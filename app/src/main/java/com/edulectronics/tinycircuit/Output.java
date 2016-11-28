@@ -7,7 +7,20 @@ import java.util.List;
  */
 
 public class Output {
+    private double voltage;
     private List<Input> connectedInputs;
+
+    public void setOutputVoltage(double voltage) {
+        this.voltage = voltage;
+        for (Input input: connectedInputs
+             ) {
+            input.handleInputVoltageChange();
+        }
+    }
+
+    public double getOutputVoltage() {
+        return voltage;
+    }
 
     public boolean hasOutputConnection() {
         if (!connectedInputs.isEmpty())
@@ -20,13 +33,13 @@ public class Output {
         return false;
     }
 
-    public void Connect(Input input) {
+    public void connect(Input input) {
         if(!this.connectedInputs.contains(input)) {
             this.connectedInputs.add(input);
         }
     }
 
-    public void Disconnect(Input input) {
+    public void disconnect(Input input) {
         if(connectedInputs.contains(input)) {
             connectedInputs.remove(input);
         }
