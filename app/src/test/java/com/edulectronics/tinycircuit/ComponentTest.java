@@ -22,7 +22,7 @@ public class ComponentTest {
         Output output = powersource.getOutputByIndex(0);
         Input input = powersource.getInputByIndex(0);
 
-        Connector.getInstance().connect(input,output);
+        Connector.connect(input,output);
 
         assertTrue(powersource.hasOutputConnection());
     }
@@ -41,7 +41,7 @@ public class ComponentTest {
         Lightbulb bulb = new Lightbulb();
         Input bulbInput = bulb.getInputByIndex(0);
 
-        Connector.getInstance().connect(bulbInput, powerOutput);
+        Connector.connect(bulbInput, powerOutput);
 
         assertFalse(powersource.hasOutputConnection());
     }

@@ -43,8 +43,6 @@ public class Input {
     }
 
     public void handleInputVoltageChange() {
-        /* Do something to calculate voltage from multiple output voltages */
-
         this.voltage = 0;
         for (Output output: connectedOutputs
              ) {

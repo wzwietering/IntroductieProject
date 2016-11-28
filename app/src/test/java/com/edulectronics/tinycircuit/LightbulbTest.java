@@ -26,13 +26,29 @@ public class LightbulbTest {
         Output bulbOutput = bulb.getOutputByIndex(0);
         Input bulbInput = bulb.getInputByIndex(0);
 
-        Connector.getInstance().connect(bulbInput, powerOutput);
-        Connector.getInstance().connect(powerInput, bulbOutput);
+        Connector.connect(bulbInput, powerOutput);
+        Connector.connect(powerInput, bulbOutput);
 
         powersource.startConnection();
         assertTrue(bulb.isOn);
     }
 
+    @Test
+    public void weakPowersourceLightbulbNotOn(){
+        Powersource powersource = new Powersource(3);
+        Output powerOutput = powersource.getOutputByIndex(0);
+        Input powerInput = powersource.getInputByIndex(0);
+
+        Lightbulb bulb = new Lightbulb();
+        Output bulbOutput = bulb.getOutputByIndex(0);
+        Input bulbInput = bulb.getInputByIndex(0);
+
+        Connector.connect(bulbInput, powerOutput);
+        Connector.connect(powerInput, bulbOutput);
+
+        powersource.startConnection();
+        assertFalse(bulb.isOn);
+    }
 
     @Test
     public void disconnectedLightBulbIsOff(){
@@ -42,7 +58,7 @@ public class LightbulbTest {
         Lightbulb bulb = new Lightbulb();
         Input bulbInput = bulb.getInputByIndex(0);
 
-        Connector.getInstance().connect(bulbInput, powerOutput);
+        Connector.connect(bulbInput, powerOutput);
 
         powersource.startConnection();
         assertFalse(bulb.isOn);
