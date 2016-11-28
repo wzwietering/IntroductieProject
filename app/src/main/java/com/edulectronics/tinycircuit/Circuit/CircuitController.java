@@ -2,6 +2,7 @@ package com.edulectronics.tinycircuit.Circuit;
 
 import com.edulectronics.tinycircuit.Models.Components.Component;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Set;
 
@@ -9,7 +10,7 @@ import java.util.Set;
  * Created by Wilmer on 28-11-2016.
  */
 
-public class CircuitController {
+public class CircuitController implements Serializable {
 
     public CircuitModel circuit;
     private Set<Component> availableComponents;

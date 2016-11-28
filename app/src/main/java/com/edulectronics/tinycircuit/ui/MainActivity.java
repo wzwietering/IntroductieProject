@@ -27,6 +27,9 @@ public class MainActivity extends AppCompatActivity {
         GridView circuit = (GridView) findViewById(R.id.circuit);
         HashSet s = new HashSet();
         s.add(new Lightbulb());
-        circuit.setAdapter(new MainScreenAdapter(this, new CircuitController(s, 5, 5)));
+
+        Intent intent = getIntent();
+        CircuitController controller = (CircuitController) intent.getSerializableExtra("Controller");
+        circuit.setAdapter(new MainScreenAdapter(this, controller));
     }
 }
