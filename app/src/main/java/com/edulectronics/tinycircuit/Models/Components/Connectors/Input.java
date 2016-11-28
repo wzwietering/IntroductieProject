@@ -1,7 +1,9 @@
 package com.edulectronics.tinycircuit.Models.Components.Connectors;
 
 import com.edulectronics.tinycircuit.Models.Components.Component;
+import com.edulectronics.tinycircuit.Models.Components.Powersource;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,31 +12,45 @@ import java.util.List;
 
 public class Input {
     private Component parentComponent;
-    private List<Output> connectedOutputs;
+    private List<Output> connectedOutputs = new ArrayList<Output>();
     private double voltage;
 
     public Input(Component parent) {
         this.parentComponent = parent;
     }
 
-    public void connect(Output output) {
+    public double getInputVoltage(){
+        return this.voltage;
+    }
+
+    void connect(Output output) {
         if(!connectedOutputs.contains(output)) {
             connectedOutputs.add(output);
         }
     }
 
-    public void disconnect(Output output) {
+    void disconnect(Output output) {
         if(connectedOutputs.contains(output)) {
             connectedOutputs.remove(output);
         }
     }
 
     public boolean hasOutputConnection() {
+        if(parentComponent.getClass() == Powersource.class) {
+            return true;
+        }
         return parentComponent.hasOutputConnection();
     }
 
     public void handleInputVoltageChange() {
         /* Do something to calculate voltage from multiple output voltages */
+
+        this.voltage = 0;
+        for (Output output: connectedOutputs
+             ) {
+            voltage += output.getOutputVoltage();
+        }
+
         this.parentComponent.handleInputChange();
     }
 }

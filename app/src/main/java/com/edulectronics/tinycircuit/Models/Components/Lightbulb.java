@@ -1,5 +1,6 @@
 package com.edulectronics.tinycircuit.Models.Components;
 
+import com.edulectronics.tinycircuit.Models.Components.Connectors.Input;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.Output;
 
 /**
@@ -14,8 +15,8 @@ public class Lightbulb extends Component {
     @Override
     public void handleInputChange() {
         double voltage = 0;
-        for (Output output: outputs) {
-            voltage += output.getOutputVoltage();
+        for (Input input: inputs) {
+            voltage += input.getInputVoltage();
         }
         if(voltage >= voltageThreshold)
         {
