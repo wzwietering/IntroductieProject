@@ -6,10 +6,7 @@ import com.edulectronics.tinycircuit.Models.Components.Connectors.Input;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.Output;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
 /**
  * Created by Maaike on 28-11-2016.
