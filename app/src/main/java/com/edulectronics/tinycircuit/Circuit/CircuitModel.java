@@ -1,5 +1,6 @@
 package com.edulectronics.tinycircuit.Circuit;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.edulectronics.tinycircuit.Models.Components.Component;
@@ -11,10 +12,10 @@ import com.edulectronics.tinycircuit.Models.Components.Powersource;
 
 public class CircuitModel {
 
-    protected List<Component> components;
+    public ArrayList<Component> components;
 
     public CircuitModel(){
-
+        components = new ArrayList<>();
     }
 
     /*Checks if the Circuit has a connection from the first powersource*/
