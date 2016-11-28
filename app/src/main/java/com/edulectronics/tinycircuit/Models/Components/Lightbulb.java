@@ -14,22 +14,25 @@ public class Lightbulb extends Component {
     @Override
     public void handleInputChange() {
         double voltage = 0;
-        for (Output output: outputs
-             ) {
+        for (Output output: outputs) {
             voltage += output.getOutputVoltage();
         }
         if(voltage >= voltageThreshold)
         {
             switchState(true);
         }
-    }
-
-    private void switchState(boolean isOn) {
-        this.isOn = isOn;
+        this.outputVoltage = voltage;
+        setNewOutputValues();
     }
 
     @Override
     public void setNewOutputValues() {
+        for (Output output: outputs) {
+            output.setOutputVoltage(this.outputVoltage);
+        }
+    }
 
+    private void switchState(boolean isOn) {
+        this.isOn = isOn;
     }
 }

@@ -9,10 +9,9 @@ import com.edulectronics.tinycircuit.Models.Output;
  */
 
 public class Powersource extends Component {
-    private final double voltage;
 
     public Powersource(double voltage){
-        this.voltage = voltage;
+        this.outputVoltage = voltage;
         this.inputs.add(new Input(this));
         this.outputs.add(new Output());
     }
@@ -26,11 +25,10 @@ public class Powersource extends Component {
     @Override
     public void handleInputChange(){}
 
-    @Override
     public void setNewOutputValues(){
         for (Output output: outputs
              ) {
-            output.setOutputVoltage(this.voltage);
+            output.setOutputVoltage(this.outputVoltage);
         }
     }
 }

@@ -16,6 +16,8 @@ public abstract class Component implements IComponent {
     protected List<Input> inputs;
     protected List<Output> outputs;
 
+    protected double outputVoltage;
+
     public boolean hasOutputConnection() {
         for (Output o : outputs
              ) {
