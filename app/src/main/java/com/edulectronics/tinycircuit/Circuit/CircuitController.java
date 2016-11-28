@@ -27,9 +27,9 @@ public class CircuitController implements Serializable {
         }
     }
 
-    public void removeComponent(Component c, int x, int y){
+    public void removeComponent(int x, int y){
         if(circuit.occupied(x, y)) {
-            circuit.remove(c);
+            circuit.remove(x, y);
         }
     }
 

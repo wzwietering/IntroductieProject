@@ -33,7 +33,7 @@ public class CircuitActivity extends AppCompatActivity {
         });
         Intent intent = getIntent();
         CircuitController controller = (CircuitController) intent.getSerializableExtra("Controller");
-        circuit.setNumColumns(controller.width);
+        circuit.setNumColumns(controller.circuit.width);
         circuit.setAdapter(new CircuitAdapter(this, controller));
     }
 }

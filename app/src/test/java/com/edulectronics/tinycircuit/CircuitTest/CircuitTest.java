@@ -34,7 +34,7 @@ public class CircuitTest {
     @Test
     public void removeComponent(){
         c = new CircuitController(s, 5, 5);
-        c.removeComponent(light, 1, 1);
+        c.removeComponent(1, 1);
 
         assertEquals(false, c.circuit.occupied(1, 1));
     }
