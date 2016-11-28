@@ -14,7 +14,7 @@ public class CircuitModel {
 
     public ArrayList<Component> components;
 
-    public CircuitModel(){
+    public CircuitModel(int width, int height){
         components = new ArrayList<>();
     }
 

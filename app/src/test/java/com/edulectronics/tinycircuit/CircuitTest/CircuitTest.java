@@ -8,7 +8,6 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import static org.junit.Assert.*;
@@ -32,7 +31,7 @@ public class CircuitTest {
         l.add(light);
         b[1][1] = true;
 
-        assertEquals(l, c.circuitModel.components);
+        assertEquals(l, c.circuit.components);
         assertArrayEquals(b, c.occupation);
     }
 
@@ -41,7 +40,7 @@ public class CircuitTest {
         c = new CircuitController(s);
         c.removeComponent(light, 1, 1);
 
-        assertEquals(l, c.circuitModel.components);
+        assertEquals(l, c.circuit.components);
         assertArrayEquals(b, c.occupation);
     }
 }
