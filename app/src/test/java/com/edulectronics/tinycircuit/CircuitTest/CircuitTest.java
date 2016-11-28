@@ -7,7 +7,9 @@ import com.edulectronics.tinycircuit.Models.Components.Lightbulb;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.Assert.*;
 
@@ -16,13 +18,16 @@ import static org.junit.Assert.*;
  */
 
 public class CircuitTest {
-    CircuitController c = new CircuitController();
+    Set<Component> s = new HashSet<>();
+    CircuitController c;
     Lightbulb light = new Lightbulb();
     boolean[][] b = new boolean[5][5];
     ArrayList<Component> l = new ArrayList<>();
 
     @Test
     public void addComponent(){
+        c = new CircuitController(s);
+        s.add(light);
         c.addComponent(light, 1, 1);
         l.add(light);
         b[1][1] = true;
@@ -33,6 +38,7 @@ public class CircuitTest {
 
     @Test
     public void removeComponent(){
+        c = new CircuitController(s);
         c.removeComponent(light, 1, 1);
 
         assertEquals(l, c.circuitModel.components);
