@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
+import com.edulectronics.tinycircuit.Circuit.CircuitController;
 import com.edulectronics.tinycircuit.Models.Components.Component;
 import com.edulectronics.tinycircuit.Models.Components.IComponent;
 import com.edulectronics.tinycircuit.Models.Components.Lightbulb;
@@ -24,8 +25,8 @@ public class MainScreenAdapter extends BaseAdapter {
     ArrayList<IComponent> components;
     Context context;
 
-    public MainScreenAdapter(Context context) {
-        this.components = new ArrayList<>();
+    public MainScreenAdapter(Context context, CircuitController controller) {
+        this.components = controller.getComponents();
         this.context = context;
     }
 
