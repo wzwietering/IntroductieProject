@@ -1,4 +1,6 @@
-package com.edulectronics.tinycircuit;
+package com.edulectronics.tinycircuit.Models;
+
+import com.edulectronics.tinycircuit.Models.Input;
 
 import java.util.List;
 

@@ -1,7 +1,7 @@
-package com.edulectronics.tinycircuit.Components;
+package com.edulectronics.tinycircuit.Models.Components;
 
-import com.edulectronics.tinycircuit.Input;
-import com.edulectronics.tinycircuit.Output;
+import com.edulectronics.tinycircuit.Models.Input;
+import com.edulectronics.tinycircuit.Models.Output;
 
 import java.util.List;
 

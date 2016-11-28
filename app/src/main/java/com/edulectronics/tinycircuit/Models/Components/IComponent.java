@@ -1,4 +1,4 @@
-package com.edulectronics.tinycircuit.Components;
+package com.edulectronics.tinycircuit.Models.Components;
 
 /**
  * Created by Maaike on 28-11-2016.
