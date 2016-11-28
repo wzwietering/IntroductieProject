@@ -18,8 +18,6 @@ public class CircuitController implements Serializable {
 
     public CircuitController(Set<Component> s, int width, int height){
         this.circuit = new CircuitModel(width, height);
-        this.width = width;
-        this.height = height;
         this.availableComponents = s;
     }
 
