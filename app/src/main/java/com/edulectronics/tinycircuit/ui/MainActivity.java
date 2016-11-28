@@ -25,11 +25,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         GridView circuit = (GridView) findViewById(R.id.circuit);
-        HashSet s = new HashSet();
-        s.add(new Lightbulb());
 
         Intent intent = getIntent();
         CircuitController controller = (CircuitController) intent.getSerializableExtra("Controller");
+        circuit.setNumColumns(controller.width);
         circuit.setAdapter(new MainScreenAdapter(this, controller));
     }
 }

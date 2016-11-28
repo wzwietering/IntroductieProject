@@ -35,7 +35,7 @@ public class MainScreenAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return controller.getComponents().length;
+        return controller.width * controller.height;
     }
 
     @Override
