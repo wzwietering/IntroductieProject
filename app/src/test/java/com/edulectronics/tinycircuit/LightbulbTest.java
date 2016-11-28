@@ -26,8 +26,8 @@ public class LightbulbTest {
         Output bulbOutput = bulb.getOutputByIndex(0);
         Input bulbInput = bulb.getInputByIndex(0);
 
-        Connector.getInstance().connect(bulbInput, powerOutput);
-        Connector.getInstance().connect(powerInput, bulbOutput);
+        Connector.connect(bulbInput, powerOutput);
+        Connector.connect(powerInput, bulbOutput);
 
         powersource.startConnection();
         assertTrue(bulb.isOn);
@@ -43,8 +43,8 @@ public class LightbulbTest {
         Output bulbOutput = bulb.getOutputByIndex(0);
         Input bulbInput = bulb.getInputByIndex(0);
 
-        Connector.getInstance().connect(bulbInput, powerOutput);
-        Connector.getInstance().connect(powerInput, bulbOutput);
+        Connector.connect(bulbInput, powerOutput);
+        Connector.connect(powerInput, bulbOutput);
 
         powersource.startConnection();
         assertFalse(bulb.isOn);
@@ -58,7 +58,7 @@ public class LightbulbTest {
         Lightbulb bulb = new Lightbulb();
         Input bulbInput = bulb.getInputByIndex(0);
 
-        Connector.getInstance().connect(bulbInput, powerOutput);
+        Connector.connect(bulbInput, powerOutput);
 
         powersource.startConnection();
         assertFalse(bulb.isOn);
