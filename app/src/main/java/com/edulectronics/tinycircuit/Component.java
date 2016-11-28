@@ -7,6 +7,17 @@ import java.util.List;
  */
 
 public abstract class Component implements IComponent {
-    public List<Input> inputs;
-    public List<Output> outputs;
+    private List<Input> inputs;
+    private List<Output> outputs;
+
+    public boolean hasOutputConnection() {
+        for (Output o : outputs
+             ) {
+            if (o.hasOutputConnection() )
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 }
