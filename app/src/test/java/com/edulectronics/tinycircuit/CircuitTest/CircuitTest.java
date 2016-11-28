@@ -20,27 +20,25 @@ public class CircuitTest {
     Set<Component> s = new HashSet<>();
     CircuitController c;
     Lightbulb light = new Lightbulb();
-    boolean[][] b = new boolean[5][5];
     ArrayList<Component> l = new ArrayList<>();
 
     @Test
     public void addComponent(){
-        c = new CircuitController(s);
+        c = new CircuitController(s, 5, 5);
         s.add(light);
         c.addComponent(light, 1, 1);
         l.add(light);
-        b[1][1] = true;
 
         assertEquals(l, c.circuit.components);
-        assertArrayEquals(b, c.occupation);
+        assertEquals(true, c.circuit.occupied(1, 1));
     }
 
     @Test
     public void removeComponent(){
-        c = new CircuitController(s);
+        c = new CircuitController(s, 5, 5);
         c.removeComponent(light, 1, 1);
 
         assertEquals(l, c.circuit.components);
-        assertArrayEquals(b, c.occupation);
+        assertEquals(true, c.circuit.occupied(1, 1));
     }
 }
