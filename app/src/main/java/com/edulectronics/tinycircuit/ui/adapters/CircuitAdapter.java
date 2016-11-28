@@ -24,11 +24,11 @@ import android.widget.ImageView;
  * Created by bernd on 28/11/2016.
  */
 
-public class MainScreenAdapter extends BaseAdapter {
+public class CircuitAdapter extends BaseAdapter {
     Context context;
     CircuitController controller;
 
-    public MainScreenAdapter(Context context, CircuitController controller) {
+    public CircuitAdapter(Context context, CircuitController controller) {
         this.controller = controller;
         this.context = context;
     }
