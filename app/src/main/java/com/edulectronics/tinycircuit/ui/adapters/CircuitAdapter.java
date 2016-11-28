@@ -35,7 +35,7 @@ public class CircuitAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return controller.width * controller.height;
+        return controller.circuit.width * controller.circuit.height;
     }
 
     @Override
@@ -43,8 +43,8 @@ public class CircuitAdapter extends BaseAdapter {
         /*position / height = column, position % height = row.
         Minus one is required because position 1 equals index 0*/
         return controller.getComponents()
-                [(int)Math.ceil((double)(position / controller.height)) - 1]
-                [position % controller.height - 1];
+                [(int)Math.ceil((double)(position / controller.circuit.height)) - 1]
+                [position % controller.circuit.height - 1];
     }
 
     @Override
