@@ -1,5 +1,7 @@
 package com.edulectronics.tinycircuit.ui.adapters;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,7 @@ import com.edulectronics.tinycircuit.Models.Components.Lightbulb;
 import com.edulectronics.tinycircuit.Models.Components.Powersource;
 import com.edulectronics.tinycircuit.R;
 
+import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import android.content.Context;
@@ -22,22 +25,26 @@ import android.widget.ImageView;
  */
 
 public class MainScreenAdapter extends BaseAdapter {
-    ArrayList<IComponent> components;
     Context context;
+    CircuitController controller;
 
     public MainScreenAdapter(Context context, CircuitController controller) {
-        this.components = controller.getComponents();
+        this.controller = controller;
         this.context = context;
     }
 
     @Override
     public int getCount() {
-        return components.size();
+        return controller.getComponents().length;
     }
 
     @Override
     public Object getItem(int position) {
-        return components.get(position);
+        /*position / height = column, position % height = row.
+        Minus one is required because position 1 equals index 0*/
+        return controller.getComponents()
+                [(int)Math.ceil((double)(position / controller.height)) - 1]
+                [position % controller.height - 1];
     }
 
     @Override

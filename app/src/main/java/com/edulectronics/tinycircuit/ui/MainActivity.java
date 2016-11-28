@@ -18,7 +18,7 @@ import com.edulectronics.tinycircuit.ui.adapters.MainScreenAdapter;
 import java.io.Serializable;
 import java.util.HashSet;
 
-public class MainActivity extends AppCompatActivity implements Serializable{
+public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,4 +28,5 @@ public class MainActivity extends AppCompatActivity implements Serializable{
         HashSet s = new HashSet();
         s.add(new Lightbulb());
         circuit.setAdapter(new MainScreenAdapter(this, new CircuitController(s, 5, 5)));
+    }
 }

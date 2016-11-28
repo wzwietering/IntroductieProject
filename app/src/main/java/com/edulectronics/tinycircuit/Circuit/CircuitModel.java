@@ -1,5 +1,6 @@
 package com.edulectronics.tinycircuit.Circuit;
 
+import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +13,7 @@ import com.edulectronics.tinycircuit.Models.Components.Powersource;
  * Created by Wilmer on 28-11-2016.
  */
 
-public class CircuitModel {
+public class CircuitModel implements Serializable{
 
     public Component[][] components;
     private int width, height;
