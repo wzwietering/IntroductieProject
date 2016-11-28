@@ -19,21 +19,20 @@ public class CircuitController {
         this.availableComponents = s;
     }
 
-    public void addComponent(Component c, int x, int y){
+    public void addComponent(Component component, int x, int y){
         /*Only add if tile is available and allowed*/
-        if(!circuit.occupied(x, y) && availableComponents.contains(c)){
-            circuit.components.add(c);
+        if(!circuit.occupied(x, y) && availableComponents.contains(component)){
+            circuit.add(component, x, y);
         }
     }
 
     public void removeComponent(Component c, int x, int y){
-        if(occupation[x][y]) {
-            occupation[x][y] = false;
-            circuit.components.remove(c);
+        if(circuit.occupied(x, y)) {
+            circuit.remove(c);
         }
     }
 
-    public ArrayList<Component> getComponents(){
+    public Component[][] getComponents(){
         return circuit.components;
     }
 }
