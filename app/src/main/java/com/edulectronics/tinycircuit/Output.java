@@ -12,4 +12,16 @@ public class Output {
     public boolean hasOutputConnection() {
         return !connectedInputs.isEmpty();
     }
+
+    protected void Connect(Input input) {
+        if(!this.connectedInputs.contains(input)) {
+            this.connectedInputs.add(input);
+        }
+    }
+
+    protected void Disconnect(Input input) {
+        if(connectedInputs.contains(input)) {
+            connectedInputs.remove(input);
+        }
+    }
 }
