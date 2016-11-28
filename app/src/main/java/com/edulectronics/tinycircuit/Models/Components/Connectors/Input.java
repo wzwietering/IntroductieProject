@@ -1,4 +1,4 @@
-package com.edulectronics.tinycircuit.Models;
+package com.edulectronics.tinycircuit.Models.Components.Connectors;
 
 import com.edulectronics.tinycircuit.Models.Components.Component;
 
