@@ -26,10 +26,12 @@ public class CircuitModel implements Serializable{
 
     /*Checks if the Circuit has a connection from the first powersource*/
     public boolean noComponentsWithoutOutput(){
-        for (Object object: components) {
-            if (object != null) {
-                Component c = (Component) object;
-                if (!c.hasOutputConnection()) { return false; }
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                if (components[x][y] != null) {
+                    Component c = (Component) components[x][y];
+                    if (!c.hasOutputConnection()) { return false; }
+                }
             }
         }
         return true;

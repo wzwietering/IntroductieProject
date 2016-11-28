@@ -14,7 +14,6 @@ public class CircuitController implements Serializable {
 
     public CircuitModel circuit;
     private Set<Component> availableComponents;
-    public int width, height;
 
     public CircuitController(Set<Component> s, int width, int height){
         this.circuit = new CircuitModel(width, height);
