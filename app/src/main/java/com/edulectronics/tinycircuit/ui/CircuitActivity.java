@@ -19,7 +19,7 @@ import com.edulectronics.tinycircuit.ui.adapters.MainScreenAdapter;
 import java.io.Serializable;
 import java.util.HashSet;
 
-public class MainActivity extends AppCompatActivity {
+public class CircuitActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
