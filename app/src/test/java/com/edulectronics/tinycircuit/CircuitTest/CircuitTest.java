@@ -20,17 +20,15 @@ public class CircuitTest {
     Set<Component> s = new HashSet<>();
     CircuitController c;
     Lightbulb light = new Lightbulb();
-    ArrayList<Component> l = new ArrayList<>();
 
     @Test
     public void addComponent(){
-        c = new CircuitController(s, 5, 5);
         s.add(light);
+        c = new CircuitController(s, 5, 5);
         c.addComponent(light, 1, 1);
-        l.add(light);
 
-        assertEquals(l, c.circuit.components);
         assertEquals(true, c.circuit.occupied(1, 1));
+        assertEquals(c.circuit.components[1][1].getClass(), Lightbulb.class);
     }
 
     @Test
@@ -38,7 +36,6 @@ public class CircuitTest {
         c = new CircuitController(s, 5, 5);
         c.removeComponent(light, 1, 1);
 
-        assertEquals(l, c.circuit.components);
-        assertEquals(true, c.circuit.occupied(1, 1));
+        assertEquals(false, c.circuit.occupied(1, 1));
     }
 }
