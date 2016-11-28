@@ -22,6 +22,7 @@ public class CircuitController {
     }
 
     public void addComponent(Component c, int x, int y){
+        /*Only add if tile is available and allowed*/
         if(!occupation[x][y] && availableComponents.contains(c)){
             occupation[x][y] = true;
             circuitModel.components.add(c);
