@@ -1,7 +1,7 @@
-package com.edulectronics.tinycircuit.Components;
+package com.edulectronics.tinycircuit.Models.Components;
 
-import com.edulectronics.tinycircuit.Input;
-import com.edulectronics.tinycircuit.Output;
+import com.edulectronics.tinycircuit.Models.Components.Connectors.Input;
+import com.edulectronics.tinycircuit.Models.Components.Connectors.Output;
 
 import java.util.List;
 
@@ -13,8 +13,10 @@ import java.util.List;
  * This is the component base class. All components have to be derived from this base.
  */
 public abstract class Component implements IComponent {
-    private List<Input> inputs;
-    private List<Output> outputs;
+    protected List<Input> inputs;
+    protected List<Output> outputs;
+
+    protected double outputVoltage;
 
     public boolean hasOutputConnection() {
         for (Output o : outputs

@@ -1,4 +1,4 @@
-package com.edulectronics.tinycircuit;
+package com.edulectronics.tinycircuit.Models.Components.Connectors;
 
 import java.util.List;
 
