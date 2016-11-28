@@ -1,16 +1,20 @@
 package com.edulectronics.tinycircuit.ui.adapters;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
+import com.edulectronics.tinycircuit.Circuit.CircuitController;
 import com.edulectronics.tinycircuit.Models.Components.Component;
 import com.edulectronics.tinycircuit.Models.Components.IComponent;
 import com.edulectronics.tinycircuit.Models.Components.Lightbulb;
 import com.edulectronics.tinycircuit.Models.Components.Powersource;
 import com.edulectronics.tinycircuit.R;
 
+import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import android.content.Context;
@@ -20,23 +24,27 @@ import android.widget.ImageView;
  * Created by bernd on 28/11/2016.
  */
 
-public class MainScreenAdapter extends BaseAdapter {
-    ArrayList<IComponent> components;
+public class CircuitAdapter extends BaseAdapter {
     Context context;
+    CircuitController controller;
 
-    public MainScreenAdapter(Context context) {
-        this.components = new ArrayList<>();
+    public CircuitAdapter(Context context, CircuitController controller) {
+        this.controller = controller;
         this.context = context;
     }
 
     @Override
     public int getCount() {
-        return components.size();
+        return controller.width * controller.height;
     }
 
     @Override
     public Object getItem(int position) {
-        return components.get(position);
+        /*position / height = column, position % height = row.
+        Minus one is required because position 1 equals index 0*/
+        return controller.getComponents()
+                [(int)Math.ceil((double)(position / controller.height)) - 1]
+                [position % controller.height - 1];
     }
 
     @Override

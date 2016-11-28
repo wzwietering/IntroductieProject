@@ -4,12 +4,13 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.edulectronics.tinycircuit.ui.MainActivity">
+    tools:context="com.edulectronics.tinycircuit.ui.CircuitActivity">
 
     <GridView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
+        android:scrollbars="none"
         android:id="@+id/circuit" />
 </RelativeLayout>
