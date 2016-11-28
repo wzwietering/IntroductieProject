@@ -1,6 +1,6 @@
 package com.edulectronics.tinycircuit.Circuit;
 
-import com.edulectronics.tinycircuit.Components.Component;
+import com.edulectronics.tinycircuit.Models.Components.Component;
 
 /**
  * Created by Wilmer on 28-11-2016.
@@ -8,7 +8,7 @@ import com.edulectronics.tinycircuit.Components.Component;
 
 public class CircuitController {
 
-    CircuitModel circuitModel;
+    private CircuitModel circuitModel;
 
     public CircuitController(){
         circuitModel = new CircuitModel();
