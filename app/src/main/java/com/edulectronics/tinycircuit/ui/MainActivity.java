@@ -6,6 +6,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridView;
@@ -26,6 +27,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         GridView circuit = (GridView) findViewById(R.id.circuit);
 
+        /*Prevents scrolling, stuff can still be rendered outside screen*/
+        circuit.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_MOVE){
+                    return true;
+                }
+                return false;
+            }
+        });
         Intent intent = getIntent();
         CircuitController controller = (CircuitController) intent.getSerializableExtra("Controller");
         circuit.setNumColumns(controller.width);
