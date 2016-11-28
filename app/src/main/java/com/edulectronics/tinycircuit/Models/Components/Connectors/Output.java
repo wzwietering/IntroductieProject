@@ -1,5 +1,6 @@
 package com.edulectronics.tinycircuit.Models.Components.Connectors;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -8,7 +9,7 @@ import java.util.List;
 
 public class Output {
     private double voltage;
-    private List<Input> connectedInputs;
+    private List<Input> connectedInputs = new ArrayList<Input>();
 
     public void setOutputVoltage(double voltage) {
         this.voltage = voltage;
@@ -33,13 +34,13 @@ public class Output {
         return false;
     }
 
-    public void connect(Input input) {
+    void connect(Input input) {
         if(!this.connectedInputs.contains(input)) {
             this.connectedInputs.add(input);
         }
     }
 
-    public void disconnect(Input input) {
+    void disconnect(Input input) {
         if(connectedInputs.contains(input)) {
             connectedInputs.remove(input);
         }

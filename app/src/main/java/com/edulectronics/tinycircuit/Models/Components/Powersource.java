@@ -12,14 +12,12 @@ public class Powersource extends Component {
 
     public Powersource(double voltage){
         this.outputVoltage = voltage;
-        this.inputs.add(new Input(this));
-        this.outputs.add(new Output());
     }
 
-    @Override
-    public boolean hasOutputConnection()
-    {
-        return true;
+    public void startConnection(){
+        if(this.hasOutputConnection()) {
+            setNewOutputValues();
+        }
     }
 
     @Override
