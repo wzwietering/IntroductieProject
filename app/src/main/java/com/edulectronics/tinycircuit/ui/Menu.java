@@ -7,7 +7,10 @@ import android.view.View;
 import android.widget.Button;
 
 import com.edulectronics.tinycircuit.Circuit.CircuitController;
+import com.edulectronics.tinycircuit.Models.Components.Component;
 import com.edulectronics.tinycircuit.R;
+
+import java.util.HashSet;
 
 public class Menu extends AppCompatActivity {
 
@@ -21,6 +24,8 @@ public class Menu extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Menu.this, MainActivity.class);
+                intent.putExtra("Controller", new CircuitController(null, 5, 5));
+                startActivity(intent);
             }
         });
     }
