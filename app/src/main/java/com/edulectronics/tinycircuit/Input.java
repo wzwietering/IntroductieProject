@@ -13,14 +13,11 @@ public class Input {
         if(!connectedOutputs.contains(output)) {
             connectedOutputs.add(output);
         }
-        output.Connect(this);
-    }
+}
 
     public void Disconnect (Output output) {
-        if(connectedOutputs.contains(output))
-        {
+        if(connectedOutputs.contains(output)) {
             connectedOutputs.remove(output);
         }
-        output.Disconnect(this);
     }
 }

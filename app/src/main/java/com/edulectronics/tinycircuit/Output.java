@@ -13,13 +13,13 @@ public class Output {
         return !connectedInputs.isEmpty();
     }
 
-    protected void Connect(Input input) {
+    public void Connect(Input input) {
         if(!this.connectedInputs.contains(input)) {
             this.connectedInputs.add(input);
         }
     }
 
-    protected void Disconnect(Input input) {
+    public void Disconnect(Input input) {
         if(connectedInputs.contains(input)) {
             connectedInputs.remove(input);
         }
