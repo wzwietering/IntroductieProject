@@ -16,8 +16,6 @@ public class Input {
         this.parentComponent = parent;
     }
 
-
-
     public void Connect (Output output) {
         if(!connectedOutputs.contains(output)) {
             connectedOutputs.add(output);
@@ -28,5 +26,9 @@ public class Input {
         if(connectedOutputs.contains(output)) {
             connectedOutputs.remove(output);
         }
+    }
+
+    public boolean hasOutputConnection() {
+        return parentComponent.hasOutputConnection();
     }
 }

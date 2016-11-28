@@ -10,14 +10,14 @@ public class Output {
     private List<Input> connectedInputs;
 
     public boolean hasOutputConnection() {
-        if(connectedInputs.isEmpty())
-        {
-            return false;
-        }
-        for (Input input: connectedInputs
-             ) {
-            input.
-        }
+        if (!connectedInputs.isEmpty())
+            for (Input input : connectedInputs
+                    ) {
+                if (input.hasOutputConnection()) {
+                    return true;
+                }
+            }
+        return false;
     }
 
     public void Connect(Input input) {
