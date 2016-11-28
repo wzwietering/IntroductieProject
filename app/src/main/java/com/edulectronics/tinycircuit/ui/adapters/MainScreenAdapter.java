@@ -5,7 +5,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
-import com.edulectronics.tinycircuit.Components.IComponent;
+import com.edulectronics.tinycircuit.Models.Components.Component;
+import com.edulectronics.tinycircuit.Models.Components.IComponent;
+import com.edulectronics.tinycircuit.Models.Components.Lightbulb;
+import com.edulectronics.tinycircuit.Models.Components.Powersource;
 import com.edulectronics.tinycircuit.R;
 
 import java.lang.reflect.Array;
@@ -21,7 +24,8 @@ public class MainScreenAdapter extends BaseAdapter {
     ArrayList<IComponent> components;
     Context context;
 
-    MainScreenAdapter(Context context) {
+    public MainScreenAdapter(Context context) {
+        this.components = new ArrayList<>();
         this.context = context;
     }
 
@@ -50,6 +54,7 @@ public class MainScreenAdapter extends BaseAdapter {
     }
 
     private int getImageId(int position) {
+        // TODO: replace with components image
         return R.mipmap.ic_launcher;
     }
 }
