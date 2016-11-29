@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">TinyCircuit</string>
+    <string-array name="items">
+        <item>item1</item>
+        <item>item2</item>
+    </string-array>
 </resources>
