@@ -6,7 +6,11 @@ import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.GridView;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import com.edulectronics.tinycircuit.Circuit.CircuitController;
 import com.edulectronics.tinycircuit.R;
@@ -35,5 +39,17 @@ public class CircuitActivity extends AppCompatActivity {
         CircuitController controller = (CircuitController) intent.getSerializableExtra("Controller");
         circuit.setNumColumns(controller.circuit.width);
         circuit.setAdapter(new CircuitAdapter(this, controller));
+
+        /*This code adds a menu to the side*/
+        ListView menu = (ListView) findViewById(R.id.menu);
+        String[] items = {"Item1", "Item2"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, items);
+        menu.setAdapter(adapter);
+
+        menu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long itemId){
+                /*Not implemented, should select desired item*/
+            }
+        });
     }
 }
