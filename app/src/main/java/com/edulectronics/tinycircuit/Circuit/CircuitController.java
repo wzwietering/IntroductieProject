@@ -2,41 +2,38 @@ package com.edulectronics.tinycircuit.Circuit;
 
 import com.edulectronics.tinycircuit.Models.Components.Component;
 
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Set;
 
 /**
  * Created by Wilmer on 28-11-2016.
  */
 
-public class CircuitController {
+public class CircuitController implements Serializable {
 
-    public CircuitModel circuitModel;
-    public final boolean[][] occupation = new boolean[5][5]; //Grid dimensions
+    public CircuitModel circuit;
     private Set<Component> availableComponents;
 
-    public CircuitController(Set<Component> s){
-        this.circuitModel = new CircuitModel();
+    public CircuitController(Set<Component> s, int width, int height){
+        this.circuit = new CircuitModel(width, height);
         this.availableComponents = s;
     }
 
-    public void addComponent(Component c, int x, int y){
+    public void addComponent(Component component, int x, int y){
         /*Only add if tile is available and allowed*/
-        if(!occupation[x][y] && availableComponents.contains(c)){
-            occupation[x][y] = true;
-            circuitModel.components.add(c);
+        if(!circuit.occupied(x, y)){ // && availableComponents.contains(component)
+            circuit.add(component, x, y);
         }
     }
 
-    public void removeComponent(Component c, int x, int y){
-        if(occupation[x][y]) {
-            occupation[x][y] = false;
-            circuitModel.components.remove(c);
+    public void removeComponent(int x, int y){
+        if(circuit.occupied(x, y)) {
+            circuit.remove(x, y);
         }
     }
 
-    public ArrayList<Component> getComponents(){
-        return circuitModel.components;
+    public Component[][] getComponents(){
+        return circuit.components;
     }
 }
