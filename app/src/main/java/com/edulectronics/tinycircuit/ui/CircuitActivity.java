@@ -1,6 +1,7 @@
 package com.edulectronics.tinycircuit.ui;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -41,9 +42,13 @@ public class CircuitActivity extends AppCompatActivity {
         circuit.setNumColumns(controller.circuit.width);
         circuit.setAdapter(new CircuitAdapter(this, controller));
 
-        /*This code adds a menu to the side*/
+        makeMenu();
+    }
+
+    /*This code adds a menu to the side*/
+    private void makeMenu(){
         ListView menu = (ListView) findViewById(R.id.menu);
-        String[] items = {"Item1", "Item2"};
+        String[] items = getResources().getStringArray(R.array.items);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 this, android.R.layout.simple_list_item_1, items);
         menu.setAdapter(adapter);
