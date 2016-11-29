@@ -17,7 +17,7 @@ public class Powersource extends Component {
     public void startConnection(){
         if(this.hasOutputConnection()) {
             this.setNewOutputValues();
-        }
+    }
     }
 
     @Override
