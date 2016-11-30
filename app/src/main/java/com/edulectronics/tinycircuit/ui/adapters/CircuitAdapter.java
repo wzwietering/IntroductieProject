@@ -63,6 +63,6 @@ public class CircuitAdapter extends BaseAdapter {
 
     private int getImageId(int position) {
         // TODO: replace with components image
-        return R.mipmap.ic_launcher;
+        return R.mipmap.resistor;
     }
 }
