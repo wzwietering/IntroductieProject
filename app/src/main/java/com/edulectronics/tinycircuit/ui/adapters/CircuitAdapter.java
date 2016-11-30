@@ -12,6 +12,7 @@ import com.edulectronics.tinycircuit.Models.Components.Component;
 import com.edulectronics.tinycircuit.Models.Components.IComponent;
 import com.edulectronics.tinycircuit.Models.Components.Lightbulb;
 import com.edulectronics.tinycircuit.Models.Components.Powersource;
+import com.edulectronics.tinycircuit.Models.Factories.ImageFactory;
 import com.edulectronics.tinycircuit.R;
 
 import java.io.Serializable;
@@ -57,7 +58,8 @@ public class CircuitAdapter extends BaseAdapter {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View row = inflater.inflate(R.layout.component, parent, false);
         ImageView image = (ImageView) row.findViewById(R.id.imageView);
-        image.setImageResource(getImageId(position));
+        ImageFactory imageFactory = new ImageFactory();
+        imageFactory.GetImage(getItem(position));
         return row;
     }
 
