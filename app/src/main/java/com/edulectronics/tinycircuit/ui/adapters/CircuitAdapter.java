@@ -39,13 +39,12 @@ public class CircuitAdapter extends BaseAdapter {
         return controller.circuit.width * controller.circuit.height;
     }
 
+    /*Range = [0, width * height - 1]*/
     @Override
     public Object getItem(int position) {
-        /*position / height = column, position % height = row.
-        Minus one is required because position 1 equals index 0*/
-        return controller.getComponents()
-                [(int)Math.ceil((double)(position / controller.circuit.height)) - 1]
-                [position % controller.circuit.height - 1];
+         return controller.getComponents()
+                [position % controller.circuit.height]
+                [position / controller.circuit.height];
     }
 
     @Override
