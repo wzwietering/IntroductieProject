@@ -41,10 +41,10 @@ public class CircuitAdapter extends BaseAdapter {
 
     /*Range = [0, width * height - 1]*/
     @Override
-    public Object getItem(int position) {
-         return controller.getComponents()
-                [position % controller.circuit.height]
-                [position / controller.circuit.height];
+    public Object getItem(int position){
+        return controller.getComponents()
+                [position % controller.circuit.width]
+                [position / controller.circuit.width];
     }
 
     @Override
@@ -57,13 +57,15 @@ public class CircuitAdapter extends BaseAdapter {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View row = inflater.inflate(R.layout.component, parent, false);
         ImageView image = (ImageView) row.findViewById(R.id.imageView);
-        ImageFactory imageFactory = new ImageFactory();
-        imageFactory.GetImage(getItem(position));
-        return row;
-    }
 
-    private int getImageId(int position) {
-        // TODO: replace with components image
-        return R.mipmap.resistor;
+        ImageFactory imageFactory = new ImageFactory();
+        Object object = getItem(position);
+        if(object != null){
+            image.setImageResource(imageFactory.GetImage(object));
+        }else{
+            image.setImageResource(R.mipmap.ic_launcher);
+        }
+
+        return row;
     }
 }

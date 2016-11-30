@@ -9,7 +9,8 @@ import com.edulectronics.tinycircuit.ui.adapters.CircuitAdapter;
 
 public class ImageFactory {
     public int GetImage(Object object){
-        switch (object.getClass().toString()){
+        String component = object.getClass().getSimpleName();
+        switch (component){
             case "Lightbulb":
                 return R.mipmap.lightbulb_on;
             case "Resistor":
@@ -17,7 +18,7 @@ public class ImageFactory {
             case "Powersource":
                 return R.mipmap.battery;
             default:
-                throw new IllegalArgumentException("Unknown component");
+                throw new IllegalArgumentException("Unknown component: " + component);
         }
     }
 }
