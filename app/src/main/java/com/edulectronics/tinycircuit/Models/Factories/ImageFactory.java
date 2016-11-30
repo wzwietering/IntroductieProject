@@ -1,7 +1,6 @@
 package com.edulectronics.tinycircuit.Models.Factories;
 
 import com.edulectronics.tinycircuit.R;
-import com.edulectronics.tinycircuit.ui.adapters.CircuitAdapter;
 
 /**
  * Created by Wilmer on 30-11-2016.
