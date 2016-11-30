@@ -1,10 +1,13 @@
 package com.edulectronics.tinycircuit.DataStorage;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.edulectronics.tinycircuit.Circuit.CircuitModel;
+import com.edulectronics.tinycircuit.Models.Components.Component;
 
 /**
  * Created by bernd on 30/11/2016.
@@ -99,5 +102,35 @@ public class DBHandler extends SQLiteOpenHelper {
         db.execSQL("DROP_TABLE_IF_EXISTS " + OUTPUT_TABLE);
         db.execSQL("DROP_TABLE_IF_EXISTS " + INPUT_OUTPUT_TABLE);
         onCreate(db);
+    }
+
+    public void saveCircuit(CircuitModel circuit) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(CIRCUIT_NAME, circuit.name);
+        long id = db.insert(CIRCUIT_TABLE, null, values);
+        for (int x = 0; x < circuit.width; x++) {
+            for (int y = 0; y < circuit.height; y++) {
+                if (circuit.components[x][y] != null) {
+                    saveComponent(db, circuit.components[x][y], id, x, y);
+                }
+            }
+        }
+        db.close();
+    }
+
+    private void saveComponent(SQLiteDatabase writableDB, Component component, long circuitId, int x, int y) {
+        ContentValues values = new ContentValues();
+        values.put(FOREIGN_KEY_CIRCUIT, circuitId);
+        values.put(COMPONENT_ID, getComponentId(component));
+        values.put(COMPONENT_X_POSITION, x);
+        values.put(COMPONENT_Y_POSITION, y);
+        writableDB.insert(CIRCUIT_COMPONENTS_TABLE, null, values);
+    }
+
+    private int getComponentId(Component component) {
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.query(COMPONENT_TABLE, new String[] {COMPONENT_ID}, "type = ?", new String[] {component.getClass().getSimpleName()}, null, null, null);
+        return cursor.getColumnIndex(COMPONENT_ID);
     }
 }
