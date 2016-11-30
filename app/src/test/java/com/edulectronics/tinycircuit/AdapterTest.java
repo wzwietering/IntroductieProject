@@ -26,7 +26,6 @@ public class AdapterTest {
         controller.addComponent(l, 4, 2);
 
         assertEquals(l, circuitAdapter.getItem(14));
-        assertEquals(null, circuitAdapter.getItem(3000));
         assertEquals(25, circuitAdapter.getCount());
     }
 }

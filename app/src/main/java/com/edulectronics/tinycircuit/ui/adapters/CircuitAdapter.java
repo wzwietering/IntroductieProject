@@ -41,14 +41,9 @@ public class CircuitAdapter extends BaseAdapter {
     /*Range = [0, width * height - 1]*/
     @Override
     public Object getItem(int position) {
-        try{
-            return controller.getComponents()
-                    [position % controller.circuit.height]
-                    [position / controller.circuit.height];
-        } catch(ArrayIndexOutOfBoundsException e){
-            System.err.println("Error, array out of bounds:\n" + e);
-            return null;
-        }
+         return controller.getComponents()
+                [position % controller.circuit.height]
+                [position / controller.circuit.height];
     }
 
     @Override
