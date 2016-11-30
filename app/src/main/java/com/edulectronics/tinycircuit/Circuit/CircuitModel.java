@@ -14,11 +14,20 @@ import com.edulectronics.tinycircuit.Models.Components.Powersource;
  */
 
 public class CircuitModel implements Serializable{
-
+    public String name;
     public Component[][] components;
     public int width, height;
 
-    public CircuitModel(int width, int height){
+    public CircuitModel(int width, int height, String name){
+        this.name = name;
+        setValues(width, height);
+    }
+
+    public CircuitModel(int width, int height) {
+        setValues(width, height);
+    }
+
+    private void setValues(int width, int height) {
         components = new Component[width][height];
         this.width = width;
         this.height = height;
