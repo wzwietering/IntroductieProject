@@ -14,31 +14,39 @@ public class DBHandler extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "circuits.db";
 
+    // circuit table
     public static final String CIRCUIT_TABLE = "circuit";
     public static final String CIRCUIT_ID = "id";
     public static final String CIRCUIT_NAME = "name";
 
+    // component table
     public static final String COMPONENT_TABLE = "component";
     public static final String COMPONENT_ID = "id";
     public static final String COMPONENT_TYPE = "type";
 
+    // connection between circuits and components
     public static final String CIRCUIT_COMPONENTS_TABLE = "circuit_components";
     public static final String COMPONENT_X_POSITION = "x_pos";
     public static final String COMPONENT_Y_POSITION = "y_pos";
 
+    // component settings table
     public static final String COMPONENT_SETTINGS_TABLE = "component_settings";
     public static final String COMPONENT_SETTINGS = "settings";
 
+    // input table
     public static final String INPUT_TABLE = "input";
     public static final String INPUT_ID = "id";
     public static final String INPUT_LOCATION = "location";
 
+    // output table
     public static final String OUTPUT_TABLE = "output";
     public static final String OUTPUT_ID = "id";
     public static final String OUTPUT_LOCATION = "location";
 
+    // connection between inputs and outputs
     public static final String INPUT_OUTPUT_TABLE = "input_output";
 
+    // foreign key names
     public static final String FOREIGN_KEY_COMPONENT = "component_id";
     public static final String FOREIGN_KEY_CIRCUIT = "circuit_id";
     public static final String FOREIGN_KEY_INPUT = "input_id";
