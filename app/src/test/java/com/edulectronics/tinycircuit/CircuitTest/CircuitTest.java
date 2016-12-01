@@ -6,11 +6,10 @@ import com.edulectronics.tinycircuit.Models.Components.Lightbulb;
 
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by Wilmer on 28-11-2016.
