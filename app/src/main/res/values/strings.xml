@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">TinyCircuit</string>
-    <string-array name="items">
-        <item>item1</item>
-        <item>item2</item>
+    <string-array name="menuitems">
+        <item>Stroombronnen</item>
+        <item>Lampen</item>
+        <item>Weerstanden</item>
     </string-array>
 </resources>
