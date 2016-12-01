@@ -5,4 +5,21 @@
         <item>Lampen</item>
         <item>Weerstanden</item>
     </string-array>
+    <array name="array">
+        <item>@array/stroombronnen</item>
+        <item>@array/lampen</item>
+        <item>@array/weerstanden</item>
+    </array>
+    <string-array name="stroombronnen">
+        <item name="id">0</item>
+        <item>Batterij</item>
+    </string-array>
+    <string-array name="lampen">
+        <item name="id">1</item>
+        <item>Gloeilamp</item>
+    </string-array>
+    <string-array name="weerstanden">
+        <item name="id">2</item>
+        <item>Weerstand</item>
+    </string-array>
 </resources>

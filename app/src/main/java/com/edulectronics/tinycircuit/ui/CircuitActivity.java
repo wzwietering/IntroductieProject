@@ -1,6 +1,7 @@
 package com.edulectronics.tinycircuit.ui;
 
 import android.content.Intent;
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -86,34 +87,29 @@ public class CircuitActivity extends AppCompatActivity {
         headers = new ArrayList<>();
         children = new HashMap<>();
         String[] items = getResources().getStringArray(R.array.menuitems);
+        int[] textures = {R.mipmap.battery, R.mipmap.lightbulb_on, R.mipmap.resistor};
 
-        ExpandedMenu item1 = new ExpandedMenu();
-        item1.setIconName(items[0]);
-        item1.setIconImage(R.mipmap.battery);
-        headers.add(item1);
+        TypedArray typedArray = getResources().obtainTypedArray(R.array.array);
+        int length = typedArray.length();
+        String[][] headings = new String[length][];
 
-        ExpandedMenu item2 = new ExpandedMenu();
-        item2.setIconName(items[1]);
-        item2.setIconImage(R.mipmap.lightbulb_on);
-        headers.add(item2);
+        for (int i = 0; i < length; i++){
+            int id = typedArray.getResourceId(i, 0);
+            headings[i] = getResources().getStringArray(id);
+        }
+        typedArray.recycle();
 
-        ExpandedMenu item3 = new ExpandedMenu();
-        item3.setIconName(items[2]);
-        item3.setIconImage(R.mipmap.resistor);
-        headers.add(item3);
+        for(int i = 0; i < items.length; i++){
+            ExpandedMenu item = new ExpandedMenu();
+            item.setIconName(items[i]);
+            item.setIconImage(textures[i]);
+            headers.add(item);
 
-        /*Add child data*/
-        List<String> heading1 = new ArrayList();
-        heading1.add("Batterij");
-
-        List<String> heading2 = new ArrayList();
-        heading2.add("Gloeilamp");
-
-        List<String> heading3 = new ArrayList();
-        heading3.add("Weerstand");
-
-        children.put(headers.get(0), heading1);
-        children.put(headers.get(1), heading2);
-        children.put(headers.get(2), heading3);
+            List<String> heading = new ArrayList();
+            for(int j = 1; j < headings[i].length; j++){
+                heading.add(headings[i][j]);
+            }
+            children.put(headers.get(i), heading);
+        }
     }
 }
