@@ -25,6 +25,7 @@ public class CircuitModel implements Serializable{
     }
 
     public boolean isCompleteCircle() {
+        //TODO implement isCompleteCircle()
         return false;
     }
 

@@ -45,4 +45,10 @@ public class ComponentTest {
 
         assertFalse(powersource.hasOutputConnection());
     }
+
+    @Test
+    public void imageResource(){
+        Powersource powersource = new Powersource(5);
+        assertEquals(R.mipmap.battery, powersource.getImage());
+    }
 }
