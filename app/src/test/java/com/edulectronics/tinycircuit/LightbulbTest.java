@@ -8,6 +8,7 @@ import com.edulectronics.tinycircuit.Models.Components.Powersource;
 
 import org.junit.Test;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -62,5 +63,11 @@ public class LightbulbTest {
 
         powersource.startConnection();
         assertFalse(bulb.isOn);
+    }
+
+    @Test
+    public void imageResource(){
+        Lightbulb lightbulb = new Lightbulb();
+        assertEquals(R.mipmap.lightbulb_on, lightbulb.getImage());
     }
 }
