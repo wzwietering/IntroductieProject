@@ -1,24 +1,19 @@
-package com.edulectronics.tinycircuit.Circuit;
-
-import java.io.Serializable;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.List;
+package com.edulectronics.tinycircuit.Models;
 
 import com.edulectronics.tinycircuit.Models.Components.Component;
-import com.edulectronics.tinycircuit.Models.Components.IComponent;
-import com.edulectronics.tinycircuit.Models.Components.Powersource;
+
+import java.io.Serializable;
 
 /**
  * Created by Wilmer on 28-11-2016.
  */
 
-public class CircuitModel implements Serializable{
+public class Circuit implements Serializable{
 
     public Component[][] components;
     public int width, height;
 
-    public CircuitModel(int width, int height){
+    public Circuit(int width, int height){
         components = new Component[width][height];
         this.width = width;
         this.height = height;
