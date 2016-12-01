@@ -89,17 +89,17 @@ public class CircuitActivity extends AppCompatActivity {
 
         ExpandedMenu item1 = new ExpandedMenu();
         item1.setIconName(items[0]);
-        item1.setIconImage(R.mipmap.ic_launcher);
+        item1.setIconImage(R.mipmap.battery);
         headers.add(item1);
 
         ExpandedMenu item2 = new ExpandedMenu();
         item2.setIconName(items[1]);
-        item2.setIconImage(R.mipmap.ic_launcher);
+        item2.setIconImage(R.mipmap.lightbulb_on);
         headers.add(item2);
 
         ExpandedMenu item3 = new ExpandedMenu();
         item3.setIconName(items[2]);
-        item3.setIconImage(R.mipmap.ic_launcher);
+        item3.setIconImage(R.mipmap.resistor);
         headers.add(item3);
 
         /*Add child data*/
