@@ -5,7 +5,7 @@
         <item>Lampen</item>
         <item>Weerstanden</item>
     </string-array>
-    <array name="array">
+    <array name="categories">
         <item>@array/stroombronnen</item>
         <item>@array/lampen</item>
         <item>@array/weerstanden</item>

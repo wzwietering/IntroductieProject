@@ -3,7 +3,6 @@ package com.edulectronics.tinycircuit.ui;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.os.Bundle;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -22,9 +21,8 @@ import java.util.HashMap;
 import java.util.List;
 
 public class CircuitActivity extends AppCompatActivity {
-    private DrawerLayout drawerLayout;
     private List<ExpandedMenu> headers;
-    private HashMap<ExpandedMenu, List<String>> children;
+    private HashMap<ExpandedMenu, List<ExpandedMenu>> children;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +55,6 @@ public class CircuitActivity extends AppCompatActivity {
     /*This code adds a menu to the side*/
     private void makeMenu(){
         ExpandableListView expandableList = (ExpandableListView) findViewById(R.id.expandablelist);
-        drawerLayout = (DrawerLayout) findViewById(R.id.activity_main);
         makeLists();
 
         ExpandableListAdapter adapter = new ExpandableListAdapter(
@@ -89,7 +86,7 @@ public class CircuitActivity extends AppCompatActivity {
         String[] items = getResources().getStringArray(R.array.menuitems);
         int[] textures = {R.mipmap.battery, R.mipmap.lightbulb_on, R.mipmap.resistor};
 
-        TypedArray typedArray = getResources().obtainTypedArray(R.array.array);
+        TypedArray typedArray = getResources().obtainTypedArray(R.array.categories);
         int length = typedArray.length();
         String[][] headings = new String[length][];
 
@@ -105,9 +102,12 @@ public class CircuitActivity extends AppCompatActivity {
             item.setIconImage(textures[i]);
             headers.add(item);
 
-            List<String> heading = new ArrayList();
+            List<ExpandedMenu> heading = new ArrayList();
             for(int j = 1; j < headings[i].length; j++){
-                heading.add(headings[i][j]);
+                ExpandedMenu subitem = new ExpandedMenu();
+                subitem.setIconName(headings[i][j]);
+                subitem.setIconImage(textures[i]);
+                heading.add(subitem);
             }
             children.put(headers.get(i), heading);
         }

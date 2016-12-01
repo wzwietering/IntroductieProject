@@ -22,11 +22,11 @@ import java.util.List;
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
     private Context context;
     private List<ExpandedMenu> headers;
-    private HashMap<ExpandedMenu, List<String>> children;
+    private HashMap<ExpandedMenu, List<ExpandedMenu>> children;
     ExpandableListView expandableListView;
 
     public ExpandableListAdapter(Context context, List<ExpandedMenu> listHeader,
-                                 HashMap<ExpandedMenu, List<String>> listChildren,
+                                 HashMap<ExpandedMenu, List<ExpandedMenu>> listChildren,
                                  ExpandableListView view) {
         this.context = context;
         this.headers = listHeader;
@@ -90,7 +90,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-        String childText = (String) getChild(groupPosition, childPosition);
+        ExpandedMenu childText = (ExpandedMenu) getChild(groupPosition, childPosition);
 
         if (convertView == null) {
             LayoutInflater layoutInflater = (LayoutInflater) this.context
@@ -99,8 +99,8 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         }
         TextView txtListChild = (TextView) convertView.findViewById(R.id.submenu);
         ImageView childImage = (ImageView) convertView.findViewById(R.id.submenuimage);
-        txtListChild.setText(childText);
-        childImage.setImageResource(R.mipmap.ic_launcher);
+        txtListChild.setText(childText.getIconName());
+        childImage.setImageResource(childText.getIconImage());
 
         return convertView;
     }
