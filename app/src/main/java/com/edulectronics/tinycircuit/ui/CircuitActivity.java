@@ -57,7 +57,7 @@ public class CircuitActivity extends AppCompatActivity {
     private void makeMenu(){
         ExpandableListView expandableList = (ExpandableListView) findViewById(R.id.expandablelist);
         drawerLayout = (DrawerLayout) findViewById(R.id.activity_main);
-        prepareListData();
+        makeLists();
 
         ExpandableListAdapter adapter = new ExpandableListAdapter(
                 this, headers, children, expandableList);
@@ -82,7 +82,7 @@ public class CircuitActivity extends AppCompatActivity {
     }
 
     /*Makes the groups and children*/
-    private void prepareListData() {
+    private void makeLists() {
         headers = new ArrayList<>();
         children = new HashMap<>();
         String[] items = getResources().getStringArray(R.array.menuitems);

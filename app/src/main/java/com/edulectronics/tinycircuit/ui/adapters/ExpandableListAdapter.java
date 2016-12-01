@@ -22,7 +22,6 @@ import java.util.List;
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
     private Context context;
     private List<ExpandedMenu> headers;
-
     private HashMap<ExpandedMenu, List<String>> children;
     ExpandableListView expandableListView;
 
@@ -98,9 +97,10 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.listsubmenu, null);
         }
-
         TextView txtListChild = (TextView) convertView.findViewById(R.id.submenu);
+        ImageView childImage = (ImageView) convertView.findViewById(R.id.submenuimage);
         txtListChild.setText(childText);
+        childImage.setImageResource(R.mipmap.ic_launcher);
 
         return convertView;
     }
