@@ -13,4 +13,6 @@ public interface IComponent {
     public void handleInputChange();
 
     public void setNewOutputValues();
+
+    public int getImage();
 }
