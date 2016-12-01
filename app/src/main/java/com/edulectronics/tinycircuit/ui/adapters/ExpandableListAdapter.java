@@ -9,7 +9,7 @@ import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.edulectronics.tinycircuit.Models.ExpandedMenu;
+import com.edulectronics.tinycircuit.Models.MenuItem;
 import com.edulectronics.tinycircuit.R;
 
 import java.util.HashMap;
@@ -21,12 +21,12 @@ import java.util.List;
 
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
     private Context context;
-    private List<ExpandedMenu> headers;
-    private HashMap<ExpandedMenu, List<ExpandedMenu>> children;
+    private List<MenuItem> headers;
+    private HashMap<MenuItem, List<MenuItem>> children;
     ExpandableListView expandableListView;
 
-    public ExpandableListAdapter(Context context, List<ExpandedMenu> listHeader,
-                                 HashMap<ExpandedMenu, List<ExpandedMenu>> listChildren,
+    public ExpandableListAdapter(Context context, List<MenuItem> listHeader,
+                                 HashMap<MenuItem, List<MenuItem>> listChildren,
                                  ExpandableListView view) {
         this.context = context;
         this.headers = listHeader;
@@ -75,7 +75,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-        ExpandedMenu headerTitle = (ExpandedMenu) getGroup(groupPosition);
+        MenuItem headerTitle = (MenuItem) getGroup(groupPosition);
         if (convertView == null) {
             LayoutInflater layoutInflater = (LayoutInflater) this.context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -90,7 +90,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-        ExpandedMenu childText = (ExpandedMenu) getChild(groupPosition, childPosition);
+        MenuItem childText = (MenuItem) getChild(groupPosition, childPosition);
 
         if (convertView == null) {
             LayoutInflater layoutInflater = (LayoutInflater) this.context

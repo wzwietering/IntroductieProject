@@ -4,7 +4,7 @@ package com.edulectronics.tinycircuit.Models;
  * Created by Wilmer on 1-12-2016.
  */
 
-public class ExpandedMenu {
+public class MenuItem {
     String iconName;
     int image;
 

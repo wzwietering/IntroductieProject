@@ -11,7 +11,7 @@ import android.widget.ExpandableListView;
 import android.widget.GridView;
 
 import com.edulectronics.tinycircuit.Circuit.CircuitController;
-import com.edulectronics.tinycircuit.Models.ExpandedMenu;
+import com.edulectronics.tinycircuit.Models.MenuItem;
 import com.edulectronics.tinycircuit.R;
 import com.edulectronics.tinycircuit.ui.adapters.CircuitAdapter;
 import com.edulectronics.tinycircuit.ui.adapters.ExpandableListAdapter;
@@ -21,8 +21,8 @@ import java.util.HashMap;
 import java.util.List;
 
 public class CircuitActivity extends AppCompatActivity {
-    private List<ExpandedMenu> headers;
-    private HashMap<ExpandedMenu, List<ExpandedMenu>> children;
+    private List<MenuItem> headers;
+    private HashMap<MenuItem, List<MenuItem>> children;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +84,7 @@ public class CircuitActivity extends AppCompatActivity {
         headers = new ArrayList<>();
         children = new HashMap<>();
         String[] items = getResources().getStringArray(R.array.menuitems);
+        /*Temporary! Should work different!*/
         int[] textures = {R.mipmap.battery, R.mipmap.lightbulb_on, R.mipmap.resistor};
 
         TypedArray typedArray = getResources().obtainTypedArray(R.array.categories);
@@ -97,14 +98,14 @@ public class CircuitActivity extends AppCompatActivity {
         typedArray.recycle();
 
         for(int i = 0; i < items.length; i++){
-            ExpandedMenu item = new ExpandedMenu();
+            MenuItem item = new MenuItem();
             item.setIconName(items[i]);
             item.setIconImage(textures[i]);
             headers.add(item);
 
-            List<ExpandedMenu> heading = new ArrayList();
+            List<MenuItem> heading = new ArrayList();
             for(int j = 1; j < headings[i].length; j++){
-                ExpandedMenu subitem = new ExpandedMenu();
+                MenuItem subitem = new MenuItem();
                 subitem.setIconName(headings[i][j]);
                 subitem.setIconImage(textures[i]);
                 heading.add(subitem);
