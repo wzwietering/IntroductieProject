@@ -26,7 +26,7 @@ import com.edulectronics.tinycircuit.ui.Draggables.Interfaces.DropTarget;
  */
 
 public class GridCell extends ImageView
-    implements DragSource, DropTarget
+        implements DragSource, DropTarget
 {
     public boolean isEmpty = true;
     public int mCellNumber = -1;

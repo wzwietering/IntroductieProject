@@ -2,22 +2,38 @@ package com.edulectronics.tinycircuit.ui;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.TypedArray;
 import android.os.Bundle;
+import android.support.design.internal.NavigationMenu;
+import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.widget.ExpandableListView;
+import android.widget.FrameLayout;
 import android.widget.GridView;
-import android.widget.ListView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.edulectronics.tinycircuit.Circuit.CircuitController;
+import com.edulectronics.tinycircuit.Models.Components.Component;
 import com.edulectronics.tinycircuit.Models.Components.Lightbulb;
+import com.edulectronics.tinycircuit.Models.Factories.ComponentFactory;
+import com.edulectronics.tinycircuit.Models.MenuItem;
 import com.edulectronics.tinycircuit.R;
 import com.edulectronics.tinycircuit.ui.Adapters.CircuitAdapter;
+import com.edulectronics.tinycircuit.ui.Adapters.ExpandableListAdapter;
 import com.edulectronics.tinycircuit.ui.Draggables.DragController;
 import com.edulectronics.tinycircuit.ui.Draggables.DragLayer;
+import com.edulectronics.tinycircuit.ui.Draggables.GridCell;
 import com.edulectronics.tinycircuit.ui.Draggables.Interfaces.DragSource;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class CircuitActivity extends Activity
         implements  View.OnClickListener,
@@ -154,10 +170,12 @@ public class CircuitActivity extends Activity
         return true;
     }
 
-    public void onClickAddComponent(View v)
+    public void onClickAddComponent(String text)
     {
-        Component component = ComponentFactory.CreateComponent("Lightbulb");
+        Component component = ComponentFactory.CreateComponent(text);
         addNewComponent(component);
+        NavigationView view = (NavigationView) findViewById(R.id.navigationview);
+        ((DrawerLayout) findViewById(R.id.activity_main)).closeDrawer(view);
     }
 
     public void addNewComponent(Component component)
@@ -181,8 +199,8 @@ public class CircuitActivity extends Activity
         }
     }
 
-    public OnGroupClickListener onGroupClick(){
-        return new OnGroupClickListener() {
+    public ExpandableListView.OnGroupClickListener onGroupClick(){
+        return new ExpandableListView.OnGroupClickListener() {
             @Override
             public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
                 return false;
@@ -190,10 +208,14 @@ public class CircuitActivity extends Activity
         };
     }
 
-    public OnChildClickListener onChildClick(){
-        return new OnChildClickListener() {
+    public ExpandableListView.OnChildClickListener onChildClick(){
+        return new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+                LinearLayout group = (LinearLayout) ((LinearLayout)v).getChildAt(0);
+                View child = group.getChildAt(1);
+                String text = (String) ((TextView)child).getText();
+                onClickAddComponent(text);
                 return false;
             }
         };

@@ -1,4 +1,4 @@
-package com.edulectronics.tinycircuit.ui.adapters;
+package com.edulectronics.tinycircuit.ui.Adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
