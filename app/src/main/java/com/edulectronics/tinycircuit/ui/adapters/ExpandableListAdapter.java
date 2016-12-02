@@ -43,7 +43,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     public int getChildrenCount(int groupPosition) {
         try{
             return this.children.get(this.headers.get(groupPosition)).size();
-        }catch (NullPointerException e){
+        } catch (NullPointerException e){
             return 0;
         }
     }

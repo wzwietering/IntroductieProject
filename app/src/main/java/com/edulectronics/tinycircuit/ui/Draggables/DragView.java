@@ -107,7 +107,7 @@ public class DragView extends View implements Serializable {
         }
 
         Paint p2 = new Paint();
-        p2.setAlpha (100);
+        p2.setAlpha(100);
         canvas.drawBitmap(mBitmap, 0.0f, 0.0f, p2);
     }
 

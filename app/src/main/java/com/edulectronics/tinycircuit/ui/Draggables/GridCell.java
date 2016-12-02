@@ -28,7 +28,7 @@ public class GridCell extends ImageView implements DragSource, DropTarget {
     public GridView mGrid;
     private CircuitController circuitController;
 
-    public GridCell (Context context, CircuitController circuitController) {
+    public GridCell(Context context, CircuitController circuitController) {
         super(context);
         this.circuitController = circuitController;
     }
@@ -49,23 +49,19 @@ public class GridCell extends ImageView implements DragSource, DropTarget {
     public void removeComponent() {
         isEmpty = true;
         int bg = isEmpty ? R.color.cell_empty  : R.color.cell_filled ;
-        setBackgroundResource (bg);
+        setBackgroundResource(bg);
 
         if(this.mCellNumber > -1) {
             circuitController.removeComponent(this.mCellNumber);
         } else {
             circuitController.newComponent = null;
         }
-        setImageDrawable (null);
+        setImageDrawable(null);
     }
     
-    public boolean allowDrag () {
+    public boolean allowDrag() {
         // There is something to drag if the cell is not empty.
         return !this.isEmpty;
-    }
-
-    public void setDragController (DragController dragger) {
-        // Do nothing. We do not need to know the controller object.
     }
 
     public void onDropCompleted (View target, boolean success)
@@ -112,7 +108,7 @@ public class GridCell extends ImageView implements DragSource, DropTarget {
      */
     public void onDragEnter(DragSource source, int x, int y, int xOffset, int yOffset, DragView dragView, Object dragInfo) {
         int bg = isEmpty ? R.color.cell_empty_hover : R.color.cell_filled_hover;
-        setBackgroundResource (bg);
+        setBackgroundResource(bg);
     }
 
     /**
@@ -125,25 +121,25 @@ public class GridCell extends ImageView implements DragSource, DropTarget {
      */
     public void onDragExit(DragSource source, int x, int y, int xOffset, int yOffset, DragView dragView, Object dragInfo) {
         int bg = isEmpty ? R.color.cell_empty : R.color.cell_filled;
-        setBackgroundResource (bg);
+        setBackgroundResource(bg);
     }
 
     public boolean acceptDrop() {
         return isEmpty ;
     }
 
-    public boolean isEmpty ()
+    public boolean isEmpty()
     {
         return isEmpty;
     }
 
-    public boolean performClick ()
+    public boolean performClick()
     {
         if (!isEmpty) return super.performClick ();
         return false;
     }
 
-    public boolean performLongClick ()
+    public boolean performLongClick()
     {
         if (!isEmpty) return super.performLongClick ();
         return false;
