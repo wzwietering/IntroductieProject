@@ -15,6 +15,9 @@ public class CircuitController implements Serializable {
     public Circuit circuit;
     private Set<Component> availableComponents;
 
+    // When a new component is created, we save it here. It hasn't been dragged to the circuit yet.
+    public Component newComponent;
+
     public CircuitController(Set<Component> s, int width, int size){
         this.circuit = new Circuit(width, size);
         this.availableComponents = s;
@@ -27,10 +30,14 @@ public class CircuitController implements Serializable {
         }
     }
 
-    public void removeComponent(int x, int y){
-        if(circuit.occupied(x)) {
-            circuit.remove(x);
+    public void removeComponent(int position){
+        if(circuit.occupied(position)) {
+            circuit.remove(position);
         }
+    }
+
+    public Component getComponent(int position){
+        return circuit.components[position];
     }
 
     public Component[]getComponents(){

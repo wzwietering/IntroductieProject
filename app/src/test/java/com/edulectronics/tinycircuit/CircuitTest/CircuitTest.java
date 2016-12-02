@@ -6,10 +6,11 @@ import com.edulectronics.tinycircuit.Models.Components.Lightbulb;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 /**
  * Created by Wilmer on 28-11-2016.
@@ -32,7 +33,7 @@ public class CircuitTest {
     @Test
     public void removeComponent(){
         c = new CircuitController(s, 5, 5);
-        c.removeComponent(1, 1);
+        c.removeComponent(1);
 
         assertEquals(false, c.circuit.occupied(5));
     }

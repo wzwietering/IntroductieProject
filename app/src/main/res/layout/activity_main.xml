@@ -9,21 +9,43 @@
         android:id="@+id/drag_layer"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
-		<GridView
-			android:layout_width="match_parent"
-			android:layout_height="match_parent"
-			android:layout_alignParentTop="true"
-			android:layout_alignParentStart="true"
-			android:scrollbars="none"
-			android:id="@+id/circuit" />
-	</com.edulectronics.tinycircuit.ui.Draggables.DragLayer>
+    <GridView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:scrollbars="none"
+        android:id="@+id/circuit" />
 
+        <Button
+            android:id="@+id/button_add_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:onClick="onClickAddComponent"
+            android:text="Add image"/>
+
+        <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/component_source_frame"
+            android:layout_weight="0.5"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center">
+
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center"
+                />
+        </FrameLayout>
+</com.edulectronics.tinycircuit.ui.Draggables.DragLayer>
 	<android.support.design.widget.NavigationView
 		android:id="@+id/navigationview"
 		android:layout_width="wrap_content"
 		android:layout_height="match_parent"
 		android:layout_gravity="start"
 		android:fitsSystemWindows="true">
+
 
 		<ExpandableListView
 			android:id="@+id/expandablelist"
