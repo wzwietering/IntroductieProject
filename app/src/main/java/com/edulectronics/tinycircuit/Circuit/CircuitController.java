@@ -15,6 +15,9 @@ public class CircuitController implements Serializable {
     public CircuitModel circuit;
     private Set<Component> availableComponents;
 
+    // When a new component is created, we save it here. It hasn't been dragged to the circuit yet.
+    public Component newComponent;
+
     public CircuitController(Set<Component> s, int width, int size){
         this.circuit = new CircuitModel(width, size);
         this.availableComponents = s;
