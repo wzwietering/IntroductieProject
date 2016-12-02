@@ -26,23 +26,28 @@ public class DBHandler extends SQLiteOpenHelper {
     public static final String CIRCUIT_COMPONENTS_TABLE = "circuit_components";
     public static final String COMPONENT_X_POSITION = "x_pos";
     public static final String COMPONENT_Y_POSITION = "y_pos";
+    // references => [COMPONENT_TABLE, CIRCUIT_TABLE]
 
     // component settings table
     public static final String COMPONENT_SETTINGS_TABLE = "component_settings";
     public static final String COMPONENT_SETTINGS = "settings";
+    // references => [COMPONENT_TABLE]
 
     // input table
     public static final String INPUT_TABLE = "input";
     public static final String INPUT_ID = "id";
     public static final String INPUT_LOCATION = "location";
+    // references => [COMPONENT_TABLE, CIRCUIT_TABLE]
 
     // output table
     public static final String OUTPUT_TABLE = "output";
     public static final String OUTPUT_ID = "id";
     public static final String OUTPUT_LOCATION = "location";
+    // references => [COMPONENT_TABLE, CIRCUIT_TABLE]
 
     // connection between inputs and outputs
     public static final String INPUT_OUTPUT_TABLE = "input_output";
+    // references => [OUTPUT_TABLE, INPUT_TABLE]
 
     // foreign key names
     public static final String FOREIGN_KEY_COMPONENT = "component_id";
@@ -76,10 +81,14 @@ public class DBHandler extends SQLiteOpenHelper {
                 ");";
         String createInput = "CREATE TABLE " + INPUT_TABLE + "(" +
                 INPUT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "FOREIGN KEY(" + FOREIGN_KEY_CIRCUIT + ") REFERENCES " + CIRCUIT_TABLE + "(" + CIRCUIT_ID + "), " +
+                "FOREIGN KEY(" + FOREIGN_KEY_COMPONENT + ") REFERENCES " + COMPONENT_TABLE + "(" + COMPONENT_ID + "), " +
                 INPUT_LOCATION + " INTEGER " +
                 ");";
         String createOutput = "CREATE TABLE " + OUTPUT_TABLE + "(" +
                 OUTPUT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "FOREIGN KEY(" + FOREIGN_KEY_CIRCUIT + ") REFERENCES " + CIRCUIT_TABLE + "(" + CIRCUIT_ID + "), " +
+                "FOREIGN KEY(" + FOREIGN_KEY_COMPONENT + ") REFERENCES " + COMPONENT_TABLE + "(" + COMPONENT_ID + "), " +
                 OUTPUT_LOCATION + " INTEGER " +
                 ");";
         String createInputOutput = "CREATE TABLE " + INPUT_OUTPUT_TABLE + "(" +
