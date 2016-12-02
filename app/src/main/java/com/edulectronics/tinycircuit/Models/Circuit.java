@@ -1,4 +1,4 @@
-package com.edulectronics.tinycircuit.Circuit;
+package com.edulectronics.tinycircuit.Models;
 
 import com.edulectronics.tinycircuit.Models.Components.Component;
 
@@ -8,13 +8,13 @@ import java.io.Serializable;
  * Created by Wilmer on 28-11-2016.
  */
 
-public class CircuitModel implements Serializable{
+public class Circuit implements Serializable{
 
     public Component[] components;
     public int size;
     public int width;
 
-    public CircuitModel(int width, int height){
+    public Circuit(int width, int height){
         components = new Component[width * height];
         this.size = width * height;
         this.width = width;
