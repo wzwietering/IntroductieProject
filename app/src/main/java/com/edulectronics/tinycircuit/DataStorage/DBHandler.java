@@ -78,10 +78,14 @@ public class DBHandler extends SQLiteOpenHelper {
                 ");";
         String createInput = "CREATE TABLE " + INPUT_TABLE + "(" +
                 INPUT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "FOREIGN KEY(" + FOREIGN_KEY_CIRCUIT + ") REFERENCES " + CIRCUIT_TABLE + "(" + CIRCUIT_ID + "), " +
+                "FOREIGN KEY(" + FOREIGN_KEY_COMPONENT + ") REFERENCES " + COMPONENT_TABLE + "(" + COMPONENT_ID + "), " +
                 INPUT_LOCATION + " INTEGER " +
                 ");";
         String createOutput = "CREATE TABLE " + OUTPUT_TABLE + "(" +
                 OUTPUT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "FOREIGN KEY(" + FOREIGN_KEY_CIRCUIT + ") REFERENCES " + CIRCUIT_TABLE + "(" + CIRCUIT_ID + "), " +
+                "FOREIGN KEY(" + FOREIGN_KEY_COMPONENT + ") REFERENCES " + COMPONENT_TABLE + "(" + COMPONENT_ID + "), " +
                 OUTPUT_LOCATION + " INTEGER " +
                 ");";
         String createInputOutput = "CREATE TABLE " + INPUT_OUTPUT_TABLE + "(" +
