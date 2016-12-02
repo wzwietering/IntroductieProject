@@ -135,18 +135,17 @@ public class CircuitActivity extends Activity
 
     public void addNewComponent (Component component)
     {
-        if (lastNewCell != null) lastNewCell.setVisibility (View.GONE);
+        FrameLayout componentHolder = (FrameLayout) findViewById (R.id.component_source_frame);
+        componentHolder.setVisibility(View.VISIBLE);
 
-        FrameLayout imageHolder = (FrameLayout) findViewById (R.id.image_source_frame);
-        if (imageHolder != null) {
+        if (componentHolder != null) {
             FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams (ViewGroup.LayoutParams.FILL_PARENT,
                     ViewGroup.LayoutParams.FILL_PARENT,
                     Gravity.CENTER);
             GridCell newView = new GridCell (this);
             newView.setComponent (component);
-            imageHolder.addView (newView, lp);
+            componentHolder.addView (newView, lp);
             newView.mCellNumber = -1;
-            lastNewCell = newView;
 
             // Have this activity listen to touch and click events for the view.
             newView.setOnClickListener(this);

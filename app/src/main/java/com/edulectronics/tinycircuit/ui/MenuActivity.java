@@ -24,7 +24,7 @@ public class MenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MenuActivity.this, CircuitActivity.class);
-                intent.putExtra("Controller", new CircuitController(null, 10, 10));
+                intent.putExtra("Controller", new CircuitController(null, 20, 10));
                 startActivity(intent);
             }
         });

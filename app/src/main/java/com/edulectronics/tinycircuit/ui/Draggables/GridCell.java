@@ -3,6 +3,7 @@ package com.edulectronics.tinycircuit.ui.Draggables;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.ImageView;
 
@@ -71,6 +72,12 @@ public class GridCell extends ImageView
     {
         if (success) {
             removeComponent();
+
+            View parent = (View)this.getParent();
+            if(((View) this.getParent()).getId() == R.id.component_source_frame)
+            {
+                parent.setVisibility(View.INVISIBLE);
+            }
         }
     }
 
