@@ -17,11 +17,11 @@
  * limitations under the License.
  */
 
-package com.edulectronics.tinycircuit.UI.Draggables.Interfaces;
+package com.edulectronics.tinycircuit.Views.Draggables.Interfaces;
 
 import android.graphics.Rect;
 
-import com.edulectronics.tinycircuit.UI.Draggables.DragView;
+import com.edulectronics.tinycircuit.Views.Draggables.DragView;
 
 public interface DropTarget {
     void onDrop(DragSource source, int x, int y, int xOffset, int yOffset,

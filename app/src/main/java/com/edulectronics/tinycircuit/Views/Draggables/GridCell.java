@@ -1,15 +1,15 @@
-package com.edulectronics.tinycircuit.UI.Draggables;
+package com.edulectronics.tinycircuit.Views.Draggables;
 
 import android.content.Context;
 import android.view.View;
 import android.widget.GridView;
 import android.widget.ImageView;
 
-import com.edulectronics.tinycircuit.Circuit.CircuitController;
+import com.edulectronics.tinycircuit.Controllers.CircuitController;
 import com.edulectronics.tinycircuit.Models.Components.Component;
 import com.edulectronics.tinycircuit.R;
-import com.edulectronics.tinycircuit.UI.Draggables.Interfaces.DragSource;
-import com.edulectronics.tinycircuit.UI.Draggables.Interfaces.DropTarget;
+import com.edulectronics.tinycircuit.Views.Draggables.Interfaces.DragSource;
+import com.edulectronics.tinycircuit.Views.Draggables.Interfaces.DropTarget;
 
 /**
  * This subclass of ImageView is used to display an image on an GridView.

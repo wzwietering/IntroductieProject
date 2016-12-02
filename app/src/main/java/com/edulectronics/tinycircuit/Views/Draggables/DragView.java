@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-package com.edulectronics.tinycircuit.UI.Draggables;
+package com.edulectronics.tinycircuit.Views.Draggables;
 
 import android.content.Context;
 import android.graphics.Bitmap;

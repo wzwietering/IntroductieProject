@@ -1,12 +1,11 @@
 package com.edulectronics.tinycircuit.CircuitTest;
 
-import com.edulectronics.tinycircuit.Circuit.CircuitController;
+import com.edulectronics.tinycircuit.Controllers.CircuitController;
 import com.edulectronics.tinycircuit.Models.Components.Component;
 import com.edulectronics.tinycircuit.Models.Components.Lightbulb;
 
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 

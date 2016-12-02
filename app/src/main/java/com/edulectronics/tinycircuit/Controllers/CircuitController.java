@@ -1,4 +1,4 @@
-package com.edulectronics.tinycircuit.Circuit;
+package com.edulectronics.tinycircuit.Controllers;
 
 import com.edulectronics.tinycircuit.Models.Circuit;
 import com.edulectronics.tinycircuit.Models.Components.Component;

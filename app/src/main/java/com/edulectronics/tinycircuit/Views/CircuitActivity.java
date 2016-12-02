@@ -1,4 +1,4 @@
-package com.edulectronics.tinycircuit.UI;
+package com.edulectronics.tinycircuit.Views;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -17,18 +17,17 @@ import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.edulectronics.tinycircuit.Circuit.CircuitController;
+import com.edulectronics.tinycircuit.Controllers.CircuitController;
 import com.edulectronics.tinycircuit.Models.Components.Component;
-import com.edulectronics.tinycircuit.Models.Components.Lightbulb;
 import com.edulectronics.tinycircuit.Models.Factories.ComponentFactory;
 import com.edulectronics.tinycircuit.Models.MenuItem;
 import com.edulectronics.tinycircuit.R;
-import com.edulectronics.tinycircuit.UI.Adapters.CircuitAdapter;
-import com.edulectronics.tinycircuit.UI.Adapters.ExpandableListAdapter;
-import com.edulectronics.tinycircuit.UI.Draggables.DragController;
-import com.edulectronics.tinycircuit.UI.Draggables.DragLayer;
-import com.edulectronics.tinycircuit.UI.Draggables.GridCell;
-import com.edulectronics.tinycircuit.UI.Draggables.Interfaces.DragSource;
+import com.edulectronics.tinycircuit.Views.Adapters.CircuitAdapter;
+import com.edulectronics.tinycircuit.Views.Adapters.ExpandableListAdapter;
+import com.edulectronics.tinycircuit.Views.Draggables.DragController;
+import com.edulectronics.tinycircuit.Views.Draggables.DragLayer;
+import com.edulectronics.tinycircuit.Views.Draggables.GridCell;
+import com.edulectronics.tinycircuit.Views.Draggables.Interfaces.DragSource;
 
 import java.util.ArrayList;
 import java.util.HashMap;

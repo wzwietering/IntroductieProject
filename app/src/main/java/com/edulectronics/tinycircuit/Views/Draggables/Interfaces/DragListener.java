@@ -1,4 +1,4 @@
-package com.edulectronics.tinycircuit.UI.Draggables.Interfaces;
+package com.edulectronics.tinycircuit.Views.Draggables.Interfaces;
 
 /**
  * Created by Maaike on 30-11-2016.

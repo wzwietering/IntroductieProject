@@ -1,4 +1,4 @@
-package com.edulectronics.tinycircuit.UI.Adapters;
+package com.edulectronics.tinycircuit.Views.Adapters;
 
 import android.content.Context;
 import android.view.View;
@@ -7,10 +7,10 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 
-import com.edulectronics.tinycircuit.Circuit.CircuitController;
+import com.edulectronics.tinycircuit.Controllers.CircuitController;
 import com.edulectronics.tinycircuit.Models.Components.Component;
 import com.edulectronics.tinycircuit.R;
-import com.edulectronics.tinycircuit.UI.Draggables.GridCell;
+import com.edulectronics.tinycircuit.Views.Draggables.GridCell;
 /**
  * This class is used with a GridView object. It provides a set of ImageCell objects
  * that support dragging and dropping.

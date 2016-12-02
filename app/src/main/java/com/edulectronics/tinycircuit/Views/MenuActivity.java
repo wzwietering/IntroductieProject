@@ -1,4 +1,4 @@
-package com.edulectronics.tinycircuit.UI;
+package com.edulectronics.tinycircuit.Views;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 
-import com.edulectronics.tinycircuit.Circuit.CircuitController;
+import com.edulectronics.tinycircuit.Controllers.CircuitController;
 import com.edulectronics.tinycircuit.R;
 
 public class MenuActivity extends AppCompatActivity {

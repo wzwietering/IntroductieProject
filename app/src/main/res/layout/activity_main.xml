@@ -4,8 +4,8 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.edulectronics.tinycircuit.UI.CircuitActivity">
-    <com.edulectronics.tinycircuit.UI.Draggables.DragLayer
+    tools:context="com.edulectronics.tinycircuit.Views.CircuitActivity">
+    <com.edulectronics.tinycircuit.Views.Draggables.DragLayer
         android:id="@+id/drag_layer"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
@@ -27,10 +27,10 @@
             <ImageView
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:layout_gravity="center"
-                />
+                android:layout_gravity="center" />
         </FrameLayout>
-</com.edulectronics.tinycircuit.UI.Draggables.DragLayer>
+
+</com.edulectronics.tinycircuit.Views.Draggables.DragLayer>
 	<android.support.design.widget.NavigationView
 		android:id="@+id/navigationview"
 		android:layout_width="wrap_content"

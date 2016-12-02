@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-package com.edulectronics.tinycircuit.UI.Draggables;
+package com.edulectronics.tinycircuit.Views.Draggables;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -30,9 +30,9 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
-import com.edulectronics.tinycircuit.UI.Draggables.Interfaces.DragListener;
-import com.edulectronics.tinycircuit.UI.Draggables.Interfaces.DragSource;
-import com.edulectronics.tinycircuit.UI.Draggables.Interfaces.DropTarget;
+import com.edulectronics.tinycircuit.Views.Draggables.Interfaces.DragListener;
+import com.edulectronics.tinycircuit.Views.Draggables.Interfaces.DragSource;
+import com.edulectronics.tinycircuit.Views.Draggables.Interfaces.DropTarget;
 
 import java.util.ArrayList;
 
