@@ -14,7 +14,6 @@ import android.widget.ListView;
 import com.edulectronics.tinycircuit.Circuit.CircuitController;
 import com.edulectronics.tinycircuit.Models.Components.Lightbulb;
 import com.edulectronics.tinycircuit.R;
-import com.edulectronics.tinycircuit.ui.Adapters.CircuitAdapter;
 import com.edulectronics.tinycircuit.ui.Draggables.DragController;
 import com.edulectronics.tinycircuit.ui.Draggables.DragLayer;
 import com.edulectronics.tinycircuit.ui.Draggables.Interfaces.DragSource;
@@ -51,7 +50,7 @@ public class CircuitActivity extends Activity
         CircuitController controller =
                 (CircuitController) intent.getSerializableExtra("Controller");
         circuit.setNumColumns(controller.circuit.width);
-        circuit.setAdapter(new CircuitAdapter(this, controller));
+        circuit.setAdapter(new com.edulectronics.tinycircuit.ui.adapters.CircuitAdapter(this, controller));
 
         controller.addComponent(new Lightbulb(), 1);
 

@@ -1,7 +1,6 @@
-package com.edulectronics.tinycircuit.ui.Adapters;
+package com.edulectronics.tinycircuit.ui.adapters;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -11,7 +10,6 @@ import android.widget.ImageView;
 import com.edulectronics.tinycircuit.Circuit.CircuitController;
 import com.edulectronics.tinycircuit.Models.Components.Component;
 import com.edulectronics.tinycircuit.R;
-import com.edulectronics.tinycircuit.ui.CircuitActivity;
 import com.edulectronics.tinycircuit.ui.Draggables.GridCell;
 
 /**
@@ -38,7 +36,7 @@ public class CircuitAdapter extends BaseAdapter
 
     public Object getItem(int position)
     {
-        return null;
+        return controller.circuit.components[position];
     }
 
     public long getItemId(int position) {

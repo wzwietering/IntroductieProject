@@ -3,7 +3,7 @@ package com.edulectronics.tinycircuit;
 import com.edulectronics.tinycircuit.Circuit.CircuitController;
 import com.edulectronics.tinycircuit.Models.Components.Component;
 import com.edulectronics.tinycircuit.Models.Components.Lightbulb;
-import com.edulectronics.tinycircuit.ui.Adapters.CircuitAdapter;
+import com.edulectronics.tinycircuit.ui.adapters.CircuitAdapter;
 
 import org.junit.Test;
 
@@ -23,7 +23,7 @@ public class AdapterTest {
     @Test
     public void adapterTests(){
         Lightbulb l = new Lightbulb();
-        controller.addComponent(l, 4, 2);
+        controller.addComponent(l, 14);
 
         assertEquals(l, circuitAdapter.getItem(14));
         assertEquals(25, circuitAdapter.getCount());

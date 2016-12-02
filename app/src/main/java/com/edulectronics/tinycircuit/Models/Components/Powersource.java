@@ -1,8 +1,8 @@
 package com.edulectronics.tinycircuit.Models.Components;
 
 
-import com.edulectronics.tinycircuit.Models.Components.Connectors.Input;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.Output;
+import com.edulectronics.tinycircuit.R;
 
 /**
  * Created by Maaike on 28-11-2016.
@@ -28,5 +28,10 @@ public class Powersource extends Component {
              ) {
             output.setOutputVoltage(this.outputVoltage);
         }
+    }
+
+    @Override
+    public int getImage(){
+        return R.mipmap.battery;
     }
 }
