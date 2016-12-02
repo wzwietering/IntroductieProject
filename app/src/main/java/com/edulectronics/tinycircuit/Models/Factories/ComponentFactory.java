@@ -10,6 +10,8 @@ import com.edulectronics.tinycircuit.R;
  */
 public class ComponentFactory {
 
+    //TODO: geen hardcoded strings gebruiken!!! Uit resouces halen.
+    
     public static Component CreateComponent(String name) {
         switch (name) {
             case "Batterij":
