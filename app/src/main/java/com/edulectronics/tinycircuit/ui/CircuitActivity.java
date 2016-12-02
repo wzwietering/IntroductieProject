@@ -4,28 +4,26 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ExpandableListView;
+import android.widget.ExpandableListView.OnChildClickListener;
+import android.widget.ExpandableListView.OnGroupClickListener;
 import android.widget.GridView;
 
 import com.edulectronics.tinycircuit.Circuit.CircuitController;
+import com.edulectronics.tinycircuit.Models.Components.Lightbulb;
 import com.edulectronics.tinycircuit.Models.MenuItem;
 import com.edulectronics.tinycircuit.R;
-import com.edulectronics.tinycircuit.ui.adapters.CircuitAdapter;
+import com.edulectronics.tinycircuit.ui.Draggables.DragController;
+import com.edulectronics.tinycircuit.ui.Draggables.DragLayer;
+import com.edulectronics.tinycircuit.ui.Draggables.Interfaces.DragSource;
 import com.edulectronics.tinycircuit.ui.adapters.ExpandableListAdapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import com.edulectronics.tinycircuit.Models.Components.Lightbulb;
-import com.edulectronics.tinycircuit.R;
-import com.edulectronics.tinycircuit.ui.Draggables.DragController;
-import com.edulectronics.tinycircuit.ui.Draggables.DragLayer;
-import com.edulectronics.tinycircuit.ui.Draggables.Interfaces.DragSource;
 
 public class CircuitActivity extends Activity
         implements  View.OnClickListener,
@@ -84,22 +82,8 @@ public class CircuitActivity extends Activity
                 this, headers, children, expandableList);
         expandableList.setAdapter(adapter);
 
-        expandableList.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-            @Override
-            public boolean onChildClick(ExpandableListView expandableListView, View view,
-                                        int groupPosition, int childPosition, long rowID) {
-                /*Handle click event of child over here*/
-                return false;
-            }
-        });
-        expandableList.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
-            @Override
-            public boolean onGroupClick(ExpandableListView expandableListView, View view,
-                                        int groupPosition, long rowID) {
-                /*Handle click event of group over here*/
-                return false;
-            }
-        });
+        expandableList.setOnChildClickListener(onChildClick());
+        expandableList.setOnGroupClickListener(onGroupClick());
     }
 
     /*Makes the groups and children*/
@@ -174,5 +158,23 @@ public class CircuitActivity extends Activity
         mDragController.startDrag (v, dragSource, dragSource);
 
         return true;
+    }
+
+    public OnGroupClickListener onGroupClick(){
+        return new OnGroupClickListener() {
+            @Override
+            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+                return false;
+            }
+        };
+    }
+
+    public OnChildClickListener onChildClick(){
+        return new OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+                return false;
+            }
+        };
     }
 }

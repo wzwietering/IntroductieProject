@@ -81,11 +81,8 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.header, null);
         }
-        TextView textView = (TextView) convertView.findViewById(R.id.submenu);
         ImageView headerIcon = (ImageView) convertView.findViewById(R.id.iconimage);
-        textView.setText(headerTitle.getIconName());
-        headerIcon.setImageResource(headerTitle.getIconImage());
-        return convertView;
+        return getView(convertView, headerTitle, headerIcon);
     }
 
     @Override
@@ -97,10 +94,14 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.listsubmenu, null);
         }
-        TextView txtListChild = (TextView) convertView.findViewById(R.id.submenu);
         ImageView childImage = (ImageView) convertView.findViewById(R.id.submenuimage);
-        txtListChild.setText(childText.getIconName());
-        childImage.setImageResource(childText.getIconImage());
+        return getView(convertView, childText, childImage);
+    }
+
+    public View getView(View convertView, MenuItem menuItem, ImageView imageView){
+        TextView textView = (TextView) convertView.findViewById(R.id.submenu);
+        textView.setText(menuItem.getIconName());
+        imageView.setImageResource(menuItem.getIconImage());
 
         return convertView;
     }
