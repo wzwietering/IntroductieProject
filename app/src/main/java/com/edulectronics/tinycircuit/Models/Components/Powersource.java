@@ -1,7 +1,6 @@
 package com.edulectronics.tinycircuit.Models.Components;
 
 
-import com.edulectronics.tinycircuit.Models.Components.Connectors.Input;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.Output;
 import com.edulectronics.tinycircuit.R;
 
@@ -32,7 +31,7 @@ public class Powersource extends Component {
     }
 
     @Override
-    public int getImage() {
+    public int getImage(){
         return R.mipmap.battery;
     }
 }

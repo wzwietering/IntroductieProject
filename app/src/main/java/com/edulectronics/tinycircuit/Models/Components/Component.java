@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.edulectronics.tinycircuit.Models.Components.Connectors.Input;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.Output;
+import com.edulectronics.tinycircuit.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,5 +50,9 @@ public abstract class Component implements IComponent {
             return outputs.get(i);
         }
         return null;
+    }
+
+    public int getImage () {
+        return R.mipmap.ic_launcher;
     }
 }

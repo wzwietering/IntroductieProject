@@ -34,12 +34,12 @@ public class Lightbulb extends Component {
         }
     }
 
-    @Override
-    public int getImage() {
-        return R.mipmap.lightbulb_on;
-    }
-
     private void switchState(boolean isOn) {
         this.isOn = isOn;
+    }
+
+    @Override
+    public int getImage(){
+        return R.mipmap.lightbulb_on;
     }
 }
