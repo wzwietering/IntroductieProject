@@ -1,19 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <resources>
-
     <color name="colorPrimary">#3F51B5</color>
-
     <color name="colorPrimaryDark">#303F9F</color>
-
     <color name="colorAccent">#FF4081</color>
-
     <color name="cell_empty">#aaaaaa</color>
-
     <color name="cell_filled">#aaaaaa</color>
-
     <color name="cell_empty_hover">#eaeaea</color>
-
     <color name="cell_filled_hover">#bbbbbb</color>
-
 </resources>

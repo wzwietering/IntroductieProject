@@ -3,20 +3,26 @@ package com.edulectronics.tinycircuit.ui;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.ListView;
 
 import com.edulectronics.tinycircuit.Circuit.CircuitController;
+import com.edulectronics.tinycircuit.Models.Components.Component;
 import com.edulectronics.tinycircuit.Models.Components.Lightbulb;
+import com.edulectronics.tinycircuit.Models.Factories.ComponentFactory;
 import com.edulectronics.tinycircuit.R;
 import com.edulectronics.tinycircuit.ui.Adapters.CircuitAdapter;
 import com.edulectronics.tinycircuit.ui.Draggables.DragController;
 import com.edulectronics.tinycircuit.ui.Draggables.DragLayer;
+import com.edulectronics.tinycircuit.ui.Draggables.GridCell;
 import com.edulectronics.tinycircuit.ui.Draggables.Interfaces.DragSource;
 
 public class CircuitActivity extends Activity
@@ -25,6 +31,7 @@ public class CircuitActivity extends Activity
 {
     private DragController mDragController;   // Object that handles a drag-drop sequence. It interacts with DragSource and DropTarget objects.
     private DragLayer mDragLayer;             // The ViewGroup within which an object can be dragged.
+    private GridCell lastNewCell;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +42,7 @@ public class CircuitActivity extends Activity
 
         GridView circuit = (GridView) findViewById(R.id.circuit);
 
-/*Prevents scrolling, stuff can still be rendered outside screen*/
-
+        /*Prevents scrolling, stuff can still be rendered outside screen*/
         circuit.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -84,6 +90,7 @@ public class CircuitActivity extends Activity
     public void onClick(View v)
     {
     }
+
     public boolean onTouch (View v, MotionEvent ev) {
         // If we are configured to start only on a long click, we are not going to handle any events here.
 
@@ -118,5 +125,33 @@ public class CircuitActivity extends Activity
         mDragController.startDrag (v, dragSource, dragSource);
 
         return true;
+    }
+
+    public void onClickAddComponent (View v)
+    {
+        Component component = ComponentFactory.CreateComponent("Lightbulb");
+        addNewComponent(component);
+    }
+
+    public void addNewComponent (Component component)
+    {
+        if (lastNewCell != null) lastNewCell.setVisibility (View.GONE);
+
+        FrameLayout imageHolder = (FrameLayout) findViewById (R.id.image_source_frame);
+        if (imageHolder != null) {
+            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams (ViewGroup.LayoutParams.FILL_PARENT,
+                    ViewGroup.LayoutParams.FILL_PARENT,
+                    Gravity.CENTER);
+            GridCell newView = new GridCell (this);
+            newView.setComponent (component);
+            imageHolder.addView (newView, lp);
+            newView.mCellNumber = -1;
+            lastNewCell = newView;
+
+            // Have this activity listen to touch and click events for the view.
+            newView.setOnClickListener(this);
+            newView.setOnLongClickListener(this);
+            newView.setOnTouchListener (this);
+        }
     }
 }
