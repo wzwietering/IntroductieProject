@@ -23,12 +23,13 @@ public class Output {
     }
 
     public boolean hasOutputConnection() {
-        if (!connectedInputs.isEmpty())
+        if (!connectedInputs.isEmpty()) {
             for (Input input : connectedInputs) {
                 if (input.hasOutputConnection()) {
                     return true;
                 }
             }
+        }
         return false;
     }
 
