@@ -4,8 +4,6 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.edulectronics.tinycircuit.Circuit.CircuitModel;
-
 /**
  * Created by bernd on 30/11/2016.
  */
