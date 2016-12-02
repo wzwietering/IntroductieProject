@@ -1,62 +1,90 @@
-package com.edulectronics.tinycircuit.ui.adapters;
+package com.edulectronics.tinycircuit.ui.Adapters;
 
-import android.view.LayoutInflater;
+import android.content.Context;
+import android.content.res.Resources;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.GridView;
+import android.widget.ImageView;
 
 import com.edulectronics.tinycircuit.Circuit.CircuitController;
 import com.edulectronics.tinycircuit.Models.Components.Component;
-import com.edulectronics.tinycircuit.Models.Components.Lightbulb;
 import com.edulectronics.tinycircuit.R;
-
-import android.content.Context;
-import android.widget.ImageView;
+import com.edulectronics.tinycircuit.ui.CircuitActivity;
+import com.edulectronics.tinycircuit.ui.Draggables.GridCell;
 
 /**
- * Created by bernd on 28/11/2016.
+ * This class is used with a GridView object. It provides a set of ImageCell objects
+ * that support dragging and dropping.
+ *
  */
 
-public class CircuitAdapter extends BaseAdapter {
-    Context context;
-    CircuitController controller;
+public class CircuitAdapter extends BaseAdapter
+{
+    public ViewGroup mParentView = null;
+    private Context context;
+    private CircuitController controller;
 
     public CircuitAdapter(Context context, CircuitController controller) {
         this.controller = controller;
         this.context = context;
     }
 
-    @Override
+
     public int getCount() {
-        return controller.circuit.width * controller.circuit.height;
+        return controller.circuit.size;
     }
 
-    /*Range = [0, width * height - 1]*/
-    @Override
-    public Object getItem(int position){
-        return controller.getComponents()
-                [position % controller.circuit.width]
-                [position / controller.circuit.width];
+    public Object getItem(int position)
+    {
+        return null;
     }
 
-    @Override
     public long getItemId(int position) {
         return position;
     }
 
-    @Override
-    public View getView(int position, View view, ViewGroup parent) {
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View row = inflater.inflate(R.layout.component, parent, false);
-        ImageView image = (ImageView) row.findViewById(R.id.imageView);
+    /**
+     * getView
+     * Return a view object for the grid.
+     *
+     * @return ImageCell
+     */
+    public View getView (int position, View convertView, ViewGroup parent)
+    {
+        mParentView = parent;
 
-        Component object = (Component) getItem(position);
-        if(object != null){
-            image.setImageResource(object.getImage());
-        }else{
-            image.setImageResource(R.mipmap.ic_launcher);
+        GridCell v = null;
+        if (convertView == null) {
+            // If it's not recycled, create a new ImageCell.
+            v = new GridCell (context);
+            v.setLayoutParams(new GridView.LayoutParams(85, 85));
+            v.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            v.setPadding(8, 8, 8, 8);
+
+        } else {
+            v = (GridCell) convertView;
         }
 
-        return row;
+        v.mCellNumber = position;
+        v.mGrid = (GridView) mParentView;
+        v.isEmpty = true;
+        v.setBackgroundResource (R.color.cell_empty);
+
+        // Set up to relay events to the activity.
+        // The activity decides which events trigger drag operations.
+        // Activities like the Android Launcher require a long click to get a drag operation started.
+        v.setOnTouchListener ((View.OnTouchListener) context);
+        v.setOnClickListener ((View.OnClickListener) context);
+        v.setOnLongClickListener ((View.OnLongClickListener) context);
+
+        if(controller.circuit.occupied(position))
+        {
+            Component component = controller.circuit.getComponent(position);
+            v.setComponent(component);
+        }
+
+        return v;
     }
 }

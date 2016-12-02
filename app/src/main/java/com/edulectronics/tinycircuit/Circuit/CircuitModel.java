@@ -15,29 +15,33 @@ import com.edulectronics.tinycircuit.Models.Components.Powersource;
 
 public class CircuitModel implements Serializable{
 
-    public Component[][] components;
-    public int width, height;
+    public Component[] components;
+    public int size;
+    public int width;
 
     public CircuitModel(int width, int height){
-        components = new Component[width][height];
+        components = new Component[width * height];
+        this.size = width * height;
         this.width = width;
-        this.height = height;
     }
 
     public boolean isCompleteCircle() {
-        //TODO implement isCompleteCircle()
         return false;
     }
 
-    public void add(Component component, int x, int y) {
-        components[x][y] = component;
+    public void add(Component component, int i) {
+        components[i] = component;
     }
 
-    public void remove(int x, int y) {
-        components[x][y] = null;
+    public void remove(int i) {
+        components[i] = null;
     }
 
-    public boolean occupied(int x, int y) {
-        return components[x][y] != null;
+    public boolean occupied(int i) {
+        return components[i] != null;
+    }
+
+    public Component getComponent(int i) {
+        return components[i];
     }
 }

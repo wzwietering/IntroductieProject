@@ -15,25 +15,25 @@ public class CircuitController implements Serializable {
     public CircuitModel circuit;
     private Set<Component> availableComponents;
 
-    public CircuitController(Set<Component> s, int width, int height){
-        this.circuit = new CircuitModel(width, height);
+    public CircuitController(Set<Component> s, int width, int size){
+        this.circuit = new CircuitModel(width, size);
         this.availableComponents = s;
     }
 
-    public void addComponent(Component component, int x, int y){
+    public void addComponent(Component component, int position){
         /*Only add if tile is available and allowed*/
-        if(!circuit.occupied(x, y)){ // && availableComponents.contains(component)
-            circuit.add(component, x, y);
+        if(!circuit.occupied(position)){ // && availableComponents.contains(component)
+            circuit.add(component, position);
         }
     }
 
     public void removeComponent(int x, int y){
-        if(circuit.occupied(x, y)) {
-            circuit.remove(x, y);
+        if(circuit.occupied(x)) {
+            circuit.remove(x);
         }
     }
 
-    public Component[][] getComponents(){
+    public Component[]getComponents(){
         return circuit.components;
     }
 }
