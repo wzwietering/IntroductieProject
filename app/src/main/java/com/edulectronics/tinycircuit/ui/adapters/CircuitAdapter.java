@@ -11,7 +11,6 @@ import com.edulectronics.tinycircuit.Circuit.CircuitController;
 import com.edulectronics.tinycircuit.Models.Components.Component;
 import com.edulectronics.tinycircuit.R;
 import com.edulectronics.tinycircuit.ui.Draggables.GridCell;
-
 /**
  * This class is used with a GridView object. It provides a set of ImageCell objects
  * that support dragging and dropping.

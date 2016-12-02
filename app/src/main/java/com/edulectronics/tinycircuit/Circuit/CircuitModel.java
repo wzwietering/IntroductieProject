@@ -1,13 +1,8 @@
 package com.edulectronics.tinycircuit.Circuit;
 
-import java.io.Serializable;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.List;
-
 import com.edulectronics.tinycircuit.Models.Components.Component;
-import com.edulectronics.tinycircuit.Models.Components.IComponent;
-import com.edulectronics.tinycircuit.Models.Components.Powersource;
+
+import java.io.Serializable;
 
 /**
  * Created by Wilmer on 28-11-2016.

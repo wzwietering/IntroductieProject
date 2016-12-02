@@ -2,21 +2,28 @@ package com.edulectronics.tinycircuit.ui;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.widget.ExpandableListView;
+import android.widget.ExpandableListView.OnChildClickListener;
+import android.widget.ExpandableListView.OnGroupClickListener;
 import android.widget.GridView;
-import android.widget.ListView;
 
 import com.edulectronics.tinycircuit.Circuit.CircuitController;
 import com.edulectronics.tinycircuit.Models.Components.Lightbulb;
+import com.edulectronics.tinycircuit.Models.MenuItem;
 import com.edulectronics.tinycircuit.R;
 import com.edulectronics.tinycircuit.ui.Draggables.DragController;
 import com.edulectronics.tinycircuit.ui.Draggables.DragLayer;
 import com.edulectronics.tinycircuit.ui.Draggables.Interfaces.DragSource;
+import com.edulectronics.tinycircuit.ui.adapters.ExpandableListAdapter;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class CircuitActivity extends Activity
         implements  View.OnClickListener,
@@ -24,6 +31,8 @@ public class CircuitActivity extends Activity
 {
     private DragController mDragController;   // Object that handles a drag-drop sequence. It interacts with DragSource and DropTarget objects.
     private DragLayer mDragLayer;             // The ViewGroup within which an object can be dragged.
+	private List<MenuItem> headers;
+    private HashMap<MenuItem, List<MenuItem>> children;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,18 +75,50 @@ public class CircuitActivity extends Activity
 
     /*This code adds a menu to the side*/
     private void makeMenu(){
-        ListView menu = (ListView) findViewById(R.id.menu);
-        String[] items = getResources().getStringArray(R.array.items);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                this, android.R.layout.simple_list_item_1, items);
-        menu.setAdapter(adapter);
+        ExpandableListView expandableList = (ExpandableListView) findViewById(R.id.expandablelist);
+        makeLists();
 
-        menu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> adapterView, View view,
-                                    int position, long itemId){
-                /*Not implemented, should select desired item*/
+        ExpandableListAdapter adapter = new ExpandableListAdapter(
+                this, headers, children, expandableList);
+        expandableList.setAdapter(adapter);
+
+        expandableList.setOnChildClickListener(onChildClick());
+        expandableList.setOnGroupClickListener(onGroupClick());
+    }
+
+    /*Makes the groups and children*/
+    private void makeLists() {
+        headers = new ArrayList<>();
+        children = new HashMap<>();
+        String[] items = getResources().getStringArray(R.array.menuitems);
+        /*Temporary! Should work different!*/
+        int[] textures = {R.mipmap.battery, R.mipmap.lightbulb_on, R.mipmap.resistor};
+
+        TypedArray typedArray = getResources().obtainTypedArray(R.array.categories);
+        int length = typedArray.length();
+        String[][] headings = new String[length][];
+
+        for (int i = 0; i < length; i++){
+            int id = typedArray.getResourceId(i, 0);
+            headings[i] = getResources().getStringArray(id);
+        }
+        typedArray.recycle();
+
+        for(int i = 0; i < items.length; i++){
+            MenuItem item = new MenuItem();
+            item.setIconName(items[i]);
+            item.setIconImage(textures[i]);
+            headers.add(item);
+
+            List<MenuItem> heading = new ArrayList();
+            for(int j = 1; j < headings[i].length; j++){
+                MenuItem subitem = new MenuItem();
+                subitem.setIconName(headings[i][j]);
+                subitem.setIconImage(textures[i]);
+                heading.add(subitem);
             }
-        });
+            children.put(headers.get(i), heading);
+        }
     }
 
     public void onClick(View v)
@@ -117,5 +158,23 @@ public class CircuitActivity extends Activity
         mDragController.startDrag (v, dragSource, dragSource);
 
         return true;
+    }
+
+    public OnGroupClickListener onGroupClick(){
+        return new OnGroupClickListener() {
+            @Override
+            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+                return false;
+            }
+        };
+    }
+
+    public OnChildClickListener onChildClick(){
+        return new OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+                return false;
+            }
+        };
     }
 }

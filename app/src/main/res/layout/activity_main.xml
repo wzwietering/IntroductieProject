@@ -9,19 +9,26 @@
         android:id="@+id/drag_layer"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
-    <GridView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:scrollbars="none"
-        android:id="@+id/circuit" />
-</com.edulectronics.tinycircuit.ui.Draggables.DragLayer>
-    <ListView
-        android:id="@+id/menu"
-        android:layout_width="200dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:background="#f0f0f0"/>
+		<GridView
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:layout_alignParentTop="true"
+			android:layout_alignParentStart="true"
+			android:scrollbars="none"
+			android:id="@+id/circuit" />
+	</com.edulectronics.tinycircuit.ui.Draggables.DragLayer>
 
+	<android.support.design.widget.NavigationView
+		android:id="@+id/navigationview"
+		android:layout_width="wrap_content"
+		android:layout_height="match_parent"
+		android:layout_gravity="start"
+		android:fitsSystemWindows="true">
+
+		<ExpandableListView
+			android:id="@+id/expandablelist"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:background="#ffffff"/>
+	</android.support.design.widget.NavigationView>
 </android.support.v4.widget.DrawerLayout>
