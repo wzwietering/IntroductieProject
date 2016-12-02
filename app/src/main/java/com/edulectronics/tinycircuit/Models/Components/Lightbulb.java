@@ -2,6 +2,7 @@ package com.edulectronics.tinycircuit.Models.Components;
 
 import com.edulectronics.tinycircuit.Models.Components.Connectors.Input;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.Output;
+import com.edulectronics.tinycircuit.R;
 
 /**
  * Created by Maaike on 28-11-2016.
@@ -35,5 +36,10 @@ public class Lightbulb extends Component {
 
     private void switchState(boolean isOn) {
         this.isOn = isOn;
+    }
+
+    @Override
+    public int getImage(){
+        return R.mipmap.lightbulb_on;
     }
 }
