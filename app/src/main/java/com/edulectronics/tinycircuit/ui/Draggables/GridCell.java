@@ -1,18 +1,15 @@
-package com.edulectronics.tinycircuit.ui.Draggables;
+package com.edulectronics.tinycircuit.UI.Draggables;
 
 import android.content.Context;
-import android.util.AttributeSet;
 import android.view.View;
-import android.widget.CursorAdapter;
-import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.ImageView;
 
 import com.edulectronics.tinycircuit.Circuit.CircuitController;
 import com.edulectronics.tinycircuit.Models.Components.Component;
 import com.edulectronics.tinycircuit.R;
-import com.edulectronics.tinycircuit.ui.Draggables.Interfaces.DragSource;
-import com.edulectronics.tinycircuit.ui.Draggables.Interfaces.DropTarget;
+import com.edulectronics.tinycircuit.UI.Draggables.Interfaces.DragSource;
+import com.edulectronics.tinycircuit.UI.Draggables.Interfaces.DropTarget;
 
 /**
  * This subclass of ImageView is used to display an image on an GridView.
@@ -25,28 +22,25 @@ import com.edulectronics.tinycircuit.ui.Draggables.Interfaces.DropTarget;
  * 
  */
 
-public class GridCell extends ImageView
-        implements DragSource, DropTarget
-{
+public class GridCell extends ImageView implements DragSource, DropTarget {
     public boolean isEmpty = true;
     public int mCellNumber = -1;
     public GridView mGrid;
     private CircuitController circuitController;
 
     public GridCell (Context context, CircuitController circuitController) {
-        super (context);
+        super(context);
         this.circuitController = circuitController;
     }
 
     public void setComponent(Component component) {
         this.isEmpty = false;
         int bg = isEmpty ? R.color.cell_empty : R.color.cell_filled;
-        setBackgroundResource (bg);
+        setBackgroundResource(bg);
 
         if(this.mCellNumber > -1) {
             circuitController.addComponent(component, this.mCellNumber);
-        }
-        else{
+        } else {
             circuitController.newComponent = component;
         }
         this.setImageResource(component.getImage());
@@ -59,8 +53,7 @@ public class GridCell extends ImageView
 
         if(this.mCellNumber > -1) {
             circuitController.removeComponent(this.mCellNumber);
-        }
-        else {
+        } else {
             circuitController.newComponent = null;
         }
         setImageDrawable (null);
@@ -79,9 +72,8 @@ public class GridCell extends ImageView
     {
         if (success) {
             removeComponent();
-
             View parent = (View)this.getParent();
-            if(((View) this.getParent()).getId() == R.id.component_source_frame)
+            if(parent.getId() == R.id.component_source_frame)
             {
                 parent.setVisibility(View.INVISIBLE);
             }
@@ -102,9 +94,7 @@ public class GridCell extends ImageView
      * @param dragView The DragView that's being dragged around on screen.
      * @param dragInfo Data associated with the object being dragged
      */
-    public void onDrop(DragSource source, int x, int y, int xOffset, int yOffset,
-            DragView dragView, Object dragInfo)
-    {
+    public void onDrop(DragSource source, int x, int y, int xOffset, int yOffset, DragView dragView, Object dragInfo) {
         Component component;
         if(((GridCell)source).mCellNumber  == -1) {
             // The source is a GridCell with index -1, therefore a new component
@@ -120,9 +110,7 @@ public class GridCell extends ImageView
      * React to a dragged object entering the area of this DropSpot.
      * Provide the user with some visual feedback.
      */
-    public void onDragEnter(DragSource source, int x, int y, int xOffset, int yOffset,
-            DragView dragView, Object dragInfo)
-    {
+    public void onDragEnter(DragSource source, int x, int y, int xOffset, int yOffset, DragView dragView, Object dragInfo) {
         int bg = isEmpty ? R.color.cell_empty_hover : R.color.cell_filled_hover;
         setBackgroundResource (bg);
     }
@@ -130,21 +118,15 @@ public class GridCell extends ImageView
     /**
      * React to something being dragged over the drop target.
      */
-    public void onDragOver(DragSource source, int x, int y, int xOffset, int yOffset,
-            DragView dragView, Object dragInfo)
-    {
-    }
+    public void onDragOver(DragSource source, int x, int y, int xOffset, int yOffset, DragView dragView, Object dragInfo) {}
 
     /**
      * React to a drag
      */
-    public void onDragExit(DragSource source, int x, int y, int xOffset, int yOffset,
-            DragView dragView, Object dragInfo)
-    {
+    public void onDragExit(DragSource source, int x, int y, int xOffset, int yOffset, DragView dragView, Object dragInfo) {
         int bg = isEmpty ? R.color.cell_empty : R.color.cell_filled;
         setBackgroundResource (bg);
     }
-
 
     public boolean acceptDrop() {
         return isEmpty ;
@@ -166,5 +148,4 @@ public class GridCell extends ImageView
         if (!isEmpty) return super.performLongClick ();
         return false;
     }
-
 }

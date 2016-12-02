@@ -17,15 +17,13 @@
  * limitations under the License.
  */
 
-package com.edulectronics.tinycircuit.ui.Draggables.Interfaces;
+package com.edulectronics.tinycircuit.UI.Draggables.Interfaces;
 
 import android.view.View;
 
-import com.edulectronics.tinycircuit.ui.Draggables.DragController;
+import com.edulectronics.tinycircuit.UI.Draggables.DragController;
 
 public interface DragSource {
-
     boolean allowDrag();
-    void setDragController(DragController dragger);
     void onDropCompleted(View target, boolean success);
 }

@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-package com.edulectronics.tinycircuit.ui.Draggables;
+package com.edulectronics.tinycircuit.UI.Draggables;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -30,9 +30,9 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
-import com.edulectronics.tinycircuit.ui.Draggables.Interfaces.DragListener;
-import com.edulectronics.tinycircuit.ui.Draggables.Interfaces.DragSource;
-import com.edulectronics.tinycircuit.ui.Draggables.Interfaces.DropTarget;
+import com.edulectronics.tinycircuit.UI.Draggables.Interfaces.DragListener;
+import com.edulectronics.tinycircuit.UI.Draggables.Interfaces.DragSource;
+import com.edulectronics.tinycircuit.UI.Draggables.Interfaces.DropTarget;
 
 import java.util.ArrayList;
 
@@ -126,30 +126,23 @@ public class DragController {
      */
     public void startDrag(View v, DragSource source, Object dragInfo) {
         // Start dragging, but only if the source has something to drag.
-        boolean doDrag = source.allowDrag ();
+        boolean doDrag = source.allowDrag();
         if (!doDrag) return;
 
         mOriginator = v;
 
         Bitmap b = getViewBitmap(v);
 
-        if (b == null) {
-            // out of memory?
-            return;
-        }
+        if (b == null) return; // out of memory?
 
         int[] loc = mCoordinatesTemp;
         v.getLocationOnScreen(loc);
         int screenX = loc[0];
         int screenY = loc[1];
 
-        startDrag(b, screenX, screenY, 0, 0, b.getWidth(), b.getHeight(),
-                source, dragInfo);
-
+        startDrag(b, screenX, screenY, 0, 0, b.getWidth(), b.getHeight(), source, dragInfo);
         b.recycle();
-
         v.setVisibility(View.GONE);
-
     }
 
     /**
@@ -169,11 +162,10 @@ public class DragController {
     public void startDrag(Bitmap b, int screenX, int screenY,
             int textureLeft, int textureTop, int textureWidth, int textureHeight,
             DragSource source, Object dragInfo) {
-
         // Hide soft keyboard, if visible
         if (mInputMethodManager == null) {
-            mInputMethodManager = (InputMethodManager)
-                    mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
+            mInputMethodManager =
+                    (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
         }
         mInputMethodManager.hideSoftInputFromWindow(mWindowToken, 0);
 
@@ -191,7 +183,7 @@ public class DragController {
         mDragSource = source;
         mDragInfo = dragInfo;
 
-     //   mVibrator.vibrate(VIBRATE_DURATION);
+        // mVibrator.vibrate(VIBRATE_DURATION);
 
         DragView dragView = mDragView = new DragView(mContext, b, registrationX, registrationY,
                 textureLeft, textureTop, textureWidth, textureHeight);
@@ -292,7 +284,6 @@ public class DragController {
                 mMotionDownY = screenY;
                 mLastDropTarget = null;
                 break;
-
             case MotionEvent.ACTION_CANCEL:
             case MotionEvent.ACTION_UP:
                 if (mDragging) {
@@ -301,16 +292,8 @@ public class DragController {
                 endDrag();
                 break;
         }
-
         return mDragging;
     }
-
-    /**
-     * Sets the view that should handle move events.
-     */
-    void setMoveTarget(View view) {
-        mMoveTarget = view;
-    }    
 
     public boolean dispatchUnhandledMove(View focused, int direction) {
         return mMoveTarget != null && mMoveTarget.dispatchUnhandledMove(focused, direction);
@@ -437,10 +420,6 @@ public class DragController {
         }
     }
 
-    public void setWindowToken(IBinder token) {
-        mWindowToken = token;
-    }
-
     /**
      * Sets the drag listener which will be notified when a drag starts or ends.
      */
@@ -449,24 +428,10 @@ public class DragController {
     }
 
     /**
-     * Remove a previously installed drag listener.
-     */
-    public void removeDragListener(DragListener l) {
-        mListener = null;
-    }
-
-    /**
      * Add a DropTarget to the list of potential places to receive drop events.
      */
     public void addDropTarget(DropTarget target) {
         mDropTargets.add(target);
-    }
-
-    /**
-     * Don't send drop events to <em>target</em> any more.
-     */
-    public void removeDropTarget(DropTarget target) {
-        mDropTargets.remove(target);
     }
 
     /**

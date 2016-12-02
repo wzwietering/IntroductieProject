@@ -1,4 +1,4 @@
-package com.edulectronics.tinycircuit.ui;
+package com.edulectronics.tinycircuit.UI;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +19,10 @@ public class MenuActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_menu);
 
+        createMenu();
+    }
+
+    private void createMenu() {
         Button startGameButton = (Button) findViewById(R.id.startGame);
         startGameButton.setOnClickListener(new View.OnClickListener() {
             @Override

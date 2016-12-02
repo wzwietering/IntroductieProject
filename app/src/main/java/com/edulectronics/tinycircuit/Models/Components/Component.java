@@ -28,12 +28,9 @@ public abstract class Component implements IComponent {
     }
 
     public boolean hasOutputConnection() {
-        for (Output o : outputs
-             ) {
-            if (o.hasOutputConnection() )
-            {
+        for (Output o : outputs) {
+            if (o.hasOutputConnection())
                 return true;
-            }
         }
         return false;
     }

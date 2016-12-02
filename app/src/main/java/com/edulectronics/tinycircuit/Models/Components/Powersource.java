@@ -15,17 +15,15 @@ public class Powersource extends Component {
     }
 
     public void startConnection(){
-        if(this.hasOutputConnection()) {
+        if(this.hasOutputConnection())
             this.setNewOutputValues();
-    }
     }
 
     @Override
     public void handleInputChange(){}
 
     public void setNewOutputValues(){
-        for (Output output: outputs
-             ) {
+        for (Output output: outputs) {
             output.setOutputVoltage(this.outputVoltage);
         }
     }

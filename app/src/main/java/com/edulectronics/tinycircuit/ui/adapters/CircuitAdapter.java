@@ -1,4 +1,4 @@
-package com.edulectronics.tinycircuit.ui.Adapters;
+package com.edulectronics.tinycircuit.UI.Adapters;
 
 import android.content.Context;
 import android.view.View;
@@ -10,15 +10,14 @@ import android.widget.ImageView;
 import com.edulectronics.tinycircuit.Circuit.CircuitController;
 import com.edulectronics.tinycircuit.Models.Components.Component;
 import com.edulectronics.tinycircuit.R;
-import com.edulectronics.tinycircuit.ui.Draggables.GridCell;
+import com.edulectronics.tinycircuit.UI.Draggables.GridCell;
 /**
  * This class is used with a GridView object. It provides a set of ImageCell objects
  * that support dragging and dropping.
  *
  */
 
-public class CircuitAdapter extends BaseAdapter
-{
+public class CircuitAdapter extends BaseAdapter {
     public ViewGroup mParentView = null;
     private Context context;
     private CircuitController controller;
@@ -27,7 +26,6 @@ public class CircuitAdapter extends BaseAdapter
         this.controller = controller;
         this.context = context;
     }
-
 
     public int getCount() {
         return controller.circuit.size;
@@ -52,7 +50,7 @@ public class CircuitAdapter extends BaseAdapter
     {
         mParentView = parent;
 
-        GridCell v = null;
+        GridCell v;
         if (convertView == null) {
             // If it's not recycled, create a new ImageCell.
             v = new GridCell (context, controller);
@@ -67,14 +65,14 @@ public class CircuitAdapter extends BaseAdapter
         v.mCellNumber = position;
         v.mGrid = (GridView) mParentView;
         v.isEmpty = true;
-        v.setBackgroundResource (R.color.cell_empty);
+        v.setBackgroundResource(R.color.cell_empty);
 
         // Set up to relay events to the activity.
         // The activity decides which events trigger drag operations.
         // Activities like the Android Launcher require a long click to get a drag operation started.
-        v.setOnTouchListener ((View.OnTouchListener) context);
-        v.setOnClickListener ((View.OnClickListener) context);
-        v.setOnLongClickListener ((View.OnLongClickListener) context);
+        v.setOnTouchListener((View.OnTouchListener) context);
+        v.setOnClickListener((View.OnClickListener) context);
+        v.setOnLongClickListener((View.OnLongClickListener) context);
 
         if(controller.circuit.occupied(position))
         {
