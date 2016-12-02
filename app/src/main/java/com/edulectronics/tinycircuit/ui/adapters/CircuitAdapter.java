@@ -1,17 +1,15 @@
 package com.edulectronics.tinycircuit.ui.adapters;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 
 import com.edulectronics.tinycircuit.Circuit.CircuitController;
 import com.edulectronics.tinycircuit.Models.Components.Component;
-import com.edulectronics.tinycircuit.Models.Components.Lightbulb;
 import com.edulectronics.tinycircuit.R;
-
-import android.content.Context;
-import android.widget.ImageView;
 
 /**
  * Created by bernd on 28/11/2016.
