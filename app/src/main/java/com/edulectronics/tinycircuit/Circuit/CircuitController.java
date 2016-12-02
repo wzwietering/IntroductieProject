@@ -27,10 +27,14 @@ public class CircuitController implements Serializable {
         }
     }
 
-    public void removeComponent(int x, int y){
-        if(circuit.occupied(x)) {
-            circuit.remove(x);
+    public void removeComponent(int position){
+        if(circuit.occupied(position)) {
+            circuit.remove(position);
         }
+    }
+
+    public Component getComponent(int position){
+        return circuit.components[position];
     }
 
     public Component[]getComponents(){

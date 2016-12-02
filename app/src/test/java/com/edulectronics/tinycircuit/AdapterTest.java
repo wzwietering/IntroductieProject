@@ -23,7 +23,7 @@ public class AdapterTest {
     @Test
     public void adapterTests(){
         Lightbulb l = new Lightbulb();
-        controller.addComponent(l, 4, 2);
+        controller.addComponent(l, 14);
 
         assertEquals(l, circuitAdapter.getItem(14));
         assertEquals(25, circuitAdapter.getCount());

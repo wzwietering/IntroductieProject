@@ -25,17 +25,17 @@ public class CircuitTest {
     public void addComponent(){
         s.add(light);
         c = new CircuitController(s, 5, 5);
-        c.addComponent(light, 1, 1);
+        c.addComponent(light, 1);
 
-        assertEquals(true, c.circuit.occupied(1, 1));
-        assertEquals(c.circuit.components[1][1].getClass(), Lightbulb.class);
+        assertEquals(true, c.circuit.occupied(1));
+        assertEquals(c.circuit.components[1].getClass(), Lightbulb.class);
     }
 
     @Test
     public void removeComponent(){
         c = new CircuitController(s, 5, 5);
-        c.removeComponent(1, 1);
+        c.removeComponent(1);
 
-        assertEquals(false, c.circuit.occupied(1, 1));
+        assertEquals(false, c.circuit.occupied(1));
     }
 }

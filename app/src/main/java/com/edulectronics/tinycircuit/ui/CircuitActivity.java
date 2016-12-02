@@ -32,6 +32,7 @@ public class CircuitActivity extends Activity
     private DragController mDragController;   // Object that handles a drag-drop sequence. It interacts with DragSource and DropTarget objects.
     private DragLayer mDragLayer;             // The ViewGroup within which an object can be dragged.
     private GridCell lastNewCell;
+    private CircuitController circuitController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,12 +55,12 @@ public class CircuitActivity extends Activity
         });
 
         Intent intent = getIntent();
-        CircuitController controller =
+        this.circuitController =
                 (CircuitController) intent.getSerializableExtra("Controller");
-        circuit.setNumColumns(controller.circuit.width);
-        circuit.setAdapter(new CircuitAdapter(this, controller));
+        circuit.setNumColumns(circuitController.circuit.width);
+        circuit.setAdapter(new CircuitAdapter(this, circuitController));
 
-        controller.addComponent(new Lightbulb(), 1);
+        circuitController.addComponent(new Lightbulb(), 1);
 
         mDragController = new DragController(this);
         mDragLayer = (DragLayer) findViewById(R.id.drag_layer);
@@ -91,7 +92,7 @@ public class CircuitActivity extends Activity
     {
     }
 
-    public boolean onTouch (View v, MotionEvent ev) {
+    public boolean onTouch(View v, MotionEvent ev) {
         // If we are configured to start only on a long click, we are not going to handle any events here.
 
         boolean handledHere = false;
@@ -115,36 +116,36 @@ public class CircuitActivity extends Activity
         if (!v.isInTouchMode()) {
             return false;
         }
-        return startDrag (v);
+        return startDrag(v);
     }
 
-    public boolean startDrag (View v)
+    public boolean startDrag(View v)
     {
-        DragSource dragSource = (DragSource) v;
+        DragSource dragSource = (DragSource)v;
 
-        mDragController.startDrag (v, dragSource, dragSource);
+        mDragController.startDrag(v, dragSource, dragSource);
 
         return true;
     }
 
-    public void onClickAddComponent (View v)
+    public void onClickAddComponent(View v)
     {
         Component component = ComponentFactory.CreateComponent("Lightbulb");
         addNewComponent(component);
     }
 
-    public void addNewComponent (Component component)
+    public void addNewComponent(Component component)
     {
-        FrameLayout componentHolder = (FrameLayout) findViewById (R.id.component_source_frame);
+        FrameLayout componentHolder = (FrameLayout)findViewById (R.id.component_source_frame);
         componentHolder.setVisibility(View.VISIBLE);
 
         if (componentHolder != null) {
             FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams (ViewGroup.LayoutParams.FILL_PARENT,
                     ViewGroup.LayoutParams.FILL_PARENT,
                     Gravity.CENTER);
-            GridCell newView = new GridCell (this);
-            newView.setComponent (component);
-            componentHolder.addView (newView, lp);
+            GridCell newView = new GridCell (this, circuitController);
+            newView.setComponent(component);
+            componentHolder.addView(newView, lp);
             newView.mCellNumber = -1;
 
             // Have this activity listen to touch and click events for the view.

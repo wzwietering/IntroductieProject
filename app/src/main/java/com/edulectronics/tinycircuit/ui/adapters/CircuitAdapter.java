@@ -58,7 +58,7 @@ public class CircuitAdapter extends BaseAdapter
         GridCell v = null;
         if (convertView == null) {
             // If it's not recycled, create a new ImageCell.
-            v = new GridCell (context);
+            v = new GridCell (context, controller);
             v.setLayoutParams(new GridView.LayoutParams(85, 85));
             v.setScaleType(ImageView.ScaleType.CENTER_CROP);
             v.setPadding(8, 8, 8, 8);

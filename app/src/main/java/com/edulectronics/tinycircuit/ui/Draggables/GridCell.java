@@ -3,10 +3,12 @@ package com.edulectronics.tinycircuit.ui.Draggables;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.CursorAdapter;
 import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.ImageView;
 
+import com.edulectronics.tinycircuit.Circuit.CircuitController;
 import com.edulectronics.tinycircuit.Models.Components.Component;
 import com.edulectronics.tinycircuit.R;
 import com.edulectronics.tinycircuit.ui.Draggables.Interfaces.DragSource;
@@ -32,14 +34,11 @@ public class GridCell extends ImageView
     public GridView mGrid;
     public Component component;
 
-    public GridCell (Context context) {
+    private CircuitController circuitController;
+
+    public GridCell (Context context, CircuitController circuitController) {
         super (context);
-    }
-    public GridCell (Context context, AttributeSet attrs) {
-        super (context, attrs);
-    }
-    public GridCell (Context context, AttributeSet attrs, int style) {
-        super (context, attrs, style);
+        this.circuitController = circuitController;
     }
 
     public void setComponent(Component component) {
@@ -48,6 +47,9 @@ public class GridCell extends ImageView
         setBackgroundResource (bg);
 
         this.component = component;
+        if(this.mCellNumber > -1) {
+            circuitController.addComponent(component, this.mCellNumber);
+        }
         this.setImageResource(component.getImage());
     }
 
@@ -56,6 +58,10 @@ public class GridCell extends ImageView
         this.component = null;
         int bg = isEmpty ? R.color.cell_empty  : R.color.cell_filled ;
         setBackgroundResource (bg);
+
+        if(this.mCellNumber > -1) {
+            circuitController.removeComponent(this.mCellNumber);
+        }
         setImageDrawable (null);
     }
     
@@ -81,8 +87,6 @@ public class GridCell extends ImageView
         }
     }
 
-
-
     /**
      * Handle an object being dropped on the DropTarget.
      * This is the where the drawable of the dragged view gets copied into the ImageCell.
@@ -96,7 +100,6 @@ public class GridCell extends ImageView
      *          touch happened
      * @param dragView The DragView that's being dragged around on screen.
      * @param dragInfo Data associated with the object being dragged
-     *
      */
     public void onDrop(DragSource source, int x, int y, int xOffset, int yOffset,
             DragView dragView, Object dragInfo)
