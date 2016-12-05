@@ -1,4 +1,4 @@
-package com.edulectronics.tinycircuit.Circuit;
+package com.edulectronics.tinycircuit.Controllers;
 
 import com.edulectronics.tinycircuit.Models.Circuit;
 import com.edulectronics.tinycircuit.Models.Components.Component;
@@ -11,7 +11,6 @@ import java.util.Set;
  */
 
 public class CircuitController implements Serializable {
-
     public Circuit circuit;
     private Set<Component> availableComponents;
 
@@ -24,7 +23,7 @@ public class CircuitController implements Serializable {
     }
 
     public void addComponent(Component component, int position){
-        /*Only add if tile is available and allowed*/
+        // Only add if tile is available and allowed
         if(!circuit.occupied(position)){ // && availableComponents.contains(component)
             circuit.add(component, position);
         }

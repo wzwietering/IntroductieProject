@@ -1,4 +1,4 @@
-package com.edulectronics.tinycircuit.ui.Adapters;
+package com.edulectronics.tinycircuit.Views.Adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -43,7 +43,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     public int getChildrenCount(int groupPosition) {
         try{
             return this.children.get(this.headers.get(groupPosition)).size();
-        }catch (NullPointerException e){
+        } catch (NullPointerException e){
             return 0;
         }
     }

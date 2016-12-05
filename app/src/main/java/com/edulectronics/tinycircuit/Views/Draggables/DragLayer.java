@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-package com.edulectronics.tinycircuit.ui.Draggables;
+package com.edulectronics.tinycircuit.Views.Draggables;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -27,9 +27,9 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.GridView;
 
-import com.edulectronics.tinycircuit.ui.Draggables.Interfaces.DragListener;
-import com.edulectronics.tinycircuit.ui.Draggables.Interfaces.DragSource;
-import com.edulectronics.tinycircuit.ui.Draggables.Interfaces.DropTarget;
+import com.edulectronics.tinycircuit.Views.Draggables.Interfaces.DragListener;
+import com.edulectronics.tinycircuit.Views.Draggables.Interfaces.DragSource;
+import com.edulectronics.tinycircuit.Views.Draggables.Interfaces.DropTarget;
 
 /**
  * A ViewGroup that supports dragging within it.
@@ -41,9 +41,7 @@ import com.edulectronics.tinycircuit.ui.Draggables.Interfaces.DropTarget;
  * (2) it dynamically adds drop targets when a drag-drop sequence begins.
  * The child views of the GridView are assumed to implement the DropTarget interface. 
  */
-public class DragLayer extends FrameLayout
-    implements DragListener
-{
+public class DragLayer extends FrameLayout implements DragListener {
     DragController mDragController;
     GridView mGridView;
 
@@ -75,10 +73,6 @@ public class DragLayer extends FrameLayout
         return mDragController.dispatchUnhandledMove(focused, direction);
     }
 
-    public GridView getGridView () {
-       return mGridView;
-    }
-
     public void setGridView (GridView newValue) {
         mGridView = newValue;
     }
@@ -102,6 +96,4 @@ public class DragLayer extends FrameLayout
     {
         mDragController.removeAllDropTargets ();
     }
-
-
-} // end class
+}

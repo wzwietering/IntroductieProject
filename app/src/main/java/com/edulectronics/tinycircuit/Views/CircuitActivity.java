@@ -1,10 +1,9 @@
-package com.edulectronics.tinycircuit.ui;
+package com.edulectronics.tinycircuit.Views;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.os.Bundle;
-import android.support.design.internal.NavigationMenu;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
@@ -18,32 +17,30 @@ import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.edulectronics.tinycircuit.Circuit.CircuitController;
+import com.edulectronics.tinycircuit.Controllers.CircuitController;
 import com.edulectronics.tinycircuit.Models.Components.Component;
-import com.edulectronics.tinycircuit.Models.Components.Lightbulb;
 import com.edulectronics.tinycircuit.Models.Factories.ComponentFactory;
 import com.edulectronics.tinycircuit.Models.MenuItem;
 import com.edulectronics.tinycircuit.R;
-import com.edulectronics.tinycircuit.ui.Adapters.CircuitAdapter;
-import com.edulectronics.tinycircuit.ui.Adapters.ExpandableListAdapter;
-import com.edulectronics.tinycircuit.ui.Draggables.DragController;
-import com.edulectronics.tinycircuit.ui.Draggables.DragLayer;
-import com.edulectronics.tinycircuit.ui.Draggables.GridCell;
-import com.edulectronics.tinycircuit.ui.Draggables.Interfaces.DragSource;
+import com.edulectronics.tinycircuit.Views.Adapters.CircuitAdapter;
+import com.edulectronics.tinycircuit.Views.Adapters.ExpandableListAdapter;
+import com.edulectronics.tinycircuit.Views.Draggables.DragController;
+import com.edulectronics.tinycircuit.Views.Draggables.DragLayer;
+import com.edulectronics.tinycircuit.Views.Draggables.GridCell;
+import com.edulectronics.tinycircuit.Views.Draggables.Interfaces.DragSource;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class CircuitActivity extends Activity
-        implements  View.OnClickListener,
-        View.OnTouchListener, View.OnLongClickListener //  , AdapterView.OnItemClickListener
-{
+        implements View.OnClickListener, View.OnTouchListener, View.OnLongClickListener { //  , AdapterView.OnItemClickListener
     private DragController mDragController;   // Object that handles a drag-drop sequence. It interacts with DragSource and DropTarget objects.
     private DragLayer mDragLayer;             // The ViewGroup within which an object can be dragged.
 	private List<MenuItem> headers;
     private HashMap<MenuItem, List<MenuItem>> children;
     private CircuitController circuitController;
+    private GridView circuit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +49,14 @@ public class CircuitActivity extends Activity
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
 
-        GridView circuit = (GridView) findViewById(R.id.circuit);
+        getController();
+        setCircuit();
+        createDragControls();
+        createMenu();
+    }
+
+    private void setCircuit() {
+        circuit = (GridView) findViewById(R.id.circuit);
 
         /*Prevents scrolling, stuff can still be rendered outside screen*/
         circuit.setOnTouchListener(new View.OnTouchListener() {
@@ -65,33 +69,32 @@ public class CircuitActivity extends Activity
             }
         });
 
-        Intent intent = getIntent();
-        this.circuitController =
-                (CircuitController) intent.getSerializableExtra("Controller");
         circuit.setNumColumns(circuitController.circuit.width);
         circuit.setAdapter(new CircuitAdapter(this, circuitController));
+    }
 
-        circuitController.addComponent(new Lightbulb(), 1);
+    private void getController() {
+        Intent intent = getIntent();
+        circuitController = (CircuitController) intent.getSerializableExtra("Controller");
+    }
 
+    private void createDragControls() {
         mDragController = new DragController(this);
         mDragLayer = (DragLayer) findViewById(R.id.drag_layer);
         mDragLayer.setDragController (mDragController);
-        mDragLayer.setGridView (circuit);
-
+        mDragLayer.setGridView(circuit);
         mDragController.setDragListener (mDragLayer);
-
-        makeMenu();
     }
 
     /*This code adds a menu to the side*/
-    private void makeMenu(){
+    private void createMenu(){
         ExpandableListView expandableList = (ExpandableListView) findViewById(R.id.expandablelist);
         makeLists();
 
         ExpandableListAdapter adapter = new ExpandableListAdapter(
-                this, headers, children, expandableList);
+                                            this, headers, children, expandableList
+                                        );
         expandableList.setAdapter(adapter);
-
         expandableList.setOnChildClickListener(onChildClick());
         expandableList.setOnGroupClickListener(onGroupClick());
     }

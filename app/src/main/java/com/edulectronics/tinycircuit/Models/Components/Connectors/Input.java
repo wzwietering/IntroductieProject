@@ -44,11 +44,9 @@ public class Input {
 
     public void handleInputVoltageChange() {
         this.voltage = 0;
-        for (Output output: connectedOutputs
-             ) {
+        for (Output output: connectedOutputs) {
             voltage += output.getOutputVoltage();
         }
-
         this.parentComponent.handleInputChange();
     }
 }

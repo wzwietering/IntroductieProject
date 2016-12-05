@@ -13,8 +13,7 @@ public class Output {
 
     public void setOutputVoltage(double voltage) {
         this.voltage = voltage;
-        for (Input input: connectedInputs
-             ) {
+        for (Input input: connectedInputs) {
             input.handleInputVoltageChange();
         }
     }
@@ -24,13 +23,13 @@ public class Output {
     }
 
     public boolean hasOutputConnection() {
-        if (!connectedInputs.isEmpty())
-            for (Input input : connectedInputs
-                    ) {
+        if (!connectedInputs.isEmpty()) {
+            for (Input input : connectedInputs) {
                 if (input.hasOutputConnection()) {
                     return true;
                 }
             }
+        }
         return false;
     }
 

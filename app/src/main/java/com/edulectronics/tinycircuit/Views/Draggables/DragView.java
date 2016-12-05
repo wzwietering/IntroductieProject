@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-package com.edulectronics.tinycircuit.ui.Draggables;
+package com.edulectronics.tinycircuit.Views.Draggables;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -40,17 +40,14 @@ import java.io.Serializable;
  *
  */
 
-public class DragView extends View implements Serializable
-{
+public class DragView extends View implements Serializable {
     // Number of pixels to add to the dragged item for scaling.  Should be even for pixel alignment.
     private static final int DRAG_SCALE = 0;   // In Launcher, value is 40
 
     private Bitmap mBitmap;
-    private Paint mPaint;
     private int mRegistrationX;
     private int mRegistrationY;
 
-    private float mScale;
     private float mAnimationScale = 0.9f;
 
     private WindowManager.LayoutParams mLayoutParams;
@@ -76,7 +73,7 @@ public class DragView extends View implements Serializable
   
         Matrix scale = new Matrix();
         float scaleFactor = width;
-        scaleFactor = mScale = (scaleFactor + DRAG_SCALE) / scaleFactor;
+        scaleFactor = (scaleFactor + DRAG_SCALE) / scaleFactor;
         scale.setScale(scaleFactor, scaleFactor);
         mBitmap = Bitmap.createBitmap(bitmap, left, top, width, height, scale, true);
 
@@ -92,15 +89,14 @@ public class DragView extends View implements Serializable
 
     @Override
     protected void onDraw(Canvas canvas) {
-        if (true) {
-            // Puts a little border around the view so you can see that you selected something.
-            Paint p = new Paint();
-            p.setStyle (Paint.Style.FILL);
-            p.setColor (0x8800dd11);
-            p.setAlpha (80);
-            canvas.drawRect(0, 0, getWidth(), getHeight(), p);
-        }
+        // Puts a little border around the view so you can see that you selected something.
+        Paint p = new Paint();
+        p.setStyle (Paint.Style.FILL);
+        p.setColor (0x8800dd11);
+        p.setAlpha (80);
+        canvas.drawRect(0, 0, getWidth(), getHeight(), p);
         float scale = mAnimationScale;
+
         if (scale < 0.999f) { // allow for some float error
             float height = mBitmap.getHeight();
             float width = mBitmap.getWidth();
@@ -109,8 +105,9 @@ public class DragView extends View implements Serializable
             canvas.translate(offset1, offset2);
             canvas.scale(scale, scale);
         }
+
         Paint p2 = new Paint();
-        p2.setAlpha (100);
+        p2.setAlpha(100);
         canvas.drawBitmap(mBitmap, 0.0f, 0.0f, p2);
     }
 
@@ -118,17 +115,6 @@ public class DragView extends View implements Serializable
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
         mBitmap.recycle();
-    }
-
-    public void setPaint(Paint paint) {
-        mPaint = paint;
-        invalidate();
-    }
-
-    public void setScale (float scale) {
-        if (scale > 1.0f) mAnimationScale = 1.0f;
-        else mAnimationScale = scale;
-        invalidate();
     }
 
     /**
@@ -149,18 +135,14 @@ public class DragView extends View implements Serializable
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 touchX-mRegistrationX, touchY-mRegistrationY,
                 WindowManager.LayoutParams.TYPE_APPLICATION_SUB_PANEL,
-                WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
-                    | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
-                    /*| WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM*/,
+                WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
                 pixelFormat);
-//        lp.token = mStatusBarView.getWindowToken();
+        // lp.token = mStatusBarView.getWindowToken();
         lp.gravity = Gravity.LEFT | Gravity.TOP;
         lp.token = windowToken;
         lp.setTitle("DragView");
         mLayoutParams = lp;
-
         mWindowManager.addView(this, lp);
-
     }
     
     /**
@@ -181,4 +163,3 @@ public class DragView extends View implements Serializable
         mWindowManager.removeView(this);
     }
 }
-
