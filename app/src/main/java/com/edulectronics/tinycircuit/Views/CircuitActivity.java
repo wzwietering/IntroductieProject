@@ -175,8 +175,7 @@ public class CircuitActivity extends Activity
 
     public void onClickAddComponent(String text)
     {
-        Component component = ComponentFactory.CreateComponent(text);
-        circuitController.addNewComponent(component, this);
+        circuitController.addNewComponent(text, this);
         NavigationView view = (NavigationView) findViewById(R.id.navigationview);
         ((DrawerLayout) findViewById(R.id.activity_main)).closeDrawer(view);
     }
