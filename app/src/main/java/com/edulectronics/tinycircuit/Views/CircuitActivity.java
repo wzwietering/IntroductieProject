@@ -24,6 +24,7 @@ import com.edulectronics.tinycircuit.Models.MenuItem;
 import com.edulectronics.tinycircuit.R;
 import com.edulectronics.tinycircuit.Views.Adapters.CircuitAdapter;
 import com.edulectronics.tinycircuit.Views.Adapters.ExpandableListAdapter;
+import com.edulectronics.tinycircuit.Views.Draggables.DeleteZone;
 import com.edulectronics.tinycircuit.Views.Draggables.DragController;
 import com.edulectronics.tinycircuit.Views.Draggables.DragLayer;
 import com.edulectronics.tinycircuit.Views.Draggables.GridCell;
@@ -70,12 +71,12 @@ public class CircuitActivity extends Activity
         });
 
         circuit.setNumColumns(circuitController.circuit.width);
-        circuit.setAdapter(new CircuitAdapter(this, circuitController));
+        circuit.setAdapter(new CircuitAdapter(this));
     }
 
     private void getController() {
         Intent intent = getIntent();
-        circuitController = (CircuitController) intent.getSerializableExtra("Controller");
+        circuitController = CircuitController.getInstance();
     }
 
     private void createDragControls() {
@@ -167,7 +168,6 @@ public class CircuitActivity extends Activity
     public boolean startDrag (View v)
     {
         DragSource dragSource = (DragSource) v;
-
         mDragController.startDrag (v, dragSource, dragSource);
 
         return true;

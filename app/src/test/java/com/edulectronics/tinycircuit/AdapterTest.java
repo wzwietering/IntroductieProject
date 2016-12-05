@@ -17,8 +17,9 @@ import static org.junit.Assert.assertEquals;
  */
 
 public class AdapterTest {
-    CircuitController controller = new CircuitController(new HashSet<Component>(), 5, 5);
-    CircuitAdapter circuitAdapter = new CircuitAdapter(null, controller);
+    CircuitController controller = CircuitController.getInstance();
+    controller.setProperties(new HashSet<Component>(), 5, 5);
+    CircuitAdapter circuitAdapter = new CircuitAdapter(null);
 
     @Test
     public void adapterTests(){

@@ -20,20 +20,20 @@ import com.edulectronics.tinycircuit.Views.Draggables.GridCell;
 public class CircuitAdapter extends BaseAdapter {
     public ViewGroup mParentView = null;
     private Context context;
-    private CircuitController controller;
+    private CircuitController circuitController;
 
-    public CircuitAdapter(Context context, CircuitController controller) {
-        this.controller = controller;
+    public CircuitAdapter(Context context) {
         this.context = context;
+        this.circuitController = CircuitController.getInstance();
     }
 
     public int getCount() {
-        return controller.circuit.size;
+        return circuitController.circuit.size;
     }
 
     public Object getItem(int position)
     {
-        return controller.circuit.components[position];
+        return circuitController.circuit.components[position];
     }
 
     public long getItemId(int position) {
@@ -53,7 +53,7 @@ public class CircuitAdapter extends BaseAdapter {
         GridCell v;
         if (convertView == null) {
             // If it's not recycled, create a new ImageCell.
-            v = new GridCell(context, controller);
+            v = new GridCell(context);
             v.setLayoutParams(new GridView.LayoutParams(85, 85));
             v.setScaleType(ImageView.ScaleType.CENTER_CROP);
             v.setPadding(8, 8, 8, 8);
@@ -74,9 +74,9 @@ public class CircuitAdapter extends BaseAdapter {
         v.setOnClickListener((View.OnClickListener) context);
         v.setOnLongClickListener((View.OnLongClickListener) context);
 
-        if(controller.circuit.occupied(position))
+        if(circuitController.circuit.occupied(position))
         {
-            Component component = controller.circuit.getComponent(position);
+            Component component = circuitController.circuit.getComponent(position);
             v.setComponent(component);
         }
 

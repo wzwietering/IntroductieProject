@@ -27,6 +27,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.GridView;
 
+import com.edulectronics.tinycircuit.R;
 import com.edulectronics.tinycircuit.Views.Draggables.Interfaces.DragListener;
 import com.edulectronics.tinycircuit.Views.Draggables.Interfaces.DragSource;
 import com.edulectronics.tinycircuit.Views.Draggables.Interfaces.DropTarget;
@@ -89,6 +90,15 @@ public class DragLayer extends FrameLayout implements DragListener {
                DropTarget view = (DropTarget) mGridView.getChildAt (i);
                mDragController.addDropTarget (view);
            }
+        }
+
+        // Always add the delete_zone so there is a place to get rid of views.
+        // Find the delete_zone and add it as a drop target.
+        // That gives the user a place to drag views to get them off the screen.
+        View v = findViewById (R.id.delete_zone_view);
+        if (v != null) {
+            DeleteZone dz = (DeleteZone) v;
+            mDragController.addDropTarget (dz);
         }
     }
 

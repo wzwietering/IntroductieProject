@@ -19,6 +19,7 @@
 
 package com.edulectronics.tinycircuit.Views.Draggables;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
@@ -29,7 +30,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ImageView;
 
+import com.edulectronics.tinycircuit.R;
 import com.edulectronics.tinycircuit.Views.Draggables.Interfaces.DragListener;
 import com.edulectronics.tinycircuit.Views.Draggables.Interfaces.DragSource;
 import com.edulectronics.tinycircuit.Views.Draggables.Interfaces.DropTarget;
@@ -143,6 +146,8 @@ public class DragController {
         startDrag(b, screenX, screenY, 0, 0, b.getWidth(), b.getHeight(), source, dragInfo);
         b.recycle();
         v.setVisibility(View.GONE);
+
+        ((Activity)mContext).findViewById(R.id.delete_zone_view).setVisibility(View.VISIBLE);
     }
 
     /**
@@ -189,6 +194,7 @@ public class DragController {
                 textureLeft, textureTop, textureWidth, textureHeight);
         dragView.show(mWindowToken, (int)mMotionDownX, (int)mMotionDownY);
     }
+
 
     /**
      * Draw the view into a bitmap.
@@ -257,6 +263,10 @@ public class DragController {
             if (mDragView != null) {
                 mDragView.remove();
                 mDragView = null;
+            }
+            DeleteZone deleteZone = (DeleteZone)((Activity)mContext).findViewById(R.id.delete_zone_view);
+            if (deleteZone != null) {
+                deleteZone.setVisibility(View.INVISIBLE);
             }
         }
     }

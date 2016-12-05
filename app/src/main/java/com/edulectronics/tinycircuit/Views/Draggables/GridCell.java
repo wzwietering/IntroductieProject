@@ -1,11 +1,13 @@
 package com.edulectronics.tinycircuit.Views.Draggables;
 
 import android.content.Context;
+import android.util.AttributeSet;
 import android.view.View;
 import android.widget.GridView;
 import android.widget.ImageView;
 
 import com.edulectronics.tinycircuit.Controllers.CircuitController;
+import com.edulectronics.tinycircuit.Models.Circuit;
 import com.edulectronics.tinycircuit.Models.Components.Component;
 import com.edulectronics.tinycircuit.R;
 import com.edulectronics.tinycircuit.Views.Draggables.Interfaces.DragSource;
@@ -26,12 +28,13 @@ public class GridCell extends ImageView implements DragSource, DropTarget {
     public boolean isEmpty = true;
     public int mCellNumber = -1;
     public GridView mGrid;
-    private CircuitController circuitController;
 
-    public GridCell(Context context, CircuitController circuitController) {
+    // Constructors
+    public GridCell(Context context) {
         super(context);
-        this.circuitController = circuitController;
     }
+    public GridCell (Context context, AttributeSet attrs) { super (context, attrs); }
+    public GridCell (Context context, AttributeSet attrs, int style) { super (context, attrs, style); }
 
     public void setComponent(Component component) {
         this.isEmpty = false;
@@ -39,9 +42,9 @@ public class GridCell extends ImageView implements DragSource, DropTarget {
         setBackgroundResource(bg);
 
         if(this.mCellNumber > -1) {
-            circuitController.addComponent(component, this.mCellNumber);
+            CircuitController.getInstance().addComponent(component, this.mCellNumber);
         } else {
-            circuitController.newComponent = component;
+            CircuitController.getInstance().newComponent = component;
         }
         this.setImageResource(component.getImage());
     }
@@ -52,9 +55,9 @@ public class GridCell extends ImageView implements DragSource, DropTarget {
         setBackgroundResource(bg);
 
         if(this.mCellNumber > -1) {
-            circuitController.removeComponent(this.mCellNumber);
+            CircuitController.getInstance().removeComponent(this.mCellNumber);
         } else {
-            circuitController.newComponent = null;
+            CircuitController.getInstance().newComponent = null;
         }
         setImageDrawable(null);
     }
@@ -94,10 +97,10 @@ public class GridCell extends ImageView implements DragSource, DropTarget {
         Component component;
         if(((GridCell)source).mCellNumber  == -1) {
             // The source is a GridCell with index -1, therefore a new component
-            component = circuitController.newComponent;
+            component = CircuitController.getInstance().newComponent;
         } else {
             // Source is an existing GridCell. Get its component from the controller.
-            component = circuitController.getComponent(((GridCell)source).mCellNumber);
+            component = CircuitController.getInstance().getComponent(((GridCell)source).mCellNumber);
         }
         this.setComponent(component);
     }
