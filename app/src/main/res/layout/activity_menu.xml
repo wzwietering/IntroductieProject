@@ -31,9 +31,9 @@
         <ImageButton
             android:layout_width="198dp"
             android:layout_height="wrap_content"
-            android:background="@mipmap/opgaves"
+            android:background="@mipmap/Exercise"
             android:id="@+id/opgaveButton"
-            android:onClick="ExcerciseMenuStart"
+            android:onClick="excerciseMenuStart"
             android:layout_gravity="center_horizontal"
             android:layout_weight="2.48"/>
 
@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:background="@mipmap/vrijspel"
             android:id="@+id/startGame"
-            android:onClick="FreePlayStart"
+            android:onClick="freePlayStart"
             android:layout_gravity="center_horizontal"
             android:layout_weight="2.48"/>
     </LinearLayout>

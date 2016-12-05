@@ -19,12 +19,12 @@ public class MenuActivity extends AppCompatActivity {
         setContentView(R.layout.activity_menu);
     }
 
-    public void FreePlayStart(View v) {
+    public void freePlayStart(View v) {
         Intent freeplay = new Intent(MenuActivity.this, CircuitActivity.class);
         freeplay.putExtra("Controller", new CircuitController(null, 20, 10));
         startActivity(freeplay);
     }
-    public void ExcerciseMenuStart(View v){
+    public void excerciseMenuStart(View v){
         Intent excercise = new Intent(MenuActivity.this, excerciseMenuActivity.class);
         startActivity(excercise);
 

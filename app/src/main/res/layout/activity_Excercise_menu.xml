@@ -12,6 +12,13 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.edulectronics.tinycircuit.Views.excerciseMenuActivity">
 
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="170dp"
+        app:srcCompat="@mipmap/Exercise"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/imageView2" />
+
 
     <HorizontalScrollView
         android:layout_width="match_parent"
@@ -25,17 +32,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:id="@+id/Linearlayout">
-
-        </LinearLayout>
+            android:id="@+id/Linearlayout"/>
 
     </HorizontalScrollView>
 
-    <ImageView
-        android:layout_width="200dp"
-        android:layout_height="170dp"
-        app:srcCompat="@mipmap/opgaves"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/imageView2" />
 
 </RelativeLayout>
