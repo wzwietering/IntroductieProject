@@ -176,30 +176,9 @@ public class CircuitActivity extends Activity
     public void onClickAddComponent(String text)
     {
         Component component = ComponentFactory.CreateComponent(text);
-        addNewComponent(component);
+        circuitController.addNewComponent(component, this);
         NavigationView view = (NavigationView) findViewById(R.id.navigationview);
         ((DrawerLayout) findViewById(R.id.activity_main)).closeDrawer(view);
-    }
-
-    public void addNewComponent(Component component)
-    {
-        FrameLayout componentHolder = (FrameLayout)findViewById (R.id.component_source_frame);
-        componentHolder.setVisibility(View.VISIBLE);
-
-        if (componentHolder != null) {
-            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams (ViewGroup.LayoutParams.FILL_PARENT,
-                    ViewGroup.LayoutParams.FILL_PARENT,
-                    Gravity.CENTER);
-            GridCell newView = new GridCell (this, circuitController);
-            newView.setComponent(component);
-            componentHolder.addView(newView, lp);
-            newView.mCellNumber = -1;
-
-            // Have this activity listen to touch and click events for the view.
-            newView.setOnClickListener(this);
-            newView.setOnLongClickListener(this);
-            newView.setOnTouchListener (this);
-        }
     }
 
     public ExpandableListView.OnGroupClickListener onGroupClick(){
