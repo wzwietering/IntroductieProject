@@ -1,17 +1,16 @@
 package com.edulectronics.tinycircuit.Views.Draggables;
-
 import android.content.Context;
 import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 import com.edulectronics.tinycircuit.Controllers.CircuitController;
 import com.edulectronics.tinycircuit.Models.Components.Component;
-import com.edulectronics.tinycircuit.Views.Draggables.Interfaces.DragSource;
-import com.edulectronics.tinycircuit.Views.Draggables.Interfaces.DropTarget;
+import com.edulectronics.tinycircuit.Views.Draggables.Interfaces.IDragSource;
+import com.edulectronics.tinycircuit.Views.Draggables.Interfaces.IDropTarget;
 
 
 public class DeleteZone extends ImageView
-        implements DropTarget
+        implements IDropTarget
 {
     private DragController mDragController;
 
@@ -37,23 +36,23 @@ public class DeleteZone extends ImageView
         return true;
     }
 
-    public void onDragEnter(DragSource source, int x, int y, int xOffset, int yOffset,
+    public void onDragEnter(IDragSource source, int x, int y, int xOffset, int yOffset,
                             DragView dragView, Object dragInfo) {
         // Set the image level so the image is highlighted;
         setImageLevel (2);
     }
 
-    public void onDragExit(DragSource source, int x, int y, int xOffset, int yOffset,
+    public void onDragExit(IDragSource source, int x, int y, int xOffset, int yOffset,
                            DragView dragView, Object dragInfo) {
         setImageLevel (1);
     }
 
-    public boolean acceptDrop(DragSource source, int x, int y, int xOffset, int yOffset,
+    public boolean acceptDrop(IDragSource source, int x, int y, int xOffset, int yOffset,
                               DragView dragView, Object dragInfo) {
         return true;
     }
 
-    public void onDrop(DragSource source, int x, int y, int xOffset, int yOffset, DragView dragView, Object dragInfo) {
+    public void onDrop(IDragSource source, int x, int y, int xOffset, int yOffset, DragView dragView, Object dragInfo) {
         Component component;
         if(((GridCell)source).mCellNumber == -1) {
              CircuitController.getInstance().newComponent = null;
@@ -63,12 +62,12 @@ public class DeleteZone extends ImageView
         }
     }
 
-    public void onDragOver(DragSource source, int x, int y, int xOffset, int yOffset,
+    public void onDragOver(IDragSource source, int x, int y, int xOffset, int yOffset,
                            DragView dragView, Object dragInfo) {
         // Not implemented
     }
 
-    public Rect estimateDropLocation(DragSource source, int x, int y, int xOffset, int yOffset,
+    public Rect estimateDropLocation(IDragSource source, int x, int y, int xOffset, int yOffset,
                                      DragView dragView, Object dragInfo, Rect recycle) {
         return null;
     }

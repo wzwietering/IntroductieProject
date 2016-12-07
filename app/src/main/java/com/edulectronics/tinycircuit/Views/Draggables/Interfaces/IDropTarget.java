@@ -23,17 +23,17 @@ import android.graphics.Rect;
 
 import com.edulectronics.tinycircuit.Views.Draggables.DragView;
 
-public interface DropTarget {
-    void onDrop(DragSource source, int x, int y, int xOffset, int yOffset,
+public interface IDropTarget {
+    void onDrop(IDragSource source, int x, int y, int xOffset, int yOffset,
                 DragView dragView, Object dragInfo);
 
-    void onDragEnter(DragSource source, int x, int y, int xOffset, int yOffset,
+    void onDragEnter(IDragSource source, int x, int y, int xOffset, int yOffset,
                      DragView dragView, Object dragInfo);
 
-    void onDragOver(DragSource source, int x, int y, int xOffset, int yOffset,
+    void onDragOver(IDragSource source, int x, int y, int xOffset, int yOffset,
                     DragView dragView, Object dragInfo);
 
-    void onDragExit(DragSource source, int x, int y, int xOffset, int yOffset,
+    void onDragExit(IDragSource source, int x, int y, int xOffset, int yOffset,
                     DragView dragView, Object dragInfo);
 
     boolean acceptDrop();
