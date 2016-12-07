@@ -19,6 +19,7 @@
 
 package com.edulectronics.tinycircuit.Views.Draggables;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
@@ -29,10 +30,10 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-
-import com.edulectronics.tinycircuit.Views.Draggables.Interfaces.DragListener;
-import com.edulectronics.tinycircuit.Views.Draggables.Interfaces.DragSource;
-import com.edulectronics.tinycircuit.Views.Draggables.Interfaces.DropTarget;
+import com.edulectronics.tinycircuit.R;
+import com.edulectronics.tinycircuit.Views.Draggables.Interfaces.IDragListener;
+import com.edulectronics.tinycircuit.Views.Draggables.Interfaces.IDragSource;
+import com.edulectronics.tinycircuit.Views.Draggables.Interfaces.IDropTarget;
 
 import java.util.ArrayList;
 
@@ -79,7 +80,7 @@ public class DragController {
     private float mTouchOffsetY;
 
     /** Where the drag originated */
-    private DragSource mDragSource;
+    private IDragSource mDragSource;
 
     /** The data associated with the object being dragged */
     private Object mDragInfo;
@@ -88,16 +89,16 @@ public class DragController {
     private DragView mDragView;
 
     /** Who can receive drop events */
-    private ArrayList<DropTarget> mDropTargets = new ArrayList<DropTarget>();
+    private ArrayList<IDropTarget> mDropTargets = new ArrayList<IDropTarget>();
 
-    private DragListener mListener;
+    private IDragListener mListener;
 
     /** The window token used as the parent for the DragView. */
     private IBinder mWindowToken;
 
     private View mMoveTarget;
 
-    private DropTarget mLastDropTarget;
+    private IDropTarget mLastDropTarget;
 
     private InputMethodManager mInputMethodManager;
 
@@ -124,7 +125,7 @@ public class DragController {
      * @param source An object representing where the drag originated
      * @param dragInfo The data associated with the object that is being dragged
      */
-    public void startDrag(View v, DragSource source, Object dragInfo) {
+    public void startDrag(View v, IDragSource source, Object dragInfo) {
         // Start dragging, but only if the source has something to drag.
         boolean doDrag = source.allowDrag();
         if (!doDrag) return;
@@ -143,6 +144,8 @@ public class DragController {
         startDrag(b, screenX, screenY, 0, 0, b.getWidth(), b.getHeight(), source, dragInfo);
         b.recycle();
         v.setVisibility(View.GONE);
+
+        ((Activity)mContext).findViewById(R.id.delete_zone_view).setVisibility(View.VISIBLE);
     }
 
     /**
@@ -161,7 +164,7 @@ public class DragController {
      */
     public void startDrag(Bitmap b, int screenX, int screenY,
             int textureLeft, int textureTop, int textureWidth, int textureHeight,
-            DragSource source, Object dragInfo) {
+                          IDragSource source, Object dragInfo) {
         // Hide soft keyboard, if visible
         if (mInputMethodManager == null) {
             mInputMethodManager =
@@ -189,6 +192,7 @@ public class DragController {
                 textureLeft, textureTop, textureWidth, textureHeight);
         dragView.show(mWindowToken, (int)mMotionDownX, (int)mMotionDownY);
     }
+
 
     /**
      * Draw the view into a bitmap.
@@ -258,6 +262,10 @@ public class DragController {
                 mDragView.remove();
                 mDragView = null;
             }
+            DeleteZone deleteZone = (DeleteZone)((Activity)mContext).findViewById(R.id.delete_zone_view);
+            if (deleteZone != null) {
+                deleteZone.setVisibility(View.INVISIBLE);
+            }
         }
     }
 
@@ -323,7 +331,7 @@ public class DragController {
             mDragView.move((int)ev.getRawX(), (int)ev.getRawY());
             // Drop on someone?
             final int[] coordinates = mCoordinatesTemp;
-            DropTarget dropTarget = findDropTarget(screenX, screenY, coordinates);
+            IDropTarget dropTarget = findDropTarget(screenX, screenY, coordinates);
             if (dropTarget != null) {
                 if (mLastDropTarget == dropTarget) {
                     dropTarget.onDragOver(mDragSource, coordinates[0], coordinates[1],
@@ -361,7 +369,7 @@ public class DragController {
     private boolean drop(float x, float y) {
 
         final int[] coordinates = mCoordinatesTemp;
-        DropTarget dropTarget = findDropTarget((int) x, (int) y, coordinates);
+        IDropTarget dropTarget = findDropTarget((int) x, (int) y, coordinates);
 
         if (dropTarget != null) {
             dropTarget.onDragExit(mDragSource, coordinates[0], coordinates[1],
@@ -379,13 +387,13 @@ public class DragController {
         return false;
     }
 
-    private DropTarget findDropTarget(int x, int y, int[] dropCoordinates) {
+    private IDropTarget findDropTarget(int x, int y, int[] dropCoordinates) {
         final Rect r = mRectTemp;
 
-        final ArrayList<DropTarget> dropTargets = mDropTargets;
+        final ArrayList<IDropTarget> dropTargets = mDropTargets;
         final int count = dropTargets.size();
         for (int i=count-1; i>=0; i--) {
-            final DropTarget target = dropTargets.get(i);
+            final IDropTarget target = dropTargets.get(i);
             target.getHitRect(r);
             target.getLocationOnScreen(dropCoordinates);
             r.offset(dropCoordinates[0] - target.getLeft(), dropCoordinates[1] - target.getTop());
@@ -423,14 +431,14 @@ public class DragController {
     /**
      * Sets the drag listener which will be notified when a drag starts or ends.
      */
-    public void setDragListener(DragListener l) {
+    public void setDragListener(IDragListener l) {
         mListener = l;
     }
 
     /**
      * Add a DropTarget to the list of potential places to receive drop events.
      */
-    public void addDropTarget(DropTarget target) {
+    public void addDropTarget(IDropTarget target) {
         mDropTargets.add(target);
     }
 
@@ -438,6 +446,6 @@ public class DragController {
      * Don't send drop events to <em>target</em> any more.
      */
     public void removeAllDropTargets () {
-        mDropTargets = new ArrayList<DropTarget> ();
+        mDropTargets = new ArrayList<IDropTarget> ();
     }
 }

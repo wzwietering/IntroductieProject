@@ -6,28 +6,22 @@ import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
-import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ExpandableListView;
-import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.edulectronics.tinycircuit.Controllers.CircuitController;
-import com.edulectronics.tinycircuit.Models.Components.Component;
-import com.edulectronics.tinycircuit.Models.Factories.ComponentFactory;
 import com.edulectronics.tinycircuit.Models.MenuItem;
 import com.edulectronics.tinycircuit.R;
 import com.edulectronics.tinycircuit.Views.Adapters.CircuitAdapter;
 import com.edulectronics.tinycircuit.Views.Adapters.ExpandableListAdapter;
 import com.edulectronics.tinycircuit.Views.Draggables.DragController;
 import com.edulectronics.tinycircuit.Views.Draggables.DragLayer;
-import com.edulectronics.tinycircuit.Views.Draggables.GridCell;
-import com.edulectronics.tinycircuit.Views.Draggables.Interfaces.DragSource;
+import com.edulectronics.tinycircuit.Views.Draggables.Interfaces.IDragSource;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -70,12 +64,12 @@ public class CircuitActivity extends Activity
         });
 
         circuit.setNumColumns(circuitController.circuit.width);
-        circuit.setAdapter(new CircuitAdapter(this, circuitController));
+        circuit.setAdapter(new CircuitAdapter(this));
     }
 
     private void getController() {
         Intent intent = getIntent();
-        circuitController = (CircuitController) intent.getSerializableExtra("Controller");
+        circuitController = CircuitController.getInstance();
     }
 
     private void createDragControls() {
@@ -166,8 +160,7 @@ public class CircuitActivity extends Activity
 
     public boolean startDrag (View v)
     {
-        DragSource dragSource = (DragSource) v;
-
+        IDragSource dragSource = (IDragSource) v;
         mDragController.startDrag (v, dragSource, dragSource);
 
         return true;
@@ -175,31 +168,9 @@ public class CircuitActivity extends Activity
 
     public void onClickAddComponent(String text)
     {
-        Component component = ComponentFactory.CreateComponent(text);
-        addNewComponent(component);
+        circuitController.addNewComponent(text, this);
         NavigationView view = (NavigationView) findViewById(R.id.navigationview);
         ((DrawerLayout) findViewById(R.id.activity_main)).closeDrawer(view);
-    }
-
-    public void addNewComponent(Component component)
-    {
-        FrameLayout componentHolder = (FrameLayout)findViewById (R.id.component_source_frame);
-        componentHolder.setVisibility(View.VISIBLE);
-
-        if (componentHolder != null) {
-            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams (ViewGroup.LayoutParams.FILL_PARENT,
-                    ViewGroup.LayoutParams.FILL_PARENT,
-                    Gravity.CENTER);
-            GridCell newView = new GridCell (this, circuitController);
-            newView.setComponent(component);
-            componentHolder.addView(newView, lp);
-            newView.mCellNumber = -1;
-
-            // Have this activity listen to touch and click events for the view.
-            newView.setOnClickListener(this);
-            newView.setOnLongClickListener(this);
-            newView.setOnTouchListener (this);
-        }
     }
 
     public ExpandableListView.OnGroupClickListener onGroupClick(){

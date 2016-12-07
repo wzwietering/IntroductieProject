@@ -21,14 +21,11 @@ public class MenuActivity extends AppCompatActivity {
 
     public void freePlayStart(View v) {
         Intent freeplay = new Intent(MenuActivity.this, CircuitActivity.class);
-        freeplay.putExtra("Controller", new CircuitController(null, 20, 10));
+        CircuitController.getInstance().setProperties(null, 20, 20);
         startActivity(freeplay);
     }
     public void exerciseMenuStart(View v){
         Intent exercise = new Intent(MenuActivity.this, ExerciseMenuActivity.class);
         startActivity(exercise);
-
-
     }
-
 }

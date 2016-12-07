@@ -23,7 +23,8 @@ public class CircuitTest {
     @Test
     public void addComponent(){
         s.add(light);
-        c = new CircuitController(s, 5, 5);
+        c = CircuitController.getInstance();
+        c.setProperties(s, 5, 5);
         c.addComponent(light, 6);
 
         assertEquals(true, c.circuit.occupied(6));
@@ -31,7 +32,8 @@ public class CircuitTest {
 
     @Test
     public void removeComponent(){
-        c = new CircuitController(s, 5, 5);
+        c = CircuitController.getInstance();
+        c.setProperties(s, 5, 5);
         c.removeComponent(1);
 
         assertEquals(false, c.circuit.occupied(5));
