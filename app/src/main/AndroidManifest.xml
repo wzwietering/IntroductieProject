@@ -21,7 +21,7 @@
             android:name=".Views.CircuitActivity"
             android:screenOrientation="sensorLandscape" />
         <activity
-            android:name=".Views.excerciseMenuActivity"
+            android:name=".Views.ExerciseMenuActivity"
             android:screenOrientation="sensorLandscape">
         </activity>
     </application>

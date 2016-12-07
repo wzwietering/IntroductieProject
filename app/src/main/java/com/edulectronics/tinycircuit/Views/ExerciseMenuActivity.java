@@ -8,28 +8,28 @@ import android.widget.TextView;
 
 import com.edulectronics.tinycircuit.R;
 
-public class excerciseMenuActivity extends AppCompatActivity {
-    int n, excercise_amount = 10;
+public class ExerciseMenuActivity extends AppCompatActivity {
+    int n, exercise_amount = 10;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_excercise_menu);
+        setContentView(R.layout.activity_exercise_menu);
 
         //fills the horizontal scrollView
         LinearLayout item;
-        for (n = 1; n <= excercise_amount; n++) {
+        for (n = 1; n <= exercise_amount; n++) {
             item = (LinearLayout) findViewById(R.id.Linearlayout);
             View button = getLayoutInflater().inflate(R.layout.choise_button, null);
-            TextView text = (TextView) button.findViewById(R.id.textview1);
+            TextView text = (TextView) button.findViewById(R.id.levelnumber);
             text.setText(Integer.toString(n));
             item.addView(button);
         }
     }
 
     //Identifier for which button was pressed
-     public void startExcercise(View v){
-        TextView text = (TextView) v.findViewById(R.id.textview1);
+     public void startExercise(View v){
+        TextView text = (TextView) v.findViewById(R.id.levelnumber);
         n = Integer.parseInt(text.getText().toString());
 
         switch (n) {

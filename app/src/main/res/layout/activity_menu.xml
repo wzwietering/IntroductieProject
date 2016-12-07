@@ -31,9 +31,9 @@
         <ImageButton
             android:layout_width="198dp"
             android:layout_height="wrap_content"
-            android:background="@mipmap/Exercise"
+            android:background="@mipmap/exercise"
             android:id="@+id/opgaveButton"
-            android:onClick="excerciseMenuStart"
+            android:onClick="exerciseMenuStart"
             android:layout_gravity="center_horizontal"
             android:layout_weight="2.48"/>
 

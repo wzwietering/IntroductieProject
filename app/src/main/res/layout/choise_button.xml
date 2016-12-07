@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:onClick="startExcercise"
+    android:onClick="startExercise"
     android:layout_marginStart="15dp"
     android:layout_weight="1">
 
@@ -18,7 +18,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:id="@+id/textview1"
+        android:id="@+id/levelnumber"
         android:textSize="60sp"
         android:layout_marginTop="20dp"
         android:layout_centerInParent="true" />
