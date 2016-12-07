@@ -36,7 +36,7 @@ public class DeleteZone extends ImageView
     public boolean acceptDrop() {
         return true;
     }
-    
+
     public void onDragEnter(DragSource source, int x, int y, int xOffset, int yOffset,
                             DragView dragView, Object dragInfo) {
         // Set the image level so the image is highlighted;

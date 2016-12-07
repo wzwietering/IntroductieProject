@@ -17,12 +17,14 @@ import static org.junit.Assert.assertEquals;
  */
 
 public class AdapterTest {
+
     CircuitController controller = CircuitController.getInstance();
-    controller.setProperties(new HashSet<Component>(), 5, 5);
     CircuitAdapter circuitAdapter = new CircuitAdapter(null);
 
     @Test
     public void adapterTests(){
+        controller.setProperties(new HashSet<Component>(), 5, 5);
+
         Lightbulb l = new Lightbulb();
         controller.addComponent(l, 14);
 
