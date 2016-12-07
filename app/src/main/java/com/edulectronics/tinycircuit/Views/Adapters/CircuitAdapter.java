@@ -55,7 +55,9 @@ public class CircuitAdapter extends BaseAdapter {
         GridCell v = createGridCellByView(convertView);
         v.mCellNumber = position;
         v.mGrid = (GridView) parent;
-        v.setComponent(circuitController.circuit.getComponent(position));
+
+        if (circuitController.circuit.occupied(position))
+            v.setComponent(circuitController.circuit.getComponent(position));
 
         // Set up to relay events to the activity.
         // The activity decides which events trigger drag operations.
