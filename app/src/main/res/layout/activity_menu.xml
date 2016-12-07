@@ -24,15 +24,14 @@
         <ImageView
             android:layout_width="388dp"
             android:layout_height="wrap_content"
-            app:srcCompat="@mipmap/titel_text"
-            android:id="@+id/imageView3"
+            app:srcCompat="@mipmap/title_text"
             android:layout_weight="3"/>
 
         <ImageButton
             android:layout_width="198dp"
             android:layout_height="wrap_content"
             android:background="@mipmap/exercise"
-            android:id="@+id/opgaveButton"
+            android:id="@+id/exerciseButton"
             android:onClick="exerciseMenuStart"
             android:layout_gravity="center_horizontal"
             android:layout_weight="2.48"/>
@@ -51,7 +50,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@mipmap/logo"
-        android:id="@+id/imageView"
+        android:id="@+id/logo"
 
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"/>
