@@ -1,8 +1,5 @@
 package com.edulectronics.tinycircuit.Controllers;
 
-import android.content.Context;
-import android.support.design.widget.NavigationView;
-import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,7 +43,7 @@ public class CircuitController implements Serializable {
 
     public void addNewComponent(String componentName, CircuitActivity activity)
     {
-        Component component = ComponentFactory.CreateComponent(componentName);
+        Component component = ComponentFactory.CreateComponent(componentName, 5.0);
 
         FrameLayout componentHolder = (FrameLayout) activity.findViewById (R.id.component_source_frame);
         componentHolder.setVisibility(View.VISIBLE);

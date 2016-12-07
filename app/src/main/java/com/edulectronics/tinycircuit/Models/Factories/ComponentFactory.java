@@ -10,16 +10,16 @@ import com.edulectronics.tinycircuit.Models.Components.Resistor;
  */
 public class ComponentFactory {
 
-    //TODO: geen hardcoded strings gebruiken!!! Uit resouces halen.
+    //TODO: geen hardcoded strings gebruiken!!! Uit resources halen.
 
-    public static Component CreateComponent(String name) {
+    public static Component CreateComponent(String name, double value) {
         switch (name) {
             case "Batterij":
-                return new Powersource(5);
+                return new Powersource(value);
             case "Gloeilamp":
                 return new Lightbulb();
             case "Weerstand":
-                return new Resistor();
+                return new Resistor(value);
         }
         throw new IllegalArgumentException("component name unknown");
     }

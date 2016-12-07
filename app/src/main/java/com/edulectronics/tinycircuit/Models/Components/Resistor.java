@@ -9,6 +9,11 @@ import com.edulectronics.tinycircuit.R;
  */
 
 public class Resistor extends Component {
+    double resistance;
+
+    public Resistor(double resistance){
+        this.resistance = resistance;
+    }
 
     @Override
     public void handleInputChange() {
@@ -29,6 +34,11 @@ public class Resistor extends Component {
 
     @Override
     public int getImage(){
-        return R.mipmap.resistor;
+        //TODO use different texture for different types
+        if(this.resistance == 0){
+            return R.mipmap.resistor;
+        }else{
+            return R.mipmap.resistor;
+        }
     }
 }
