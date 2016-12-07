@@ -29,7 +29,6 @@ public class MenuActivity extends AppCompatActivity {
         int cellSize = getResources().getInteger(R.integer.cell_size);
         //Width or height divided by cellsize fits the maxiumum amount of cells inside the screen
         CircuitController.getInstance().setProperties(null, size.x / cellSize, size.y / cellSize);
-        CircuitController.getInstance().setProperties(null, 20, 20);
         startActivity(freeplay);
     }
     public void exerciseMenuStart(View v){
