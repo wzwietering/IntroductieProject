@@ -27,9 +27,10 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.GridView;
 
-import com.edulectronics.tinycircuit.Views.Draggables.Interfaces.DragListener;
-import com.edulectronics.tinycircuit.Views.Draggables.Interfaces.DragSource;
-import com.edulectronics.tinycircuit.Views.Draggables.Interfaces.DropTarget;
+import com.edulectronics.tinycircuit.R;
+import com.edulectronics.tinycircuit.Views.Draggables.Interfaces.IDragListener;
+import com.edulectronics.tinycircuit.Views.Draggables.Interfaces.IDragSource;
+import com.edulectronics.tinycircuit.Views.Draggables.Interfaces.IDropTarget;
 
 /**
  * A ViewGroup that supports dragging within it.
@@ -41,7 +42,7 @@ import com.edulectronics.tinycircuit.Views.Draggables.Interfaces.DropTarget;
  * (2) it dynamically adds drop targets when a drag-drop sequence begins.
  * The child views of the GridView are assumed to implement the DropTarget interface. 
  */
-public class DragLayer extends FrameLayout implements DragListener {
+public class DragLayer extends FrameLayout implements IDragListener {
     DragController mDragController;
     GridView mGridView;
 
@@ -77,7 +78,7 @@ public class DragLayer extends FrameLayout implements DragListener {
         mGridView = newValue;
     }
 
-    public void onDragStart(DragSource source, Object info)
+    public void onDragStart(IDragSource source, Object info)
     {
         // We are starting a drag.
         // Build up a list of DropTargets from the child views of the GridView.
@@ -86,9 +87,18 @@ public class DragLayer extends FrameLayout implements DragListener {
         if (mGridView != null) {
            int numVisibleChildren = mGridView.getChildCount();
            for ( int i = 0; i < numVisibleChildren; i++ ) {
-               DropTarget view = (DropTarget) mGridView.getChildAt (i);
+               IDropTarget view = (IDropTarget) mGridView.getChildAt (i);
                mDragController.addDropTarget (view);
            }
+        }
+
+        // Always add the delete_zone so there is a place to get rid of views.
+        // Find the delete_zone and add it as a drop target.
+        // That gives the user a place to drag views to get them off the screen.
+        View v = findViewById (R.id.delete_zone_view);
+        if (v != null) {
+            DeleteZone dz = (DeleteZone) v;
+            mDragController.addDropTarget (dz);
         }
     }
 

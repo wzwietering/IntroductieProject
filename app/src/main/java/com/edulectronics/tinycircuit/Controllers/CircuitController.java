@@ -23,13 +23,23 @@ import java.util.Set;
  */
 
 public class CircuitController implements Serializable {
+
+    private static CircuitController ourInstance = new CircuitController();
+
+    public static CircuitController getInstance() {
+        return ourInstance;
+    }
+
+    private CircuitController() {
+    }
+
     public Circuit circuit;
     private Set<Component> availableComponents;
 
     // When a new component is created, we save it here. It hasn't been dragged to the circuit yet.
     public Component newComponent;
 
-    public CircuitController(Set<Component> s, int width, int size){
+    public void setProperties(Set<Component> s, int width, int size){
         this.circuit = new Circuit(width, size);
         this.availableComponents = s;
     }
@@ -45,7 +55,7 @@ public class CircuitController implements Serializable {
             FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams (ViewGroup.LayoutParams.FILL_PARENT,
                     ViewGroup.LayoutParams.FILL_PARENT,
                     Gravity.CENTER);
-            GridCell newView = new GridCell (activity, this);
+            GridCell newView = new GridCell (activity);
             newView.setComponent(component);
             componentHolder.addView(newView, lp);
             newView.mCellNumber = -1;

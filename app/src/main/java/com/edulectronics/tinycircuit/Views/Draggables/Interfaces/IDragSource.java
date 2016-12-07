@@ -21,7 +21,7 @@ package com.edulectronics.tinycircuit.Views.Draggables.Interfaces;
 
 import android.view.View;
 
-public interface DragSource {
+public interface IDragSource {
     boolean allowDrag();
     void onDropCompleted(View target, boolean success);
 }
