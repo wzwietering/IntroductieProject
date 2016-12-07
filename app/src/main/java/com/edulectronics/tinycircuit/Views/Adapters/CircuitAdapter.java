@@ -8,7 +8,6 @@ import android.widget.GridView;
 import android.widget.ImageView;
 
 import com.edulectronics.tinycircuit.Controllers.CircuitController;
-import com.edulectronics.tinycircuit.Models.Components.Component;
 import com.edulectronics.tinycircuit.R;
 import com.edulectronics.tinycircuit.Views.Draggables.GridCell;
 /**
@@ -79,7 +78,8 @@ public class CircuitAdapter extends BaseAdapter {
 
     private GridCell createNewGridCell() {
         GridCell cell = new GridCell(context);
-        cell.setLayoutParams(new GridView.LayoutParams(85, 85));
+        int cellSize = context.getResources().getInteger(R.integer.cell_size);
+        cell.setLayoutParams(new GridView.LayoutParams(cellSize, cellSize));
         cell.setScaleType(ImageView.ScaleType.CENTER_CROP);
         cell.setPadding(8, 8, 8, 8);
         return cell;
