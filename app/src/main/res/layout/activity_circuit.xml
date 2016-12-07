@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
-										xmlns:tools="http://schemas.android.com/tools"
-										android:id="@+id/activity_main"
-										android:layout_width="match_parent"
-										android:layout_height="match_parent"
-										tools:context="com.edulectronics.tinycircuit.Views.CircuitActivity">
-	<com.edulectronics.tinycircuit.Views.Draggables.DragLayer
-		android:id="@+id/drag_layer"
-		android:layout_width="fill_parent"
-		android:layout_height="fill_parent">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.edulectronics.tinycircuit.Views.CircuitActivity">
+    <com.edulectronics.tinycircuit.Views.Draggables.DragLayer
+        android:id="@+id/drag_layer"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
 		<GridView
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
@@ -35,17 +35,15 @@
 			android:id="@+id/delete_zone_view"
 			android:src="@mipmap/trashcan"
 			android:layout_gravity="bottom"
-			android:visibility="invisible"
-			/>
+			android:visibility="invisible"/>
+    </com.edulectronics.tinycircuit.Views.Draggables.DragLayer>
 
-	</com.edulectronics.tinycircuit.Views.Draggables.DragLayer>
 	<android.support.design.widget.NavigationView
 		android:id="@+id/navigationview"
 		android:layout_width="wrap_content"
 		android:layout_height="match_parent"
 		android:layout_gravity="start"
 		android:fitsSystemWindows="true">
-
 
 		<ExpandableListView
 			android:id="@+id/expandablelist"
