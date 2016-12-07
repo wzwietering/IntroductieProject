@@ -48,25 +48,16 @@ public class CircuitAdapter extends BaseAdapter {
      */
     public View getView (int position, View convertView, ViewGroup parent)
     {
-        mParentView = parent;
+        return createGridCell(position, convertView, parent);
+    }
 
-        GridCell v;
-        if (convertView == null) {
-            // If it's not recycled, create a new ImageCell.
-            v = new GridCell(context);
-            int cellSize = context.getResources().getInteger(R.integer.cell_size);
-            v.setLayoutParams(new GridView.LayoutParams(cellSize, cellSize));
-            v.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            v.setPadding(8, 8, 8, 8);
-
-        } else {
-            v = (GridCell) convertView;
-        }
-
+    private GridCell createGridCell(int position, View convertView, ViewGroup parent) {
+        GridCell v = createGridCellByView(convertView);
         v.mCellNumber = position;
-        v.mGrid = (GridView) mParentView;
-        v.isEmpty = true;
-        v.setBackgroundResource(R.color.cell_empty);
+        v.mGrid = (GridView) parent;
+
+        if (circuitController.circuit.occupied(position))
+            v.setComponent(circuitController.circuit.getComponent(position));
 
         // Set up to relay events to the activity.
         // The activity decides which events trigger drag operations.
@@ -75,12 +66,22 @@ public class CircuitAdapter extends BaseAdapter {
         v.setOnClickListener((View.OnClickListener) context);
         v.setOnLongClickListener((View.OnLongClickListener) context);
 
-        if(circuitController.circuit.occupied(position))
-        {
-            Component component = circuitController.circuit.getComponent(position);
-            v.setComponent(component);
-        }
-
         return v;
+    }
+
+    private GridCell createGridCellByView(View convertView) {
+        if (convertView == null) {
+            // If it's not recycled, create a new ImageCell.
+            return createNewGridCell();
+        }
+        return (GridCell) convertView;
+    }
+
+    private GridCell createNewGridCell() {
+        GridCell cell = new GridCell(context);
+        cell.setLayoutParams(new GridView.LayoutParams(85, 85));
+        cell.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        cell.setPadding(8, 8, 8, 8);
+        return cell;
     }
 }
