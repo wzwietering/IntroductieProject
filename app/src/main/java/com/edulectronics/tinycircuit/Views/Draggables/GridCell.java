@@ -31,9 +31,18 @@ public class GridCell extends ImageView implements IDragSource, IDropTarget {
     // Constructors
     public GridCell(Context context) {
         super(context);
+        setBackgroundResource(R.color.cell_empty);
     }
-    public GridCell (Context context, AttributeSet attrs) { super (context, attrs); }
-    public GridCell (Context context, AttributeSet attrs, int style) { super (context, attrs, style); }
+
+    public GridCell (Context context, AttributeSet attrs) {
+        super (context, attrs);
+        setBackgroundResource(R.color.cell_empty);
+    }
+
+    public GridCell (Context context, AttributeSet attrs, int style) {
+        super (context, attrs, style);
+        setBackgroundResource(R.color.cell_empty);
+    }
 
     public void setComponent(Component component) {
         this.isEmpty = false;

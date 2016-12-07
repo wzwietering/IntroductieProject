@@ -36,13 +36,13 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getGroupCount() {
-        return this.headers.size();
+        return headers.size();
     }
 
     @Override
     public int getChildrenCount(int groupPosition) {
         try{
-            return this.children.get(this.headers.get(groupPosition)).size();
+            return children.get(headers.get(groupPosition)).size();
         } catch (NullPointerException e){
             return 0;
         }
@@ -50,7 +50,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public Object getGroup(int groupPosition) {
-        return this.headers.get(groupPosition);
+        return headers.get(groupPosition);
     }
 
     @Override
@@ -76,26 +76,27 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         MenuItem headerTitle = (MenuItem) getGroup(groupPosition);
-        if (convertView == null) {
-            LayoutInflater layoutInflater = (LayoutInflater) this.context
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = layoutInflater.inflate(R.layout.header, null);
-        }
-        ImageView headerIcon = (ImageView) convertView.findViewById(R.id.iconimage);
-        return getView(convertView, headerTitle, headerIcon);
+        return createMenuItem(convertView, headerTitle, R.layout.header, R.id.iconimage);
     }
 
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
         MenuItem childText = (MenuItem) getChild(groupPosition, childPosition);
+        return createMenuItem(convertView, childText, R.layout.listsubmenu, R.id.submenuimage);
+    }
 
+    private View createMenuItem(View convertView, MenuItem text, int layout, int icon) {
         if (convertView == null) {
-            LayoutInflater layoutInflater = (LayoutInflater) this.context
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = layoutInflater.inflate(R.layout.listsubmenu, null);
+            convertView = inflateView(layout);
         }
-        ImageView childImage = (ImageView) convertView.findViewById(R.id.submenuimage);
-        return getView(convertView, childText, childImage);
+        ImageView image = (ImageView) convertView.findViewById(icon);
+        return getView(convertView, text, image);
+    }
+
+    private View inflateView(int layout) {
+        LayoutInflater layoutInflater = (LayoutInflater) this.context
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        return layoutInflater.inflate(layout, null);
     }
 
     public View getView(View convertView, MenuItem menuItem, ImageView imageView){
