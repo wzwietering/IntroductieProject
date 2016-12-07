@@ -24,7 +24,7 @@
         <ImageView
             android:layout_width="388dp"
             android:layout_height="wrap_content"
-            app:srcCompat="@mipmap/titel_tekst"
+            app:srcCompat="@mipmap/titel_text"
             android:id="@+id/imageView3"
             android:layout_weight="3"/>
 
@@ -40,7 +40,7 @@
         <ImageButton
             android:layout_width="198dp"
             android:layout_height="wrap_content"
-            android:background="@mipmap/vrijspel"
+            android:background="@mipmap/freeplay"
             android:id="@+id/startGame"
             android:onClick="freePlayStart"
             android:layout_gravity="center_horizontal"
