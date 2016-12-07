@@ -1,7 +1,5 @@
 package com.edulectronics.tinycircuit.Models.Components;
-
-import com.edulectronics.tinycircuit.Models.Components.Connectors.Input;
-import com.edulectronics.tinycircuit.Models.Components.Connectors.Output;
+import com.edulectronics.tinycircuit.Models.Components.Connectors.ConnectionPoint;
 import com.edulectronics.tinycircuit.R;
 
 /**
@@ -13,24 +11,25 @@ public class Lightbulb extends Component {
     public double voltageThreshold = 5;
     public boolean isOn = false;
 
+
+    double voltageOut = 0;
+
     @Override
     public void handleInputChange() {
-        double voltage = 0;
-        for (Input input: inputs) {
-            voltage += input.getInputVoltage();
-        }
+        double voltage = Math.abs(connectionPoints.get(0).getVoltageIn() - connectionPoints.get(1).getVoltageIn());
+
         if(voltage >= voltageThreshold)
         {
             switchState(true);
         }
-        this.outputVoltage = voltage;
+        voltageOut = voltage;
         setNewOutputValues();
     }
 
     @Override
     public void setNewOutputValues() {
-        for (Output output: outputs) {
-            output.setOutputVoltage(this.outputVoltage);
+        for (ConnectionPoint connectionPoint: connectionPoints) {
+            connectionPoint.setVoltageOut(this.voltageOut);
         }
     }
 

@@ -1,8 +1,7 @@
 package com.edulectronics.tinycircuit;
 
+import com.edulectronics.tinycircuit.Models.Components.Connectors.ConnectionPoint;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.Connector;
-import com.edulectronics.tinycircuit.Models.Components.Connectors.Input;
-import com.edulectronics.tinycircuit.Models.Components.Connectors.Output;
 import com.edulectronics.tinycircuit.Models.Components.Lightbulb;
 import com.edulectronics.tinycircuit.Models.Components.Powersource;
 
@@ -20,12 +19,12 @@ public class LightbulbTest {
     @Test
     public void connectedLightBulbIsOn(){
         Powersource powersource = new Powersource(5);
-        Output powerOutput = powersource.getOutputByIndex(0);
-        Input powerInput = powersource.getInputByIndex(0);
+        ConnectionPoint powerOutput = powersource.getOutput();
+        ConnectionPoint powerInput = powersource.getInput();
 
         Lightbulb bulb = new Lightbulb();
-        Output bulbOutput = bulb.getOutputByIndex(0);
-        Input bulbInput = bulb.getInputByIndex(0);
+        ConnectionPoint bulbOutput = bulb.getConnectionPointByIndex(0);
+        ConnectionPoint bulbInput = bulb.getConnectionPointByIndex(1);
 
         Connector.connect(bulbInput, powerOutput);
         Connector.connect(powerInput, bulbOutput);
@@ -37,12 +36,12 @@ public class LightbulbTest {
     @Test
     public void weakPowersourceLightbulbNotOn(){
         Powersource powersource = new Powersource(3);
-        Output powerOutput = powersource.getOutputByIndex(0);
-        Input powerInput = powersource.getInputByIndex(0);
+        ConnectionPoint powerOutput = powersource.getOutput();
+        ConnectionPoint powerInput = powersource.getInput();
 
         Lightbulb bulb = new Lightbulb();
-        Output bulbOutput = bulb.getOutputByIndex(0);
-        Input bulbInput = bulb.getInputByIndex(0);
+        ConnectionPoint bulbOutput = bulb.getConnectionPointByIndex(0);
+        ConnectionPoint bulbInput = bulb.getConnectionPointByIndex(0);
 
         Connector.connect(bulbInput, powerOutput);
         Connector.connect(powerInput, bulbOutput);
@@ -54,10 +53,10 @@ public class LightbulbTest {
     @Test
     public void disconnectedLightBulbIsOff(){
         Powersource powersource = new Powersource(5);
-        Output powerOutput = powersource.getOutputByIndex(0);
+        ConnectionPoint powerOutput = powersource.getOutput();
 
         Lightbulb bulb = new Lightbulb();
-        Input bulbInput = bulb.getInputByIndex(0);
+        ConnectionPoint bulbInput = bulb.getConnectionPointByIndex(0);
 
         Connector.connect(bulbInput, powerOutput);
 
