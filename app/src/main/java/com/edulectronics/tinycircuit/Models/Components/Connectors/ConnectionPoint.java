@@ -28,7 +28,7 @@ public class ConnectionPoint {
         this.orientation = orientation;
     }
 
-    public double getVolgateOut() {
+    public double getVoltageOut() {
         return this.voltageOut;
     }
 
@@ -45,7 +45,7 @@ public class ConnectionPoint {
     private void calculateVoltageIn() {
         double voltage = 0;
         for (ConnectionPoint connectionPoint: connections) {
-            voltage += connectionPoint.getVolgateOut();
+            voltage += connectionPoint.getVoltageOut();
         }
         this.voltageIn = voltage;
         parentComponent.handleInputChange();
