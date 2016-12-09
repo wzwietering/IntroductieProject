@@ -15,6 +15,7 @@ import android.view.View;
 public class DrawView extends View {
     Paint paint = new Paint();
     private int strokeWidth = 8;
+    private Canvas canvas;
 
     public DrawView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -24,11 +25,12 @@ public class DrawView extends View {
 
     @Override
     public void onDraw(Canvas canvas) {
+        this.canvas = canvas;
         canvas.drawLine(0, 0, 300, 300, paint);
         super.onDraw(canvas);
     }
 
-    public void drawLine(Canvas canvas, Point point, Point toPoint){
+    public void drawLine(Point point, Point toPoint){
         canvas.drawLine(point.x, point.y, toPoint.x, toPoint.y, paint);
         super.draw(canvas);
     }
