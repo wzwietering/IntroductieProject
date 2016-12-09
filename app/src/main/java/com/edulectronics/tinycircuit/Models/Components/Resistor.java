@@ -1,7 +1,6 @@
 package com.edulectronics.tinycircuit.Models.Components;
 
-import com.edulectronics.tinycircuit.Models.Components.Connectors.Input;
-import com.edulectronics.tinycircuit.Models.Components.Connectors.Output;
+import com.edulectronics.tinycircuit.Models.Components.Connectors.ConnectionPoint;
 import com.edulectronics.tinycircuit.R;
 
 /**
@@ -10,6 +9,7 @@ import com.edulectronics.tinycircuit.R;
 
 public class Resistor extends Component {
     double resistance;
+    double voltageOut = 0;
 
     public Resistor(double resistance){
         this.resistance = resistance;
@@ -17,18 +17,14 @@ public class Resistor extends Component {
 
     @Override
     public void handleInputChange() {
-        double voltage = 0;
-        for (Input input: inputs) {
-            voltage += input.getInputVoltage();
-        }
-        this.outputVoltage = voltage;
+        voltageOut = Math.abs(connectionPoints.get(0).getVoltageIn() - connectionPoints.get(1).getVoltageIn());
         setNewOutputValues();
     }
 
     @Override
     public void setNewOutputValues(){
-        for (Output output: outputs) {
-            output.setOutputVoltage(this.outputVoltage);
+        for (ConnectionPoint connectionPoint: connectionPoints) {
+            connectionPoint.setVoltageOut(this.voltageOut);
         }
     }
 
