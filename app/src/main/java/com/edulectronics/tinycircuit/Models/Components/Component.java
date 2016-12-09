@@ -17,6 +17,7 @@ import java.util.List;
 public abstract class Component implements IComponent {
 
     private double resistance;
+    public int position;
 
     protected List<ConnectionPoint> connectionPoints = new ArrayList<ConnectionPoint>(4);
 
@@ -50,5 +51,9 @@ public abstract class Component implements IComponent {
 
     public int getImage () {
         return R.mipmap.ic_launcher;
+    }
+
+    public void setPosition(int position){
+        this.position = position;
     }
 }
