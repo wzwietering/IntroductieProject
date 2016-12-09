@@ -81,7 +81,7 @@ public class CircuitController implements Serializable {
         return circuit.components[position];
     }
 
-    public Component[]getComponents(){
+    public Component[] getComponents(){
         return circuit.components;
     }
 }
