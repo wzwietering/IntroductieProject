@@ -1,8 +1,7 @@
 package com.edulectronics.tinycircuit;
 
+import com.edulectronics.tinycircuit.Models.Components.Connectors.ConnectionPoint;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.Connector;
-import com.edulectronics.tinycircuit.Models.Components.Connectors.Input;
-import com.edulectronics.tinycircuit.Models.Components.Connectors.Output;
 import com.edulectronics.tinycircuit.Models.Components.Lightbulb;
 import com.edulectronics.tinycircuit.Models.Components.Powersource;
 
@@ -19,8 +18,8 @@ public class ComponentTest {
     @Test
     public void connectedPowersource() throws Exception {
         Powersource powersource = new Powersource(5);
-        Output output = powersource.getOutputByIndex(0);
-        Input input = powersource.getInputByIndex(0);
+        ConnectionPoint output = powersource.getConnectionPointByIndex(0);
+        ConnectionPoint input = powersource.getConnectionPointByIndex(1);
 
         Connector.connect(input,output);
 
@@ -36,10 +35,10 @@ public class ComponentTest {
     @Test
     public void disconnectedCircuit(){
         Powersource powersource = new Powersource(5);
-        Output powerOutput = powersource.getOutputByIndex(0);
+        ConnectionPoint powerOutput = powersource.getConnectionPointByIndex(0);
 
         Lightbulb bulb = new Lightbulb();
-        Input bulbInput = bulb.getInputByIndex(0);
+        ConnectionPoint bulbInput = bulb.getConnectionPointByIndex(0);
 
         Connector.connect(bulbInput, powerOutput);
 
