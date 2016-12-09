@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Point;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -25,5 +26,10 @@ public class DrawView extends View {
     public void onDraw(Canvas canvas) {
         canvas.drawLine(0, 0, 300, 300, paint);
         super.onDraw(canvas);
+    }
+
+    public void drawLine(Canvas canvas, Point point, Point toPoint){
+        canvas.drawLine(point.x, point.y, toPoint.x, toPoint.y, paint);
+        super.draw(canvas);
     }
 }
