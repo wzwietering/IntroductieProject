@@ -11,13 +11,12 @@ import com.edulectronics.tinycircuit.Models.Components.Connectors.ConnectionPoin
 
 public class DrawingController {
 
-    private int componentWidth, componentHeight, gridWidth, gridHeight;
+    private int componentWidth, componentHeight, gridWidth;
 
-    public DrawingController(int componentWidth, int componentHeight, int gridWidth, int gridHeight) {
+    public DrawingController(int componentWidth, int componentHeight, int gridWidth) {
         this.componentWidth = componentWidth;
         this.componentHeight = componentHeight;
         this.gridWidth = gridWidth;
-        this.gridHeight = gridHeight;
     }
 
     public Point getNodeLocation(int position, ConnectionPointOrientation orientation) {
@@ -26,13 +25,13 @@ public class DrawingController {
 
     private int getXLocation(int position, ConnectionPointOrientation orientation) {
         if (orientation == ConnectionPointOrientation.Left)
-            return (position - 1) * componentWidth;
-        return position * componentWidth;
+            return ((position % gridWidth) - 1) * componentWidth;
+        return (position % gridWidth) * componentWidth;
     }
 
     private int getYLocation(int position, ConnectionPointOrientation orientation) {
         if (orientation == ConnectionPointOrientation.Top)
-            return (position - 1) * componentHeight;
-        return position * componentHeight;
+            return ((position / gridWidth) - 1) * componentHeight;
+        return (position / gridWidth) * componentHeight;
     }
 }
