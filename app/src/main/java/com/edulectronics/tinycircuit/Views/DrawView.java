@@ -26,20 +26,24 @@ public class DrawView extends View {
     private int strokeWidth = 8;
     private CircuitController controller;
 
-
-    public DrawView(Context context, AttributeSet attrs, CircuitController controller) {
+    public DrawView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        this.controller = controller;
         paint.setColor(Color.RED);
         paint.setStrokeWidth(strokeWidth);
+    }
+
+    public void setController(CircuitController controller) {
+        this.controller = controller;
     }
 
     @Override
     public void onDraw(Canvas canvas) {
         for (Component c: controller.getComponents()) {
-            for (ConnectionPoint connection: c.getConnectionPoints()) {
-                for (ConnectionPoint connectedTo: connection.getConnections()) {
-
+            if (c != null) {
+                for (ConnectionPoint connection: c.getConnectionPoints()) {
+                    for (ConnectionPoint connectedTo: connection.getConnections()) {
+                        
+                    }
                 }
             }
         }

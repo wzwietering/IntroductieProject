@@ -26,6 +26,7 @@ public class Circuit implements Serializable{
 
     public void add(Component component, int i) {
         components[i] = component;
+        component.setPosition(i);
     }
 
     public void remove(int i) {

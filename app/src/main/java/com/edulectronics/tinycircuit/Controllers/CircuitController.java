@@ -2,7 +2,7 @@ package com.edulectronics.tinycircuit.Controllers;
 
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.FrameLayout;
 
 import com.edulectronics.tinycircuit.Models.Circuit;
@@ -45,14 +45,15 @@ public class CircuitController implements Serializable {
     {
         Component component = ComponentFactory.CreateComponent(componentName, 5.0);
 
-        FrameLayout componentHolder = (FrameLayout) activity.findViewById (R.id.component_source_frame);
+        FrameLayout componentHolder = (FrameLayout) activity.findViewById
+                (R.id.component_source_frame);
         componentHolder.setVisibility(View.VISIBLE);
 
         if (componentHolder != null) {
-            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams (ViewGroup.LayoutParams.FILL_PARENT,
-                    ViewGroup.LayoutParams.FILL_PARENT,
+            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams (LayoutParams.MATCH_PARENT,
+                    LayoutParams.MATCH_PARENT,
                     Gravity.CENTER);
-            GridCell newView = new GridCell (activity);
+            GridCell newView = new GridCell(activity);
             newView.setComponent(component);
             componentHolder.addView(newView, lp);
             newView.mCellNumber = -1;
@@ -60,13 +61,13 @@ public class CircuitController implements Serializable {
             // Have this activity listen to touch and click events for the view.
             newView.setOnClickListener(activity);
             newView.setOnLongClickListener(activity);
-            newView.setOnTouchListener (activity);
+            newView.setOnTouchListener(activity);
         }
     }
 
     public void addComponent(Component component, int position){
         // Only add if tile is available and allowed
-        if(!circuit.occupied(position)){ // && availableComponents.contains(component)
+        if(!circuit.occupied(position)) {
             circuit.add(component, position);
         }
     }

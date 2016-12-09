@@ -51,6 +51,8 @@ public class CircuitActivity extends Activity
         setCircuit();
         createDragControls();
         createMenu();
+        DrawView drawView = (DrawView) findViewById(R.id.draw_view);
+        drawView.setController(circuitController);
     }
 
     private void setCircuit() {

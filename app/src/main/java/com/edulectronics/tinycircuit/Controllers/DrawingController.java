@@ -25,12 +25,6 @@ public class DrawingController {
         this.view = view;
     }
 
-    public void drawFromTo(int startPosition, ConnectionPointOrientation startComponentSide, int endPosition, ConnectionPointOrientation endComponentSide) {
-        Point startPoint = getNodeLocation(startPosition, startComponentSide);
-        Point endPoint = getNodeLocation(endPosition, endComponentSide);
-        view.drawLine(startPoint, endPoint);
-    }
-
     public Point getNodeLocation(int position, ConnectionPointOrientation orientation) {
         return new Point(getXLocation(position, orientation), getYLocation(position, orientation));
     }
