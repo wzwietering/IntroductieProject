@@ -3,6 +3,7 @@ package com.edulectronics.tinycircuit.Views;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.TypedArray;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -15,6 +16,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.edulectronics.tinycircuit.Controllers.CircuitController;
+import com.edulectronics.tinycircuit.Controllers.DrawingController;
+import com.edulectronics.tinycircuit.Models.Components.Connectors.ConnectionPointOrientation;
 import com.edulectronics.tinycircuit.Models.MenuItem;
 import com.edulectronics.tinycircuit.R;
 import com.edulectronics.tinycircuit.Views.Adapters.CircuitAdapter;
@@ -35,6 +38,7 @@ public class CircuitActivity extends Activity
     private HashMap<MenuItem, List<MenuItem>> children;
     private CircuitController circuitController;
     private GridView circuit;
+    private DrawingController drawingController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,9 +135,9 @@ public class CircuitActivity extends Activity
     public void onClick(View v)
     {
     }
+
     public boolean onTouch (View v, MotionEvent ev) {
         // If we are configured to start only on a long click, we are not going to handle any events here.
-
         boolean handledHere = false;
 
         final int action = ev.getAction();

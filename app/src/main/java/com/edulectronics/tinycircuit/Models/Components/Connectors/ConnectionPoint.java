@@ -73,6 +73,10 @@ public class ConnectionPoint {
         return false;
     }
 
+    public List<ConnectionPoint> getConnections() {
+        return connections;
+    }
+
     public double getVoltageIn() {
         return this.voltageIn;
     }

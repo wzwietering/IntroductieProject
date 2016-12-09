@@ -40,7 +40,7 @@ public abstract class Component implements IComponent {
         return null;
     }
 
-    private List<ConnectionPoint> getOutgoingConnections(ConnectionPoint connectionPoint){
+    public List<ConnectionPoint> getOutgoingConnections(ConnectionPoint connectionPoint){
         int incomingConnection = connectionPoints.indexOf(connectionPoint);
         List<ConnectionPoint> outgoingConnections = new ArrayList<ConnectionPoint>(connectionPoints);
         outgoingConnections.remove(incomingConnection);
@@ -48,7 +48,11 @@ public abstract class Component implements IComponent {
         return outgoingConnections;
     }
 
-    public int getImage () {
+    public List<ConnectionPoint> getConnectionPoints() {
+        return connectionPoints;
+    }
+
+    public int getImage() {
         return R.mipmap.ic_launcher;
     }
 }
