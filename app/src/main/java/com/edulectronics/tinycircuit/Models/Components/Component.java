@@ -1,12 +1,9 @@
 package com.edulectronics.tinycircuit.Models.Components;
 
-import android.support.annotation.NonNull;
-
 import com.edulectronics.tinycircuit.Models.Components.Connectors.ConnectionPoint;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.ConnectionPointOrientation;
 import com.edulectronics.tinycircuit.R;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,11 +26,7 @@ public abstract class Component implements IComponent {
     }
 
     public boolean hasOutputConnection(ConnectionPoint connectionpoint) {
-        int incomingConnection = connectionPoints.indexOf(connectionpoint);
-        List<ConnectionPoint> outgoingConnections = new ArrayList<ConnectionPoint>(connectionPoints);
-        outgoingConnections.remove(incomingConnection);
-
-        for (ConnectionPoint c : outgoingConnections) {
+        for (ConnectionPoint c : getOutgoingConnections(connectionpoint)) {
             if (c.hasOutputConnection())
                 return true;
         }
@@ -45,6 +38,14 @@ public abstract class Component implements IComponent {
             return connectionPoints.get(i);
         }
         return null;
+    }
+
+    private List<ConnectionPoint> getOutgoingConnections(ConnectionPoint connectionPoint){
+        int incomingConnection = connectionPoints.indexOf(connectionPoint);
+        List<ConnectionPoint> outgoingConnections = new ArrayList<ConnectionPoint>(connectionPoints);
+        outgoingConnections.remove(incomingConnection);
+
+        return outgoingConnections;
     }
 
     public int getImage () {

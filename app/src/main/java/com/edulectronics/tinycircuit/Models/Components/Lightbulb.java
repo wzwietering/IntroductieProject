@@ -20,7 +20,7 @@ public class Lightbulb extends Component {
 
         if(voltage >= voltageThreshold)
         {
-            switchState(true);
+            setSwitchState(true);
         }
         voltageOut = voltage;
         setNewOutputValues();
@@ -33,7 +33,7 @@ public class Lightbulb extends Component {
         }
     }
 
-    private void switchState(boolean isOn) {
+    private void setSwitchState(boolean isOn) {
         this.isOn = isOn;
     }
 

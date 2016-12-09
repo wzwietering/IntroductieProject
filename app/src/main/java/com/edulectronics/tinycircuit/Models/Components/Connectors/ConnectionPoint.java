@@ -1,7 +1,5 @@
 package com.edulectronics.tinycircuit.Models.Components.Connectors;
 
-import android.graphics.drawable.GradientDrawable;
-
 import com.edulectronics.tinycircuit.Models.Components.Component;
 import com.edulectronics.tinycircuit.Models.Components.Powersource;
 
@@ -38,8 +36,7 @@ public class ConnectionPoint {
     // points.
     public void setVoltageOut(double voltage) {
         this.voltageOut = voltage;
-        for (ConnectionPoint connectionPoint: connections
-             ) {
+        for (ConnectionPoint connectionPoint: connections) {
             connectionPoint.calculateVoltageIn();
         }
     }
@@ -47,8 +44,7 @@ public class ConnectionPoint {
     // Returns the accumulated voltage of all connectionpoints.
     private void calculateVoltageIn() {
         double voltage = 0;
-        for (ConnectionPoint connectionPoint: connections
-                ) {
+        for (ConnectionPoint connectionPoint: connections) {
             voltage += connectionPoint.getVolgateOut();
         }
         this.voltageIn = voltage;
@@ -68,8 +64,7 @@ public class ConnectionPoint {
     }
 
     public boolean hasOutputConnection() {
-        for (ConnectionPoint connection: connections
-             ) {
+        for (ConnectionPoint connection: connections) {
             // ALWAYS check if parent is a powersource FIRST. Otherwise you get stackoverflow.
             if(connection.parentComponent.getClass() == Powersource.class ||
                     connection.parentComponent.hasOutputConnection(connection))
