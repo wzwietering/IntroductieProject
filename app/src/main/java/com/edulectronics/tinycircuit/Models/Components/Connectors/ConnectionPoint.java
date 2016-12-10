@@ -51,7 +51,7 @@ public class ConnectionPoint {
         parentComponent.handleInputChange();
     }
 
-    void connect(ConnectionPoint connectionPoint) {
+    public void connect(ConnectionPoint connectionPoint) {
         if(!connections.contains(connectionPoint)) {
             connections.add(connectionPoint);
         }
@@ -75,6 +75,10 @@ public class ConnectionPoint {
 
     public List<ConnectionPoint> getConnections() {
         return connections;
+    }
+
+    public Component getParentComponent() {
+        return parentComponent;
     }
 
     public double getVoltageIn() {

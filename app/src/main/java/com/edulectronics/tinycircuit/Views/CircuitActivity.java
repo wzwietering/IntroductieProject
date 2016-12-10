@@ -3,7 +3,6 @@ package com.edulectronics.tinycircuit.Views;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.TypedArray;
-import android.graphics.Point;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -16,8 +15,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.edulectronics.tinycircuit.Controllers.CircuitController;
-import com.edulectronics.tinycircuit.Controllers.DrawingController;
-import com.edulectronics.tinycircuit.Models.Components.Connectors.ConnectionPointOrientation;
 import com.edulectronics.tinycircuit.Models.MenuItem;
 import com.edulectronics.tinycircuit.R;
 import com.edulectronics.tinycircuit.Views.Adapters.CircuitAdapter;
@@ -38,7 +35,6 @@ public class CircuitActivity extends Activity
     private HashMap<MenuItem, List<MenuItem>> children;
     private CircuitController circuitController;
     private GridView circuit;
-    private DrawingController drawingController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,8 +47,12 @@ public class CircuitActivity extends Activity
         setCircuit();
         createDragControls();
         createMenu();
+        createDrawView();
+    }
+
+    private void createDrawView() {
         DrawView drawView = (DrawView) findViewById(R.id.draw_view);
-        drawView.setController(circuitController);
+        drawView.setControllers(circuitController);
     }
 
     private void setCircuit() {
@@ -102,8 +102,8 @@ public class CircuitActivity extends Activity
     /*Makes the groups and children*/
     private void makeLists() {
         headers = new ArrayList<>();
-        children = new HashMap<>();
         String[] items = getResources().getStringArray(R.array.menuitems);
+        children = new HashMap<>();
         /*Temporary! Should work different!*/
         int[] textures = {R.mipmap.battery, R.mipmap.lightbulb_on, R.mipmap.resistor};
 

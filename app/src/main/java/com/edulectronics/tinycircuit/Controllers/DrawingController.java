@@ -16,13 +16,11 @@ import com.edulectronics.tinycircuit.Views.DrawView;
 
 public class DrawingController {
 
-    private int componentWidth, componentHeight, gridWidth;
-    private Canvas canvas;
-    private DrawView view;
+    private int gridWidth, cellSize;
 
-    public DrawingController(int gridWidth, DrawView view) {
+    public DrawingController(int gridWidth, int cellSize) {
         this.gridWidth = gridWidth;
-        this.view = view;
+        this.cellSize = cellSize;
     }
 
     public Point getNodeLocation(int position, ConnectionPointOrientation orientation) {
@@ -30,14 +28,26 @@ public class DrawingController {
     }
 
     private int getXLocation(int position, ConnectionPointOrientation orientation) {
+        if (orientation == ConnectionPointOrientation.Top || orientation == ConnectionPointOrientation.Bottom)
+            return (getColumn(position) - 1) * 150 + (int)(0.5 * cellSize);
         if (orientation == ConnectionPointOrientation.Left)
-            return ((position % gridWidth) - 1) * R.integer.cell_size;
-        return (position % gridWidth) * R.integer.cell_size;
+            return (getColumn(position) - 1) * 150;
+        return getColumn(position) * 150;
     }
 
     private int getYLocation(int position, ConnectionPointOrientation orientation) {
+        if (orientation == ConnectionPointOrientation.Left || orientation == ConnectionPointOrientation.Right)
+            return (getRow(position) - 1) * 150 + (int)(0.5 * cellSize);
         if (orientation == ConnectionPointOrientation.Top)
-            return ((position / gridWidth) - 1) * R.integer.cell_size;
-        return (position / gridWidth) * R.integer.cell_size;
+            return (getRow(position) - 1) * 150;
+        return getRow(position) * 150;
+    }
+
+    private int getRow(int position) {
+        return (position / gridWidth) + 1;
+    }
+
+    private int getColumn(int position) {
+        return (position % gridWidth) + 1;
     }
 }
