@@ -180,7 +180,6 @@ public class CircuitActivity extends Activity
     {
         IDragSource dragSource = (IDragSource) v;
         mDragController.startDrag (v, dragSource, dragSource);
-
         return true;
     }
 

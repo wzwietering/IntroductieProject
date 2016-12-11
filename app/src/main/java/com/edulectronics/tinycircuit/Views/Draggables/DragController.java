@@ -266,6 +266,7 @@ public class DragController {
             if (deleteZone != null) {
                 deleteZone.setVisibility(View.INVISIBLE);
             }
+            ((Activity)mContext).findViewById(R.id.draw_view).invalidate();
         }
     }
 
