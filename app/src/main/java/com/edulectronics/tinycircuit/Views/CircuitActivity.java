@@ -9,6 +9,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.GridView;
 import android.widget.LinearLayout;
@@ -35,6 +36,7 @@ public class CircuitActivity extends Activity
     private HashMap<MenuItem, List<MenuItem>> children;
     private CircuitController circuitController;
     private GridView circuit;
+    public String mode = "Drag";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +44,9 @@ public class CircuitActivity extends Activity
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_circuit);
+
+        Button toggle = (Button) findViewById(R.id.mode_toggle);
+        toggle.setText(mode);
 
         getController();
         setCircuit();
@@ -131,17 +136,20 @@ public class CircuitActivity extends Activity
     public void onClick(View v)
     {
     }
+
     public boolean onTouch (View v, MotionEvent ev) {
         // If we are configured to start only on a long click, we are not going to handle any events here.
-
         boolean handledHere = false;
-
         final int action = ev.getAction();
 
         // In the situation where a long click is not needed to initiate a drag, simply start on the down event.
-        if (action == MotionEvent.ACTION_DOWN) {
-            handledHere = startDrag(v);
-            if (handledHere) v.performClick();
+        if (mode == "Drag") {
+            if (action == MotionEvent.ACTION_DOWN) {
+                handledHere = startDrag(v);
+                if (handledHere) v.performClick();
+            }
+        } else {
+
         }
 
         return handledHere;
@@ -193,5 +201,18 @@ public class CircuitActivity extends Activity
                 return false;
             }
         };
+    }
+
+    public void toggleMode(View v){
+        switch (mode){
+            case "Drag":
+                mode = "Wire";
+                ((Button) findViewById(R.id.mode_toggle)).setText(mode);
+                break;
+            case "Wire":
+                mode = "Drag";
+                ((Button) findViewById(R.id.mode_toggle)).setText(mode);
+                break;
+        }
     }
 }
