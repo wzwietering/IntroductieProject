@@ -11,7 +11,7 @@
     <ImageView
         android:layout_width="118dp"
         android:layout_height="139dp"
-        app:srcCompat="@mipmap/lightbulb_on"
+        app:srcCompat="@drawable/lightbulb_on"
         android:layout_gravity="center_vertical" />
 
     <TextView

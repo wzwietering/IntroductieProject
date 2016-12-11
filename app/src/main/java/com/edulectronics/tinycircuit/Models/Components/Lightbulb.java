@@ -39,6 +39,6 @@ public class Lightbulb extends Component {
 
     @Override
     public int getImage(){
-        return R.mipmap.lightbulb_on;
+        return R.drawable.lightbulb_on;
     }
 }
