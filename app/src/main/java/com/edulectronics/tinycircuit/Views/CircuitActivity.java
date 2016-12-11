@@ -16,12 +16,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.edulectronics.tinycircuit.Controllers.CircuitController;
+import com.edulectronics.tinycircuit.Controllers.WireController;
 import com.edulectronics.tinycircuit.Models.MenuItem;
 import com.edulectronics.tinycircuit.R;
 import com.edulectronics.tinycircuit.Views.Adapters.CircuitAdapter;
 import com.edulectronics.tinycircuit.Views.Adapters.ExpandableListAdapter;
 import com.edulectronics.tinycircuit.Views.Draggables.DragController;
 import com.edulectronics.tinycircuit.Views.Draggables.DragLayer;
+import com.edulectronics.tinycircuit.Views.Draggables.GridCell;
 import com.edulectronics.tinycircuit.Views.Draggables.Interfaces.IDragSource;
 
 import java.util.ArrayList;
@@ -37,6 +39,7 @@ public class CircuitActivity extends Activity
     private CircuitController circuitController;
     private GridView circuit;
     public String mode = "Drag";
+    private WireController wireController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +50,7 @@ public class CircuitActivity extends Activity
 
         Button toggle = (Button) findViewById(R.id.mode_toggle);
         toggle.setText(mode);
+        wireController = new WireController((DrawView) findViewById(R.id.draw_view));
 
         getController();
         setCircuit();
@@ -155,7 +159,7 @@ public class CircuitActivity extends Activity
                 if (handledHere) v.performClick();
             }
         } else {
-
+            wireController.wire(((GridCell)((IDragSource) v)).getComponent());
         }
 
         return handledHere;
