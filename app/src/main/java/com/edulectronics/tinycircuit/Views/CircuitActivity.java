@@ -52,6 +52,12 @@ public class CircuitActivity extends Activity
         setCircuit();
         createDragControls();
         createMenu();
+        createDrawView();
+    }
+
+    private void createDrawView() {
+        DrawView drawView = (DrawView) findViewById(R.id.draw_view);
+        drawView.setControllers(circuitController);
     }
 
     private void setCircuit() {
@@ -101,8 +107,8 @@ public class CircuitActivity extends Activity
     /*Makes the groups and children*/
     private void makeLists() {
         headers = new ArrayList<>();
-        children = new HashMap<>();
         String[] items = getResources().getStringArray(R.array.menuitems);
+        children = new HashMap<>();
         /*Temporary! Should work different!*/
         int[] textures = {R.mipmap.battery, R.mipmap.lightbulb_on, R.mipmap.resistor};
 
