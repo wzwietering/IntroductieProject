@@ -9,7 +9,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@mipmap/background"
+    android:background="@drawable/background"
     tools:context="com.edulectronics.tinycircuit.Views.MenuActivity">
 
     <LinearLayout
@@ -24,13 +24,13 @@
         <ImageView
             android:layout_width="388dp"
             android:layout_height="wrap_content"
-            app:srcCompat="@mipmap/title_text"
+            app:srcCompat="@drawable/title_text"
             android:layout_weight="3"/>
 
         <ImageButton
             android:layout_width="198dp"
             android:layout_height="wrap_content"
-            android:background="@mipmap/exercise"
+            android:background="@drawable/exercise"
             android:id="@+id/exerciseButton"
             android:onClick="exerciseMenuStart"
             android:layout_gravity="center_horizontal"
@@ -39,7 +39,7 @@
         <ImageButton
             android:layout_width="198dp"
             android:layout_height="wrap_content"
-            android:background="@mipmap/freeplay"
+            android:background="@drawable/freeplay"
             android:id="@+id/startGame"
             android:onClick="freePlayStart"
             android:layout_gravity="center_horizontal"
@@ -49,7 +49,7 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@mipmap/logo"
+        app:srcCompat="@drawable/logo_text"
         android:id="@+id/logo"
 
         android:layout_alignParentBottom="true"

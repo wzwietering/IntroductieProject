@@ -43,6 +43,6 @@ public class Powersource extends Component {
 
     @Override
     public int getImage(){
-        return R.mipmap.battery;
+        return R.drawable.battery;
     }
 }

@@ -39,7 +39,7 @@
 			android:layout_height="60dp"
 			android:layout_width="60dp"
 			android:id="@+id/delete_zone_view"
-			android:src="@mipmap/trashcan"
+			android:src="@drawable/trashcan"
 			android:layout_gravity="bottom"
 			android:visibility="invisible"/>
     </com.edulectronics.tinycircuit.Views.Draggables.DragLayer>
