@@ -48,6 +48,6 @@ public class ComponentTest {
     @Test
     public void imageResource(){
         Powersource powersource = new Powersource(5);
-        assertEquals(R.mipmap.battery, powersource.getImage());
+        assertEquals(R.drawable.battery, powersource.getImage());
     }
 }

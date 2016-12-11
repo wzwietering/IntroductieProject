@@ -67,6 +67,6 @@ public class LightbulbTest {
     @Test
     public void imageResource(){
         Lightbulb lightbulb = new Lightbulb();
-        assertEquals(R.mipmap.lightbulb_on, lightbulb.getImage());
+        assertEquals(R.drawable.lightbulb_on, lightbulb.getImage());
     }
 }
