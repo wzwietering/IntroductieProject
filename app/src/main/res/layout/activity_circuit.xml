@@ -18,6 +18,11 @@
 			android:background="@color/cell_empty"
 			android:id="@+id/circuit" />
 
+		<com.edulectronics.tinycircuit.Views.DrawView
+            android:id="@+id/draw_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
 		<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
 			 android:id="@+id/component_source_frame"
 			 android:layout_weight="0.5"
@@ -34,7 +39,7 @@
 			android:layout_height="60dp"
 			android:layout_width="60dp"
 			android:id="@+id/delete_zone_view"
-			android:src="@mipmap/trashcan"
+			android:src="@drawable/trashcan"
 			android:layout_gravity="bottom"
 			android:visibility="invisible"/>
     </com.edulectronics.tinycircuit.Views.Draggables.DragLayer>
