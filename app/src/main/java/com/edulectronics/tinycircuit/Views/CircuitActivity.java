@@ -2,6 +2,7 @@ package com.edulectronics.tinycircuit.Views;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -159,7 +160,8 @@ public class CircuitActivity extends Activity
                 if (handledHere) v.performClick();
             }
         } else {
-            wireController.wire(((GridCell)((IDragSource) v)).getComponent());
+            Resources r = getResources();
+            wireController.wire(((GridCell)((IDragSource) v)).getComponent(), ev, r.getInteger(R.integer.cell_size));
         }
 
         return handledHere;

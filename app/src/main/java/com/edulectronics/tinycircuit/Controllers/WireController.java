@@ -1,6 +1,9 @@
 package com.edulectronics.tinycircuit.Controllers;
 
+import android.view.MotionEvent;
+
 import com.edulectronics.tinycircuit.Models.Components.Component;
+import com.edulectronics.tinycircuit.Models.Components.Connectors.ConnectionPointOrientation;
 import com.edulectronics.tinycircuit.Views.DrawView;
 
 /**
@@ -8,20 +11,60 @@ import com.edulectronics.tinycircuit.Views.DrawView;
  */
 
 public class WireController {
-    Component first, second;
-    DrawView drawView;
+    private Component first, second;
+    private ConnectionPointOrientation cpoF, cpoS;
+    private DrawView drawView;
+    private int cellSize, halfCellSize;
 
-    public WireController(DrawView drawView){
+    public WireController(DrawView drawView) {
         this.drawView = drawView;
     }
 
-    public void wire(Component component){
-        if(first == null) {
+    public void wire(Component component, MotionEvent event, int cellSize) {
+        this.cellSize = cellSize;
+        this.halfCellSize = (int) (0.5 * cellSize);
+        if (first == null) {
             first = component;
+            cpoF = area((int) event.getX(), (int) event.getY());
+            System.out.println(cpoF);
         } else {
             second = component;
-            first.connect(first.getConnectionPointByIndex(0).orientation, second.getConnectionPointByIndex(0));
-            drawView.invalidate();
+            cpoS = area((int) event.getX(), (int) event.getY());
+            System.out.println(cpoS);
+
+            if(component.getConnectionPoints().indexOf(cpoS) != -1){
+                first.connect(cpoF, component.getConnectionPoints().get(component.getConnectionPoints().indexOf(cpoS)));
+                drawView.invalidate();
+            }
         }
+    }
+
+    private ConnectionPointOrientation area(int x, int y) {
+        if (x < halfCellSize && y < halfCellSize) {
+            if (x >= y) {
+                return ConnectionPointOrientation.Top;
+            } else {
+                return ConnectionPointOrientation.Left;
+            }
+        } else if (x >= halfCellSize && y < halfCellSize) {
+            if (y < cellSize - x) {
+                return ConnectionPointOrientation.Top;
+            } else {
+                return ConnectionPointOrientation.Right;
+            }
+        } else if (x < halfCellSize && y >= halfCellSize) {
+            if (y < cellSize - x) {
+                return ConnectionPointOrientation.Left;
+            } else {
+                return ConnectionPointOrientation.Bottom;
+            }
+        } else if (x >= halfCellSize && y >= halfCellSize) {
+            if (x >= y) {
+                return ConnectionPointOrientation.Right;
+            } else {
+                return ConnectionPointOrientation.Bottom;
+            }
+        }
+        return null;
     }
 }
