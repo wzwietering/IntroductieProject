@@ -57,7 +57,7 @@ public class ConnectionPoint {
         }
     }
 
-    void disconnect(ConnectionPoint connectionPoint) {
+    public void disconnect(ConnectionPoint connectionPoint) {
         if(connections.contains(connectionPoint)) {
             connections.remove(connectionPoint);
         }

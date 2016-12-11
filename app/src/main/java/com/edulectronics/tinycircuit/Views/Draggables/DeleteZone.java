@@ -58,6 +58,7 @@ public class DeleteZone extends ImageView
              CircuitController.getInstance().newComponent = null;
         } else {
             // Source is an existing GridCell. Get its component from the controller.
+            CircuitController.getInstance().getComponent(((GridCell) source).mCellNumber).removeAllConnections();
             CircuitController.getInstance().removeComponent(((GridCell) source).mCellNumber);
         }
     }

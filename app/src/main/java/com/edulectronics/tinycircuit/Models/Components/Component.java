@@ -57,6 +57,15 @@ public abstract class Component implements IComponent {
         getConnectionPointByOrientation(orientation).connect(connectTo);
     }
 
+    public void removeAllConnections(){
+        for(ConnectionPoint c: getConnectionPoints()){
+            for (ConnectionPoint cp : getOutgoingConnections(c)){
+                cp.disconnect(c);
+                c.disconnect(cp);
+            }
+        }
+    }
+
     public int getImage() {
         return R.mipmap.ic_launcher;
     }
