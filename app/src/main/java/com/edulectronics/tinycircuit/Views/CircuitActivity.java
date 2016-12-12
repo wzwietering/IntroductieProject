@@ -1,7 +1,6 @@
 package com.edulectronics.tinycircuit.Views;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.os.Bundle;
@@ -18,6 +17,8 @@ import android.widget.TextView;
 
 import com.edulectronics.tinycircuit.Controllers.CircuitController;
 import com.edulectronics.tinycircuit.Controllers.WireController;
+import com.edulectronics.tinycircuit.Models.Components.Connectors.ConnectionPointOrientation;
+import com.edulectronics.tinycircuit.Models.Components.Lightbulb;
 import com.edulectronics.tinycircuit.Models.MenuItem;
 import com.edulectronics.tinycircuit.R;
 import com.edulectronics.tinycircuit.Views.Adapters.CircuitAdapter;
@@ -51,9 +52,8 @@ public class CircuitActivity extends Activity
 
         Button toggle = (Button) findViewById(R.id.mode_toggle);
         toggle.setText(mode);
-        wireController = new WireController((DrawView) findViewById(R.id.draw_view));
 
-        getController();
+        getControllers();
         setCircuit();
         createDragControls();
         createMenu();
@@ -83,9 +83,9 @@ public class CircuitActivity extends Activity
         circuit.setAdapter(new CircuitAdapter(this));
     }
 
-    private void getController() {
-        Intent intent = getIntent();
+    private void getControllers() {
         circuitController = CircuitController.getInstance();
+        wireController = new WireController((DrawView) findViewById(R.id.draw_view));
     }
 
     private void createDragControls() {

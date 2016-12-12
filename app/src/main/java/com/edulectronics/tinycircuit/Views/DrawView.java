@@ -13,9 +13,11 @@ import android.view.WindowManager;
 
 import com.edulectronics.tinycircuit.Controllers.CircuitController;
 import com.edulectronics.tinycircuit.Controllers.DrawingController;
+import com.edulectronics.tinycircuit.Controllers.WireController;
 import com.edulectronics.tinycircuit.Models.Circuit;
 import com.edulectronics.tinycircuit.Models.Components.Component;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.ConnectionPoint;
+import com.edulectronics.tinycircuit.Models.Wire;
 import com.edulectronics.tinycircuit.R;
 
 /**
@@ -27,12 +29,14 @@ public class DrawView extends View {
     private int strokeWidth = 8;
     private CircuitController controller;
     private DrawingController drawingController;
+    private WireController wireController;
 
     public DrawView(Context context, AttributeSet attrs) {
         super(context, attrs);
         paint = new Paint();
         paint.setColor(Color.RED);
         paint.setStrokeWidth(strokeWidth);
+        wireController = new WireController(this);
     }
 
     public void setControllers(CircuitController controller) {
@@ -48,7 +52,9 @@ public class DrawView extends View {
                     for (ConnectionPoint connectedTo: connection.getConnections()) {
                         Point startPoint = drawingController.getNodeLocation(c.position, connection.orientation);
                         Point endPoint = drawingController.getNodeLocation(connectedTo.getParentComponent().position, connectedTo.orientation);
-                        canvas.drawLine(startPoint.x, startPoint.y, endPoint.x, endPoint.y, paint);
+                        for (Wire wire: wireController.getWires(startPoint, endPoint)) {
+                            canvas.drawLine(wire.a.x, wire.a.y, wire.b.x, wire.b.y, paint);
+                        }
                     }
                 }
             }

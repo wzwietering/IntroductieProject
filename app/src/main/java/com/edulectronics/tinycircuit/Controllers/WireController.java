@@ -7,6 +7,7 @@ import com.edulectronics.tinycircuit.Models.Components.Component;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.ConnectionPoint;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.ConnectionPointOrientation;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.Connector;
+import com.edulectronics.tinycircuit.Models.Wire;
 import com.edulectronics.tinycircuit.Views.DrawView;
 
 import java.util.ArrayList;
