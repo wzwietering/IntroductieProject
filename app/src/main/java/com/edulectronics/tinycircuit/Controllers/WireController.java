@@ -5,6 +5,7 @@ import android.view.MotionEvent;
 import com.edulectronics.tinycircuit.Models.Components.Component;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.ConnectionPoint;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.ConnectionPointOrientation;
+import com.edulectronics.tinycircuit.Models.Components.Connectors.Connector;
 import com.edulectronics.tinycircuit.Views.DrawView;
 
 /**
@@ -32,10 +33,11 @@ public class WireController {
                 System.out.println("First: " + cpoF);
                 connecting = true;
             } else {
+                Connector connector = new Connector();
                 ConnectionPointOrientation cpoS = area((int) event.getX(), (int) event.getY());
                 System.out.println("Second: " + cpoS);
 
-                first.connect(cpoF, getConnectionPoint(component, cpoS));
+                connector.connect(getConnectionPoint(first, cpoF), getConnectionPoint(component, cpoS));
                 connecting = false;
                 drawView.invalidate();
             }
