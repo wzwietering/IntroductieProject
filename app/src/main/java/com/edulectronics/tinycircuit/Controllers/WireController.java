@@ -13,10 +13,10 @@ import com.edulectronics.tinycircuit.Views.WireView;
  */
 
 public class WireController {
-    private Component first;
+    public Component first;
     private ConnectionPointOrientation cpoFirst;
     private WireView wireView;
-    private int cellSize, halfCellSize;
+    public int cellSize, halfCellSize;
     private boolean connecting = false;
 
     public WireController(WireView wireView) {
@@ -41,7 +41,7 @@ public class WireController {
         }
     }
 
-    private ConnectionPointOrientation area(int x, int y) {
+    public ConnectionPointOrientation area(int x, int y) {
         if (x < halfCellSize && y < halfCellSize) {
             if (x >= y) {
                 return ConnectionPointOrientation.Top;

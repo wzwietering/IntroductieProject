@@ -21,7 +21,7 @@ public class CoordinateHelper {
         return new Point(getXLocation(position, orientation), getYLocation(position, orientation));
     }
 
-    private int getXLocation(int position, ConnectionPointOrientation orientation) {
+    public int getXLocation(int position, ConnectionPointOrientation orientation) {
         switch (orientation) {
             case Top:
             case Bottom:
@@ -33,7 +33,7 @@ public class CoordinateHelper {
         }
     }
 
-    private int getYLocation(int position, ConnectionPointOrientation orientation) {
+    public int getYLocation(int position, ConnectionPointOrientation orientation) {
         switch (orientation) {
             case Left:
             case Right:
@@ -41,7 +41,7 @@ public class CoordinateHelper {
             case Top:
                 return (getRow(position) - 1) * cellSize;
             default:
-                return getColumn(position) * cellSize;
+                return getRow(position) * cellSize;
         }
     }
 
