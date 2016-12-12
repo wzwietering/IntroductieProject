@@ -54,7 +54,7 @@ public abstract class Component implements IComponent {
     }
 
     public int getImage() {
-        return R.mipmap.ic_launcher;
+        return R.drawable.ic_launcher;
     }
 
     public void setPosition(int position){
