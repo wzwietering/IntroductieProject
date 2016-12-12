@@ -1,7 +1,6 @@
 package com.edulectronics.tinycircuit.Views;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -25,23 +24,25 @@ import com.edulectronics.tinycircuit.R;
  */
 
 public class DrawView extends View {
-    Paint paint;
-    private int strokeWidth = 8;
+    Paint paint = new Paint();
     private CircuitController controller;
     private DrawingController drawingController;
     private WireController wireController;
 
     public DrawView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        paint = new Paint();
         paint.setColor(Color.RED);
-        paint.setStrokeWidth(strokeWidth);
         wireController = new WireController(this);
+        WindowManager windowManager = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
+        Display display = windowManager.getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        paint.setStrokeWidth(size.y / 100);
     }
 
-    public void setControllers(CircuitController controller) {
-        this.controller = controller;
-        drawingController = new DrawingController(controller.circuit.width, getContext().getResources().getInteger(R.integer.cell_size));
+    public void setControllers(CircuitController circuitController) {
+        this.controller = circuitController;
+        drawingController = new DrawingController(circuitController.circuit.width, getContext().getResources().getInteger(R.integer.cell_size));
     }
 
     @Override
