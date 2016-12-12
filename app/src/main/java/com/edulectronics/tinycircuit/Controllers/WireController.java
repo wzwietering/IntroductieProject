@@ -14,7 +14,7 @@ import com.edulectronics.tinycircuit.Views.DrawView;
 
 public class WireController {
     private Component first;
-    private ConnectionPointOrientation cpoF;
+    private ConnectionPointOrientation cpoFirst;
     private DrawView drawView;
     private int cellSize, halfCellSize;
     private boolean connecting = false;
@@ -29,15 +29,12 @@ public class WireController {
             this.halfCellSize = (int) (0.5 * cellSize);
             if (!connecting) {
                 first = component;
-                cpoF = area((int) event.getX(), (int) event.getY());
-                System.out.println("First: " + cpoF);
+                cpoFirst = area((int) event.getX(), (int) event.getY());
                 connecting = true;
             } else {
                 Connector connector = new Connector();
-                ConnectionPointOrientation cpoS = area((int) event.getX(), (int) event.getY());
-                System.out.println("Second: " + cpoS);
-
-                connector.connect(getConnectionPoint(first, cpoF), getConnectionPoint(component, cpoS));
+                ConnectionPointOrientation cpoSecond = area((int) event.getX(), (int) event.getY());
+                connector.connect(getConnectionPoint(first, cpoFirst), getConnectionPoint(component, cpoSecond));
                 connecting = false;
                 drawView.invalidate();
             }
@@ -69,8 +66,9 @@ public class WireController {
             } else {
                 return ConnectionPointOrientation.Bottom;
             }
+        } else {
+            throw new IllegalArgumentException();
         }
-        return null;
     }
 
     private ConnectionPoint getConnectionPoint(Component component, ConnectionPointOrientation cpo) {

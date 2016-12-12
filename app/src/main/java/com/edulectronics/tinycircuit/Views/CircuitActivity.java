@@ -39,8 +39,8 @@ public class CircuitActivity extends Activity
     private HashMap<MenuItem, List<MenuItem>> children;
     private CircuitController circuitController;
     private GridView circuit;
-    public String mode = "Drag";
     private WireController wireController;
+    public Modes mode = Modes.Drag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +50,7 @@ public class CircuitActivity extends Activity
         setContentView(R.layout.activity_circuit);
 
         Button toggle = (Button) findViewById(R.id.mode_toggle);
-        toggle.setText(mode);
+        toggle.setText(mode.toString());
         wireController = new WireController((DrawView) findViewById(R.id.draw_view));
 
         getController();
@@ -154,7 +154,7 @@ public class CircuitActivity extends Activity
         final int action = ev.getAction();
 
         // In the situation where a long click is not needed to initiate a drag, simply start on the down event.
-        if (mode == "Drag") {
+        if (mode == Modes.Drag) {
             if (action == MotionEvent.ACTION_DOWN) {
                 handledHere = startDrag(v);
                 if (handledHere) v.performClick();
@@ -216,14 +216,19 @@ public class CircuitActivity extends Activity
 
     public void toggleMode(View v){
         switch (mode){
-            case "Drag":
-                mode = "Wire";
-                ((Button) findViewById(R.id.mode_toggle)).setText(mode);
+            case Drag:
+                mode = Modes.Wire;
+                ((Button) findViewById(R.id.mode_toggle)).setText(mode.toString());
                 break;
-            case "Wire":
-                mode = "Drag";
-                ((Button) findViewById(R.id.mode_toggle)).setText(mode);
+            case Wire:
+                mode = Modes.Drag;
+                ((Button) findViewById(R.id.mode_toggle)).setText(mode.toString());
                 break;
         }
+    }
+
+    public enum Modes{
+        Drag,
+        Wire
     }
 }
