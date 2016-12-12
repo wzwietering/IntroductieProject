@@ -17,6 +17,7 @@ import java.util.List;
 public abstract class Component implements IComponent {
 
     private double resistance;
+    public int position;
 
     protected List<ConnectionPoint> connectionPoints = new ArrayList<ConnectionPoint>(4);
 
@@ -40,7 +41,7 @@ public abstract class Component implements IComponent {
         return null;
     }
 
-    private List<ConnectionPoint> getOutgoingConnections(ConnectionPoint connectionPoint){
+    public List<ConnectionPoint> getOutgoingConnections(ConnectionPoint connectionPoint){
         int incomingConnection = connectionPoints.indexOf(connectionPoint);
         List<ConnectionPoint> outgoingConnections = new ArrayList<ConnectionPoint>(connectionPoints);
         outgoingConnections.remove(incomingConnection);
@@ -48,7 +49,23 @@ public abstract class Component implements IComponent {
         return outgoingConnections;
     }
 
-    public int getImage () {
-        return R.drawable.ic_launcher;
+    public List<ConnectionPoint> getConnectionPoints() {
+        return connectionPoints;
+    }
+
+    public int getImage() {
+        return R.mipmap.ic_launcher;
+    }
+
+    public void setPosition(int position){
+        this.position = position;
+    }
+
+    private ConnectionPoint getConnectionPointByOrientation(ConnectionPointOrientation orientation) {
+        for (ConnectionPoint c: connectionPoints) {
+            if (c.orientation == orientation)
+                return c;
+        }
+        return null;
     }
 }

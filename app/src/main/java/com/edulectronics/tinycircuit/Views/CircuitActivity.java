@@ -47,6 +47,12 @@ public class CircuitActivity extends Activity
         setCircuit();
         createDragControls();
         createMenu();
+        createDrawView();
+    }
+
+    private void createDrawView() {
+        WireView wireView = (WireView) findViewById(R.id.draw_view);
+        wireView.setControllers(circuitController);
     }
 
     private void setCircuit() {
@@ -96,8 +102,8 @@ public class CircuitActivity extends Activity
     /*Makes the groups and children*/
     private void makeLists() {
         headers = new ArrayList<>();
-        children = new HashMap<>();
         String[] items = getResources().getStringArray(R.array.menuitems);
+        children = new HashMap<>();
         /*Temporary! Should work different!*/
         int[] textures = {R.drawable.battery, R.drawable.lightbulb_on, R.drawable.resistor};
 
@@ -131,9 +137,9 @@ public class CircuitActivity extends Activity
     public void onClick(View v)
     {
     }
+
     public boolean onTouch (View v, MotionEvent ev) {
         // If we are configured to start only on a long click, we are not going to handle any events here.
-
         boolean handledHere = false;
 
         final int action = ev.getAction();
