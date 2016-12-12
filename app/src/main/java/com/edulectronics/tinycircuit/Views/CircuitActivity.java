@@ -53,7 +53,7 @@ public class CircuitActivity extends Activity
         Button toggle = (Button) findViewById(R.id.mode_toggle);
         toggle.setText(mode.toString());
 
-        getControllers();
+        setControllers();
         setCircuit();
         createDragControls();
         createMenu();
@@ -83,7 +83,7 @@ public class CircuitActivity extends Activity
         circuit.setAdapter(new CircuitAdapter(this));
     }
 
-    private void getControllers() {
+    private void setControllers() {
         circuitController = CircuitController.getInstance();
         wireController = new WireController((DrawView) findViewById(R.id.draw_view));
     }
