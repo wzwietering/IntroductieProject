@@ -51,7 +51,7 @@ public class CircuitActivity extends Activity
 
         Button toggle = (Button) findViewById(R.id.mode_toggle);
         toggle.setText(mode.toString());
-        wireController = new WireController((DrawView) findViewById(R.id.draw_view));
+        wireController = new WireController((WireView) findViewById(R.id.draw_view));
 
         getController();
         setCircuit();
