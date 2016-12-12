@@ -51,8 +51,8 @@ public class CircuitActivity extends Activity
     }
 
     private void createDrawView() {
-        DrawView drawView = (DrawView) findViewById(R.id.draw_view);
-        drawView.setControllers(circuitController);
+        WireView wireView = (WireView) findViewById(R.id.draw_view);
+        wireView.setControllers(circuitController);
     }
 
     private void setCircuit() {

@@ -53,10 +53,6 @@ public abstract class Component implements IComponent {
         return connectionPoints;
     }
 
-    public void connect(ConnectionPointOrientation orientation, ConnectionPoint connectTo) {
-        getConnectionPointByOrientation(orientation).connect(connectTo);
-    }
-
     public int getImage() {
         return R.mipmap.ic_launcher;
     }
