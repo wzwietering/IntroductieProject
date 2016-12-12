@@ -20,7 +20,7 @@ public class NodeTest {
     Node node = new Node(150,150);
 
     @Test
-    public void OccupyTests(){
+    public void occupyTests(){
         node.occupy(lightbulb);
         assertTrue(node.occupied);
 
