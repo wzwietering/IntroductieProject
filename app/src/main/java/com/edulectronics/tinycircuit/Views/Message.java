@@ -16,13 +16,14 @@ import com.edulectronics.tinycircuit.R;
 
 public class Message extends DialogFragment {
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_message, container, false);
         getDialog().setTitle("Test Dialog");
 
         Bundle args = getArguments();
         int messageId = args.getInt("message", 0);
         int titleId = args.getInt("title", 0);
+        final boolean endActivity = args.getBoolean("end_activity", false);
 
         TextView explanation = (TextView) view.findViewById(R.id.scenario_explanation);
         explanation.setText(messageId);
@@ -36,6 +37,9 @@ public class Message extends DialogFragment {
             @Override
             public void onClick(View v) {
                 dismiss();
+                if(endActivity) {
+                    Message.this.getActivity().finish();
+                }
             }
         });
 
