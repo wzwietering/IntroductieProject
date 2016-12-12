@@ -69,6 +69,10 @@ public class GridCell extends ImageView implements IDragSource, IDropTarget {
         }
         setImageDrawable(null);
     }
+
+    public Component getComponent(){
+        return CircuitController.getInstance().circuit.getComponent(this.mCellNumber);
+    }
     
     public boolean allowDrag() {
         // There is something to drag if the cell is not empty.

@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.WindowManager;
 
 import com.edulectronics.tinycircuit.Controllers.CircuitController;
 import com.edulectronics.tinycircuit.Controllers.CoordinateHelper;
@@ -19,16 +20,20 @@ import com.edulectronics.tinycircuit.R;
  */
 
 public class WireView extends View {
-    Paint paint;
-    private int strokeWidth = 8;
+    private int strokeWidth = 8
+    Paint paint = new Paint();
     private CircuitController controller;
     private CoordinateHelper coordinateHelper;
 
     public WireView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        paint = new Paint();
         paint.setColor(Color.RED);
-        paint.setStrokeWidth(strokeWidth);
+
+        WindowManager windowManager = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
+        Display display = windowManager.getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        paint.setStrokeWidth(size.y / 100);
     }
 
     public void setControllers(CircuitController controller) {

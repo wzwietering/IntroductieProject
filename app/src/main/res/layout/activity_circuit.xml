@@ -35,6 +35,14 @@
 				android:layout_height="fill_parent"
 				android:layout_gravity="center" />
 		</FrameLayout>
+
+		<Button
+			android:id="@+id/mode_toggle"
+			android:layout_width="80dp"
+			android:layout_height="60dp"
+            android:layout_gravity="right"
+            android:onClick="toggleMode"/>
+
 		<com.edulectronics.tinycircuit.Views.Draggables.DeleteZone
 			android:layout_height="60dp"
 			android:layout_width="60dp"
