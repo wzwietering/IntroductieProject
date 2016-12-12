@@ -9,6 +9,10 @@ import android.view.View;
 import android.view.WindowManager;
 
 import com.edulectronics.tinycircuit.Controllers.CircuitController;
+import com.edulectronics.tinycircuit.Models.Scenarios.FreePlayScenario;
+import com.edulectronics.tinycircuit.Models.Scenarios.IScenario;
+import com.edulectronics.tinycircuit.Models.Scenarios.Scenario1;
+import com.edulectronics.tinycircuit.Models.Scenarios.ScenarioFactory;
 import com.edulectronics.tinycircuit.R;
 
 public class MenuActivity extends AppCompatActivity {
@@ -22,17 +26,16 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     public void freePlayStart(View v) {
-        Intent freeplay = new Intent(MenuActivity.this, CircuitActivity.class);
-        Display display = getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        int cellSize = getResources().getInteger(R.integer.cell_size);
-        //Width or height divided by cellsize fits the maxiumum amount of cells inside the screen
-        CircuitController.getInstance().setProperties(null, size.x / cellSize, size.y / cellSize);
-        startActivity(freeplay);
+        ScenarioFactory factory = new ScenarioFactory();
+        IScenario scenario = factory.getScenario("freeplay");
+
+        Intent intent = new Intent(this, CircuitActivity.class);
+        intent.putExtra("scenario", scenario );
+        startActivity(intent);
     }
+
     public void exerciseMenuStart(View v){
-        Intent exercise = new Intent(MenuActivity.this, ExerciseMenuActivity.class);
+        Intent exercise = new Intent(this, ExerciseMenuActivity.class);
         startActivity(exercise);
     }
 }

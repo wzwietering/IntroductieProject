@@ -13,6 +13,7 @@ import com.edulectronics.tinycircuit.Views.CircuitActivity;
 import com.edulectronics.tinycircuit.Views.Draggables.GridCell;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Set;
 
 /**
@@ -31,14 +32,21 @@ public class CircuitController implements Serializable {
     }
 
     public Circuit circuit;
-    private Set<Component> availableComponents;
 
     // When a new component is created, we save it here. It hasn't been dragged to the circuit yet.
     public Component newComponent;
 
-    public void setProperties(Set<Component> s, int width, int size){
+    public void setProperties(int width, int size, ArrayList<Component> components){
         this.circuit = new Circuit(width, size);
-        this.availableComponents = s;
+        if (components != null) {
+            int position = width/2;
+            for (Component component : components) {
+                addComponent(component, position);
+                position++;
+                position++;
+            }
+        }
+
     }
 
     public void addNewComponent(String componentName, CircuitActivity activity)

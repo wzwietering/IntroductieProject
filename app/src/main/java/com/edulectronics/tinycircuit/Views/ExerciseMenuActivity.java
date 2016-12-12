@@ -1,11 +1,14 @@
 package com.edulectronics.tinycircuit.Views;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.edulectronics.tinycircuit.Models.Scenarios.IScenario;
+import com.edulectronics.tinycircuit.Models.Scenarios.ScenarioFactory;
 import com.edulectronics.tinycircuit.R;
 
 public class ExerciseMenuActivity extends AppCompatActivity {
@@ -30,9 +33,13 @@ public class ExerciseMenuActivity extends AppCompatActivity {
     //Identifier for which button was pressed
      public void startExercise(View v){
         TextView text = (TextView) v.findViewById(R.id.levelnumber);
-        int levelnumber = Integer.parseInt(text.getText().toString());
+        String levelnumber = text.getText().toString();
 
-        switch (levelnumber) {
-        }
+         ScenarioFactory factory = new ScenarioFactory();
+         IScenario scenario = factory.getScenario(levelnumber);
+
+         Intent intent = new Intent(this, CircuitActivity.class);
+         intent.putExtra("scenario", scenario );
+         startActivity(intent);
     }
 }
