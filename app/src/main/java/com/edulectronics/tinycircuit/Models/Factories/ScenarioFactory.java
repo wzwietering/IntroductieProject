@@ -1,6 +1,8 @@
-package com.edulectronics.tinycircuit.Models.Scenarios;
+package com.edulectronics.tinycircuit.Models.Factories;
 
-import java.security.InvalidParameterException;
+import com.edulectronics.tinycircuit.Models.Scenarios.IScenario;
+import com.edulectronics.tinycircuit.Models.Scenarios.ImplementedScenarios.FreePlayScenario;
+import com.edulectronics.tinycircuit.Models.Scenarios.ImplementedScenarios.Scenario1;
 
 /**
  * Created by Maaike on 12-12-2016.

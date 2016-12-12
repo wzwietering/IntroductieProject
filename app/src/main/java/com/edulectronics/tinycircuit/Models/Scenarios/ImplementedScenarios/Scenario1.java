@@ -1,13 +1,16 @@
-package com.edulectronics.tinycircuit.Models.Scenarios;
+package com.edulectronics.tinycircuit.Models.Scenarios.ImplementedScenarios;
 
 import com.edulectronics.tinycircuit.Models.Circuit;
 import com.edulectronics.tinycircuit.Models.Components.Component;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.Connector;
 import com.edulectronics.tinycircuit.Models.Components.Lightbulb;
 import com.edulectronics.tinycircuit.Models.Components.Powersource;
+import com.edulectronics.tinycircuit.Models.Scenarios.DesignScenario;
+import com.edulectronics.tinycircuit.R;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.ResourceBundle;
 import java.util.Set;
 
 /**
@@ -20,6 +23,11 @@ import java.util.Set;
  */
 
 public class Scenario1 extends DesignScenario {
+
+    @Override
+    public int getPrompt() {
+        return R.string.scenario1_explanation;
+    }
 
     @Override
     public boolean isCompleted(Circuit circuit) {

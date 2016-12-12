@@ -21,7 +21,7 @@ import java.util.SortedSet;
  * the user can modify a circuit in order to complete a task.
  */
 
-abstract class DesignScenario implements IScenario {
+public abstract class DesignScenario implements IScenario {
 
     // Determines whether the user completed the task. Different implementation for each scenario.
     @Override
@@ -42,10 +42,8 @@ abstract class DesignScenario implements IScenario {
         return null;
     }
 
-    // Show a message to the user explaining what they need to do
+    // Get the Id of a message explaining to the user what they need to do
     // TODO: get message from database
     @Override
-    public void showPrompt() {
-
-    }
+    public abstract int getPrompt();
 }

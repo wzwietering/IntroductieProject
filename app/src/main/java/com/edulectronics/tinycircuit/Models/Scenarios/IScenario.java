@@ -21,7 +21,7 @@ import java.util.Set;
     public boolean isCompleted(Circuit circuit);
 
     // Show a message to the user (explaining what to do, or a quiz question)
-    public void showPrompt();
+    public int getPrompt();
 
     // Load the preset components for displaying the circuit that is part of this scenario.
     ArrayList<Component> loadComponents();

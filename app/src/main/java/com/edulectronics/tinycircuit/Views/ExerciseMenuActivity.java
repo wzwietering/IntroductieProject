@@ -8,7 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.edulectronics.tinycircuit.Models.Scenarios.IScenario;
-import com.edulectronics.tinycircuit.Models.Scenarios.ScenarioFactory;
+import com.edulectronics.tinycircuit.Models.Factories.ScenarioFactory;
 import com.edulectronics.tinycircuit.R;
 
 public class ExerciseMenuActivity extends AppCompatActivity {

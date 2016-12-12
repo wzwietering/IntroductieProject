@@ -1,7 +1,8 @@
-package com.edulectronics.tinycircuit.Models.Scenarios;
+package com.edulectronics.tinycircuit.Models.Scenarios.ImplementedScenarios;
 
 import com.edulectronics.tinycircuit.Models.Circuit;
 import com.edulectronics.tinycircuit.Models.Components.Component;
+import com.edulectronics.tinycircuit.Models.Scenarios.IScenario;
 
 import java.util.ArrayList;
 import java.util.Set;
@@ -25,8 +26,9 @@ public class QuizScenario implements IScenario {
     }
 
     @Override
-    public void showPrompt() {
-        // Get text from DB
+    public int getPrompt() {
+        return 0;
+        // TODO: Get text from DB
     }
 
     @Override

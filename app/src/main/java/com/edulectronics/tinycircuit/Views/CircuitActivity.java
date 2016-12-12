@@ -1,6 +1,7 @@
 package com.edulectronics.tinycircuit.Views;
 
 import android.app.Activity;
+import android.app.FragmentManager;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Point;
@@ -22,6 +23,7 @@ import com.edulectronics.tinycircuit.Controllers.WireController;
 import com.edulectronics.tinycircuit.Models.Components.Component;
 import com.edulectronics.tinycircuit.Models.MenuItem;
 import com.edulectronics.tinycircuit.Models.Scenarios.IScenario;
+import com.edulectronics.tinycircuit.Models.Scenarios.ImplementedScenarios.FreePlayScenario;
 import com.edulectronics.tinycircuit.R;
 import com.edulectronics.tinycircuit.Views.Adapters.CircuitAdapter;
 import com.edulectronics.tinycircuit.Views.Adapters.ExpandableListAdapter;
@@ -66,6 +68,33 @@ public class CircuitActivity extends Activity
         createDragControls();
         createMenu();
         createDrawView();
+
+        displayScenarioExplanation();
+    }
+
+    private void displayScenarioExplanation() {
+        if (scenario.getClass() != FreePlayScenario.class) {
+            Bundle args = new Bundle();
+            args.putInt("message", scenario.getPrompt());
+            args.putInt("title", R.string.scenario_explanation_title);
+            showMessage(args);
+        }
+    }
+
+    private void displayScenarioCompleteMessage() {
+        if (scenario.getClass() != FreePlayScenario.class) {
+            Bundle args = new Bundle();
+            args.putInt("message", R.string.scenario_complete);
+            args.putInt("title", R.string.scenario_complete);
+            showMessage(args);
+        }
+    }
+
+    private void showMessage(Bundle args) {
+        FragmentManager fm = getFragmentManager();
+        Message dialogFragment = new Message();
+        dialogFragment.setArguments(args);
+        dialogFragment.show(fm, "");
     }
 
     private void createDrawView() {
@@ -186,7 +215,7 @@ public class CircuitActivity extends Activity
     }
 
     private void scenarioCompleted() {
-
+        displayScenarioCompleteMessage();
     }
 
     public boolean onLongClick(View v)

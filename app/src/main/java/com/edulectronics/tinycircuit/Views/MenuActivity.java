@@ -1,18 +1,13 @@
 package com.edulectronics.tinycircuit.Views;
 
 import android.content.Intent;
-import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
 
-import com.edulectronics.tinycircuit.Controllers.CircuitController;
-import com.edulectronics.tinycircuit.Models.Scenarios.FreePlayScenario;
 import com.edulectronics.tinycircuit.Models.Scenarios.IScenario;
-import com.edulectronics.tinycircuit.Models.Scenarios.Scenario1;
-import com.edulectronics.tinycircuit.Models.Scenarios.ScenarioFactory;
+import com.edulectronics.tinycircuit.Models.Factories.ScenarioFactory;
 import com.edulectronics.tinycircuit.R;
 
 public class MenuActivity extends AppCompatActivity {
