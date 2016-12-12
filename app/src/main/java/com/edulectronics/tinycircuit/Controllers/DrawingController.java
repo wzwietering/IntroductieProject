@@ -29,18 +29,18 @@ public class DrawingController {
 
     private int getXLocation(int position, ConnectionPointOrientation orientation) {
         if (orientation == ConnectionPointOrientation.Top || orientation == ConnectionPointOrientation.Bottom)
-            return (getColumn(position) - 1) * 150 + (int)(0.5 * cellSize);
+            return (getColumn(position) - 1) * cellSize + (int) (0.5 * cellSize);
         if (orientation == ConnectionPointOrientation.Left)
-            return (getColumn(position) - 1) * 150;
-        return getColumn(position) * 150;
+            return (getColumn(position) - 1) * cellSize;
+        return getColumn(position) * cellSize;
     }
 
     private int getYLocation(int position, ConnectionPointOrientation orientation) {
         if (orientation == ConnectionPointOrientation.Left || orientation == ConnectionPointOrientation.Right)
-            return (getRow(position) - 1) * 150 + (int)(0.5 * cellSize);
+            return (getRow(position) - 1) * cellSize + (int) (0.5 * cellSize);
         if (orientation == ConnectionPointOrientation.Top)
-            return (getRow(position) - 1) * 150;
-        return getRow(position) * 150;
+            return (getRow(position) - 1) * cellSize;
+        return getRow(position) * cellSize;
     }
 
     private int getRow(int position) {

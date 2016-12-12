@@ -114,6 +114,6 @@ public class WireController {
     public Wire getVerticalWire(Point a, Point b) {
         if (a.y == b.y)
             return null;
-        return new Wire(new Point(a.x, a.x), new Point(a.x, b.y - (Math.abs(a.y - b.y) % 150)));
+        return new Wire(new Point(a.x, a.y), new Point(a.x, b.y - (Math.abs(a.y - b.y) % 150)));
     }
 }
