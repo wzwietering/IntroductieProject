@@ -45,10 +45,10 @@ public class CircuitActivity extends Activity
     private CircuitController circuitController;
     private GridView circuitGrid;
     private WireController wireController;
-    public Modes mode = Modes.Drag;
     private IScenario scenario;
     private Set<Component> availableComponents;
     private MessageController messageController = new MessageController(getFragmentManager());
+    private boolean isInWireMode = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,9 +56,6 @@ public class CircuitActivity extends Activity
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_circuit);
-
-        Button toggle = (Button) findViewById(R.id.mode_toggle);
-        toggle.setText(mode.toString());
         wireController = new WireController((WireView) findViewById(R.id.draw_view));
 
         scenario = (IScenario) getIntent().getSerializableExtra("scenario");
@@ -171,7 +168,7 @@ public class CircuitActivity extends Activity
         final int action = ev.getAction();
 
         // In the situation where a long click is not needed to initiate a drag, simply start on the down event.
-        if (mode == Modes.Wire) {
+        if (isInWireMode) {
             Resources r = getResources();
             wireController.wire(((GridCell)((IDragSource) v)).getComponent(), ev, r.getInteger(R.integer.cell_size));
         }
@@ -242,20 +239,11 @@ public class CircuitActivity extends Activity
     }
 
     public void toggleMode(View v){
-        switch (mode){
-            case Drag:
-                mode = Modes.Wire;
-                ((Button) findViewById(R.id.mode_toggle)).setText(mode.toString());
-                break;
-            case Wire:
-                mode = Modes.Drag;
-                ((Button) findViewById(R.id.mode_toggle)).setText(mode.toString());
-                break;
-        }
-    }
+        isInWireMode = !isInWireMode;
 
-    public enum Modes{
-        Drag,
-        Wire
+        int buttonColor = isInWireMode? R.color.button_wiremode_on : R.color.button_wiremode_off;
+        ((Button) findViewById(R.id.button_add_wire)).setBackgroundColor(
+                getResources().getColor(buttonColor)
+        );
     }
 }

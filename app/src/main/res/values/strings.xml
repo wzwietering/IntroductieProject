@@ -27,4 +27,5 @@
     <string name="scenario1_explanation" >Verbind het lampje met de batterij, zodat het lampje aan gaat.</string>
     <string name="scenario2_explanation" >Verbind het lampje met de batterij, zodat het lampje aan gaat.</string>
     <string name="scenario_complete" >Goed gedaan!</string>
+    <string name="button_add_wire" >draden tekenen</string>
 </resources>
