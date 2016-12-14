@@ -1,6 +1,9 @@
 package com.edulectronics.tinycircuit.Models;
 
+import android.graphics.Point;
+
 import com.edulectronics.tinycircuit.Models.Components.Component;
+import com.edulectronics.tinycircuit.Models.Components.Connectors.ConnectionPointOrientation;
 
 import java.io.Serializable;
 
@@ -39,5 +42,45 @@ public class Circuit implements Serializable{
 
     public Component getComponent(int i) {
         return components[i];
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public Point getNodeLocation(int position, ConnectionPointOrientation orientation) {
+        return new Point(getXLocation(position, orientation), getYLocation(position, orientation));
+    }
+
+    private int getXLocation(int position, ConnectionPointOrientation orientation) {
+        switch (orientation) {
+            case Top:
+            case Bottom:
+                return (getColumn(position) - 1) * cellSize + (int) (0.5 * cellSize);
+            case Left:
+                return (getColumn(position) - 1) * cellSize;
+            default:
+                return getColumn(position) * cellSize;
+        }
+    }
+
+    private int getYLocation(int position, ConnectionPointOrientation orientation) {
+        switch (orientation) {
+            case Left:
+            case Right:
+                return (getRow(position) - 1) * cellSize + (int) (0.5 * cellSize);
+            case Top:
+                return (getRow(position) - 1) * cellSize;
+            default:
+                return getColumn(position) * cellSize;
+        }
+    }
+
+    private int getRow(int position) {
+        return (position / width) + 1;
+    }
+
+    private int getColumn(int position) {
+        return (position % width) + 1;
     }
 }

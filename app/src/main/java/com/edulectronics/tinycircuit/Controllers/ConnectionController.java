@@ -79,4 +79,18 @@ public class ConnectionController {
         }
         return null;
     }
+
+    public void connect(ConnectionPoint input, ConnectionPoint output) {
+        if(input != null && output != null) {
+            input.connect(output);
+            output.connect(input);
+        }
+    }
+
+    public void disconnect(ConnectionPoint input, ConnectionPoint output) {
+        if(input != null && output != null) {
+            input.disconnect(output);
+            output.disconnect(input);
+        }
+    }
 }
