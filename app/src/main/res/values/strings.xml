@@ -25,5 +25,6 @@
     <string name="button_ok" >Ik snap het</string>
     <string name="scenario_explanation_title" >Uitleg</string>
     <string name="scenario1_explanation" >Verbind het lampje met de batterij, zodat het lampje aan gaat.</string>
+    <string name="scenario2_explanation" >Verbind het lampje met de batterij, zodat het lampje aan gaat.</string>
     <string name="scenario_complete" >Goed gedaan!</string>
 </resources>

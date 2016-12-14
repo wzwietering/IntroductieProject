@@ -167,23 +167,13 @@ public class CircuitActivity extends Activity
     }
 
     public boolean onTouch (View v, MotionEvent ev) {
-        // If we are configured to start only on a long click, we are not going to handle any events here.
         boolean handledHere = false;
         final int action = ev.getAction();
 
         // In the situation where a long click is not needed to initiate a drag, simply start on the down event.
-        if (mode == Modes.Drag) {
-            if (action == MotionEvent.ACTION_DOWN) {
-                handledHere = startDrag(v);
-                if (handledHere) v.performClick();
-            }
-        } else {
+        if (mode == Modes.Wire) {
             Resources r = getResources();
             wireController.wire(((GridCell)((IDragSource) v)).getComponent(), ev, r.getInteger(R.integer.cell_size));
-        }
-
-        if (scenario.isCompleted(circuitController.circuit)) {
-            scenarioCompleted();
         }
 
         return handledHere;
@@ -201,7 +191,18 @@ public class CircuitActivity extends Activity
         if (!v.isInTouchMode()) {
             return false;
         }
-        return startDrag (v);
+        boolean handledHere = false;
+
+        // In the situation where a long click is not needed to initiate a drag, simply start on the down event.
+
+        handledHere = startDrag(v);
+        if (handledHere) v.performClick();
+
+        if (scenario.isCompleted(circuitController.circuit)) {
+            scenarioCompleted();
+        }
+
+        return handledHere;
     }
 
     public boolean startDrag (View v)
