@@ -6,21 +6,21 @@ import com.edulectronics.tinycircuit.Models.Components.Component;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.ConnectionPoint;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.ConnectionPointOrientation;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.Connector;
-import com.edulectronics.tinycircuit.Views.WireView;
+import com.edulectronics.tinycircuit.Views.WireActivity;
 
 /**
  * Created by Wilmer on 11-12-2016.
  */
 
-public class WireController {
+public class ConnectionController {
     private Component first;
     private ConnectionPointOrientation cpoFirst;
-    private WireView wireView;
+    private WireActivity wireActivity;
     private int cellSize, halfCellSize;
     private boolean connecting = false;
 
-    public WireController(WireView wireView) {
-        this.wireView = wireView;
+    public ConnectionController(WireActivity wireActivity) {
+        this.wireActivity = wireActivity;
     }
 
     public void wire(Component component, MotionEvent event, int cellSize) {
@@ -36,7 +36,7 @@ public class WireController {
                 ConnectionPointOrientation cpoSecond = area((int) event.getX(), (int) event.getY());
                 connector.connect(getConnectionPoint(first, cpoFirst), getConnectionPoint(component, cpoSecond));
                 connecting = false;
-                wireView.invalidate();
+                wireActivity.invalidate();
             }
         }
     }

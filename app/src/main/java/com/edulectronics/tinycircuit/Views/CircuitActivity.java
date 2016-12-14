@@ -17,7 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.edulectronics.tinycircuit.Controllers.CircuitController;
-import com.edulectronics.tinycircuit.Controllers.WireController;
+import com.edulectronics.tinycircuit.Controllers.ConnectionController;
 import com.edulectronics.tinycircuit.Models.MenuItem;
 import com.edulectronics.tinycircuit.R;
 import com.edulectronics.tinycircuit.Views.Adapters.CircuitAdapter;
@@ -38,8 +38,8 @@ public class CircuitActivity extends Activity
 	private List<MenuItem> headers;
     private HashMap<MenuItem, List<MenuItem>> children;
     private CircuitController circuitController;
-    private GridView circuit;
-    private WireController wireController;
+    private GridView circuitGrid;
+    private ConnectionController connectionController;
     public Modes mode = Modes.Drag;
 
     @Override
@@ -51,7 +51,7 @@ public class CircuitActivity extends Activity
 
         Button toggle = (Button) findViewById(R.id.mode_toggle);
         toggle.setText(mode.toString());
-        wireController = new WireController((WireView) findViewById(R.id.draw_view));
+        connectionController = new ConnectionController((WireActivity) findViewById(R.id.draw_view));
 
         getController();
         setCircuit();
@@ -61,15 +61,15 @@ public class CircuitActivity extends Activity
     }
 
     private void createDrawView() {
-        WireView wireView = (WireView) findViewById(R.id.draw_view);
-        wireView.setControllers(circuitController);
+        WireActivity wireActivity = (WireActivity) findViewById(R.id.draw_view);
+        wireActivity.setControllers(circuitController);
     }
 
     private void setCircuit() {
-        circuit = (GridView) findViewById(R.id.circuit);
+        circuitGrid = (GridView) findViewById(R.id.circuit);
 
         /*Prevents scrolling, stuff can still be rendered outside screen*/
-        circuit.setOnTouchListener(new View.OnTouchListener() {
+        circuitGrid.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_MOVE){
@@ -79,8 +79,8 @@ public class CircuitActivity extends Activity
             }
         });
 
-        circuit.setNumColumns(circuitController.circuit.width);
-        circuit.setAdapter(new CircuitAdapter(this));
+        circuitGrid.setNumColumns(circuitController.getCircuitWidth());
+        circuitGrid.setAdapter(new CircuitAdapter(this));
     }
 
     private void getController() {
@@ -92,7 +92,7 @@ public class CircuitActivity extends Activity
         mDragController = new DragController(this);
         mDragLayer = (DragLayer) findViewById(R.id.drag_layer);
         mDragLayer.setDragController (mDragController);
-        mDragLayer.setGridView(circuit);
+        mDragLayer.setGridView(circuitGrid);
         mDragController.setDragListener (mDragLayer);
     }
 
@@ -161,7 +161,7 @@ public class CircuitActivity extends Activity
             }
         } else {
             Resources r = getResources();
-            wireController.wire(((GridCell)((IDragSource) v)).getComponent(), ev, r.getInteger(R.integer.cell_size));
+            connectionController.wire(((GridCell)((IDragSource) v)).getComponent(), ev, r.getInteger(R.integer.cell_size));
         }
 
         return handledHere;

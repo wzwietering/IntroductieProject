@@ -18,7 +18,7 @@
 			android:background="@color/cell_empty"
 			android:id="@+id/circuit" />
 
-		<com.edulectronics.tinycircuit.Views.WireView
+		<com.edulectronics.tinycircuit.Views.WireActivity
             android:id="@+id/draw_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>

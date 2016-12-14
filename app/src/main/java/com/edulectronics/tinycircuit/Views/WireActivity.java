@@ -20,12 +20,12 @@ import com.edulectronics.tinycircuit.R;
  * Created by Wilmer on 9-12-2016.
  */
 
-public class WireView extends View {
+public class WireActivity extends View {
     Paint paint = new Paint();
     private CircuitController controller;
     private CoordinateHelper coordinateHelper;
 
-    public WireView(Context context, AttributeSet attrs) {
+    public WireActivity(Context context, AttributeSet attrs) {
         super(context, attrs);
         paint.setColor(Color.RED);
 
