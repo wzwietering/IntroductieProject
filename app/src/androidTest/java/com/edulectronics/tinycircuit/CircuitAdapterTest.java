@@ -1,17 +1,21 @@
 package com.edulectronics.tinycircuit;
 
-import android.content.Context;
-import android.support.test.InstrumentationRegistry;
+import android.support.test.espresso.contrib.DrawerActions;
+import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.edulectronics.tinycircuit.Controllers.CircuitController;
-import com.edulectronics.tinycircuit.Models.Components.Lightbulb;
-import com.edulectronics.tinycircuit.Views.Adapters.CircuitAdapter;
+import com.edulectronics.tinycircuit.Views.CircuitActivity;
 
+import org.junit.BeforeClass;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static junit.framework.Assert.assertEquals;
+import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
 
 /**
  * Created by Wilmer on 12-12-2016.
@@ -19,23 +23,19 @@ import static junit.framework.Assert.assertEquals;
 
 @RunWith(AndroidJUnit4.class)
 public class CircuitAdapterTest {
-    Context context = InstrumentationRegistry.getTargetContext();
-    CircuitController circuitController = CircuitController.getInstance();
-    CircuitAdapter circuitAdapter = new CircuitAdapter(context);
-    Lightbulb lightbulb = new Lightbulb();
+    static CircuitController circuitController = CircuitController.getInstance();
 
-    //More tests would be nice, but they require a views :\
-    public void setup(){
+    @BeforeClass
+    public static void setup(){
         circuitController.setProperties(null, 4, 4);
-        circuitController.addComponent(lightbulb, 5);
     }
+
+    @Rule
+    public ActivityTestRule<CircuitActivity> circuitActivity = new ActivityTestRule<>(CircuitActivity.class);
 
     @Test
-    public void countTest(){
-        assertEquals(16, circuitAdapter.getCount());
-    }
-
-    public void equalityTest(){
-        assertEquals(lightbulb, circuitAdapter.getItem(5));
+    public void menuOpen(){
+        onView(withId(R.id.activity_main)).perform(DrawerActions.open());
+        onView(withId(R.id.navigationview)).check(matches(isDisplayed()));
     }
 }
