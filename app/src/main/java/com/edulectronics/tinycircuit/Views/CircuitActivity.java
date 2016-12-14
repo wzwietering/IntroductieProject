@@ -171,6 +171,10 @@ public class CircuitActivity extends Activity
         if (isInWireMode) {
             Resources r = getResources();
             wireController.wire(((GridCell)((IDragSource) v)).getComponent(), ev, r.getInteger(R.integer.cell_size));
+
+            if (scenario.isCompleted(circuitController.circuit)) {
+                scenarioCompleted();
+            }
         }
 
         return handledHere;
@@ -188,18 +192,10 @@ public class CircuitActivity extends Activity
         if (!v.isInTouchMode()) {
             return false;
         }
-        boolean handledHere = false;
 
         // In the situation where a long click is not needed to initiate a drag, simply start on the down event.
 
-        handledHere = startDrag(v);
-        if (handledHere) v.performClick();
-
-        if (scenario.isCompleted(circuitController.circuit)) {
-            scenarioCompleted();
-        }
-
-        return handledHere;
+        return startDrag(v);
     }
 
     public boolean startDrag (View v)
