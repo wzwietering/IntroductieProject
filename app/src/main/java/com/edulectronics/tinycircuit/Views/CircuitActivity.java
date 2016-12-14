@@ -193,8 +193,6 @@ public class CircuitActivity extends Activity
             return false;
         }
 
-        // In the situation where a long click is not needed to initiate a drag, simply start on the down event.
-
         return startDrag(v);
     }
 
