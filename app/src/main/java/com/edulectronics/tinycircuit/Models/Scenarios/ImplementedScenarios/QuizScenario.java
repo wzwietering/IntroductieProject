@@ -33,7 +33,7 @@ public class QuizScenario implements IScenario {
 
     @Override
     public ArrayList<Component> loadComponents() {
-        // Get Components from DB
+        // TODO: Get Components from DB
         return null;
     }
 }
