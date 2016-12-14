@@ -14,8 +14,8 @@ import java.io.Serializable;
 public class Circuit implements Serializable{
 
     public Component[] components;
-    public int size;
-    public int width;
+    private int size;
+    private int width;
 
     public Circuit(int width, int height){
         components = new Component[width * height];

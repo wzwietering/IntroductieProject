@@ -85,4 +85,8 @@ public class CircuitController implements Serializable {
     public Component[] getComponents(){
         return circuit.components;
     }
+
+    public int getCircuitWidth() {
+        return circuit.getWidth();
+    }
 }
