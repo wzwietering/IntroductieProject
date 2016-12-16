@@ -48,6 +48,10 @@ public class Circuit implements Serializable{
         return width;
     }
 
+    public int getSize() {
+        return size;
+    }
+
     public Point getNodeLocation(int position, ConnectionPointOrientation orientation) {
         return new Point(getXLocation(position, orientation), getYLocation(position, orientation));
     }
