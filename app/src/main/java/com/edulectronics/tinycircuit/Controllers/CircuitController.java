@@ -21,24 +21,10 @@ import java.util.Set;
 
 public class CircuitController implements Serializable {
 
-    private static CircuitController ourInstance = new CircuitController();
+    private Circuit circuit;
 
-    public static CircuitController getInstance() {
-        return ourInstance;
-    }
-
-    private CircuitController() {
-    }
-
-    public Circuit circuit;
-    private Set<Component> availableComponents;
-
-    // When a new component is created, we save it here. It hasn't been dragged to the circuit yet.
-    public Component newComponent;
-
-    public void setProperties(Set<Component> s, int width, int size){
-        this.circuit = new Circuit(width, size);
-        this.availableComponents = s;
+    public CircuitController(int width, int height) {
+        circuit = new Circuit(width, height);
     }
 
     public void addNewComponent(String componentName, CircuitActivity activity)

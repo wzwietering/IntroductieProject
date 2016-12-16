@@ -1,7 +1,6 @@
 package com.edulectronics.tinycircuit.Views;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.os.Bundle;
@@ -35,11 +34,13 @@ public class CircuitActivity extends Activity
         implements View.OnClickListener, View.OnTouchListener, View.OnLongClickListener { //  , AdapterView.OnItemClickListener
     private DragController mDragController;   // Object that handles a drag-drop sequence. It interacts with DragSource and DropTarget objects.
     private DragLayer mDragLayer;             // The ViewGroup within which an object can be dragged.
-	private List<MenuItem> headers;
-    private HashMap<MenuItem, List<MenuItem>> children;
-    private CircuitController circuitController;
+
     private GridView circuitGrid;
+    private WireActivity wireActivity;
+
+    private CircuitController circuitController;
     private ConnectionController connectionController;
+
     public Modes mode = Modes.Drag;
 
     @Override
@@ -49,20 +50,22 @@ public class CircuitActivity extends Activity
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_circuit);
 
-        Button toggle = (Button) findViewById(R.id.mode_toggle);
-        toggle.setText(mode.toString());
-        connectionController = new ConnectionController((WireActivity) findViewById(R.id.draw_view));
-
-        getController();
+        createDrawView();
         setCircuit();
+        setControllers();
         createDragControls();
         createMenu();
-        createDrawView();
+        setButtons();
+    }
+
+    private void setButtons() {
+        Button toggle = (Button) findViewById(R.id.mode_toggle);
+        toggle.setText(mode.toString());
     }
 
     private void createDrawView() {
-        WireActivity wireActivity = (WireActivity) findViewById(R.id.draw_view);
-        wireActivity.setControllers(circuitController);
+        wireActivity = (WireActivity) findViewById(R.id.draw_view);
+        wireActivity.setControllers(new ConnectionController(wireActivity));
     }
 
     private void setCircuit() {
@@ -83,9 +86,9 @@ public class CircuitActivity extends Activity
         circuitGrid.setAdapter(new CircuitAdapter(this));
     }
 
-    private void getController() {
-        Intent intent = getIntent();
-        circuitController = CircuitController.getInstance();
+    private void setControllers() {
+        connectionController = new ConnectionController(wireActivity);
+        circuitController = new CircuitController(getIntent().getIntExtra("width", 10), getIntent().getIntExtra("height", 10));
     }
 
     private void createDragControls() {
@@ -94,6 +97,12 @@ public class CircuitActivity extends Activity
         mDragLayer.setDragController (mDragController);
         mDragLayer.setGridView(circuitGrid);
         mDragController.setDragListener (mDragLayer);
+    }
+
+    private void connect() {
+        if (connectionController.connect()) {
+            wireActivity.invalidate();
+        }
     }
 
     /*This code adds a menu to the side*/
