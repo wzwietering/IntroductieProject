@@ -7,12 +7,14 @@ import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -52,6 +54,9 @@ public class CircuitActivity extends Activity
         Button toggle = (Button) findViewById(R.id.mode_toggle);
         toggle.setText(mode.toString());
         wireController = new WireController((WireView) findViewById(R.id.draw_view));
+
+        ImageView hamburger = (ImageView) findViewById(R.id.hamburger);
+        hamburger.setImageResource(R.drawable.ic_hamburger);
 
         getController();
         setCircuit();
@@ -230,5 +235,9 @@ public class CircuitActivity extends Activity
     public enum Modes{
         Drag,
         Wire
+    }
+
+    public void openMenu(View v){
+        ((DrawerLayout) findViewById(R.id.activity_main)).openDrawer(Gravity.LEFT);
     }
 }

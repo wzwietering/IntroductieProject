@@ -50,6 +50,14 @@
 			android:src="@drawable/trashcan"
 			android:layout_gravity="bottom"
 			android:visibility="invisible"/>
+
+		<ImageView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="start"
+			android:padding="4dp"
+            android:onClick="openMenu"
+			android:id="@+id/hamburger"/>
     </com.edulectronics.tinycircuit.Views.Draggables.DragLayer>
 
 	<android.support.design.widget.NavigationView
