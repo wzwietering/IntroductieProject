@@ -47,10 +47,10 @@ public class CircuitActivity extends Activity
     private CircuitController circuitController;
     private GridView circuitGrid;
     private WireController wireController;
-    public Modes mode = Modes.Drag;
     private IScenario scenario;
     private Set<Component> availableComponents;
     private MessageController messageController = new MessageController(getFragmentManager());
+    private boolean isInWireMode = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,9 +58,6 @@ public class CircuitActivity extends Activity
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_circuit);
-
-        Button toggle = (Button) findViewById(R.id.mode_toggle);
-        toggle.setText(mode.toString());
         wireController = new WireController((WireView) findViewById(R.id.draw_view));
 
         ImageView hamburger = (ImageView) findViewById(R.id.hamburger);
@@ -172,23 +169,17 @@ public class CircuitActivity extends Activity
     }
 
     public boolean onTouch (View v, MotionEvent ev) {
-        // If we are configured to start only on a long click, we are not going to handle any events here.
         boolean handledHere = false;
         final int action = ev.getAction();
 
         // In the situation where a long click is not needed to initiate a drag, simply start on the down event.
-        if (mode == Modes.Drag) {
-            if (action == MotionEvent.ACTION_DOWN) {
-                handledHere = startDrag(v);
-                if (handledHere) v.performClick();
-            }
-        } else {
+        if (isInWireMode) {
             Resources r = getResources();
             wireController.wire(((GridCell)((IDragSource) v)).getComponent(), ev, r.getInteger(R.integer.cell_size));
-        }
 
-        if (scenario.isCompleted(circuitController.circuit)) {
-            scenarioCompleted();
+            if (scenario.isCompleted(circuitController.circuit)) {
+                scenarioCompleted();
+            }
         }
 
         return handledHere;
@@ -206,7 +197,8 @@ public class CircuitActivity extends Activity
         if (!v.isInTouchMode()) {
             return false;
         }
-        return startDrag (v);
+
+        return startDrag(v);
     }
 
     public boolean startDrag (View v)
@@ -246,21 +238,12 @@ public class CircuitActivity extends Activity
     }
 
     public void toggleMode(View v){
-        switch (mode){
-            case Drag:
-                mode = Modes.Wire;
-                ((Button) findViewById(R.id.mode_toggle)).setText(mode.toString());
-                break;
-            case Wire:
-                mode = Modes.Drag;
-                ((Button) findViewById(R.id.mode_toggle)).setText(mode.toString());
-                break;
-        }
-    }
+        isInWireMode = !isInWireMode;
 
-    public enum Modes{
-        Drag,
-        Wire
+        int buttonColor = isInWireMode? R.color.button_wiremode_on : R.color.button_wiremode_off;
+        ((Button) findViewById(R.id.button_add_wire)).setBackgroundColor(
+                getResources().getColor(buttonColor)
+        );
     }
 
     public void openMenu(View v){

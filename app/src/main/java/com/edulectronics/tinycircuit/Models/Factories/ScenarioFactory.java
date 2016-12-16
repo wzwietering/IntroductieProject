@@ -3,6 +3,7 @@ package com.edulectronics.tinycircuit.Models.Factories;
 import com.edulectronics.tinycircuit.Models.Scenarios.IScenario;
 import com.edulectronics.tinycircuit.Models.Scenarios.ImplementedScenarios.FreePlayScenario;
 import com.edulectronics.tinycircuit.Models.Scenarios.ImplementedScenarios.Scenario1;
+import com.edulectronics.tinycircuit.Models.Scenarios.ImplementedScenarios.Scenario2;
 
 /**
  * Created by Maaike on 12-12-2016.
@@ -19,6 +20,8 @@ public class ScenarioFactory {
                     return new FreePlayScenario();
             case "1":
                     return new Scenario1();
+            case "2":
+                    return new Scenario2();
             default:
                 throw new IllegalArgumentException();
         }

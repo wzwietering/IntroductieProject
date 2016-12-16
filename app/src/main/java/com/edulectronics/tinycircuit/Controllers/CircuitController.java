@@ -39,17 +39,15 @@ public class CircuitController implements Serializable {
     public void setProperties(int width, int size, ArrayList<Component> components){
         this.circuit = new Circuit(width, size);
         if (components != null) {
-            int position = width/2;
+            int position = width / 2;
             for (Component component : components) {
                 // TODO: Move positioning of components to the scenario. Either based on relative
                 // positions (depending on grid size) or lock the grid to a default size.
 
                 addComponent(component, position);
-                position++;
-                position++;
+                position+= 10;
             }
         }
-
     }
 
     public void addNewComponent(String componentName, CircuitActivity activity)
