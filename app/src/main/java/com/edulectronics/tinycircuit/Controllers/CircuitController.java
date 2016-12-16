@@ -22,57 +22,42 @@ import java.util.Set;
 public class CircuitController implements Serializable {
 
     private Circuit circuit;
+    private LevelController levelController;
+
+    public CircuitController(LevelController levelController, int width, int height) {
+        this.levelController = levelController;
+        circuit = new Circuit(width, height);
+    }
 
     public CircuitController(int width, int height) {
         circuit = new Circuit(width, height);
     }
 
-    public void addNewComponent(String componentName, CircuitActivity activity)
-    {
-        Component component = ComponentFactory.CreateComponent(componentName, 5.0);
-
-        FrameLayout componentHolder = (FrameLayout) activity.findViewById
-                (R.id.component_source_frame);
-        componentHolder.setVisibility(View.VISIBLE);
-
-        if (componentHolder != null) {
-            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams (LayoutParams.MATCH_PARENT,
-                    LayoutParams.MATCH_PARENT,
-                    Gravity.CENTER);
-            GridCell newView = new GridCell(activity);
-            newView.setComponent(component);
-            componentHolder.addView(newView, lp);
-            newView.mCellNumber = -1;
-
-            // Have this activity listen to touch and click events for the view.
-            newView.setOnClickListener(activity);
-            newView.setOnLongClickListener(activity);
-            newView.setOnTouchListener(activity);
-        }
+    public void addComponent(Component component, int position) {
+        if (position < circuit.getSize() && position >= 0)
+            if (!circuit.occupied(position) && levelController.available(component))
+                circuit.add(component, position);
     }
 
-    public void addComponent(Component component, int position){
-        // Only add if tile is available and allowed
-        if(!circuit.occupied(position)) {
-            circuit.add(component, position);
-        }
+    public void removeComponent(int position) {
+        if (position < circuit.getSize() && position >= 0)
+            if (levelController != null && levelController.ownedByLevel(position))
+                circuit.remove(position);
     }
 
-    public void removeComponent(int position){
-        if(circuit.occupied(position)) {
-            circuit.remove(position);
-        }
+    public Component getComponent(int position) {
+        return circuit.getComponent(position);
     }
 
-    public Component getComponent(int position){
-        return circuit.components[position];
-    }
-
-    public Component[] getComponents(){
-        return circuit.components;
+    public boolean isComplete() {
+        return circuit.isCompleteCircle();
     }
 
     public int getCircuitWidth() {
         return circuit.getWidth();
+    }
+
+    public int getCircuitSize() {
+        return circuit.getSize();
     }
 }
