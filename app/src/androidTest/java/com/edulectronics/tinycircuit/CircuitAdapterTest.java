@@ -1,6 +1,5 @@
 package com.edulectronics.tinycircuit;
 
-import android.support.test.espresso.DataInteraction;
 import android.support.test.espresso.ViewAction;
 import android.support.test.espresso.action.CoordinatesProvider;
 import android.support.test.espresso.action.GeneralSwipeAction;
@@ -14,7 +13,6 @@ import android.view.View;
 import com.edulectronics.tinycircuit.Controllers.CircuitController;
 import com.edulectronics.tinycircuit.Models.Components.Lightbulb;
 import com.edulectronics.tinycircuit.Views.CircuitActivity;
-import com.edulectronics.tinycircuit.Views.Draggables.GridCell;
 
 import org.junit.BeforeClass;
 import org.junit.Rule;
@@ -68,14 +66,14 @@ public class CircuitAdapterTest {
     public void dragItem(){
         Lightbulb lightbulb = new Lightbulb();
         circuitController.addComponent(lightbulb, 3);
-        DataInteraction gridcell = onData(is(instanceOf(GridCell.class))).inAdapterView(withId(R.id.circuit)).atPosition(3);
-        gridcell.perform(drag());
-        assertEquals(lightbulb, circuitController.getComponent(2));
+
+        onData(is(instanceOf(Lightbulb.class))).inAdapterView(withId(R.id.circuit)).perform(drag());
+        assertEquals(Lightbulb.class, circuitController.getComponent(7).getClass());
     }
 
     private static ViewAction drag(){
-        return new GeneralSwipeAction(Swipe.FAST, getCoordinates(10, 10),
-                getCoordinates(-140, 10), Press.FINGER);
+        return new GeneralSwipeAction(Swipe.FAST, getCoordinates(75, 75),
+                getCoordinates(140, 200), Press.FINGER);
     }
 
     //Used for coordinates on the screen

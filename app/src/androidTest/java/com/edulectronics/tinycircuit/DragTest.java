@@ -32,8 +32,8 @@ public class DragTest {
         GridCell gridCell = new GridCell(context);
         Lightbulb lightbulb = new Lightbulb();
 
-        assertTrue(gridCell.isEmpty);
+        assertTrue(gridCell.isEmpty());
         gridCell.setComponent(lightbulb);
-        assertFalse(gridCell.isEmpty);
+        assertFalse(gridCell.isEmpty());
     }
 }
