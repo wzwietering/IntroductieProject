@@ -8,6 +8,6 @@
     <color name="cell_filled">#26a52a</color>
     <color name="cell_empty_hover">#eaeaea</color>
     <color name="cell_filled_hover">#bbbbbb</color>
-    <color name="button_wiremode_on">#ffffff</color>
-    <color name="button_wiremode_off">#666666</color>
+    <color name="wiremode_on">#bbbbbb</color>
+    <color name="wiremode_off">#ffffff</color>
 </resources>

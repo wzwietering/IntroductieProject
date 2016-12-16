@@ -36,14 +36,6 @@
 				android:layout_gravity="center" />
 		</FrameLayout>
 
-		<Button
-			android:id="@+id/button_add_wire"
-			android:layout_width="80dp"
-			android:layout_height="60dp"
-            android:layout_gravity="right"
-			android:text="@string/button_add_wire"
-            android:onClick="toggleMode"/>
-
 		<com.edulectronics.tinycircuit.Views.Draggables.DeleteZone
 			android:layout_height="60dp"
 			android:layout_width="60dp"
@@ -72,6 +64,7 @@
 			android:id="@+id/expandablelist"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
-			android:background="#ffffff"/>
+			android:background="#ffffff"
+            android:groupIndicator="@null"/>
 	</android.support.design.widget.NavigationView>
 </android.support.v4.widget.DrawerLayout>

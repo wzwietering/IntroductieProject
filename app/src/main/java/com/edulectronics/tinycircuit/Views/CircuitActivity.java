@@ -7,12 +7,11 @@ import android.graphics.Point;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
-import android.view.Gravity;
 import android.view.Display;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -219,6 +218,10 @@ public class CircuitActivity extends Activity
         return new ExpandableListView.OnGroupClickListener() {
             @Override
             public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+                if(groupPosition == 0){
+                    LinearLayout group = (LinearLayout) v;
+                    toggleMode(group);
+                }
                 return false;
             }
         };
@@ -237,13 +240,13 @@ public class CircuitActivity extends Activity
         };
     }
 
-    public void toggleMode(View v){
+    public void toggleMode(LinearLayout linearLayout){
         isInWireMode = !isInWireMode;
-
-        int buttonColor = isInWireMode? R.color.button_wiremode_on : R.color.button_wiremode_off;
-        ((Button) findViewById(R.id.button_add_wire)).setBackgroundColor(
-                getResources().getColor(buttonColor)
-        );
+        if (isInWireMode){
+            linearLayout.setBackgroundResource(R.color.wiremode_on);
+        } else {
+            linearLayout.setBackgroundResource(R.color.wiremode_off);;
+        }
     }
 
     public void openMenu(View v){
