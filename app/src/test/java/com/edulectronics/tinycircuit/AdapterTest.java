@@ -23,7 +23,7 @@ public class AdapterTest {
 
     @Test
     public void adapterTests(){
-        controller.setProperties(new HashSet<Component>(), 5, 5);
+        controller.setProperties(5, 5, null);
 
         Lightbulb l = new Lightbulb();
         controller.addComponent(l, 14);
