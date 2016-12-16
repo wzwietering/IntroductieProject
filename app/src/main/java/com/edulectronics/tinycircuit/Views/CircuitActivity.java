@@ -120,7 +120,7 @@ public class CircuitActivity extends Activity
         String[] items = getResources().getStringArray(R.array.menuitems);
         children = new HashMap<>();
         /*Temporary! Should work different!*/
-        int[] textures = {R.drawable.battery, R.drawable.lightbulb_on, R.drawable.resistor};
+        int[] textures = {0, R.drawable.battery, R.drawable.lightbulb_on, R.drawable.resistor};
 
         TypedArray typedArray = getResources().obtainTypedArray(R.array.categories);
         int length = typedArray.length();
