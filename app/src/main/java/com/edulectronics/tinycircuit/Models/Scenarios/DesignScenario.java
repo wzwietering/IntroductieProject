@@ -37,9 +37,12 @@ public abstract class DesignScenario implements IScenario {
     // The preset components that are already part of the scenario.
     @Override
     public ArrayList<Component> loadComponents() {
-        ArrayList list =  new ArrayList<Component>();
-        list.addAll(Arrays.asList(this.initialComponents));
-        return list;
+        if(this.initialComponents != null) {
+            ArrayList list = new ArrayList<Component>();
+            list.addAll(Arrays.asList(this.initialComponents));
+            return list;
+        }
+        return null;
     }
 
     // Get the Id of a message explaining to the user what they need to do
