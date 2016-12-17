@@ -3,9 +3,8 @@ package com.edulectronics.tinycircuit.Controllers;
 import android.app.FragmentManager;
 import android.os.Bundle;
 
-import com.edulectronics.tinycircuit.Models.MessageType;
-import com.edulectronics.tinycircuit.Models.Scenarios.IScenario;
-import com.edulectronics.tinycircuit.Models.Scenarios.ImplementedScenarios.FreePlayScenario;
+import com.edulectronics.tinycircuit.Models.MessageArgs;
+import com.edulectronics.tinycircuit.Models.MessageTypes;
 import com.edulectronics.tinycircuit.R;
 import com.edulectronics.tinycircuit.Views.Message;
 
@@ -22,16 +21,26 @@ public class MessageController {
         this.fragmentManager = fm;
     }
 
-    public void displayMessage(int message, MessageType messageType) {
+    public void displayMessage(MessageArgs messageArgs) {
             Bundle args = new Bundle();
-            args.putInt("message", message);
-            args.putInt("title", getTitle(messageType));
-            args.putBoolean("end_activity", messageType == MessageType.ScenarioComplete);
+
+            // No title was given. Set a default one.
+            if (messageArgs.title == 0) {
+                messageArgs.title = getTitle(messageArgs.type);
+            }
+
+            args.putSerializable("messageargs", messageArgs);
             showMessage(args);
     }
 
-    private int getTitle(MessageType messageType) {
-        switch (messageType){
+    private void showMessage(Bundle args) {
+        Message dialogFragment = new Message();
+        dialogFragment.setArguments(args);
+        dialogFragment.show(fragmentManager, "");
+    }
+
+    private int getTitle(MessageTypes type) {
+        switch (type){
             case Explanation:
                 return R.string.scenario_explanation_title;
             case ScenarioComplete:
@@ -39,11 +48,5 @@ public class MessageController {
             default:
                 return 0;
         }
-    }
-
-    private void showMessage(Bundle args) {
-        Message dialogFragment = new Message();
-        dialogFragment.setArguments(args);
-        dialogFragment.show(fragmentManager, "");
     }
 }

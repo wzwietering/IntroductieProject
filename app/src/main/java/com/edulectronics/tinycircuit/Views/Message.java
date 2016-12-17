@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.edulectronics.tinycircuit.Models.MessageArgs;
 import com.edulectronics.tinycircuit.R;
 
 /**
@@ -20,15 +21,14 @@ public class Message extends DialogFragment {
 
         View view = inflater.inflate(R.layout.fragment_message, container, false);
         Bundle args = getArguments();
-
-        setContent(args, view);
-        setDismissButtonAction(args, view);
+        MessageArgs messageArgs = (MessageArgs) args.getSerializable("messageargs");
+        setContent(messageArgs, view);
+        setDismissButtonAction(messageArgs, view);
 
         return view;
     }
 
-    private void setDismissButtonAction(Bundle args, View view) {
-        final boolean endActivity = args.getBoolean("end_activity", false);
+    private void setDismissButtonAction(final MessageArgs args, View view) {
 
         Button dismiss = (Button) view.findViewById(R.id.dismiss);
         dismiss.setOnClickListener(new View.OnClickListener() {
@@ -36,22 +36,22 @@ public class Message extends DialogFragment {
             @Override
             public void onClick(View v) {
                 dismiss();
-                if(endActivity) {
+                if(args.endActivity) {
                     Message.this.getActivity().finish();
+                }
+                if(args.goToNextScenario) {
+                    ((CircuitActivity)Message.this.getActivity()).startNextScenario();
                 }
             }
         });
     }
 
-    private void setContent(Bundle args, View view) {
-
-        int messageId = args.getInt("message", 0);
-        int titleId = args.getInt("title", 0);
+    private void setContent(final MessageArgs args, View view) {
 
         TextView explanation = (TextView) view.findViewById(R.id.scenario_explanation);
-        explanation.setText(messageId);
+        explanation.setText(args.message);
 
         TextView title = (TextView) view.findViewById(R.id.title);
-        title.setText(titleId);
+        title.setText(args.title);
     }
 }

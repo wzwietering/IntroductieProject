@@ -22,9 +22,11 @@ import com.edulectronics.tinycircuit.Controllers.MessageController;
 import com.edulectronics.tinycircuit.Controllers.WireController;
 import com.edulectronics.tinycircuit.Models.Components.Component;
 import com.edulectronics.tinycircuit.Models.MenuItem;
-import com.edulectronics.tinycircuit.Models.MessageType;
+import com.edulectronics.tinycircuit.Models.MessageArgs;
+import com.edulectronics.tinycircuit.Models.MessageTypes;
 import com.edulectronics.tinycircuit.Models.Scenarios.IScenario;
 import com.edulectronics.tinycircuit.Models.Scenarios.ImplementedScenarios.FreePlayScenario;
+import com.edulectronics.tinycircuit.Models.Scenarios.ImplementedScenarios.Scenario2;
 import com.edulectronics.tinycircuit.R;
 import com.edulectronics.tinycircuit.Views.Adapters.CircuitAdapter;
 import com.edulectronics.tinycircuit.Views.Adapters.ExpandableListAdapter;
@@ -37,6 +39,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
+
+import static com.edulectronics.tinycircuit.Models.MessageTypes.Explanation;
 
 public class CircuitActivity extends Activity
         implements View.OnClickListener, View.OnTouchListener, View.OnLongClickListener { //  , AdapterView.OnItemClickListener
@@ -69,7 +73,7 @@ public class CircuitActivity extends Activity
         createDrawView();
 
         if (scenario.getClass() != FreePlayScenario.class) {
-            messageController.displayMessage(scenario.getPrompt(), MessageType.Explanation);
+            messageController.displayMessage(new MessageArgs(scenario.getPrompt(), Explanation));
         }
     }
 
@@ -180,10 +184,13 @@ public class CircuitActivity extends Activity
         // In the situation where a long click is not needed to initiate a drag, simply start on the down event.
         if (isInWireMode) {
             Resources r = getResources();
-            wireController.wire(((GridCell)((IDragSource) v)).getComponent(), ev, r.getInteger(R.integer.cell_size));
+            Component component = ((GridCell)((IDragSource) v)).getComponent();
+            if(component != null) {
+                wireController.wire(component, ev, r.getInteger(R.integer.cell_size));
 
-            if (scenario.isCompleted(circuitController.circuit)) {
-                scenarioCompleted();
+                if (scenario.isCompleted(circuitController.circuit)) {
+                    scenarioCompleted();
+                }
             }
         }
 
@@ -191,7 +198,10 @@ public class CircuitActivity extends Activity
     }
 
     private void scenarioCompleted() {
-        messageController.displayMessage(R.string.scenario_complete, MessageType.ScenarioComplete);
+        messageController.displayMessage(new MessageArgs(
+                R.string.scenario_complete,
+                MessageTypes.ScenarioComplete,
+                true));
     }
 
     public boolean onLongClick(View v)
@@ -249,5 +259,12 @@ public class CircuitActivity extends Activity
         ((Button) findViewById(R.id.button_add_wire)).setBackgroundColor(
                 getResources().getColor(buttonColor)
         );
+    }
+
+    public void startNextScenario() {
+        // TODO: Implemented by scenariocontroller.
+        // Obviously this is very very bad code. I know. I will fix it when we have a scenario-
+        // controller.
+        this.scenario = new Scenario2(this.circuitController.circuit);
     }
 }
