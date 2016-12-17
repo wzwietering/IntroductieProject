@@ -22,7 +22,9 @@ import com.edulectronics.tinycircuit.Controllers.MessageController;
 import com.edulectronics.tinycircuit.Controllers.WireController;
 import com.edulectronics.tinycircuit.Models.Components.Component;
 import com.edulectronics.tinycircuit.Models.MenuItem;
+import com.edulectronics.tinycircuit.Models.MessageType;
 import com.edulectronics.tinycircuit.Models.Scenarios.IScenario;
+import com.edulectronics.tinycircuit.Models.Scenarios.ImplementedScenarios.FreePlayScenario;
 import com.edulectronics.tinycircuit.R;
 import com.edulectronics.tinycircuit.Views.Adapters.CircuitAdapter;
 import com.edulectronics.tinycircuit.Views.Adapters.ExpandableListAdapter;
@@ -66,7 +68,9 @@ public class CircuitActivity extends Activity
         createMenu();
         createDrawView();
 
-        messageController.displayScenarioExplanation(scenario);
+        if (scenario.getClass() != FreePlayScenario.class) {
+            messageController.displayMessage(scenario.getPrompt(), MessageType.Explanation);
+        }
     }
 
     private void createDrawView() {
@@ -161,6 +165,12 @@ public class CircuitActivity extends Activity
 
     public void onClick(View v)
     {
+        if(!isInWireMode) {
+            // Let clicked component handle the tap.
+            if (CircuitController.getInstance().handleClick(((GridCell)v).mCellNumber)) {
+                ((GridCell)v).resetImage();
+            };
+        }
     }
 
     public boolean onTouch (View v, MotionEvent ev) {
@@ -181,7 +191,7 @@ public class CircuitActivity extends Activity
     }
 
     private void scenarioCompleted() {
-        messageController.displayScenarioCompleteMessage(scenario);
+        messageController.displayMessage(R.string.scenario_complete, MessageType.ScenarioComplete);
     }
 
     public boolean onLongClick(View v)

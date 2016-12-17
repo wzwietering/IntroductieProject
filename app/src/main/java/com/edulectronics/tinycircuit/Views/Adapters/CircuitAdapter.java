@@ -32,7 +32,7 @@ public class CircuitAdapter extends BaseAdapter {
 
     public Object getItem(int position)
     {
-        return circuitController.circuit.components[position];
+        return circuitController.circuit.getComponent(position);
     }
 
     public long getItemId(int position) {

@@ -21,6 +21,8 @@
     <string-array name="weerstanden">
         <item name="id">2</item>
         <item>Weerstand</item>
+        <item name="id">3</item>
+        <item>Schakelaar</item>
     </string-array>
     <string name="button_ok" >Ik snap het</string>
     <string name="scenario_explanation_title" >Uitleg</string>

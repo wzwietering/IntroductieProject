@@ -88,10 +88,23 @@ public class CircuitController implements Serializable {
     }
 
     public Component getComponent(int position){
-        return circuit.components[position];
+        return circuit.getComponent(position);
     }
 
     public Component[] getComponents(){
-        return circuit.components;
+        return circuit.getAllComponents();
+    }
+
+    public boolean handleClick(int position) {
+        if (position == -1) {
+            // This happens when a new component is created. Component source has index -1
+            return false;
+        }
+
+        Component component = getComponent(position);
+        if(component != null) {
+            return component.handleClick();
+        }
+        return false;
     }
 }

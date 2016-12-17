@@ -17,19 +17,18 @@ import com.edulectronics.tinycircuit.R;
 public class Message extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_message, container, false);
-        getDialog().setTitle("Test Dialog");
-
         Bundle args = getArguments();
-        int messageId = args.getInt("message", 0);
-        int titleId = args.getInt("title", 0);
+
+        setContent(args, view);
+        setDismissButtonAction(args, view);
+
+        return view;
+    }
+
+    private void setDismissButtonAction(Bundle args, View view) {
         final boolean endActivity = args.getBoolean("end_activity", false);
-
-        TextView explanation = (TextView) view.findViewById(R.id.scenario_explanation);
-        explanation.setText(messageId);
-
-        TextView title = (TextView) view.findViewById(R.id.title);
-        title.setText(titleId);
 
         Button dismiss = (Button) view.findViewById(R.id.dismiss);
         dismiss.setOnClickListener(new View.OnClickListener() {
@@ -42,7 +41,17 @@ public class Message extends DialogFragment {
                 }
             }
         });
+    }
 
-        return view;
+    private void setContent(Bundle args, View view) {
+
+        int messageId = args.getInt("message", 0);
+        int titleId = args.getInt("title", 0);
+
+        TextView explanation = (TextView) view.findViewById(R.id.scenario_explanation);
+        explanation.setText(messageId);
+
+        TextView title = (TextView) view.findViewById(R.id.title);
+        title.setText(titleId);
     }
 }

@@ -3,6 +3,7 @@ package com.edulectronics.tinycircuit.Controllers;
 import android.app.FragmentManager;
 import android.os.Bundle;
 
+import com.edulectronics.tinycircuit.Models.MessageType;
 import com.edulectronics.tinycircuit.Models.Scenarios.IScenario;
 import com.edulectronics.tinycircuit.Models.Scenarios.ImplementedScenarios.FreePlayScenario;
 import com.edulectronics.tinycircuit.R;
@@ -21,22 +22,22 @@ public class MessageController {
         this.fragmentManager = fm;
     }
 
-    public void displayScenarioExplanation(IScenario scenario) {
-        if (scenario.getClass() != FreePlayScenario.class) {
+    public void displayMessage(int message, MessageType messageType) {
             Bundle args = new Bundle();
-            args.putInt("message", scenario.getPrompt());
-            args.putInt("title", R.string.scenario_explanation_title);
+            args.putInt("message", message);
+            args.putInt("title", getTitle(messageType));
+            args.putBoolean("end_activity", messageType == MessageType.ScenarioComplete);
             showMessage(args);
-        }
     }
 
-    public void displayScenarioCompleteMessage(IScenario scenario) {
-        if (scenario.getClass() != FreePlayScenario.class) {
-            Bundle args = new Bundle();
-            args.putInt("message", R.string.scenario_complete);
-            args.putInt("title", R.string.scenario_complete);
-            args.putBoolean("end_activity", true);
-            showMessage(args);
+    private int getTitle(MessageType messageType) {
+        switch (messageType){
+            case Explanation:
+                return R.string.scenario_explanation_title;
+            case ScenarioComplete:
+                return R.string.scenario_complete;
+            default:
+                return 0;
         }
     }
 
