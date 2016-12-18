@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.edulectronics.tinycircuit.Models.Factories.ScenarioFactory;
@@ -63,6 +65,9 @@ public class ListViewAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 TextView textView = (TextView) view;
+                RelativeLayout parent = (RelativeLayout) textView.getParent();
+                ImageButton imageButton = (ImageButton) parent.getChildAt(0);
+                imageButton.setImageResource(R.drawable.buttonpressed);
                 if(textView.getText() == context.getResources().getString(R.string.exercise)){
                     exerciseMenuStart();
                 } else {
