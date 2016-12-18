@@ -27,6 +27,8 @@
         <item name="id">3</item>
         <item>Weerstand</item>
     </string-array>
+    <string name="exercise">Opgaven</string>
+    <string name="freeplay">Vrij spel</string>
     <string name="button_ok" >Ik snap het</string>
     <string name="scenario_explanation_title" >Uitleg</string>
     <string name="scenario1_explanation" >Verbind het lampje met de batterij, zodat het lampje aan gaat.</string>
