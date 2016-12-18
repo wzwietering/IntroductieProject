@@ -24,19 +24,21 @@ public class WireController {
     }
 
     public void wire(Component component, MotionEvent event, int cellSize) {
-        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            this.cellSize = cellSize;
-            this.halfCellSize = (int) (0.5 * cellSize);
-            if (!connecting) {
-                first = component;
-                cpoFirst = area((int) event.getX(), (int) event.getY());
-                connecting = true;
-            } else {
-                Connector connector = new Connector();
-                ConnectionPointOrientation cpoSecond = area((int) event.getX(), (int) event.getY());
-                connector.connect(getConnectionPoint(first, cpoFirst), getConnectionPoint(component, cpoSecond));
-                connecting = false;
-                wireView.invalidate();
+        if(component != null) {
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                this.cellSize = cellSize;
+                this.halfCellSize = (int) (0.5 * cellSize);
+                if (!connecting) {
+                    first = component;
+                    cpoFirst = area((int) event.getX(), (int) event.getY());
+                    connecting = true;
+                } else {
+                    Connector connector = new Connector();
+                    ConnectionPointOrientation cpoSecond = area((int) event.getX(), (int) event.getY());
+                    connector.connect(getConnectionPoint(first, cpoFirst), getConnectionPoint(component, cpoSecond));
+                    connecting = false;
+                    wireView.invalidate();
+                }
             }
         }
     }
