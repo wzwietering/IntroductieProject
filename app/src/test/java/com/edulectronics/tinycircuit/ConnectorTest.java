@@ -1,6 +1,5 @@
 package com.edulectronics.tinycircuit;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.ConnectionPoint;
-import com.edulectronics.tinycircuit.Models.Components.Connectors.ConnectionPointOrientation;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.Connector;
 import com.edulectronics.tinycircuit.Models.Components.Lightbulb;
 import com.edulectronics.tinycircuit.Models.Components.Powersource;
@@ -24,8 +23,8 @@ public class ConnectorTest {
         Powersource powersource = new Powersource(5);
 
         //create ConnectionPoints to use in Connector.connect method
-        ConnectionPoint input = new ConnectionPoint(lightbulb, ConnectionPointOrientation.Left);
-        ConnectionPoint output = new ConnectionPoint(powersource, ConnectionPointOrientation.Right);
+        ConnectionPoint input = lightbulb.getConnectionPointByIndex(0);
+        ConnectionPoint output = powersource.getConnectionPointByIndex(1);
         Connector.connect(input, output);
 
         //recreate list to compare with the one made in ConnectionPoint

@@ -17,7 +17,6 @@ public class WireControllerTest {
         WireController wireController = new WireController(null);
         wireController.cellSize = 150;
         wireController.halfCellSize = 75;
-        ConnectionPointOrientation result = wireController.area(80, 40);
 
         assertEquals(ConnectionPointOrientation.Top, wireController.area(80, 40));
 

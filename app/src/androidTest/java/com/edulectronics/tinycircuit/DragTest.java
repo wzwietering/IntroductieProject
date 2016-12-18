@@ -10,6 +10,7 @@ import com.edulectronics.tinycircuit.Views.Draggables.GridCell;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 
@@ -21,10 +22,10 @@ import static junit.framework.Assert.assertTrue;
 public class DragTest {
     Context context = InstrumentationRegistry.getTargetContext();
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void emptyGridCell(){
         GridCell gridCell = new GridCell(context);
-        gridCell.getComponent();
+        assertEquals(null, gridCell.getComponent());
     }
 
     @Test

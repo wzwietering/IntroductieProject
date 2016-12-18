@@ -13,7 +13,7 @@ import com.edulectronics.tinycircuit.Views.WireView;
  */
 
 public class WireController {
-    public Component first;
+    private Component first;
     private ConnectionPointOrientation cpoFirst;
     private WireView wireView;
     public int cellSize, halfCellSize;
