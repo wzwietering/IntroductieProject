@@ -44,7 +44,10 @@ public class GridCell extends ImageView implements IDragSource, IDropTarget {
     }
 
     public boolean isEmpty() {
-        return CircuitController.getInstance().getComponent(this.mCellNumber) == null;
+        if(mCellNumber != -1) {
+            return CircuitController.getInstance().getComponent(this.mCellNumber) == null;
+        }
+        return false;
     }
 
     public void setComponent(Component component) {
