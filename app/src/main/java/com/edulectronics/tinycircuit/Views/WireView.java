@@ -16,9 +16,6 @@ import com.edulectronics.tinycircuit.Models.Components.Connectors.Connection;
 import com.edulectronics.tinycircuit.Models.Line;
 import com.edulectronics.tinycircuit.R;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by Wilmer on 9-12-2016.
  */

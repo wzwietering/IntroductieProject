@@ -1,7 +1,6 @@
 package com.edulectronics.tinycircuit.Views;
 
 import android.app.Activity;
-import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Point;
 import android.os.Bundle;
@@ -187,26 +186,26 @@ public class CircuitActivity extends Activity
 
     public boolean onTouch (View v, MotionEvent ev) {
         boolean handledHere = false;
-        final int action = ev.getAction();
 
-        // In the situation where a long click is not needed to initiate a drag, simply start on the down event.
         if (isInWireMode) {
-            Resources r = getResources();
-            Component component = ((GridCell)((IDragSource) v)).getComponent();
+            //Check if wire is touched, but only on the down. This is necessary to prevent line
+            //removal on the up event.
+            if(ev.getAction() == MotionEvent.ACTION_DOWN) {
+                for (Connection connection : circuitController.getAllConnections()) {
+                    if (connection.isTouched(ev)) {
+                        Connector connector = new Connector();
+                        connector.disconnect(connection.pointA, connection.pointB);
+                        wireController.redraw();
+                    }
+                }
+            }
+
+            Component component = ((GridCell) v).getComponent();
             if(component != null) {
                 wireController.wire(component, ev);
 
                 if (scenario.isCompleted(circuitController.circuit)) {
                     scenarioCompleted();
-                }
-            }
-
-            //Check if wire is touched
-            for(Connection connection : circuitController.getAllConnections()){
-                if(connection.isTouched(ev)){
-                    Connector connector = new Connector();
-                    connector.disconnect(connection.pointA, connection.pointB);
-                    wireController.redraw();
                 }
             }
         }

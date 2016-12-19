@@ -23,7 +23,7 @@ public class WireController {
     private ConnectionPointOrientation cpoFirst;
     private WireView wireView;
     private int cellHeight, cellWidth;
-    private boolean connecting = false;
+    public boolean connecting = false;
 
     public WireController(WireView wireView, int cellWidth, int cellHeight) {
         this.wireView = wireView;
