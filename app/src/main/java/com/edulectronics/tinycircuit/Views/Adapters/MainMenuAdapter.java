@@ -20,14 +20,12 @@ import com.edulectronics.tinycircuit.Views.ExerciseMenuActivity;
  * Created by Wilmer on 18-12-2016.
  */
 
-public class ListViewAdapter extends BaseAdapter {
+public class MainMenuAdapter extends BaseAdapter {
     private Context context;
-    private View view;
     private String[] items;
 
-    public ListViewAdapter(Context context, View view, String[] items) {
+    public MainMenuAdapter(Context context, String[] items) {
         this.context = context;
-        this.view = view;
         this.items = items;
     }
 
@@ -69,25 +67,21 @@ public class ListViewAdapter extends BaseAdapter {
                 ImageButton imageButton = (ImageButton) parent.getChildAt(0);
                 imageButton.setImageResource(R.drawable.buttonpressed);
                 if(textView.getText() == context.getResources().getString(R.string.exercise)){
-                    exerciseMenuStart();
+                    event(null, ExerciseMenuActivity.class);
                 } else {
-                    freePlayStart();
+                    event("freeplay", CircuitActivity.class);
                 }
             }
         };
     }
 
-    private void freePlayStart() {
-        ScenarioFactory factory = new ScenarioFactory();
-        IScenario scenario = factory.getScenario("freeplay");
-
-        Intent intent = new Intent(context, CircuitActivity.class);
-        intent.putExtra("scenario", scenario );
+    private void event(String scenario, Class c){
+        Intent intent = new Intent(context, c);
+        if(scenario != null){
+            ScenarioFactory factory = new ScenarioFactory();
+            IScenario iscenario = factory.getScenario(scenario);
+            intent.putExtra("scenario", iscenario);
+        }
         context.startActivity(intent);
-    }
-
-    private void exerciseMenuStart(){
-        Intent exercise = new Intent(context, ExerciseMenuActivity.class);
-        context.startActivity(exercise);
     }
 }

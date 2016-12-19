@@ -6,7 +6,7 @@ import android.view.WindowManager;
 import android.widget.ListView;
 
 import com.edulectronics.tinycircuit.R;
-import com.edulectronics.tinycircuit.Views.Adapters.ListViewAdapter;
+import com.edulectronics.tinycircuit.Views.Adapters.MainMenuAdapter;
 
 public class MenuActivity extends AppCompatActivity {
 
@@ -19,6 +19,6 @@ public class MenuActivity extends AppCompatActivity {
 
         ListView listView = (ListView) findViewById(R.id.buttonArea);
         String[] items = {getResources().getString(R.string.exercise), getResources().getString(R.string.freeplay)};
-        listView.setAdapter(new ListViewAdapter(this, listView, items));
+        listView.setAdapter(new MainMenuAdapter(this, items));
     }
 }
