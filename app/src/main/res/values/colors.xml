@@ -10,4 +10,5 @@
     <color name="cell_filled_hover">#bbbbbb</color>
     <color name="button_wiremode_on">#ffffff</color>
     <color name="button_wiremode_off">#666666</color>
+    <color name="wire_default">#ffffff</color>
 </resources>

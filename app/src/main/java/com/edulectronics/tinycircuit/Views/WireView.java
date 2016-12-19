@@ -1,6 +1,7 @@
 package com.edulectronics.tinycircuit.Views;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -30,7 +31,7 @@ public class WireView extends View {
 
     public WireView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        paint.setColor(Color.RED);
+        paint.setColor(getResources().getColor(R.color.wire_default));
         wireController = new WireController(this);
         WindowManager windowManager = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
         Display display = windowManager.getDefaultDisplay();
