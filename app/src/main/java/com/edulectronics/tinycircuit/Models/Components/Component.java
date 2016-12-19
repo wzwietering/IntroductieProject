@@ -63,10 +63,6 @@ public abstract class Component implements IComponent {
         }
     }
 
-    public int getImage() {
-        return R.drawable.ic_launcher;
-    }
-
     public void setPosition(int position){
         this.position = position;
     }
@@ -78,4 +74,11 @@ public abstract class Component implements IComponent {
         }
         return null;
     }
+
+    // Let the component handle the click. Only return true if something changed!!
+    // If true is returned the view is redrawn and we don't need to do that if nothing changed.
+    public boolean handleClick() {
+        // Do nothing by default. A lot of components, e.g. a lightbulb, are not clickable.
+        return false;
+    };
 }

@@ -16,15 +16,13 @@ import static org.junit.Assert.*;
  */
 
 public class CircuitTest {
-    Set<Component> s = new HashSet<>();
     CircuitController c;
     Lightbulb light = new Lightbulb();
 
     @Test
     public void addComponent(){
-        s.add(light);
         c = CircuitController.getInstance();
-        c.setProperties(s, 5, 5);
+        c.setProperties(5, 5, null);
         c.addComponent(light, 6);
 
         assertEquals(true, c.circuit.occupied(6));
@@ -33,7 +31,7 @@ public class CircuitTest {
     @Test
     public void removeComponent(){
         c = CircuitController.getInstance();
-        c.setProperties(s, 5, 5);
+        c.setProperties(5, 5, null);
         c.removeComponent(1);
 
         assertEquals(false, c.circuit.occupied(5));
