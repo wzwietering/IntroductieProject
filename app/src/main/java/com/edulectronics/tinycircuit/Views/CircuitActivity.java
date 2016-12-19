@@ -221,6 +221,8 @@ public class CircuitActivity extends Activity
                 if(groupPosition == 0){
                     LinearLayout group = (LinearLayout) v;
                     toggleMode(group);
+                    NavigationView view = (NavigationView) findViewById(R.id.navigationview);
+                    ((DrawerLayout) findViewById(R.id.activity_main)).closeDrawer(view);
                 }
                 return false;
             }
