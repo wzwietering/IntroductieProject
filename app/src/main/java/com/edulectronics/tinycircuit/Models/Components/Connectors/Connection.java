@@ -4,6 +4,7 @@ import com.edulectronics.tinycircuit.Models.Components.Powersource;
 import com.edulectronics.tinycircuit.Models.Line;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Maaike on 19-12-2016.
@@ -13,7 +14,7 @@ public class Connection {
     public ConnectionPoint pointA;
     public ConnectionPoint pointB;
 
-    private ArrayList<Line> lines;
+    private List<Line> lines;
 
     public Connection(ConnectionPoint a, ConnectionPoint b) {
         this.pointA = a;
@@ -29,5 +30,13 @@ public class Connection {
         } else {
             return outGoingConnectionPoint.getParentComponent().hasOutputConnection(pointB);
         }
+    }
+
+    public void setLines(List<Line> lines) {
+        this.lines = lines;
+    }
+
+    public List<Line> getLines() {
+        return lines;
     }
 }

@@ -62,7 +62,9 @@ public class CircuitActivity extends Activity
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_circuit);
-        wireController = new WireController((WireView) findViewById(R.id.draw_view));
+
+        int cellSize = getResources().getInteger(R.integer.cell_size);
+        wireController = new WireController((WireView) findViewById(R.id.draw_view), cellSize, cellSize);
 
         scenario = (IScenario) getIntent().getSerializableExtra("scenario");
         availableComponents = scenario.getAvailableComponents();
@@ -186,7 +188,7 @@ public class CircuitActivity extends Activity
             Resources r = getResources();
             Component component = ((GridCell)((IDragSource) v)).getComponent();
             if(component != null) {
-                wireController.wire(component, ev, r.getInteger(R.integer.cell_size));
+                wireController.wire(component, ev);
 
                 if (scenario.isCompleted(circuitController.circuit)) {
                     scenarioCompleted();
