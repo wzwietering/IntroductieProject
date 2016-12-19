@@ -27,7 +27,7 @@ public class WireView extends View {
 
     public WireView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        paint.setColor(Color.RED);
+        paint.setColor(Color.WHITE);
 
         WindowManager windowManager = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
         Display display = windowManager.getDefaultDisplay();

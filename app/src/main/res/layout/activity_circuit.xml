@@ -4,7 +4,7 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-	android:background="@drawable/achtergrond"
+	android:background="@color/background"
     tools:context="com.edulectronics.tinycircuit.Views.CircuitActivity">
     <com.edulectronics.tinycircuit.Views.Draggables.DragLayer
         android:id="@+id/drag_layer"
