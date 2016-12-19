@@ -22,7 +22,7 @@ public class Powersource extends Component {
     }
 
     // This is the 'start' of checking whether a circuit is actually a circuit.
-    // Alwast call this method on the powersource first.
+    // Always call this method on the powersource first.
     public boolean hasOutputConnection() {
         return super.hasOutputConnection(this.getInput());
     }

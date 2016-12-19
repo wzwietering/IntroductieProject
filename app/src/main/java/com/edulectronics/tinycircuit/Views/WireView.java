@@ -72,7 +72,6 @@ public class WireView extends View {
                 }
             }
         }
-
         super.onDraw(canvas);
     }
 }

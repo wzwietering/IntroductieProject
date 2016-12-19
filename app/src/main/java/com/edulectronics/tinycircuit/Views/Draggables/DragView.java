@@ -31,13 +31,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 
+import com.edulectronics.tinycircuit.R;
+
 import java.io.Serializable;
 
 /**
  * A DragView is a special view used by a DragController. During a drag operation, what is actually moving
  * on the screen is a DragView. A DragView is constructed using a bitmap of the view the user really
  * wants to move.
- *
  */
 
 public class DragView extends View implements Serializable {
@@ -59,18 +60,18 @@ public class DragView extends View implements Serializable {
      * The registration point is the point inside our view that the touch events should
      * be centered upon.
      *
-     * @param context A context
-     * @param bitmap The view that we're dragging around.  We scale it up when we draw it.
+     * @param context       A context
+     * @param bitmap        The view that we're dragging around.  We scale it up when we draw it.
      * @param registrationX The x coordinate of the registration point.
      * @param registrationY The y coordinate of the registration point.
      */
     public DragView(Context context, Bitmap bitmap, int registrationX, int registrationY,
-            int left, int top, int width, int height) {
+                    int left, int top, int width, int height) {
         super(context);
 
         // mWindowManager = WindowManagerImpl.getDefault();
-        mWindowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);        
-  
+        mWindowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+
         Matrix scale = new Matrix();
         float scaleFactor = width;
         scaleFactor = (scaleFactor + DRAG_SCALE) / scaleFactor;
@@ -89,19 +90,19 @@ public class DragView extends View implements Serializable {
 
     @Override
     protected void onDraw(Canvas canvas) {
-            // Puts a little border around the view so you can see that you selected something.
-            Paint p = new Paint();
-            p.setStyle (Paint.Style.FILL);
-            p.setColor (0x8800dd11);
-            p.setAlpha (80);
+        // Puts a little border around the view so you can see that you selected something.
+        Paint p = new Paint();
+        p.setStyle(Paint.Style.FILL);
+        p.setColor(getResources().getColor(R.color.cell));
+        p.setAlpha(80);
         canvas.drawRect(0, 0, getWidth(), getHeight(), p);
         float scale = mAnimationScale;
 
         if (scale < 0.999f) { // allow for some float error
             float height = mBitmap.getHeight();
             float width = mBitmap.getWidth();
-            float offset1 = (width-(width*scale))/2;
-            float offset2 = (height-(height*scale))/2;
+            float offset1 = (width - (width * scale)) / 2;
+            float offset2 = (height - (height * scale)) / 2;
             canvas.translate(offset1, offset2);
             canvas.scale(scale, scale);
         }
@@ -121,8 +122,8 @@ public class DragView extends View implements Serializable {
      * Create a window containing this view and show it.
      *
      * @param windowToken obtained from v.getWindowToken() from one of your views
-     * @param touchX the x coordinate the user touched in screen coordinates
-     * @param touchY the y coordinate the user touched in screen coordinates
+     * @param touchX      the x coordinate the user touched in screen coordinates
+     * @param touchY      the y coordinate the user touched in screen coordinates
      */
     public void show(IBinder windowToken, int touchX, int touchY) {
         WindowManager.LayoutParams lp;
@@ -133,7 +134,7 @@ public class DragView extends View implements Serializable {
         lp = new WindowManager.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT,
-                touchX-mRegistrationX, touchY-mRegistrationY,
+                touchX - mRegistrationX, touchY - mRegistrationY,
                 WindowManager.LayoutParams.TYPE_APPLICATION_SUB_PANEL,
                 WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
                 pixelFormat);
@@ -144,7 +145,7 @@ public class DragView extends View implements Serializable {
         mLayoutParams = lp;
         mWindowManager.addView(this, lp);
     }
-    
+
     /**
      * Move the window containing this view.
      *
