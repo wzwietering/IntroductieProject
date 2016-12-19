@@ -36,11 +36,11 @@ public class WireController {
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
                 if (!connecting) {
                     first = component;
-                    cpoFirst = area((int) event.getX(), (int) event.getY());
+                    cpoFirst = clickedArea((int) event.getX(), (int) event.getY());
                     connecting = true;
                 } else {
                     Connector connector = new Connector();
-                    ConnectionPointOrientation cpoSecond = area((int) event.getX(), (int) event.getY());
+                    ConnectionPointOrientation cpoSecond = clickedArea((int) event.getX(), (int) event.getY());
                     connector.connect(getConnectionPoint(first, cpoFirst), getConnectionPoint(component, cpoSecond));
                     connecting = false;
                     wireView.invalidate();
@@ -49,7 +49,7 @@ public class WireController {
         }
     }
 
-    private ConnectionPointOrientation area(int x, int y) {
+    private ConnectionPointOrientation clickedArea(int x, int y) {
         if (x < 0.5 * cellWidth && y < 0.5 * cellHeight) {
             if (x >= y) {
                 return ConnectionPointOrientation.Top;
@@ -88,22 +88,44 @@ public class WireController {
         return null;
     }
 
-    public List<Line> getWires(Point a, Point b) {
+
+    public void setLines(Connection c, Point startPoint, Point endPoint) {
+
+        List<Line> lines = new ArrayList<Line>();
+        Line startLine = getEndPointLine(startPoint, endPoint, c.pointA.orientation);
+        Line endLine = getEndPointLine(endPoint, startPoint, c.pointB.orientation);
+
+        lines.add(startLine);
+        lines.addAll(getInBetweenLines(startLine.b, endLine.b, c.pointA.orientation));
+        lines.add(endLine);
+
+        c.setLines(lines);
+    }
+
+    public List<Line> getInBetweenLines(Point a, Point b, ConnectionPointOrientation orientation) {
         List<Line> lines = new ArrayList<>();
         Point lastPoint = a;
 
-
-
-        for (int i = 0; i <= 2; i++) {
-            Line w;
-            if (i % 2 == 0) {
-                w = getVerticalWire(lastPoint, b);
-            } else {
-                w = getHorizontalWire(lastPoint, b);
-            }
-
+        Line w;
+        if (orientation == ConnectionPointOrientation.Left
+                || orientation == ConnectionPointOrientation.Right) {
+            w = getVerticalWire(lastPoint, b);
             if (w != null) {
                 lastPoint = w.b;
+                lines.add(w);
+            }
+            w = getHorizontalWire(lastPoint, b);
+            if (w != null) {
+                lines.add(w);
+            }
+        } else {
+            w = getHorizontalWire(lastPoint, b);
+            if (w != null) {
+                lastPoint = w.b;
+                lines.add(w);
+            }
+            w = getVerticalWire(lastPoint, b);
+            if (w != null) {
                 lines.add(w);
             }
         }
@@ -122,6 +144,9 @@ public class WireController {
         return new Line(new Point(a.x, a.y), new Point(a.x, b.y - (Math.abs(a.y - b.y) % 150)));
     }
 
+    // First go half a cell up/down/left/right, ddepending on where the connectionpoint is
+    // and where the endpoint is. Otherwise the next lines will be drawn right through other
+    // components.
     public Line getEndPointLine(Point startPoint, Point endPoint, ConnectionPointOrientation orientation) {
         switch (orientation) {
             case Left:
@@ -149,18 +174,5 @@ public class WireController {
             default:
                 throw new IllegalArgumentException();
         }
-    }
-
-    public void setLines(Connection c, Point startPoint, Point endPoint) {
-
-        List<Line> lines = new ArrayList<Line>();
-        Line startLine = getEndPointLine(startPoint, endPoint, c.pointA.orientation);
-        Line endLine = getEndPointLine(endPoint, startPoint, c.pointB.orientation);
-
-        lines.add(startLine);
-        lines.addAll(getWires(startLine.b, endLine.b));
-        lines.add(endLine);
-
-        c.setLines(lines);
     }
 }
