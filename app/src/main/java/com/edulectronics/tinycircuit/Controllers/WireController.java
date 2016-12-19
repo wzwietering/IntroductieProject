@@ -4,6 +4,7 @@ import android.graphics.Point;
 import android.view.MotionEvent;
 
 import com.edulectronics.tinycircuit.Models.Components.Component;
+import com.edulectronics.tinycircuit.Models.Components.Connectors.Connection;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.ConnectionPoint;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.ConnectionPointOrientation;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.Connector;
@@ -21,25 +22,25 @@ public class WireController {
     private Component first;
     private ConnectionPointOrientation cpoFirst;
     private WireView wireView;
-    private int cellSize, halfCellSize;
+    private int cellHeight, cellWidth;
     private boolean connecting = false;
 
-    public WireController(WireView wireView) {
+    public WireController(WireView wireView, int cellWidth, int cellHeight) {
         this.wireView = wireView;
+        this.cellWidth = cellWidth;
+        this.cellHeight = cellHeight;
     }
 
-    public void wire(Component component, MotionEvent event, int cellSize) {
+    public void wire(Component component, MotionEvent event) {
         if(component != null) {
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                this.cellSize = cellSize;
-                this.halfCellSize = (int) (0.5 * cellSize);
                 if (!connecting) {
                     first = component;
-                    cpoFirst = area((int) event.getX(), (int) event.getY());
+                    cpoFirst = clickedArea((int) event.getX(), (int) event.getY());
                     connecting = true;
                 } else {
                     Connector connector = new Connector();
-                    ConnectionPointOrientation cpoSecond = area((int) event.getX(), (int) event.getY());
+                    ConnectionPointOrientation cpoSecond = clickedArea((int) event.getX(), (int) event.getY());
                     connector.connect(getConnectionPoint(first, cpoFirst), getConnectionPoint(component, cpoSecond));
                     connecting = false;
                     redraw();
@@ -48,26 +49,26 @@ public class WireController {
         }
     }
 
-    private ConnectionPointOrientation area(int x, int y) {
-        if (x < halfCellSize && y < halfCellSize) {
+    private ConnectionPointOrientation clickedArea(int x, int y) {
+        if (x < 0.5 * cellWidth && y < 0.5 * cellHeight) {
             if (x >= y) {
                 return ConnectionPointOrientation.Top;
             } else {
                 return ConnectionPointOrientation.Left;
             }
-        } else if (x >= halfCellSize && y < halfCellSize) {
-            if (y < cellSize - x) {
+        } else if (x >= 0.5 * cellWidth && y < 0.5 * cellHeight) {
+            if (y < 0.5 * cellHeight - x) {
                 return ConnectionPointOrientation.Top;
             } else {
                 return ConnectionPointOrientation.Right;
             }
-        } else if (x < halfCellSize && y >= halfCellSize) {
-            if (y < cellSize - x) {
+        } else if (x < 0.5 * cellWidth && y >= 0.5 * cellHeight) {
+            if (y < 0.5 * cellHeight - x) {
                 return ConnectionPointOrientation.Left;
             } else {
                 return ConnectionPointOrientation.Bottom;
             }
-        } else if (x >= halfCellSize && y >= halfCellSize) {
+        } else if (x >= 0.5 * cellWidth && y >= 0.5 * cellHeight) {
             if (x >= y) {
                 return ConnectionPointOrientation.Right;
             } else {
@@ -87,22 +88,40 @@ public class WireController {
         return null;
     }
 
-    public List<Line> getWires(Point a, Point b) {
+
+    public void setLines(Connection c, Point startPoint, Point endPoint) {
+        List<Line> lines = new ArrayList<Line>();
+        Line startLine = getEndPointLine(startPoint, endPoint, c.pointA.orientation);
+        Line endLine = getEndPointLine(endPoint, startPoint, c.pointB.orientation);
+
+        // If the connection point has a orientation left or right we first draw a vertical
+        // line, then a horizontal one. It looks better (trust me).
+        boolean drawVerticalLineFirst = c.pointA.orientation == ConnectionPointOrientation.Left
+                || c.pointA.orientation == ConnectionPointOrientation.Right;
+
+        lines.add(startLine);
+        lines.addAll(getInBetweenLines(startLine.b, endLine.b, drawVerticalLineFirst));
+        lines.add(endLine);
+
+        c.setLines(lines);
+    }
+
+    public List<Line> getInBetweenLines(Point a, Point b, boolean drawVerticalLineFirst) {
         List<Line> lines = new ArrayList<>();
         Point lastPoint = a;
+        Line l;
 
-        for (int i = 0; i <= 2; i++) {
-            Line w;
-            if (i % 2 == 0) {
-                w = getVerticalWire(lastPoint, b);
-            } else {
-                w = getHorizontalWire(lastPoint, b);
-            }
+        l = drawVerticalLineFirst ? getVerticalWire(lastPoint, b) : getHorizontalWire(lastPoint, b);
 
-            if (w != null) {
-                lastPoint = w.b;
-                lines.add(w);
-            }
+        if (l != null) {
+            lastPoint = l.b;
+            lines.add(l);
+        }
+
+        l = drawVerticalLineFirst ? getHorizontalWire(lastPoint, b) : getVerticalWire(lastPoint, b);
+
+        if (l != null) {
+            lines.add(l);
         }
         return lines;
     }
@@ -117,6 +136,38 @@ public class WireController {
         if (a.y == b.y)
             return null;
         return new Line(new Point(a.x, a.y), new Point(a.x, b.y - (Math.abs(a.y - b.y) % 150)));
+    }
+
+    // First go half a cell up/down/left/right, ddepending on where the connectionpoint is
+    // and where the endpoint is. Otherwise the next lines will be drawn right through other
+    // components.
+    public Line getEndPointLine(Point startPoint, Point endPoint, ConnectionPointOrientation orientation) {
+        switch (orientation) {
+            case Left:
+            case Right:
+                if (startPoint.y < endPoint.y) {
+                    // Go up half a cell
+                    return new Line(startPoint,
+                                    new Point(startPoint.x, startPoint.y + (int) (0.5 * cellHeight)));
+                } else {
+                    // Go down half a cell
+                    return new Line (startPoint,
+                            new Point(startPoint.x, startPoint.y - (int) (0.5 * cellHeight)));
+                }
+            case Bottom:
+            case Top:
+                if (startPoint.x > endPoint.x) {
+                    // Go left half a cell
+                    return new Line(startPoint,
+                            new Point(startPoint.x - (int) (0.5 * cellWidth), startPoint.y));
+                } else {
+                    // Go right half a cell
+                    return new Line(startPoint,
+                            new Point(startPoint.x + (int) (0.5 * cellWidth), startPoint.y));
+                }
+            default:
+                throw new IllegalArgumentException();
+        }
     }
 
     public void redraw(){

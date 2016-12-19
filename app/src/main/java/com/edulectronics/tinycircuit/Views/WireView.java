@@ -16,6 +16,9 @@ import com.edulectronics.tinycircuit.Models.Components.Connectors.Connection;
 import com.edulectronics.tinycircuit.Models.Line;
 import com.edulectronics.tinycircuit.R;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Wilmer on 9-12-2016.
  */
@@ -26,20 +29,25 @@ public class WireView extends View {
     private CoordinateHelper coordinateHelper;
     private WireController wireController;
 
+    private Point screenSize = new Point();
+
     public WireView(Context context, AttributeSet attrs) {
         super(context, attrs);
         paint.setColor(getResources().getColor(R.color.wire_default));
-        wireController = new WireController(this);
+
         WindowManager windowManager = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
         Display display = windowManager.getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        paint.setStrokeWidth(size.y / 100);
+        display.getSize(screenSize);
+        paint.setStrokeWidth(screenSize.y / 100);
     }
 
     public void setControllers(CircuitController controller) {
+        int cellWidth = screenSize.x / controller.circuit.width;
+        int cellHeight = getContext().getResources().getInteger(R.integer.cell_size);
+
         this.controller = controller;
-        coordinateHelper = new CoordinateHelper(controller.circuit.width, getContext().getResources().getInteger(R.integer.cell_size));
+        coordinateHelper = new CoordinateHelper(controller.circuit.width, cellWidth, cellHeight);
+        wireController = new WireController(this, cellWidth, cellHeight);
     }
 
     @Override
@@ -55,7 +63,9 @@ public class WireView extends View {
                         c.pointB.orientation
                 );
 
-                for (Line line : wireController.getWires(startPoint, endPoint)) {
+                wireController.setLines(c, startPoint, endPoint);
+
+                for (Line line : c.getLines()) {
                     canvas.drawLine(line.a.x, line.a.y, line.b.x, line.b.y, paint);
                 }
             }
