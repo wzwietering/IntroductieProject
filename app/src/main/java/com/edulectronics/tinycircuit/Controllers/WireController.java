@@ -90,44 +90,38 @@ public class WireController {
 
 
     public void setLines(Connection c, Point startPoint, Point endPoint) {
-
         List<Line> lines = new ArrayList<Line>();
         Line startLine = getEndPointLine(startPoint, endPoint, c.pointA.orientation);
         Line endLine = getEndPointLine(endPoint, startPoint, c.pointB.orientation);
 
+        // If the connection point has a orientation left or right we first draw a vertical
+        // line, then a horizontal one. It looks better (trust me).
+        boolean drawVerticalLineFirst = c.pointA.orientation == ConnectionPointOrientation.Left
+                || c.pointA.orientation == ConnectionPointOrientation.Right;
+
         lines.add(startLine);
-        lines.addAll(getInBetweenLines(startLine.b, endLine.b, c.pointA.orientation));
+        lines.addAll(getInBetweenLines(startLine.b, endLine.b, drawVerticalLineFirst));
         lines.add(endLine);
 
         c.setLines(lines);
     }
 
-    public List<Line> getInBetweenLines(Point a, Point b, ConnectionPointOrientation orientation) {
+    public List<Line> getInBetweenLines(Point a, Point b, boolean drawVerticalLineFirst) {
         List<Line> lines = new ArrayList<>();
         Point lastPoint = a;
+        Line l;
 
-        Line w;
-        if (orientation == ConnectionPointOrientation.Left
-                || orientation == ConnectionPointOrientation.Right) {
-            w = getVerticalWire(lastPoint, b);
-            if (w != null) {
-                lastPoint = w.b;
-                lines.add(w);
-            }
-            w = getHorizontalWire(lastPoint, b);
-            if (w != null) {
-                lines.add(w);
-            }
-        } else {
-            w = getHorizontalWire(lastPoint, b);
-            if (w != null) {
-                lastPoint = w.b;
-                lines.add(w);
-            }
-            w = getVerticalWire(lastPoint, b);
-            if (w != null) {
-                lines.add(w);
-            }
+        l = drawVerticalLineFirst ? getVerticalWire(lastPoint, b) : getHorizontalWire(lastPoint, b);
+
+        if (l != null) {
+            lastPoint = l.b;
+            lines.add(l);
+        }
+
+        l = drawVerticalLineFirst ? getHorizontalWire(lastPoint, b) : getVerticalWire(lastPoint, b);
+
+        if (l != null) {
+            lines.add(l);
         }
         return lines;
     }
