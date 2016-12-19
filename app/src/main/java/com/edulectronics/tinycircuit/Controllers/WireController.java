@@ -42,7 +42,7 @@ public class WireController {
                     ConnectionPointOrientation cpoSecond = area((int) event.getX(), (int) event.getY());
                     connector.connect(getConnectionPoint(first, cpoFirst), getConnectionPoint(component, cpoSecond));
                     connecting = false;
-                    wireView.invalidate();
+                    redraw();
                 }
             }
         }
@@ -117,5 +117,9 @@ public class WireController {
         if (a.y == b.y)
             return null;
         return new Line(new Point(a.x, a.y), new Point(a.x, b.y - (Math.abs(a.y - b.y) % 150)));
+    }
+
+    public void redraw(){
+        wireView.invalidate();
     }
 }

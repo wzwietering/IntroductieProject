@@ -12,9 +12,7 @@ import android.view.WindowManager;
 import com.edulectronics.tinycircuit.Controllers.CircuitController;
 import com.edulectronics.tinycircuit.Controllers.CoordinateHelper;
 import com.edulectronics.tinycircuit.Controllers.WireController;
-import com.edulectronics.tinycircuit.Models.Components.Component;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.Connection;
-import com.edulectronics.tinycircuit.Models.Components.Connectors.ConnectionPoint;
 import com.edulectronics.tinycircuit.Models.Line;
 import com.edulectronics.tinycircuit.R;
 
@@ -23,7 +21,7 @@ import com.edulectronics.tinycircuit.R;
  */
 
 public class WireView extends View {
-    Paint paint = new Paint();
+    public static Paint paint = new Paint();
     private CircuitController controller;
     private CoordinateHelper coordinateHelper;
     private WireController wireController;

@@ -22,6 +22,8 @@ import com.edulectronics.tinycircuit.Controllers.CircuitController;
 import com.edulectronics.tinycircuit.Controllers.MessageController;
 import com.edulectronics.tinycircuit.Controllers.WireController;
 import com.edulectronics.tinycircuit.Models.Components.Component;
+import com.edulectronics.tinycircuit.Models.Components.Connectors.Connection;
+import com.edulectronics.tinycircuit.Models.Components.Connectors.Connector;
 import com.edulectronics.tinycircuit.Models.MenuItem;
 import com.edulectronics.tinycircuit.Models.MessageArgs;
 import com.edulectronics.tinycircuit.Models.MessageTypes;
@@ -194,6 +196,15 @@ public class CircuitActivity extends Activity
 
                 if (scenario.isCompleted(circuitController.circuit)) {
                     scenarioCompleted();
+                }
+            }
+
+            //Check if wire is touched
+            for(Connection connection : circuitController.getAllConnections()){
+                if(connection.isTouched(ev)){
+                    Connector connector = new Connector();
+                    connector.disconnect(connection.pointA, connection.pointB);
+                    wireController.redraw();
                 }
             }
         }
