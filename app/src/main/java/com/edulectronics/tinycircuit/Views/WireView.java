@@ -46,23 +46,23 @@ public class WireView extends View {
 
     @Override
     public void onDraw(Canvas canvas) {
-        for (Component c : controller.getComponents()) {
+        for (Connection c : controller.getAllConnections()) {
             if (c != null) {
-                for (ConnectionPoint connectionPoint: c.getConnectionPoints()) {
-                    for (Connection connection: connectionPoint.getConnections()) {
-                        Point startPoint = coordinateHelper.getNodeLocation(c.position, connectionPoint.orientation);
+                Point startPoint = coordinateHelper.getNodeLocation(
+                        c.pointA.getParentComponent().position,
+                        c.pointA.orientation);
 
-                        Point endPoint = coordinateHelper.getNodeLocation(
-                                connectionPoint.getParentComponent().position,
-                                connectionPoint.orientation
-                        );
-                        for (Line line : wireController.getWires(startPoint, endPoint)) {
-                            canvas.drawLine(line.a.x, line.a.y, line.b.x, line.b.y, paint);
-                        }
-                    }
+                Point endPoint = coordinateHelper.getNodeLocation(
+                        c.pointB.getParentComponent().position,
+                        c.pointB.orientation
+                );
+
+                for (Line line : wireController.getWires(startPoint, endPoint)) {
+                    canvas.drawLine(line.a.x, line.a.y, line.b.x, line.b.y, paint);
                 }
             }
         }
+
         super.onDraw(canvas);
     }
 }
