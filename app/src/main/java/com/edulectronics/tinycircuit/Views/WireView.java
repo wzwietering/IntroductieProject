@@ -12,6 +12,7 @@ import android.view.WindowManager;
 
 import com.edulectronics.tinycircuit.Controllers.CircuitController;
 import com.edulectronics.tinycircuit.Controllers.CoordinateHelper;
+import com.edulectronics.tinycircuit.Controllers.WireController;
 import com.edulectronics.tinycircuit.Models.Components.Component;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.ConnectionPoint;
 import com.edulectronics.tinycircuit.Models.Wire;
@@ -49,8 +50,8 @@ public class WireView extends View {
             if (c != null) {
                 for (ConnectionPoint connection: c.getConnectionPoints()) {
                     for (ConnectionPoint connectedTo: connection.getConnections()) {
-                        Point startPoint = drawingController.getNodeLocation(c.position, connection.orientation);
-                        Point endPoint = drawingController.getNodeLocation(connectedTo.getParentComponent().position, connectedTo.orientation);
+                        Point startPoint = coordinateHelper.getNodeLocation(c.position, connection.orientation);
+                        Point endPoint = coordinateHelper.getNodeLocation(connectedTo.getParentComponent().position, connectedTo.orientation);
                         for (Wire wire: wireController.getWires(startPoint, endPoint)) {
                             canvas.drawLine(wire.a.x, wire.a.y, wire.b.x, wire.b.y, paint);
                         }

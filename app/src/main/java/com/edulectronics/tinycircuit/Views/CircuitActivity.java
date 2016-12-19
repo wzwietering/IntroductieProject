@@ -21,8 +21,6 @@ import com.edulectronics.tinycircuit.Controllers.CircuitController;
 import com.edulectronics.tinycircuit.Controllers.MessageController;
 import com.edulectronics.tinycircuit.Controllers.WireController;
 import com.edulectronics.tinycircuit.Models.Components.Component;
-import com.edulectronics.tinycircuit.Models.Components.Connectors.ConnectionPointOrientation;
-import com.edulectronics.tinycircuit.Models.Components.Lightbulb;
 import com.edulectronics.tinycircuit.Models.MenuItem;
 import com.edulectronics.tinycircuit.Models.MessageArgs;
 import com.edulectronics.tinycircuit.Models.MessageTypes;
