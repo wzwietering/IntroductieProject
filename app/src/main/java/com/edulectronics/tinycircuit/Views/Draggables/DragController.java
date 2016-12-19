@@ -24,6 +24,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.os.IBinder;
+import android.os.Vibrator;
 import android.util.DisplayMetrics;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -129,6 +130,10 @@ public class DragController {
         // Start dragging, but only if the source has something to drag.
         boolean doDrag = source.allowDrag();
         if (!doDrag) return;
+
+        // Vibrate for 500 milliseconds
+        Vibrator vibrator = (Vibrator) this.mContext.getSystemService(Context.VIBRATOR_SERVICE);
+        vibrator.vibrate(500);
 
         mOriginator = v;
 

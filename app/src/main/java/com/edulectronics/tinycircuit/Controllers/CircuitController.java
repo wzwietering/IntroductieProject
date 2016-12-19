@@ -7,6 +7,8 @@ import android.widget.FrameLayout;
 
 import com.edulectronics.tinycircuit.Models.Circuit;
 import com.edulectronics.tinycircuit.Models.Components.Component;
+import com.edulectronics.tinycircuit.Models.Components.Connectors.Connection;
+import com.edulectronics.tinycircuit.Models.Components.Connectors.ConnectionPoint;
 import com.edulectronics.tinycircuit.Models.Factories.ComponentFactory;
 import com.edulectronics.tinycircuit.R;
 import com.edulectronics.tinycircuit.Views.CircuitActivity;
@@ -106,5 +108,26 @@ public class CircuitController implements Serializable {
             return component.handleClick();
         }
         return false;
+    }
+
+
+    // The horror! if's in for's in if's in for's!
+    // Don't worry. All this does is it gets all unique connections in a circuit.
+    public ArrayList<Connection> getAllConnections() {
+        ArrayList<Connection> connections = new ArrayList<Connection>();
+        for (Component component: this.getComponents()) {
+            if(component != null) {
+                for (ConnectionPoint cp : component.getConnectionPoints()) {
+                    if (cp != null) {
+                        for (Connection c : cp.getConnections()) {
+                            if (!connections.contains(c)) {
+                                connections.add(c);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return connections;
     }
 }

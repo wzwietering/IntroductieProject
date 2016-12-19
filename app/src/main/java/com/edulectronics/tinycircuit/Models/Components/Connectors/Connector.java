@@ -5,17 +5,18 @@ package com.edulectronics.tinycircuit.Models.Components.Connectors;
  */
 public class Connector {
 
-    public static void connect(ConnectionPoint input, ConnectionPoint output) {
-        if(input != null && output != null) {
-            input.connect(output);
-            output.connect(input);
+    public static void connect(ConnectionPoint pointA, ConnectionPoint pointB) {
+        if(pointA != null && pointB != null) {
+            Connection connection = new Connection(pointA, pointB);
+            pointA.addConnection(connection);
+            pointB.addConnection(connection);
         }
     }
 
-    public static void disconnect(ConnectionPoint input, ConnectionPoint output) {
-        if(input != null && output != null) {
-            input.disconnect(output);
-            output.disconnect(input);
+    public static void disconnect(ConnectionPoint pointA, ConnectionPoint pointB) {
+        if(pointA != null && pointB != null) {
+            pointA.removeConnection(pointA, pointB);
+            pointB.removeConnection(pointA, pointB);
         }
     }
 }
