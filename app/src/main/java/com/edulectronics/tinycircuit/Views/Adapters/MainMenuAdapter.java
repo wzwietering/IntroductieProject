@@ -67,15 +67,15 @@ public class MainMenuAdapter extends BaseAdapter {
                 ImageButton imageButton = (ImageButton) parent.getChildAt(0);
                 imageButton.setImageResource(R.drawable.buttonpressed);
                 if(textView.getText() == context.getResources().getString(R.string.exercise)){
-                    event(null, ExerciseMenuActivity.class);
+                    startScenario(null, ExerciseMenuActivity.class);
                 } else {
-                    event("freeplay", CircuitActivity.class);
+                    startScenario("freeplay", CircuitActivity.class);
                 }
             }
         };
     }
 
-    private void event(String scenario, Class c){
+    private void startScenario(String scenario, Class c){
         Intent intent = new Intent(context, c);
         if(scenario != null){
             ScenarioFactory factory = new ScenarioFactory();
