@@ -11,8 +11,9 @@
     <ImageView
         android:layout_width="118dp"
         android:layout_height="139dp"
-        app:srcCompat="@drawable/lightbulb_on"
-        android:layout_gravity="center_vertical" />
+        app:srcCompat="@drawable/exercisebutton"
+        android:layout_gravity="center_vertical"
+        android:id="@+id/exercise_image"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -21,5 +22,6 @@
         android:id="@+id/levelnumber"
         android:textSize="60sp"
         android:layout_marginTop="20dp"
-        android:layout_centerInParent="true" />
+        android:layout_centerInParent="true"
+        android:textColor="@android:color/white"/>
 </RelativeLayout>
