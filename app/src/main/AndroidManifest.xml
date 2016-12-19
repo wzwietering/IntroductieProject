@@ -24,6 +24,7 @@
             android:name=".Views.ExerciseMenuActivity"
             android:screenOrientation="sensorLandscape">
         </activity>
+        <uses-permission android:name="android.permission.VIBRATE"/>
     </application>
-
+    <uses-permission android:name="android.permission.VIBRATE"/>
 </manifest>
