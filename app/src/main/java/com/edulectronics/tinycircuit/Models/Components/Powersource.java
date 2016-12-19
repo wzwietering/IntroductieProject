@@ -17,12 +17,13 @@ public class Powersource extends Component {
     }
 
     public void startConnection(){
-        if(this.hasOutputConnection())
+        if(hasOutputConnection())
             this.setNewOutputValues();
     }
 
-    public boolean hasOutputConnection()
-    {
+    // This is the 'start' of checking whether a circuit is actually a circuit.
+    // Alwast call this method on the powersource first.
+    public boolean hasOutputConnection() {
         return super.hasOutputConnection(this.getInput());
     }
 
@@ -38,7 +39,7 @@ public class Powersource extends Component {
     public void handleInputChange(){}
 
     public void setNewOutputValues(){
-        this.getOutput().setVoltageOut(this.outputVoltage);
+        //this.getOutput().setVoltageOut(this.outputVoltage);
     }
 
     @Override

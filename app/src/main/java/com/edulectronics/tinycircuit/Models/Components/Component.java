@@ -1,5 +1,6 @@
 package com.edulectronics.tinycircuit.Models.Components;
 
+import com.edulectronics.tinycircuit.Models.Components.Connectors.Connection;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.ConnectionPoint;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.ConnectionPointOrientation;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.Connector;
@@ -56,10 +57,9 @@ public abstract class Component implements IComponent {
 
     public void removeAllConnections(){
         Connector connector = new Connector();
-        for(ConnectionPoint c: getConnectionPoints()){
-            for (ConnectionPoint cp: c.getConnections()){
-                connector.disconnect(cp, c);
-            }
+        for(ConnectionPoint cp: getConnectionPoints()){
+            for(Connection c: cp.getConnections())
+                connector.disconnect(c.pointA, c.pointB);
         }
     }
 

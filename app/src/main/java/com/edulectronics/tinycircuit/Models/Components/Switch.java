@@ -20,8 +20,8 @@ public class Switch extends Component {
     @Override
     public void handleInputChange() {
         if (isOn) {
-            double voltage = Math.abs(connectionPoints.get(0).getVoltageIn() - connectionPoints.get(1).getVoltageIn());
-            voltageOut = voltage;
+    //        double voltage = Math.abs(connectionPoints.get(0).getVoltageIn() - connectionPoints.get(1).getVoltageIn());
+     //       voltageOut = voltage;
         }
         else {
             voltageOut = 0;
@@ -31,9 +31,9 @@ public class Switch extends Component {
 
     @Override
     public void setNewOutputValues() {
-        for (ConnectionPoint connectionPoint: connectionPoints) {
-            connectionPoint.setVoltageOut(this.voltageOut);
-        }
+//        for (ConnectionPoint connectionPoint: connectionPoints) {
+//            connectionPoint.setVoltageOut(this.voltageOut);
+//        }
     }
 
     public void toggle() {

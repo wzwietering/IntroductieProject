@@ -7,7 +7,7 @@ import com.edulectronics.tinycircuit.Models.Components.Component;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.ConnectionPoint;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.ConnectionPointOrientation;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.Connector;
-import com.edulectronics.tinycircuit.Models.Wire;
+import com.edulectronics.tinycircuit.Models.Line;
 import com.edulectronics.tinycircuit.Views.WireView;
 
 import java.util.ArrayList;
@@ -87,12 +87,12 @@ public class WireController {
         return null;
     }
 
-    public List<Wire> getWires(Point a, Point b) {
-        List<Wire> wires = new ArrayList<>();
+    public List<Line> getWires(Point a, Point b) {
+        List<Line> lines = new ArrayList<>();
         Point lastPoint = a;
 
         for (int i = 0; i <= 2; i++) {
-            Wire w;
+            Line w;
             if (i % 2 == 0) {
                 w = getVerticalWire(lastPoint, b);
             } else {
@@ -101,21 +101,21 @@ public class WireController {
 
             if (w != null) {
                 lastPoint = w.b;
-                wires.add(w);
+                lines.add(w);
             }
         }
-        return wires;
+        return lines;
     }
 
-    public Wire getHorizontalWire(Point a, Point b) {
+    public Line getHorizontalWire(Point a, Point b) {
         if (a.x == b.x)
             return null;
-        return new Wire(new Point(a.x, a.y), new Point(b.x, a.y));
+        return new Line(new Point(a.x, a.y), new Point(b.x, a.y));
     }
 
-    public Wire getVerticalWire(Point a, Point b) {
+    public Line getVerticalWire(Point a, Point b) {
         if (a.y == b.y)
             return null;
-        return new Wire(new Point(a.x, a.y), new Point(a.x, b.y - (Math.abs(a.y - b.y) % 150)));
+        return new Line(new Point(a.x, a.y), new Point(a.x, b.y - (Math.abs(a.y - b.y) % 150)));
     }
 }

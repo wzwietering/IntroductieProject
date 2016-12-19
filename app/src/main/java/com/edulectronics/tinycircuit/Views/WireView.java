@@ -1,9 +1,7 @@
 package com.edulectronics.tinycircuit.Views;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.util.AttributeSet;
@@ -15,8 +13,9 @@ import com.edulectronics.tinycircuit.Controllers.CircuitController;
 import com.edulectronics.tinycircuit.Controllers.CoordinateHelper;
 import com.edulectronics.tinycircuit.Controllers.WireController;
 import com.edulectronics.tinycircuit.Models.Components.Component;
+import com.edulectronics.tinycircuit.Models.Components.Connectors.Connection;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.ConnectionPoint;
-import com.edulectronics.tinycircuit.Models.Wire;
+import com.edulectronics.tinycircuit.Models.Line;
 import com.edulectronics.tinycircuit.R;
 
 /**
@@ -49,12 +48,16 @@ public class WireView extends View {
     public void onDraw(Canvas canvas) {
         for (Component c : controller.getComponents()) {
             if (c != null) {
-                for (ConnectionPoint connection: c.getConnectionPoints()) {
-                    for (ConnectionPoint connectedTo: connection.getConnections()) {
-                        Point startPoint = coordinateHelper.getNodeLocation(c.position, connection.orientation);
-                        Point endPoint = coordinateHelper.getNodeLocation(connectedTo.getParentComponent().position, connectedTo.orientation);
-                        for (Wire wire: wireController.getWires(startPoint, endPoint)) {
-                            canvas.drawLine(wire.a.x, wire.a.y, wire.b.x, wire.b.y, paint);
+                for (ConnectionPoint connectionPoint: c.getConnectionPoints()) {
+                    for (Connection connection: connectionPoint.getConnections()) {
+                        Point startPoint = coordinateHelper.getNodeLocation(c.position, connectionPoint.orientation);
+
+                        Point endPoint = coordinateHelper.getNodeLocation(
+                                connectionPoint.getParentComponent().position,
+                                connectionPoint.orientation
+                        );
+                        for (Line line : wireController.getWires(startPoint, endPoint)) {
+                            canvas.drawLine(line.a.x, line.a.y, line.b.x, line.b.y, paint);
                         }
                     }
                 }

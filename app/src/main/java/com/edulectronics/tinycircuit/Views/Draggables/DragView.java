@@ -89,11 +89,11 @@ public class DragView extends View implements Serializable {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        // Puts a little border around the view so you can see that you selected something.
-        Paint p = new Paint();
-        p.setStyle (Paint.Style.FILL);
-        p.setColor (0x8800dd11);
-        p.setAlpha (80);
+            // Puts a little border around the view so you can see that you selected something.
+            Paint p = new Paint();
+            p.setStyle (Paint.Style.FILL);
+            p.setColor (0x8800dd11);
+            p.setAlpha (80);
         canvas.drawRect(0, 0, getWidth(), getHeight(), p);
         float scale = mAnimationScale;
 
