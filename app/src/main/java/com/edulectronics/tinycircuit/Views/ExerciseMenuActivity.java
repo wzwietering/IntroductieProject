@@ -36,9 +36,6 @@ public class ExerciseMenuActivity extends AppCompatActivity {
         TextView text = (TextView) v.findViewById(R.id.levelnumber);
         String levelnumber = text.getText().toString();
 
-        ImageView imageView = (ImageView) v.findViewById(R.id.exercise_image);
-        imageView.setImageResource(R.drawable.exercisebuttonpressed);
-
         ScenarioFactory factory = new ScenarioFactory();
         IScenario scenario = factory.getScenario(levelnumber);
 

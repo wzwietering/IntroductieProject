@@ -64,8 +64,6 @@ public class MainMenuAdapter extends BaseAdapter {
             public void onClick(View view) {
                 TextView textView = (TextView) view;
                 RelativeLayout parent = (RelativeLayout) textView.getParent();
-                ImageButton imageButton = (ImageButton) parent.getChildAt(0);
-                imageButton.setImageResource(R.drawable.buttonpressed);
                 if(textView.getText() == context.getResources().getString(R.string.exercise)){
                     startScenario(null, ExerciseMenuActivity.class);
                 } else {

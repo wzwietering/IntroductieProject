@@ -5,13 +5,13 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:onClick="startExercise"
-    android:layout_marginStart="15dp"
+    android:layout_marginStart="18dp"
     android:layout_weight="1">
 
     <ImageView
         android:layout_width="118dp"
         android:layout_height="139dp"
-        app:srcCompat="@drawable/exercisebutton"
+        app:srcCompat="@drawable/exercisebuttonselector"
         android:layout_gravity="center_vertical"
         android:id="@+id/exercise_image"/>
 
