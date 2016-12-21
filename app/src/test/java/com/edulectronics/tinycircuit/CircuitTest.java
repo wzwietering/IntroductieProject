@@ -20,7 +20,7 @@ public class CircuitTest {
 
     @BeforeClass
     public static void setup(){
-        c.setProperties(null, 5, 5);
+        c.setProperties(5, 5, null);
     }
 
     @Test
@@ -32,7 +32,7 @@ public class CircuitTest {
 
     @Test
     public void checkEmpty(){
-        for (int i = 0; i < c.circuit.components.length; i++) {
+        for (int i = 0; i < c.circuit.getAllComponents().length; i++) {
             assertFalse(c.circuit.occupied(i));
         }
     }
@@ -48,8 +48,8 @@ public class CircuitTest {
     @Test
     public void setProperties(){
         int dimension = 8;
-        c.setProperties(null, dimension, dimension);
-        assertEquals(dimension * dimension, c.circuit.components.length);
+        c.setProperties(dimension, dimension, null);
+        assertEquals(dimension * dimension, c.circuit.getAllComponents().length);
 
         //Return to original state for other tests
         setup();

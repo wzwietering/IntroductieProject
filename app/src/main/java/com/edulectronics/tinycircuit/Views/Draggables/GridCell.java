@@ -58,7 +58,6 @@ public class GridCell extends ImageView implements IDragSource, IDropTarget {
     }
 
     public void setComponent(Component component) {
-        isEmpty() = false;
         setBackgroundResource(R.color.cell);
 
         if(this.mCellNumber > -1) {
@@ -70,7 +69,6 @@ public class GridCell extends ImageView implements IDragSource, IDropTarget {
     }
 
     public void removeComponent() {
-        isEmpty() = true;
         setBackgroundResource(R.color.cell);
 
         if(this.mCellNumber > -1) {

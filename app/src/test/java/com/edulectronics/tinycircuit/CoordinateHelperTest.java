@@ -14,7 +14,7 @@ import static junit.framework.Assert.assertEquals;
 public class CoordinateHelperTest {
     @Test
     public void getXTest(){
-        CoordinateHelper coordinateHelper = new CoordinateHelper(5, 150);
+        CoordinateHelper coordinateHelper = new CoordinateHelper(5, 150, 150);
         ConnectionPointOrientation connectionPointOrientation = ConnectionPointOrientation.Bottom;
         int position = 7;
 

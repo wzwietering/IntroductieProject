@@ -1,5 +1,6 @@
 package com.edulectronics.tinycircuit;
 
+import com.edulectronics.tinycircuit.Models.Components.Connectors.Connection;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.ConnectionPoint;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.ConnectionPointOrientation;
 import com.edulectronics.tinycircuit.Models.Components.Lightbulb;
@@ -21,8 +22,9 @@ public class ConnectionPointTest {
         ConnectionPoint connectionPoint = new ConnectionPoint(lightbulb, connectionPointOrientation);
 
         assertFalse(connectionPoint.hasOutputConnection());
+        Connection connection = new Connection(lightbulb.getConnectionPointByIndex(0), connectionPoint);
 
-        connectionPoint.connect(new ConnectionPoint(lightbulb, ConnectionPointOrientation.Left));
+        connectionPoint.addConnection(connection);
 
         assertEquals(1, connectionPoint.getConnections().size());
         assertEquals(lightbulb, connectionPoint.getParentComponent());
