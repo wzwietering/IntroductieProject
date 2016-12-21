@@ -19,7 +19,7 @@ import java.util.List;
  */
 
 public class WireController {
-    private Component first;
+    private Component firstComponent;
     private ConnectionPointOrientation cpoFirst;
     private WireView wireView;
     private int cellHeight, cellWidth;
@@ -35,7 +35,7 @@ public class WireController {
         if (component != null) {
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
                 if (!connecting) {
-                    first = component;
+                    firstComponent = component;
                     cpoFirst = clickedArea((int) event.getX(), (int) event.getY());
                     connecting = true;
                 } else {
@@ -168,10 +168,12 @@ public class WireController {
     }
 
     private void createConnection(Component component, MotionEvent event) {
-        Connector connector = new Connector();
         ConnectionPointOrientation cpoSecond = clickedArea((int) event.getX(), (int) event.getY());
-        connector.connect(getConnectionPoint(first, cpoFirst), getConnectionPoint(component, cpoSecond));
-        redraw();
+        if(cpoSecond != cpoFirst){
+            Connector connector = new Connector();
+            connector.connect(getConnectionPoint(firstComponent, cpoFirst), getConnectionPoint(component, cpoSecond));
+            redraw();
+        }
     }
 
     public void redraw() {
