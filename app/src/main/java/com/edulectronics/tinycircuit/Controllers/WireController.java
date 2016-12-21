@@ -31,19 +31,16 @@ public class WireController {
         this.cellHeight = cellHeight;
     }
 
-    public void wire(Component component, MotionEvent event) {
-        if(component != null) {
+    public void makeWire(Component component, MotionEvent event) {
+        if (component != null) {
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
                 if (!connecting) {
                     first = component;
                     cpoFirst = clickedArea((int) event.getX(), (int) event.getY());
                     connecting = true;
                 } else {
-                    Connector connector = new Connector();
-                    ConnectionPointOrientation cpoSecond = clickedArea((int) event.getX(), (int) event.getY());
-                    connector.connect(getConnectionPoint(first, cpoFirst), getConnectionPoint(component, cpoSecond));
+                    createConnection(component, event);
                     connecting = false;
-                    redraw();
                 }
             }
         }
@@ -148,10 +145,10 @@ public class WireController {
                 if (startPoint.y < endPoint.y) {
                     // Go up half a cell
                     return new Line(startPoint,
-                                    new Point(startPoint.x, startPoint.y + (int) (0.5 * cellHeight)));
+                            new Point(startPoint.x, startPoint.y + (int) (0.5 * cellHeight)));
                 } else {
                     // Go down half a cell
-                    return new Line (startPoint,
+                    return new Line(startPoint,
                             new Point(startPoint.x, startPoint.y - (int) (0.5 * cellHeight)));
                 }
             case Bottom:
@@ -170,7 +167,14 @@ public class WireController {
         }
     }
 
-    public void redraw(){
+    private void createConnection(Component component, MotionEvent event) {
+        Connector connector = new Connector();
+        ConnectionPointOrientation cpoSecond = clickedArea((int) event.getX(), (int) event.getY());
+        connector.connect(getConnectionPoint(first, cpoFirst), getConnectionPoint(component, cpoSecond));
+        redraw();
+    }
+
+    public void redraw() {
         wireView.invalidate();
     }
 }
