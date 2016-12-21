@@ -18,14 +18,12 @@
         android:layout_width="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerInParent="true"
-        android:orientation="vertical"
-        android:weightSum="9">
+        android:orientation="vertical">
 
         <ImageView
             android:layout_width="388dp"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/title_text"
-            android:layout_weight="3"/>
+            android:layout_height="116dp"
+            app:srcCompat="@drawable/title_text" />
 
         <ListView
             android:layout_width="198dp"
@@ -33,7 +31,8 @@
             android:layout_gravity="center_horizontal"
             android:divider="@null"
             android:dividerHeight="0dp"
-            android:id="@+id/buttonArea"/>
+            android:id="@+id/buttonArea"
+            android:nestedScrollingEnabled="false"/>
     </LinearLayout>
 
     <ImageView
