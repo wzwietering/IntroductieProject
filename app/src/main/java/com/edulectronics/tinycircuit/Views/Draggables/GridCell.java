@@ -30,17 +30,24 @@ public class GridCell extends ImageView implements IDragSource, IDropTarget {
     // Constructors
     public GridCell(Context context) {
         super(context);
-        setBackgroundResource(R.color.cell_empty);
+        setBackgroundResource(R.color.cell);
     }
 
     public GridCell (Context context, AttributeSet attrs) {
         super (context, attrs);
-        setBackgroundResource(R.color.cell_empty);
+        setBackgroundResource(R.color.cell);
     }
 
     public GridCell (Context context, AttributeSet attrs, int style) {
         super (context, attrs, style);
-        setBackgroundResource(R.color.cell_empty);
+        setBackgroundResource(R.color.cell);
+    }
+
+    public void resetImage() {
+        Component component = CircuitController.getInstance().getComponent(mCellNumber);
+        if(component != null) {
+            this.setImageResource(component.getImage());
+        }
     }
 
     public boolean isEmpty() {
@@ -51,8 +58,8 @@ public class GridCell extends ImageView implements IDragSource, IDropTarget {
     }
 
     public void setComponent(Component component) {
-        int bg = isEmpty() ? R.color.cell_empty : R.color.cell_filled;
-        setBackgroundResource(bg);
+        isEmpty() = false;
+        setBackgroundResource(R.color.cell);
 
         if(this.mCellNumber > -1) {
             CircuitController.getInstance().addComponent(component, this.mCellNumber);
@@ -63,8 +70,8 @@ public class GridCell extends ImageView implements IDragSource, IDropTarget {
     }
 
     public void removeComponent() {
-        int bg = isEmpty() ? R.color.cell_empty  : R.color.cell_filled ;
-        setBackgroundResource(bg);
+        isEmpty() = true;
+        setBackgroundResource(R.color.cell);
 
         if(this.mCellNumber > -1) {
             CircuitController.getInstance().removeComponent(this.mCellNumber);
@@ -75,6 +82,9 @@ public class GridCell extends ImageView implements IDragSource, IDropTarget {
     }
 
     public Component getComponent(){
+        if(this.mCellNumber == -1) {
+            return CircuitController.getInstance().newComponent;
+        }
         return CircuitController.getInstance().circuit.getComponent(this.mCellNumber);
     }
     
@@ -139,8 +149,7 @@ public class GridCell extends ImageView implements IDragSource, IDropTarget {
      * React to a drag
      */
     public void onDragExit(IDragSource source, int x, int y, int xOffset, int yOffset, DragView dragView, Object dragInfo) {
-        int bg = isEmpty() ? R.color.cell_empty : R.color.cell_filled;
-        setBackgroundResource(bg);
+        setBackgroundResource(R.color.cell);
     }
 
     public boolean acceptDrop() {

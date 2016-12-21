@@ -3,6 +3,9 @@ package com.edulectronics.tinycircuit.Controllers;
 import android.graphics.Point;
 
 import com.edulectronics.tinycircuit.Models.Components.Connectors.ConnectionPointOrientation;
+import com.edulectronics.tinycircuit.R;
+
+import java.security.InvalidParameterException;
 
 /**
  * Created by bernd on 09/12/2016.
@@ -10,38 +13,43 @@ import com.edulectronics.tinycircuit.Models.Components.Connectors.ConnectionPoin
 
 public class CoordinateHelper {
 
-    private int gridWidth, cellSize;
+    private int gridWidth, cellWidth, cellHeight;
 
-    public CoordinateHelper(int gridWidth, int cellSize) {
+    public CoordinateHelper(int gridWidth, int cellWidth, int cellHeight) {
         this.gridWidth = gridWidth;
-        this.cellSize = cellSize;
+        this.cellWidth = cellWidth;
+        this.cellHeight = cellHeight;
     }
 
     public Point getNodeLocation(int position, ConnectionPointOrientation orientation) {
         return new Point(getXLocation(position, orientation), getYLocation(position, orientation));
     }
 
-    public int getXLocation(int position, ConnectionPointOrientation orientation) {
+    private int getXLocation(int position, ConnectionPointOrientation orientation) {
         switch (orientation) {
             case Top:
             case Bottom:
-                return (getColumn(position) - 1) * cellSize + (int) (0.5 * cellSize);
+                return (getColumn(position) - 1) * cellWidth + (int) (0.5 * cellWidth);
             case Left:
-                return (getColumn(position) - 1) * cellSize;
+                return (getColumn(position) - 1) * cellWidth;
+            case Right:
+                return getColumn(position) * cellWidth;
             default:
-                return getColumn(position) * cellSize;
+                throw new InvalidParameterException("Invalid orientation given");
         }
     }
 
-    public int getYLocation(int position, ConnectionPointOrientation orientation) {
+    private int getYLocation(int position, ConnectionPointOrientation orientation) {
         switch (orientation) {
             case Left:
             case Right:
-                return (getRow(position) - 1) * cellSize + (int) (0.5 * cellSize);
+                return (getRow(position) - 1) * cellHeight + (int) (0.5 * cellHeight);
             case Top:
-                return (getRow(position) - 1) * cellSize;
+                return (getRow(position) - 1) * cellHeight;
+            case Bottom:
+                return getColumn(position) * cellHeight;
             default:
-                return getRow(position) * cellSize;
+                throw new InvalidParameterException("Invalid orientation given");
         }
     }
 

@@ -1,15 +1,12 @@
 package com.edulectronics.tinycircuit.Views;
 
-import android.content.Intent;
-import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Display;
-import android.view.View;
 import android.view.WindowManager;
+import android.widget.ListView;
 
-import com.edulectronics.tinycircuit.Controllers.CircuitController;
 import com.edulectronics.tinycircuit.R;
+import com.edulectronics.tinycircuit.Views.Adapters.MainMenuAdapter;
 
 public class MenuActivity extends AppCompatActivity {
 
@@ -19,20 +16,9 @@ public class MenuActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_menu);
-    }
 
-    public void freePlayStart(View v) {
-        Intent freeplay = new Intent(MenuActivity.this, CircuitActivity.class);
-        Display display = getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        int cellSize = getResources().getInteger(R.integer.cell_size);
-        //Width or height divided by cellsize fits the maxiumum amount of cells inside the screen
-        CircuitController.getInstance().setProperties(null, size.x / cellSize, size.y / cellSize);
-        startActivity(freeplay);
-    }
-    public void exerciseMenuStart(View v){
-        Intent exercise = new Intent(MenuActivity.this, ExerciseMenuActivity.class);
-        startActivity(exercise);
+        ListView listView = (ListView) findViewById(R.id.buttonArea);
+        String[] items = {getResources().getString(R.string.exercise), getResources().getString(R.string.freeplay)};
+        listView.setAdapter(new MainMenuAdapter(this, items));
     }
 }

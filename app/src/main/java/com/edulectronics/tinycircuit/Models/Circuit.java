@@ -10,7 +10,7 @@ import java.io.Serializable;
 
 public class Circuit implements Serializable{
 
-    public Component[] components;
+    Component[] components;
     public int size;
     public int width;
 
@@ -39,5 +39,9 @@ public class Circuit implements Serializable{
 
     public Component getComponent(int i) {
         return components[i];
+    }
+
+    public Component[] getAllComponents() {
+        return this.components;
     }
 }

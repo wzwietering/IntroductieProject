@@ -9,7 +9,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@drawable/background"
+    android:background="@drawable/circuitboard"
     tools:context="com.edulectronics.tinycircuit.Views.MenuActivity">
 
     <LinearLayout
@@ -18,32 +18,21 @@
         android:layout_width="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerInParent="true"
-        android:orientation="vertical"
-        android:weightSum="9">
+        android:orientation="vertical">
 
         <ImageView
             android:layout_width="388dp"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/title_text"
-            android:layout_weight="3"/>
+            android:layout_height="116dp"
+            app:srcCompat="@drawable/title_text" />
 
-        <ImageButton
+        <ListView
             android:layout_width="198dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/exercise"
-            android:id="@+id/exerciseButton"
-            android:onClick="exerciseMenuStart"
             android:layout_gravity="center_horizontal"
-            android:layout_weight="2.48"/>
-
-        <ImageButton
-            android:layout_width="198dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/freeplay"
-            android:id="@+id/startGame"
-            android:onClick="freePlayStart"
-            android:layout_gravity="center_horizontal"
-            android:layout_weight="2.48"/>
+            android:divider="@null"
+            android:dividerHeight="0dp"
+            android:id="@+id/buttonArea"
+            android:nestedScrollingEnabled="false"/>
     </LinearLayout>
 
     <ImageView

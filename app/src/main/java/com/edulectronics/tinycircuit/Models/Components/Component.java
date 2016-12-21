@@ -1,9 +1,9 @@
 package com.edulectronics.tinycircuit.Models.Components;
 
+import com.edulectronics.tinycircuit.Models.Components.Connectors.Connection;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.ConnectionPoint;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.ConnectionPointOrientation;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.Connector;
-import com.edulectronics.tinycircuit.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,15 +56,10 @@ public abstract class Component implements IComponent {
 
     public void removeAllConnections(){
         Connector connector = new Connector();
-        for(ConnectionPoint c: getConnectionPoints()){
-            for (ConnectionPoint cp: c.getConnections()){
-                connector.disconnect(cp, c);
-            }
+        for(ConnectionPoint cp: getConnectionPoints()){
+            for(Connection c: cp.getConnections())
+                connector.disconnect(c.pointA, c.pointB);
         }
-    }
-
-    public int getImage() {
-        return R.drawable.ic_launcher;
     }
 
     public void setPosition(int position){
@@ -78,4 +73,11 @@ public abstract class Component implements IComponent {
         }
         return null;
     }
+
+    // Let the component handle the click. Only return true if something changed!!
+    // If true is returned the view is redrawn and we don't need to do that if nothing changed.
+    public boolean handleClick() {
+        // Do nothing by default. A lot of components, e.g. a lightbulb, are not clickable.
+        return false;
+    };
 }

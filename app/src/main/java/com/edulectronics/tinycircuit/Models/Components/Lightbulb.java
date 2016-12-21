@@ -16,21 +16,21 @@ public class Lightbulb extends Component {
 
     @Override
     public void handleInputChange() {
-        double voltage = Math.abs(connectionPoints.get(0).getVoltageIn() - connectionPoints.get(1).getVoltageIn());
-
-        if(voltage >= voltageThreshold)
-        {
-            setSwitchState(true);
-        }
-        voltageOut = voltage;
-        setNewOutputValues();
+//        double voltage = Math.abs(connectionPoints.get(0).getVoltageIn() - connectionPoints.get(1).getVoltageIn());
+//
+//        if(voltage >= voltageThreshold)
+//        {
+//            setSwitchState(true);
+//        }
+//        voltageOut = voltage;
+//        setNewOutputValues();
     }
 
     @Override
     public void setNewOutputValues() {
-        for (ConnectionPoint connectionPoint: connectionPoints) {
-            connectionPoint.setVoltageOut(this.voltageOut);
-        }
+//        for (ConnectionPoint connectionPoint: connectionPoints) {
+//            connectionPoint.setVoltageOut(this.voltageOut);
+//        }
     }
 
     private void setSwitchState(boolean isOn) {

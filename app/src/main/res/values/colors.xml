@@ -4,8 +4,11 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="cell_empty">#26a52a</color>
-    <color name="cell_filled">#26a52a</color>
+    <color name="cell">#00000000</color>
     <color name="cell_empty_hover">#eaeaea</color>
     <color name="cell_filled_hover">#bbbbbb</color>
+    <color name="wiremode_on">#bbbbbb</color>
+    <color name="wiremode_off">#ffffff</color>
+    <color name="background">#4141ab</color>
+    <color name="wire_default">#ffffff</color>
 </resources>
