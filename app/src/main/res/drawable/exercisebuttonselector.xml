@@ -2,6 +2,6 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:drawable="@drawable/exercisebuttonpressed" android:state_pressed="true"></item>
-    <item android:drawable="@drawable/exercisebutton"></item>
+    <item android:drawable="@drawable/exercisebutton" android:state_pressed="false"></item>
 
 </selector>
