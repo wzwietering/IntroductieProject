@@ -1,15 +1,12 @@
 package com.edulectronics.tinycircuit;
 
 import com.edulectronics.tinycircuit.Controllers.CircuitController;
-import com.edulectronics.tinycircuit.Models.Components.Component;
 import com.edulectronics.tinycircuit.Models.Components.Lightbulb;
 import com.edulectronics.tinycircuit.Views.Adapters.CircuitAdapter;
 
 import org.junit.Test;
 
-import java.util.HashSet;
-
-import static org.junit.Assert.assertEquals;
+import static junit.framework.Assert.assertEquals;
 
 
 /**
