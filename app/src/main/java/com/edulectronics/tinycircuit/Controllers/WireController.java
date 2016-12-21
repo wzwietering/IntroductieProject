@@ -170,8 +170,7 @@ public class WireController {
     private void createConnection(Component component, MotionEvent event) {
         ConnectionPointOrientation cpoSecond = clickedArea((int) event.getX(), (int) event.getY());
         if(cpoSecond != cpoFirst){
-            Connector connector = new Connector();
-            connector.connect(getConnectionPoint(firstComponent, cpoFirst), getConnectionPoint(component, cpoSecond));
+            Connector.connect(getConnectionPoint(firstComponent, cpoFirst), getConnectionPoint(component, cpoSecond));
             redraw();
         }
     }
