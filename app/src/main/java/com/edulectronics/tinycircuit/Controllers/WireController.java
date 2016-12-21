@@ -20,7 +20,7 @@ import java.util.List;
 
 public class WireController {
     private Component first;
-    private ConnectionPointOrientation cpoFirst;
+    private ConnectionPointOrientation firstOrientation;
     private WireView wireView;
     private int cellHeight, cellWidth;
     private boolean connecting = false;
@@ -36,12 +36,14 @@ public class WireController {
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
                 if (!connecting) {
                     first = component;
-                    cpoFirst = clickedArea((int) event.getX(), (int) event.getY());
+                    firstOrientation = getClickedArea((int) event.getX(), (int) event.getY());
                     connecting = true;
                 } else {
                     Connector connector = new Connector();
-                    ConnectionPointOrientation cpoSecond = clickedArea((int) event.getX(), (int) event.getY());
-                    connector.connect(getConnectionPoint(first, cpoFirst), getConnectionPoint(component, cpoSecond));
+                    ConnectionPointOrientation secondOrientation = getClickedArea((int) event.getX(), (int) event.getY());
+                    connector.connect(
+                            getConnectionPoint(first, firstOrientation),
+                            getConnectionPoint(component, secondOrientation));
                     connecting = false;
                     wireView.invalidate();
                 }
@@ -49,26 +51,26 @@ public class WireController {
         }
     }
 
-    private ConnectionPointOrientation clickedArea(int x, int y) {
-        if (x < 0.5 * cellWidth && y < 0.5 * cellHeight) {
+    private ConnectionPointOrientation getClickedArea(int x, int y) {
+        if (x < 0.5 * cellHeight && y < 0.5 * cellHeight) {
             if (x >= y) {
                 return ConnectionPointOrientation.Top;
             } else {
                 return ConnectionPointOrientation.Left;
             }
-        } else if (x >= 0.5 * cellWidth && y < 0.5 * cellHeight) {
+        } else if (x >= 0.5 * cellHeight && y < 0.5 * cellHeight) {
             if (y < 0.5 * cellHeight - x) {
                 return ConnectionPointOrientation.Top;
             } else {
                 return ConnectionPointOrientation.Right;
             }
-        } else if (x < 0.5 * cellWidth && y >= 0.5 * cellHeight) {
+        } else if (x < 0.5 * cellHeight && y >= 0.5 * cellHeight) {
             if (y < 0.5 * cellHeight - x) {
                 return ConnectionPointOrientation.Left;
             } else {
                 return ConnectionPointOrientation.Bottom;
             }
-        } else if (x >= 0.5 * cellWidth && y >= 0.5 * cellHeight) {
+        } else if (x >= 0.5 * cellHeight && y >= 0.5 * cellHeight) {
             if (x >= y) {
                 return ConnectionPointOrientation.Right;
             } else {
