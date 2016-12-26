@@ -46,7 +46,7 @@ public class CoordinateHelper {
             case Top:
                 return (getRow(position) - 1) * cellHeight;
             case Bottom:
-                return getColumn(position) * cellHeight;
+                return getRow(position) * cellHeight;
             default:
                 throw new InvalidParameterException("Invalid orientation given");
         }

@@ -14,14 +14,11 @@ import static junit.framework.Assert.assertEquals;
 public class WireControllerTest {
     @Test
     public void wireControllerTest() {
-        WireController wireController = new WireController(null);
-        wireController.cellSize = 150;
-        wireController.halfCellSize = 75;
-        ConnectionPointOrientation result = wireController.area(80, 40);
+        WireController wireController = new WireController(null, 150, 150);
 
-        assertEquals(ConnectionPointOrientation.Top, wireController.area(80, 40));
+        assertEquals(ConnectionPointOrientation.Top, wireController.getClickedArea(80, 40));
 
         //Test the edge of two areas
-        assertEquals(ConnectionPointOrientation.Right, wireController.area(100, 100));
+        assertEquals(ConnectionPointOrientation.Right, wireController.getClickedArea(100, 100));
     }
 }

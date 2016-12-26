@@ -7,9 +7,6 @@ import com.edulectronics.tinycircuit.Models.Components.Powersource;
 
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static junit.framework.Assert.assertEquals;
 
 
@@ -26,16 +23,13 @@ public class ConnectorTest {
         //create ConnectionPoints to use in Connector.connect method
         ConnectionPoint input = new ConnectionPoint(lightbulb, ConnectionPointOrientation.Left);
         ConnectionPoint output = new ConnectionPoint(powersource, ConnectionPointOrientation.Right);
+
+        //Connect the components
         Connector.connect(input, output);
+        assertEquals(output, input.getConnections().get(0).pointB);
 
-        //recreate list to compare with the one made in ConnectionPoint
-        List<ConnectionPoint> inputList= new ArrayList<ConnectionPoint>();
-        inputList.add(output);
-        assertEquals(input.getConnections(), inputList);
-
-        //same for Connector.disconnect
-        Connector.disconnect(input,output);
-        inputList.remove(output);
-        assertEquals(input.getConnections(), inputList);
+        //Disconnect the components
+        Connector.disconnect(input, output);
+        assertEquals(0, input.getConnections().size());
     }
 }
