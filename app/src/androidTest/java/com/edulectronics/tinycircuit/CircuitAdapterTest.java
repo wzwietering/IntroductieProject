@@ -58,6 +58,13 @@ public class CircuitAdapterTest {
     }
 
     @Test
+    public void menuClose(){
+        onView(withId(R.id.activity_main)).perform(DrawerActions.open());
+        onView(withId(R.id.activity_main)).perform(DrawerActions.close());
+        onView(withId(R.id.navigationview)).check(matches(not(isDisplayed())));
+    }
+
+    @Test
     public void menuClosed(){
         onView(withId(R.id.navigationview)).check((matches(not(isDisplayed()))));
     }
@@ -69,6 +76,7 @@ public class CircuitAdapterTest {
 
         onData(is(instanceOf(Lightbulb.class))).inAdapterView(withId(R.id.circuit)).perform(drag());
         assertEquals(Lightbulb.class, circuitController.getComponent(7).getClass());
+        assertEquals(null, circuitController.getComponent(3));
     }
 
     private static ViewAction drag(){
