@@ -4,6 +4,7 @@ import com.edulectronics.tinycircuit.Models.Components.Connectors.Connection;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.ConnectionPoint;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.ConnectionPointOrientation;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.Connector;
+import com.edulectronics.tinycircuit.Models.DirectionalGraph;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,4 +81,8 @@ public abstract class Component implements IComponent {
         // Do nothing by default. A lot of components, e.g. a lightbulb, are not clickable.
         return false;
     };
+
+    public void handleInputHigh(DirectionalGraph graph)
+    {};
+
 }

@@ -283,4 +283,8 @@ public class CircuitActivity extends Activity
         // controller.
         this.scenario = new Scenario2(this.circuitController.circuit);
     }
+
+    public void run(View view) {
+        circuitController.run();
+    }
 }

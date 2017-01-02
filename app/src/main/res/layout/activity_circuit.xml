@@ -54,7 +54,9 @@
 			android:padding="4dp"
             android:onClick="openMenu"
 			android:id="@+id/hamburger"/>
-    </com.edulectronics.tinycircuit.Views.Draggables.DragLayer>
+
+
+	</com.edulectronics.tinycircuit.Views.Draggables.DragLayer>
 
 	<android.support.design.widget.NavigationView
 		android:id="@+id/navigationview"
@@ -62,7 +64,12 @@
 		android:layout_height="match_parent"
 		android:layout_gravity="start"
 		android:fitsSystemWindows="true">
-
+		<Button
+			android:text="Run"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:id="@+id/Run"
+			android:onClick="run"/>
 		<ExpandableListView
 			android:id="@+id/expandablelist"
 			android:layout_width="match_parent"

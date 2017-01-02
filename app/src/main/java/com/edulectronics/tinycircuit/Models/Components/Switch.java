@@ -17,23 +17,11 @@ public class Switch extends Component {
         return true;
     }
 
-    @Override
-    public void handleInputChange() {
-        if (isOn) {
-    //        double voltage = Math.abs(connectionPoints.get(0).getVoltageIn() - connectionPoints.get(1).getVoltageIn());
-     //       voltageOut = voltage;
+    public boolean hasOutputConnection(ConnectionPoint connectionpoint) {
+        if (!isOn) {
+            return false;
         }
-        else {
-            voltageOut = 0;
-        }
-        setNewOutputValues();
-    }
-
-    @Override
-    public void setNewOutputValues() {
-//        for (ConnectionPoint connectionPoint: connectionPoints) {
-//            connectionPoint.setVoltageOut(this.voltageOut);
-//        }
+        return super.hasOutputConnection(connectionpoint);
     }
 
     public void toggle() {

@@ -9,6 +9,8 @@ import com.edulectronics.tinycircuit.Models.Circuit;
 import com.edulectronics.tinycircuit.Models.Components.Component;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.Connection;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.ConnectionPoint;
+import com.edulectronics.tinycircuit.Models.Components.Powersource;
+import com.edulectronics.tinycircuit.Models.DirectionalGraph;
 import com.edulectronics.tinycircuit.Models.Factories.ComponentFactory;
 import com.edulectronics.tinycircuit.R;
 import com.edulectronics.tinycircuit.Views.CircuitActivity;
@@ -130,4 +132,27 @@ public class CircuitController implements Serializable {
         }
         return connections;
     }
+
+    public void run() {
+        // Check if there are outgoing connections.
+        for (Component component: this.getComponents()) {
+            if(component != null && component.getClass() == Powersource.class) {
+                if(((Powersource)component).hasOutputConnection()) {
+                    // If yes, create graph.
+                    // Pass the graph to each of the components?
+                    DirectionalGraph graph = new DirectionalGraph((Powersource)component);
+                    traverseGraph(graph);
+                }
+            }
+        }
+        // If yes, create graph.
+        // Pass the graph to each of the components?
+    }
+
+    private void traverseGraph(DirectionalGraph graph) {
+        for (Component component: graph.nodes) {
+            component.handleInputHigh(graph);
+        }
+    }
+
 }
