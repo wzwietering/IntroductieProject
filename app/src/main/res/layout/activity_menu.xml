@@ -40,8 +40,16 @@
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/logo"
         android:id="@+id/logo"
-
         android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/dutchflag"
+        android:id="@+id/flag"
+        android:onClick="changelanguage"
+        android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"/>
 
 </RelativeLayout>
