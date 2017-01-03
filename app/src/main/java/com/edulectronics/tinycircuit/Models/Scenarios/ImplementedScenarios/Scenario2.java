@@ -59,7 +59,7 @@ public class Scenario2 extends DesignScenario {
     public Set<Component> getAvailableComponents() {
         Set set = super.getAvailableComponents();
         set.add(new Lightbulb());
-        set.add(new Powersource(5));
+        set.add(new Powersource());
         set.add(new Switch());
 
         return set;
@@ -74,7 +74,7 @@ public class Scenario2 extends DesignScenario {
         }
 
         ArrayList<Component> components = new ArrayList<>();
-        Powersource powersource = new Powersource(5);
+        Powersource powersource = new Powersource();
         Lightbulb bulb = new Lightbulb();
 
         Connector.connect(powersource.getOutput(), bulb.getConnectionPointByIndex(0));

@@ -18,7 +18,6 @@ import com.edulectronics.tinycircuit.Views.Draggables.GridCell;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Set;
 
 /**
  * Created by Wilmer on 28-11-2016.

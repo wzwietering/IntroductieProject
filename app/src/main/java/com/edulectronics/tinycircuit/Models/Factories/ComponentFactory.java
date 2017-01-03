@@ -16,7 +16,7 @@ public class ComponentFactory {
     public static Component CreateComponent(String name, double value) {
         switch (name) {
             case "Batterij":
-                return new Powersource(value);
+                return new Powersource();
             case "Gloeilamp":
                 return new Lightbulb();
             case "Weerstand":

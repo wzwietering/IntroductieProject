@@ -3,7 +3,6 @@ package com.edulectronics.tinycircuit.Models.Components.Connectors;
 import com.edulectronics.tinycircuit.Models.Components.Powersource;
 import com.edulectronics.tinycircuit.Models.Line;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -38,5 +37,13 @@ public class Connection {
 
     public List<Line> getLines() {
         return lines;
+    }
+
+    public ConnectionPoint getOtherPoint(ConnectionPoint connectionPoint){
+        if (connectionPoint == pointB || connectionPoint.getParentComponent() == pointB.getParentComponent()){
+            return pointA;
+        } else {
+            return pointB;
+        }
     }
 }

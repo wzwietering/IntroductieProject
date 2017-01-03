@@ -46,7 +46,10 @@ public abstract class Component implements IComponent {
     public List<ConnectionPoint> getOutgoingConnections(ConnectionPoint connectionPoint){
         int incomingConnection = connectionPoints.indexOf(connectionPoint);
         List<ConnectionPoint> outgoingConnections = new ArrayList<ConnectionPoint>(connectionPoints);
-        outgoingConnections.remove(incomingConnection);
+        if(incomingConnection != -1){
+            outgoingConnections.remove(incomingConnection);
+        }
+
 
         return outgoingConnections;
     }
