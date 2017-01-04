@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.edulectronics.tinycircuit.Models.MessageArgs;
 import com.edulectronics.tinycircuit.R;
 
 /**
@@ -17,19 +18,17 @@ import com.edulectronics.tinycircuit.R;
 public class Message extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_message, container, false);
-        getDialog().setTitle("Test Dialog");
-
         Bundle args = getArguments();
-        int messageId = args.getInt("message", 0);
-        int titleId = args.getInt("title", 0);
-        final boolean endActivity = args.getBoolean("end_activity", false);
+        MessageArgs messageArgs = (MessageArgs) args.getSerializable("messageargs");
+        setContent(messageArgs, view);
+        setDismissButtonAction(messageArgs, view);
 
-        TextView explanation = (TextView) view.findViewById(R.id.scenario_explanation);
-        explanation.setText(messageId);
+        return view;
+    }
 
-        TextView title = (TextView) view.findViewById(R.id.title);
-        title.setText(titleId);
+    private void setDismissButtonAction(final MessageArgs args, View view) {
 
         Button dismiss = (Button) view.findViewById(R.id.dismiss);
         dismiss.setOnClickListener(new View.OnClickListener() {
@@ -37,12 +36,22 @@ public class Message extends DialogFragment {
             @Override
             public void onClick(View v) {
                 dismiss();
-                if(endActivity) {
+                if(args.endActivity) {
                     Message.this.getActivity().finish();
+                }
+                if(args.goToNextScenario) {
+                    ((CircuitActivity)Message.this.getActivity()).startNextScenario();
                 }
             }
         });
+    }
 
-        return view;
+    private void setContent(final MessageArgs args, View view) {
+
+        TextView explanation = (TextView) view.findViewById(R.id.scenario_explanation);
+        explanation.setText(args.message);
+
+        TextView title = (TextView) view.findViewById(R.id.title);
+        title.setText(args.title);
     }
 }

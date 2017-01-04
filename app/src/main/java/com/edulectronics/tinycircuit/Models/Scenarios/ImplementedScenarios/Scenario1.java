@@ -34,7 +34,7 @@ public class Scenario1 extends DesignScenario {
         boolean hasLightbulb = false;
         boolean isFullCircle = false;
 
-        for (Component component : circuit.components) {
+        for (Component component : circuit.getAllComponents()) {
             if(component != null) {
                 if (component.getClass() == Lightbulb.class) {
                     hasLightbulb = true;

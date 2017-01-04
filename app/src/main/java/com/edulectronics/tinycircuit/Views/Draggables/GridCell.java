@@ -44,6 +44,13 @@ public class GridCell extends ImageView implements IDragSource, IDropTarget {
         setBackgroundResource(R.color.cell);
     }
 
+    public void resetImage() {
+        Component component = CircuitController.getInstance().getComponent(mCellNumber);
+        if(component != null) {
+            this.setImageResource(component.getImage());
+        }
+    }
+
     public void setComponent(Component component) {
         this.isEmpty = false;
         setBackgroundResource(R.color.cell);
@@ -69,6 +76,9 @@ public class GridCell extends ImageView implements IDragSource, IDropTarget {
     }
 
     public Component getComponent(){
+        if(this.mCellNumber == -1) {
+            return CircuitController.getInstance().newComponent;
+        }
         return CircuitController.getInstance().circuit.getComponent(this.mCellNumber);
     }
     

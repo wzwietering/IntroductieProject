@@ -23,7 +23,11 @@ import com.edulectronics.tinycircuit.Controllers.MessageController;
 import com.edulectronics.tinycircuit.Controllers.WireController;
 import com.edulectronics.tinycircuit.Models.Components.Component;
 import com.edulectronics.tinycircuit.Models.MenuItem;
+import com.edulectronics.tinycircuit.Models.MessageArgs;
+import com.edulectronics.tinycircuit.Models.MessageTypes;
 import com.edulectronics.tinycircuit.Models.Scenarios.IScenario;
+import com.edulectronics.tinycircuit.Models.Scenarios.ImplementedScenarios.FreePlayScenario;
+import com.edulectronics.tinycircuit.Models.Scenarios.ImplementedScenarios.Scenario2;
 import com.edulectronics.tinycircuit.R;
 import com.edulectronics.tinycircuit.Views.Adapters.CircuitAdapter;
 import com.edulectronics.tinycircuit.Views.Adapters.ExpandableListAdapter;
@@ -36,6 +40,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
+
+import static com.edulectronics.tinycircuit.Models.MessageTypes.Explanation;
 
 public class CircuitActivity extends Activity
         implements View.OnClickListener, View.OnTouchListener, View.OnLongClickListener { //  , AdapterView.OnItemClickListener
@@ -57,7 +63,9 @@ public class CircuitActivity extends Activity
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_circuit);
-        wireController = new WireController((WireView) findViewById(R.id.draw_view));
+
+        int cellSize = getResources().getInteger(R.integer.cell_size);
+        wireController = new WireController((WireView) findViewById(R.id.draw_view), cellSize, cellSize);
 
         ImageView hamburger = (ImageView) findViewById(R.id.hamburger);
         hamburger.setImageResource(R.drawable.ic_hamburger);
@@ -70,7 +78,9 @@ public class CircuitActivity extends Activity
         createMenu();
         createDrawView();
 
-        messageController.displayScenarioExplanation(scenario);
+        if (scenario.getClass() != FreePlayScenario.class) {
+            messageController.displayMessage(new MessageArgs(scenario.getPrompt(), Explanation));
+        }
     }
 
     private void createDrawView() {
@@ -134,7 +144,7 @@ public class CircuitActivity extends Activity
         String[] items = getResources().getStringArray(R.array.menuitems);
         children = new HashMap<>();
         /*Temporary! Should work different!*/
-        int[] textures = {0, R.drawable.battery, R.drawable.lightbulb_on, R.drawable.resistor};
+        int[] textures = {R.drawable.battery, R.drawable.lightbulb_on, R.drawable.resistor, R.drawable.switch_on};
 
         TypedArray typedArray = getResources().obtainTypedArray(R.array.categories);
         int length = typedArray.length();
@@ -165,6 +175,12 @@ public class CircuitActivity extends Activity
 
     public void onClick(View v)
     {
+        if(!isInWireMode) {
+            // Let clicked component handle the tap.
+            if (CircuitController.getInstance().handleClick(((GridCell)v).mCellNumber)) {
+                ((GridCell)v).resetImage();
+            };
+        }
     }
 
     public boolean onTouch (View v, MotionEvent ev) {
@@ -174,10 +190,13 @@ public class CircuitActivity extends Activity
         // In the situation where a long click is not needed to initiate a drag, simply start on the down event.
         if (isInWireMode) {
             Resources r = getResources();
-            wireController.wire(((GridCell)((IDragSource) v)).getComponent(), ev, r.getInteger(R.integer.cell_size));
+            Component component = ((GridCell)((IDragSource) v)).getComponent();
+            if(component != null) {
+                wireController.wire(component, ev);
 
-            if (scenario.isCompleted(circuitController.circuit)) {
-                scenarioCompleted();
+                if (scenario.isCompleted(circuitController.circuit)) {
+                    scenarioCompleted();
+                }
             }
         }
 
@@ -185,7 +204,10 @@ public class CircuitActivity extends Activity
     }
 
     private void scenarioCompleted() {
-        messageController.displayScenarioCompleteMessage(scenario);
+        messageController.displayMessage(new MessageArgs(
+                R.string.scenario_complete,
+                MessageTypes.ScenarioComplete,
+                true));
     }
 
     public boolean onLongClick(View v)
@@ -253,5 +275,12 @@ public class CircuitActivity extends Activity
 
     public void openMenu(View v){
         ((DrawerLayout) findViewById(R.id.activity_main)).openDrawer(Gravity.LEFT);
+    }
+
+    public void startNextScenario() {
+        // TODO: Implemented by scenariocontroller.
+        // Obviously this is very very bad code. I know. I will fix it when we have a scenario-
+        // controller.
+        this.scenario = new Scenario2(this.circuitController.circuit);
     }
 }

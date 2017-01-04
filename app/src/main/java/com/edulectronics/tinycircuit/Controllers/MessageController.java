@@ -3,8 +3,8 @@ package com.edulectronics.tinycircuit.Controllers;
 import android.app.FragmentManager;
 import android.os.Bundle;
 
-import com.edulectronics.tinycircuit.Models.Scenarios.IScenario;
-import com.edulectronics.tinycircuit.Models.Scenarios.ImplementedScenarios.FreePlayScenario;
+import com.edulectronics.tinycircuit.Models.MessageArgs;
+import com.edulectronics.tinycircuit.Models.MessageTypes;
 import com.edulectronics.tinycircuit.R;
 import com.edulectronics.tinycircuit.Views.Message;
 
@@ -21,28 +21,32 @@ public class MessageController {
         this.fragmentManager = fm;
     }
 
-    public void displayScenarioExplanation(IScenario scenario) {
-        if (scenario.getClass() != FreePlayScenario.class) {
+    public void displayMessage(MessageArgs messageArgs) {
             Bundle args = new Bundle();
-            args.putInt("message", scenario.getPrompt());
-            args.putInt("title", R.string.scenario_explanation_title);
-            showMessage(args);
-        }
-    }
 
-    public void displayScenarioCompleteMessage(IScenario scenario) {
-        if (scenario.getClass() != FreePlayScenario.class) {
-            Bundle args = new Bundle();
-            args.putInt("message", R.string.scenario_complete);
-            args.putInt("title", R.string.scenario_complete);
-            args.putBoolean("end_activity", true);
+            // No title was given. Set a default one.
+            if (messageArgs.title == 0) {
+                messageArgs.title = getTitle(messageArgs.type);
+            }
+
+            args.putSerializable("messageargs", messageArgs);
             showMessage(args);
-        }
     }
 
     private void showMessage(Bundle args) {
         Message dialogFragment = new Message();
         dialogFragment.setArguments(args);
         dialogFragment.show(fragmentManager, "");
+    }
+
+    private int getTitle(MessageTypes type) {
+        switch (type){
+            case Explanation:
+                return R.string.scenario_explanation_title;
+            case ScenarioComplete:
+                return R.string.scenario_complete;
+            default:
+                return 0;
+        }
     }
 }

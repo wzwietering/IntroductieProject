@@ -3,6 +3,7 @@ package com.edulectronics.tinycircuit.Models.Scenarios;
 import com.edulectronics.tinycircuit.Models.Circuit;
 import com.edulectronics.tinycircuit.Models.Components.Component;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,6 +14,14 @@ import java.util.Set;
  */
 
 public abstract class DesignScenario implements IScenario {
+
+    protected Component[] initialComponents;
+
+    public DesignScenario() {}
+
+    public DesignScenario(Circuit circuit) {
+        this.initialComponents = circuit.getAllComponents();
+    }
 
     // Determines whether the user completed the task. Different implementation for each scenario.
     @Override
@@ -28,7 +37,11 @@ public abstract class DesignScenario implements IScenario {
     // The preset components that are already part of the scenario.
     @Override
     public ArrayList<Component> loadComponents() {
-
+        if(this.initialComponents != null) {
+            ArrayList list = new ArrayList<Component>();
+            list.addAll(Arrays.asList(this.initialComponents));
+            return list;
+        }
         return null;
     }
 
