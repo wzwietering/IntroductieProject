@@ -17,8 +17,11 @@ import java.util.List;
  */
 public abstract class Component implements IComponent {
 
-    private double resistance;
     public int position;
+
+    // Determines whether or not each path in the circuit that traverses this component has
+    // a resistor somewhere.
+    protected boolean hasResistance;
 
     protected List<ConnectionPoint> connectionPoints = new ArrayList<ConnectionPoint>(4);
 
@@ -26,6 +29,14 @@ public abstract class Component implements IComponent {
         this.connectionPoints.add(new ConnectionPoint(this, ConnectionPointOrientation.Left));
         this.connectionPoints.add(new ConnectionPoint(this, ConnectionPointOrientation.Right));
     }
+
+    public boolean isConductive() {
+        return true;
+    }
+
+    public void setResistance(boolean resistance) {
+        this.hasResistance = resistance;
+    };
 
     public boolean hasOutputConnection(ConnectionPoint connectionpoint) {
         for (ConnectionPoint c : getOutgoingConnections(connectionpoint)) {
@@ -84,6 +95,9 @@ public abstract class Component implements IComponent {
         return false;
     };
 
-    public void handleNoResistance() {};
+    public void handleInputHigh() {};
 
+    public void reset() {
+        this.hasResistance = true;
+    }
 }

@@ -19,7 +19,6 @@ import com.edulectronics.tinycircuit.Views.Draggables.GridCell;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Stack;
 
 /**
@@ -42,6 +41,7 @@ public class CircuitController implements Serializable {
     // When a new component is created, we save it here. It hasn't been dragged to the circuit yet.
     public Component newComponent;
 
+    // Set the circuit to some predefined circuit passed as arguments.
     public void setProperties(int width, int size, ArrayList<Component> components){
         this.circuit = new Circuit(width, size);
         if (components != null) {
@@ -135,20 +135,33 @@ public class CircuitController implements Serializable {
         return connections;
     }
 
+    // Reset all the components to their standard values (eg. lightbulbs turned off and not broken)
+    public void reset() {
+        for (Component component: this.circuit.getAllComponents()) {
+            if(component != null) component.reset();
+        }
+    }
+
+    // Run the circuit!
     public void run() {
+        reset();
+
         // Check if there are outgoing connections.
         for (Component component: this.getComponents()) {
             if(component != null && component.getClass() == Powersource.class) {
                 if(((Powersource)component).hasOutputConnection()) {
                     // If yes, create graph.
                     Graph graph = new Graph((Powersource)component, this.getAllConnections());
-                    traverseGraph(graph);
+
+                    // Now check all paths on the graph.
+                    checkPaths(graph);
                 }
             }
         }
     }
 
-    private void traverseGraph(Graph graph) {
+    // Check all paths on the graph to see if there is resistance
+    private void checkPaths(Graph graph) {
         for (Stack path: graph.findAllPaths()) {
             boolean pathHasResistor =  false;
 
@@ -162,10 +175,12 @@ public class CircuitController implements Serializable {
 
             if (!pathHasResistor) {
                 for (Object element : elements) {
-                    ((Component)element).handleNoResistance();
+                    ((Component)element).setResistance(false);
                 }
             }
         }
+        for (Component node: graph.nodes) {
+            node.handleInputHigh();
+        }
     }
-
 }

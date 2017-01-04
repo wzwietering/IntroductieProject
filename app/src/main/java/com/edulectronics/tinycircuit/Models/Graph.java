@@ -3,6 +3,7 @@ package com.edulectronics.tinycircuit.Models;
 import com.edulectronics.tinycircuit.Models.Components.Component;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.Connection;
 import com.edulectronics.tinycircuit.Models.Components.Powersource;
+import com.edulectronics.tinycircuit.Models.Components.Switch;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -13,16 +14,23 @@ import java.util.Stack;
 /**
  * Created by Maaike on 2-1-2017.
  */
-
+// A graph of the circuit. Contains the nodes (components in cicuit) and edges
+// (a pair of components representing a connection between the components.
 public class Graph {
 
+    // We have a source and base between which we can check all connections.
+    // In the circuit, these are represented by the same powersource.
+    // In the graph however, the connections of the powersource output are 'source',
+    // and connection of the powersource input are 'base'.
     private final Powersource source;
     private final Component base;
 
     public Set<Component> nodes = new HashSet<>();
-    public List<Edge> edges = new ArrayList<Edge>();
+    List<Edge> edges = new ArrayList<Edge>();
 
+    // temporary stack of components which will be saved as a path
     Stack<Component> connectionPath;
+    // List of all path stacks that can be made between source and base.
     List<Stack> connectionPaths;
 
     public Graph(Powersource source, ArrayList<Connection> connections) {
@@ -33,7 +41,6 @@ public class Graph {
         nodes.add(base);
 
         for (Connection connection : connections) {
-
             Edge edge = new Edge(connection.pointA.getParentComponent(), connection.pointB.getParentComponent());
 
             // Relay all source inputs to an object named 'base'. This way we can check
@@ -47,7 +54,11 @@ public class Graph {
                 }
             }
 
-            edges.add(edge);
+            // Only add edges if they conduct power (and thus are a path).
+            // A switch turned off is not a path!
+            if(edge.a.isConductive() && edge.b.isConductive()) {
+                edges.add(edge);
+            }
 
             nodes.add(connection.pointA.getParentComponent());
             nodes.add(connection.pointB.getParentComponent());
@@ -78,14 +89,12 @@ public class Graph {
     }
 
     // Get all components that are connected to this component by an edge in the graph.
-    private List<Component> getNeighbours(Component component) {
-        List<Component> neighbours = new ArrayList<>();
+    private Set<Component> getNeighbours(Component component) {
+        Set<Component> neighbours = new HashSet<>();
         for (Edge edge : this.edges) {
             if (edge.a == component) {
-                if (!neighbours.contains(edge.b))
                     neighbours.add(edge.b);
             } else if (edge.b == component) {
-                if (!neighbours.contains(edge.a))
                     neighbours.add(edge.a);
             }
         }

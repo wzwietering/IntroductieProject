@@ -9,7 +9,6 @@ import com.edulectronics.tinycircuit.R;
 public class Switch extends Component {
 
     boolean isOn = false;
-    double voltageOut = 0;
 
     @Override
     public boolean handleClick() {
@@ -26,6 +25,11 @@ public class Switch extends Component {
 
     public void toggle() {
         this.isOn = !this.isOn;
+    }
+
+    @Override
+    public boolean isConductive() {
+        return this.isOn;
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.edulectronics.tinycircuit.Models;
 import com.edulectronics.tinycircuit.Models.Components.Component;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 /**
  * Created by Wilmer on 28-11-2016.
@@ -43,5 +44,14 @@ public class Circuit implements Serializable{
 
     public Component[] getAllComponents() {
         return this.components;
+    }
+
+    public int getPosition(Component component) {
+        for  (int i = 0; i < components.length; i++) {
+            if(components[i] == component) {
+                return i;
+            }
+        }
+        return -1;
     }
 }

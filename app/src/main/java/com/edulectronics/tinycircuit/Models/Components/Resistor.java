@@ -9,7 +9,6 @@ import com.edulectronics.tinycircuit.R;
 
 public class Resistor extends Component {
     double resistance;
-    double voltageOut = 0;
 
     public Resistor(double resistance){
         this.resistance = resistance;

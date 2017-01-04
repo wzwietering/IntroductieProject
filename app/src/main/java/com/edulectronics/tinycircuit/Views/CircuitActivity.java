@@ -50,7 +50,6 @@ public class CircuitActivity extends Activity
     private List<MenuItem> headers;
     private HashMap<MenuItem, List<MenuItem>> children;
     private CircuitController circuitController;
-    private GridView circuitGrid;
     private WireController wireController;
     private IScenario scenario;
     private Set<Component> availableComponents;
@@ -73,8 +72,8 @@ public class CircuitActivity extends Activity
         scenario = (IScenario) getIntent().getSerializableExtra("scenario");
         availableComponents = scenario.getAvailableComponents();
         getController();
-        setCircuit();
-        createDragControls();
+        GridView grid = setCircuit();
+        createDragControls(grid);
         createMenu();
         createDrawView();
 
@@ -88,8 +87,8 @@ public class CircuitActivity extends Activity
         wireView.setControllers(circuitController);
     }
 
-    private void setCircuit() {
-        circuitGrid = (GridView) findViewById(R.id.circuit);
+    private GridView setCircuit() {
+        GridView circuitGrid = (GridView) findViewById(R.id.circuit);
 
         /*Prevents scrolling, stuff can still be rendered outside screen*/
         circuitGrid.setOnTouchListener(new View.OnTouchListener() {
@@ -104,6 +103,7 @@ public class CircuitActivity extends Activity
 
         circuitGrid.setNumColumns(circuitController.circuit.width);
         circuitGrid.setAdapter(new CircuitAdapter(this));
+        return circuitGrid;
     }
 
     private void getController() {
@@ -117,11 +117,11 @@ public class CircuitActivity extends Activity
         circuitController.setProperties(size.x / cellSize, size.y / cellSize, scenario.loadComponents());
     }
 
-    private void createDragControls() {
+    private void createDragControls(GridView grid) {
         mDragController = new DragController(this);
         mDragLayer = (DragLayer) findViewById(R.id.drag_layer);
         mDragLayer.setDragController(mDragController);
-        mDragLayer.setGridView(circuitGrid);
+        mDragLayer.setGridView(grid);
         mDragController.setDragListener(mDragLayer);
     }
 
@@ -284,6 +284,6 @@ public class CircuitActivity extends Activity
 
     public void run(View view) {
         circuitController.run();
-        this.circuitGrid.invalidate();
+        ((GridView)findViewById(R.id.circuit)).invalidateViews();
     }
 }

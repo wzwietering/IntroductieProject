@@ -7,27 +7,27 @@ import com.edulectronics.tinycircuit.R;
 
 public class Lightbulb extends Component {
 
-    public double voltageThreshold = 5;
     public boolean isOn = false;
-    public boolean isBroken = false;
-
-    double voltageOut = 0;
-
-
-    private void setSwitchState(boolean isOn) {
-        this.isOn = isOn;
-    }
 
     @Override
     public int getImage(){
-        return
-           isBroken ? R.drawable.lightbulb_broken
-                    : isOn ? R.drawable.lightbulb_on
-                           : R.drawable.lightbulb_off;
+        if (isOn) {
+            if(hasResistance) {
+                return R.drawable.lightbulb_on;
+            }
+            return  R.drawable.lightbulb_broken;
+        }
+        return R.drawable.lightbulb_off;
     }
 
     @Override
-    public void handleNoResistance() {
-        isBroken = true;
+    public void handleInputHigh() {
+        this.isOn = true;
+    }
+
+    @Override
+    public void reset() {
+        super.reset();
+        this.isOn = false;
     }
 }
