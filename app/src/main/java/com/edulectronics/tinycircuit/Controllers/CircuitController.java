@@ -139,7 +139,7 @@ public class CircuitController implements Serializable {
                 if(((Powersource)component).hasOutputConnection()) {
                     // If yes, create graph.
                     // Pass the graph to each of the components?
-                    DirectionalGraph graph = new DirectionalGraph((Powersource)component);
+                    DirectionalGraph graph = new DirectionalGraph((Powersource)component, this.getAllConnections());
                     traverseGraph(graph);
                 }
             }
