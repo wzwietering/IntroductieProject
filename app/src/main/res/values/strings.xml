@@ -28,6 +28,7 @@
     <string name="scenario_explanation_title" >Uitleg</string>
     <string name="scenario1_explanation" >Verbind het lampje met de batterij, zodat het lampje aan gaat.</string>
     <string name="scenario2_explanation" >Voeg nu een schakelaar toe aan het circuit, zodat je het lampje aan en uit kunt zetten.</string>
+    <string name="scenario3_explanation">Voeg een tweede batterij toe aan het circuit, zodat het lampje feller schijnt.</string>
     <string name="scenario_complete" >Goed gedaan!</string>
     <string name="button_add_wire" >draden tekenen</string>
 </resources>
