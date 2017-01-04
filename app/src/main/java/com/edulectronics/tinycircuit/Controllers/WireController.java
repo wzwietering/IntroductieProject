@@ -19,8 +19,8 @@ import java.util.List;
  */
 
 public class WireController {
-    private Component firstComponent;
-    private ConnectionPointOrientation cpoFirst;
+    private Component first;
+    private ConnectionPointOrientation firstOrientation;
     private WireView wireView;
     private int cellHeight, cellWidth;
     public boolean connecting = false;
@@ -32,38 +32,45 @@ public class WireController {
     }
 
     public void makeWire(Component component, MotionEvent event) {
-        if (component != null) {
-            if (!connecting) {
-                firstComponent = component;
-                cpoFirst = clickedArea((int) event.getX(), (int) event.getY());
-                connecting = true;
-            } else {
-                createConnection(component, event);
-                connecting = false;
+        if(component != null) {
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                if (!connecting) {
+                    first = component;
+                    firstOrientation = getClickedArea((int) event.getX(), (int) event.getY());
+                    connecting = true;
+                } else {
+                    Connector connector = new Connector();
+                    ConnectionPointOrientation secondOrientation = getClickedArea((int) event.getX(), (int) event.getY());
+                    connector.connect(
+                            getConnectionPoint(first, firstOrientation),
+                            getConnectionPoint(component, secondOrientation));
+                    connecting = false;
+                    wireView.invalidate();
+                }
             }
         }
     }
 
-    private ConnectionPointOrientation clickedArea(int x, int y) {
-        if (x < 0.5 * cellWidth && y < 0.5 * cellHeight) {
+    private ConnectionPointOrientation getClickedArea(int x, int y) {
+        if (x < 0.5 * cellHeight && y < 0.5 * cellHeight) {
             if (x >= y) {
                 return ConnectionPointOrientation.Top;
             } else {
                 return ConnectionPointOrientation.Left;
             }
-        } else if (x >= 0.5 * cellWidth && y < 0.5 * cellHeight) {
+        } else if (x >= 0.5 * cellHeight && y < 0.5 * cellHeight) {
             if (y < 0.5 * cellHeight - x) {
                 return ConnectionPointOrientation.Top;
             } else {
                 return ConnectionPointOrientation.Right;
             }
-        } else if (x < 0.5 * cellWidth && y >= 0.5 * cellHeight) {
+        } else if (x < 0.5 * cellHeight && y >= 0.5 * cellHeight) {
             if (y < 0.5 * cellHeight - x) {
                 return ConnectionPointOrientation.Left;
             } else {
                 return ConnectionPointOrientation.Bottom;
             }
-        } else if (x >= 0.5 * cellWidth && y >= 0.5 * cellHeight) {
+        } else if (x >= 0.5 * cellHeight && y >= 0.5 * cellHeight) {
             if (x >= y) {
                 return ConnectionPointOrientation.Right;
             } else {
@@ -163,17 +170,5 @@ public class WireController {
             default:
                 throw new IllegalArgumentException();
         }
-    }
-
-    private void createConnection(Component component, MotionEvent event) {
-        ConnectionPointOrientation cpoSecond = clickedArea((int) event.getX(), (int) event.getY());
-        if (cpoSecond != cpoFirst) {
-            Connector.connect(getConnectionPoint(firstComponent, cpoFirst), getConnectionPoint(component, cpoSecond));
-            redraw();
-        }
-    }
-
-    public void redraw() {
-        wireView.invalidate();
     }
 }
