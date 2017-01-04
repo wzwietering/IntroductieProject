@@ -146,8 +146,6 @@ public class CircuitController implements Serializable {
                 }
             }
         }
-        // If yes, create graph.
-        // Pass the graph to each of the components?
     }
 
     private void traverseGraph(Graph graph) {

@@ -47,7 +47,7 @@ public class CircuitActivity extends Activity
         implements View.OnClickListener, View.OnTouchListener, View.OnLongClickListener { //  , AdapterView.OnItemClickListener
     private DragController mDragController;   // Object that handles a drag-drop sequence. It interacts with DragSource and DropTarget objects.
     private DragLayer mDragLayer;             // The ViewGroup within which an object can be dragged.
-	private List<MenuItem> headers;
+    private List<MenuItem> headers;
     private HashMap<MenuItem, List<MenuItem>> children;
     private CircuitController circuitController;
     private GridView circuitGrid;
@@ -95,7 +95,7 @@ public class CircuitActivity extends Activity
         circuitGrid.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_MOVE){
+                if (event.getAction() == MotionEvent.ACTION_MOVE) {
                     return true;
                 }
                 return false;
@@ -120,19 +120,19 @@ public class CircuitActivity extends Activity
     private void createDragControls() {
         mDragController = new DragController(this);
         mDragLayer = (DragLayer) findViewById(R.id.drag_layer);
-        mDragLayer.setDragController (mDragController);
+        mDragLayer.setDragController(mDragController);
         mDragLayer.setGridView(circuitGrid);
-        mDragController.setDragListener (mDragLayer);
+        mDragController.setDragListener(mDragLayer);
     }
 
     /*This code adds a menu to the side*/
-    private void createMenu(){
+    private void createMenu() {
         ExpandableListView expandableList = (ExpandableListView) findViewById(R.id.expandablelist);
         makeLists();
 
         ExpandableListAdapter adapter = new ExpandableListAdapter(
-                                            this, headers, children, expandableList
-                                        );
+                this, headers, children, expandableList
+        );
         expandableList.setAdapter(adapter);
         expandableList.setOnChildClickListener(onChildClick());
         expandableList.setOnGroupClickListener(onGroupClick());
@@ -150,20 +150,20 @@ public class CircuitActivity extends Activity
         int length = typedArray.length();
         String[][] headings = new String[length][];
 
-        for (int i = 0; i < length; i++){
+        for (int i = 0; i < length; i++) {
             int id = typedArray.getResourceId(i, 0);
             headings[i] = getResources().getStringArray(id);
         }
         typedArray.recycle();
 
-        for(int i = 0; i < items.length; i++){
+        for (int i = 0; i < items.length; i++) {
             MenuItem item = new MenuItem();
             item.setIconName(items[i]);
             item.setIconImage(textures[i]);
             headers.add(item);
 
             List<MenuItem> heading = new ArrayList();
-            for(int j = 1; j < headings[i].length; j++){
+            for (int j = 1; j < headings[i].length; j++) {
                 MenuItem subitem = new MenuItem();
                 subitem.setIconName(headings[i][j]);
                 subitem.setIconImage(textures[i]);
@@ -173,25 +173,25 @@ public class CircuitActivity extends Activity
         }
     }
 
-    public void onClick(View v)
-    {
-        if(!isInWireMode) {
+    public void onClick(View v) {
+        if (!isInWireMode) {
             // Let clicked component handle the tap.
-            if (CircuitController.getInstance().handleClick(((GridCell)v).mCellNumber)) {
-                ((GridCell)v).resetImage();
-            };
+            if (CircuitController.getInstance().handleClick(((GridCell) v).mCellNumber)) {
+                ((GridCell) v).resetImage();
+            }
+            ;
         }
     }
 
-    public boolean onTouch (View v, MotionEvent ev) {
+    public boolean onTouch(View v, MotionEvent ev) {
         boolean handledHere = false;
         final int action = ev.getAction();
 
         // In the situation where a long click is not needed to initiate a drag, simply start on the down event.
         if (isInWireMode) {
             Resources r = getResources();
-            Component component = ((GridCell)((IDragSource) v)).getComponent();
-            if(component != null) {
+            Component component = ((GridCell) ((IDragSource) v)).getComponent();
+            if (component != null) {
                 wireController.wire(component, ev);
 
                 if (scenario.isCompleted(circuitController.circuit)) {
@@ -210,8 +210,7 @@ public class CircuitActivity extends Activity
                 true));
     }
 
-    public boolean onLongClick(View v)
-    {
+    public boolean onLongClick(View v) {
         // Make sure the drag was started by a long press as opposed to a long click.
         // (Note: I got this from the Workspace object in the Android Launcher code.
         //  I think it is here to ensure that the device is still in touch mode as we start the drag operation.)
@@ -222,25 +221,23 @@ public class CircuitActivity extends Activity
         return startDrag(v);
     }
 
-    public boolean startDrag (View v)
-    {
+    public boolean startDrag(View v) {
         IDragSource dragSource = (IDragSource) v;
-        mDragController.startDrag (v, dragSource, dragSource);
+        mDragController.startDrag(v, dragSource, dragSource);
         return true;
     }
 
-    public void onClickAddComponent(String text)
-    {
+    public void onClickAddComponent(String text) {
         circuitController.addNewComponent(text, this);
         NavigationView view = (NavigationView) findViewById(R.id.navigationview);
         ((DrawerLayout) findViewById(R.id.activity_main)).closeDrawer(view);
     }
 
-    public ExpandableListView.OnGroupClickListener onGroupClick(){
+    public ExpandableListView.OnGroupClickListener onGroupClick() {
         return new ExpandableListView.OnGroupClickListener() {
             @Override
             public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
-                if(groupPosition == 0){
+                if (groupPosition == 0) {
                     LinearLayout group = (LinearLayout) v;
                     toggleMode(group);
                     NavigationView view = (NavigationView) findViewById(R.id.navigationview);
@@ -251,29 +248,30 @@ public class CircuitActivity extends Activity
         };
     }
 
-    public ExpandableListView.OnChildClickListener onChildClick(){
+    public ExpandableListView.OnChildClickListener onChildClick() {
         return new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-                LinearLayout group = (LinearLayout) ((LinearLayout)v).getChildAt(0);
+                LinearLayout group = (LinearLayout) ((LinearLayout) v).getChildAt(0);
                 View child = group.getChildAt(1);
-                String text = (String) ((TextView)child).getText();
+                String text = (String) ((TextView) child).getText();
                 onClickAddComponent(text);
                 return false;
             }
         };
     }
 
-    public void toggleMode(LinearLayout linearLayout){
+    public void toggleMode(LinearLayout linearLayout) {
         isInWireMode = !isInWireMode;
-        if (isInWireMode){
+        if (isInWireMode) {
             linearLayout.setBackgroundResource(R.color.wiremode_on);
         } else {
-            linearLayout.setBackgroundResource(R.color.wiremode_off);;
+            linearLayout.setBackgroundResource(R.color.wiremode_off);
+            ;
         }
     }
 
-    public void openMenu(View v){
+    public void openMenu(View v) {
         ((DrawerLayout) findViewById(R.id.activity_main)).openDrawer(Gravity.LEFT);
     }
 
@@ -286,5 +284,6 @@ public class CircuitActivity extends Activity
 
     public void run(View view) {
         circuitController.run();
+        this.circuitGrid.invalidate();
     }
 }

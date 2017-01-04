@@ -1,5 +1,4 @@
 package com.edulectronics.tinycircuit.Models.Components;
-import com.edulectronics.tinycircuit.Models.Components.Connectors.ConnectionPoint;
 import com.edulectronics.tinycircuit.R;
 
 /**
@@ -21,7 +20,10 @@ public class Lightbulb extends Component {
 
     @Override
     public int getImage(){
-        return R.drawable.lightbulb_on;
+        return
+           isBroken ? R.drawable.lightbulb_broken
+                    : isOn ? R.drawable.lightbulb_on
+                           : R.drawable.lightbulb_off;
     }
 
     @Override
