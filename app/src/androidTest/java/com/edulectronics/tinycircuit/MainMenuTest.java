@@ -16,11 +16,12 @@ import org.junit.runner.RunWith;
 import java.util.Collection;
 
 import static android.support.test.InstrumentationRegistry.getInstrumentation;
-import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.runner.lifecycle.Stage.RESUMED;
 import static junit.framework.Assert.assertEquals;
+import static org.hamcrest.Matchers.anything;
 
 /**
  * Created by Wilmer on 14-12-2016.
@@ -34,14 +35,14 @@ public class MainMenuTest {
 
     @Test
     public void scenarioButton(){
-        onView(withId(R.id.exerciseButton)).perform(click());
+        onData(anything()).inAdapterView(withId(R.id.buttonArea)).atPosition(0).perform(click());
         Activity current = getActivityInstance();
         assertEquals(ExerciseMenuActivity.class, current.getClass());
     }
 
     @Test
     public void freeplayButton(){
-        onView(withId(R.id.startGame)).perform(click());
+        onData(anything()).inAdapterView(withId(R.id.buttonArea)).atPosition(1).perform(click());
         Activity current = getActivityInstance();
         assertEquals(CircuitActivity.class, current.getClass());
     }

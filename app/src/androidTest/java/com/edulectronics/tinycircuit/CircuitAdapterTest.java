@@ -39,7 +39,7 @@ public class CircuitAdapterTest {
 
     @BeforeClass
     public static void setup(){
-        circuitController.setProperties(null, 4, 4);
+        circuitController.setProperties(4, 4, null);
     }
 
     @Rule
