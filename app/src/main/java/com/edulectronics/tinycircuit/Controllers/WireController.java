@@ -33,15 +33,13 @@ public class WireController {
 
     public void makeWire(Component component, MotionEvent event) {
         if (component != null) {
-            if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                if (!connecting) {
-                    firstComponent = component;
-                    cpoFirst = clickedArea((int) event.getX(), (int) event.getY());
-                    connecting = true;
-                } else {
-                    createConnection(component, event);
-                    connecting = false;
-                }
+            if (!connecting) {
+                firstComponent = component;
+                cpoFirst = clickedArea((int) event.getX(), (int) event.getY());
+                connecting = true;
+            } else {
+                createConnection(component, event);
+                connecting = false;
             }
         }
     }
@@ -169,7 +167,7 @@ public class WireController {
 
     private void createConnection(Component component, MotionEvent event) {
         ConnectionPointOrientation cpoSecond = clickedArea((int) event.getX(), (int) event.getY());
-        if(cpoSecond != cpoFirst){
+        if (cpoSecond != cpoFirst) {
             Connector.connect(getConnectionPoint(firstComponent, cpoFirst), getConnectionPoint(component, cpoSecond));
             redraw();
         }

@@ -201,7 +201,7 @@ public class CircuitActivity extends Activity
             }
 
             Component component = ((GridCell) v).getComponent();
-            if(component != null) {
+            if(component != null && ev.getAction() == MotionEvent.ACTION_DOWN) {
                 wireController.makeWire(component, ev);
 
                 if (scenario.isCompleted(circuitController.circuit)) {
