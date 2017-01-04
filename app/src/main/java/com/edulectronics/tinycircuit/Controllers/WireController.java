@@ -19,7 +19,7 @@ import java.util.List;
  */
 
 public class WireController {
-    private Component first;
+    private Component firstComponent;
     private ConnectionPointOrientation firstOrientation;
     private WireView wireView;
     private int cellHeight, cellWidth;
@@ -35,14 +35,14 @@ public class WireController {
         if (component != null) {
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
                 if (!connecting) {
-                    first = component;
+                    firstComponent = component;
                     firstOrientation = getClickedArea((int) event.getX(), (int) event.getY());
                     connecting = true;
                 } else {
                     Connector connector = new Connector();
                     ConnectionPointOrientation secondOrientation = getClickedArea((int) event.getX(), (int) event.getY());
                     connector.connect(
-                            getConnectionPoint(first, firstOrientation),
+                            getConnectionPoint(firstComponent, firstOrientation),
                             getConnectionPoint(component, secondOrientation));
                     connecting = false;
                     wireView.invalidate();
@@ -96,7 +96,7 @@ public class WireController {
         Line startLine = getEndPointLine(startPoint, endPoint, c.pointA.orientation);
         Line endLine = getEndPointLine(endPoint, startPoint, c.pointB.orientation);
 
-        // If the connection point has a orientation left or right we first draw a vertical
+        // If the connection point has a orientation left or right we firstComponent draw a vertical
         // line, then a horizontal one. It looks better (trust me).
         boolean drawVerticalLineFirst = c.pointA.orientation == ConnectionPointOrientation.Left
                 || c.pointA.orientation == ConnectionPointOrientation.Right;

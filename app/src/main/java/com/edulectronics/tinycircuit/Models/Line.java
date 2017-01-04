@@ -17,6 +17,7 @@ public class Line {
     }
 
     public boolean isTouched(Point point){
+        //Modify the multiplier to change the detection area of the tap.
         float width = WireView.paint.getStrokeWidth() * 4;
         int minX = Math.min(a.x, b.x);
         int maxX = Math.max(a.x, b.x);
