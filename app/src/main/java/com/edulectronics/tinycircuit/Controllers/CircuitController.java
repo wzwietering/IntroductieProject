@@ -10,14 +10,17 @@ import com.edulectronics.tinycircuit.Models.Components.Component;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.Connection;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.ConnectionPoint;
 import com.edulectronics.tinycircuit.Models.Components.Powersource;
-import com.edulectronics.tinycircuit.Models.DirectionalGraph;
+import com.edulectronics.tinycircuit.Models.Components.Resistor;
 import com.edulectronics.tinycircuit.Models.Factories.ComponentFactory;
+import com.edulectronics.tinycircuit.Models.Graph;
 import com.edulectronics.tinycircuit.R;
 import com.edulectronics.tinycircuit.Views.CircuitActivity;
 import com.edulectronics.tinycircuit.Views.Draggables.GridCell;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Stack;
 
 /**
  * Created by Wilmer on 28-11-2016.
@@ -138,8 +141,7 @@ public class CircuitController implements Serializable {
             if(component != null && component.getClass() == Powersource.class) {
                 if(((Powersource)component).hasOutputConnection()) {
                     // If yes, create graph.
-                    // Pass the graph to each of the components?
-                    DirectionalGraph graph = new DirectionalGraph((Powersource)component, this.getAllConnections());
+                    Graph graph = new Graph((Powersource)component, this.getAllConnections());
                     traverseGraph(graph);
                 }
             }
@@ -148,9 +150,23 @@ public class CircuitController implements Serializable {
         // Pass the graph to each of the components?
     }
 
-    private void traverseGraph(DirectionalGraph graph) {
-        for (Component component: graph.nodes) {
-            component.handleInputHigh(graph);
+    private void traverseGraph(Graph graph) {
+        for (Stack path: graph.findAllPaths()) {
+            boolean pathHasResistor =  false;
+
+            Object[] elements = path.toArray();
+            for (Object element : elements) {
+                if (element.getClass() == Resistor.class) {
+                    pathHasResistor = true;
+                    break;
+                }
+            }
+
+            if (!pathHasResistor) {
+                for (Object element : elements) {
+                    ((Component)element).handleNoResistance();
+                }
+            }
         }
     }
 

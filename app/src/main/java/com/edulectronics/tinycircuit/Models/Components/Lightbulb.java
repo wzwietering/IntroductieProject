@@ -1,6 +1,5 @@
 package com.edulectronics.tinycircuit.Models.Components;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.ConnectionPoint;
-import com.edulectronics.tinycircuit.Models.DirectionalGraph;
 import com.edulectronics.tinycircuit.R;
 
 /**
@@ -11,6 +10,7 @@ public class Lightbulb extends Component {
 
     public double voltageThreshold = 5;
     public boolean isOn = false;
+    public boolean isBroken = false;
 
     double voltageOut = 0;
 
@@ -25,10 +25,7 @@ public class Lightbulb extends Component {
     }
 
     @Override
-    public void handleInputHigh(DirectionalGraph graph) {
-        Powersource powersource;
-
-        graph.findAllPaths(this);
-
+    public void handleNoResistance() {
+        isBroken = true;
     }
 }
