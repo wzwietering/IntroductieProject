@@ -51,7 +51,7 @@ public class WireController {
         }
     }
 
-    private ConnectionPointOrientation getClickedArea(int x, int y) {
+    public ConnectionPointOrientation getClickedArea(int x, int y) {
         if (x < 0.5 * cellHeight && y < 0.5 * cellHeight) {
             if (x >= y) {
                 return ConnectionPointOrientation.Top;
@@ -59,13 +59,13 @@ public class WireController {
                 return ConnectionPointOrientation.Left;
             }
         } else if (x >= 0.5 * cellHeight && y < 0.5 * cellHeight) {
-            if (y < 0.5 * cellHeight - x) {
+            if (y < cellHeight - x) {
                 return ConnectionPointOrientation.Top;
             } else {
                 return ConnectionPointOrientation.Right;
             }
         } else if (x < 0.5 * cellHeight && y >= 0.5 * cellHeight) {
-            if (y < 0.5 * cellHeight - x) {
+            if (y < cellHeight - x) {
                 return ConnectionPointOrientation.Left;
             } else {
                 return ConnectionPointOrientation.Bottom;

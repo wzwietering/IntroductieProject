@@ -3,7 +3,6 @@ package com.edulectronics.tinycircuit.Controllers;
 import android.graphics.Point;
 
 import com.edulectronics.tinycircuit.Models.Components.Connectors.ConnectionPointOrientation;
-import com.edulectronics.tinycircuit.R;
 
 import java.security.InvalidParameterException;
 
@@ -25,7 +24,7 @@ public class CoordinateHelper {
         return new Point(getXLocation(position, orientation), getYLocation(position, orientation));
     }
 
-    private int getXLocation(int position, ConnectionPointOrientation orientation) {
+    public int getXLocation(int position, ConnectionPointOrientation orientation) {
         switch (orientation) {
             case Top:
             case Bottom:
@@ -39,7 +38,7 @@ public class CoordinateHelper {
         }
     }
 
-    private int getYLocation(int position, ConnectionPointOrientation orientation) {
+    public int getYLocation(int position, ConnectionPointOrientation orientation) {
         switch (orientation) {
             case Left:
             case Right:
@@ -47,7 +46,7 @@ public class CoordinateHelper {
             case Top:
                 return (getRow(position) - 1) * cellHeight;
             case Bottom:
-                return getColumn(position) * cellHeight;
+                return getRow(position) * cellHeight;
             default:
                 throw new InvalidParameterException("Invalid orientation given");
         }
