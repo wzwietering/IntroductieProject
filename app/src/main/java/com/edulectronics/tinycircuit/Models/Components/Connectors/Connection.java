@@ -1,9 +1,11 @@
 package com.edulectronics.tinycircuit.Models.Components.Connectors;
 
+import android.graphics.Point;
+import android.view.MotionEvent;
+
 import com.edulectronics.tinycircuit.Models.Components.Powersource;
 import com.edulectronics.tinycircuit.Models.Line;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -38,5 +40,15 @@ public class Connection {
 
     public List<Line> getLines() {
         return lines;
+    }
+
+    public boolean isTouched(MotionEvent motionEvent){
+        Point point = new Point((int) motionEvent.getRawX(), (int) motionEvent.getRawY());
+        for (Line line : lines){
+            if(line.isTouched(point)){
+                return true;
+            }
+        }
+        return false;
     }
 }

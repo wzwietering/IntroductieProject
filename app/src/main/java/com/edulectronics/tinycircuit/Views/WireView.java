@@ -12,21 +12,16 @@ import android.view.WindowManager;
 import com.edulectronics.tinycircuit.Controllers.CircuitController;
 import com.edulectronics.tinycircuit.Controllers.CoordinateHelper;
 import com.edulectronics.tinycircuit.Controllers.WireController;
-import com.edulectronics.tinycircuit.Models.Components.Component;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.Connection;
-import com.edulectronics.tinycircuit.Models.Components.Connectors.ConnectionPoint;
 import com.edulectronics.tinycircuit.Models.Line;
 import com.edulectronics.tinycircuit.R;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Wilmer on 9-12-2016.
  */
 
 public class WireView extends View {
-    Paint paint = new Paint();
+    public static Paint paint = new Paint();
     private CircuitController controller;
     private CoordinateHelper coordinateHelper;
     private WireController wireController;
