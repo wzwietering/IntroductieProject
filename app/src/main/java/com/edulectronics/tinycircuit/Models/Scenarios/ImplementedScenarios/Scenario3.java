@@ -10,29 +10,30 @@ import com.edulectronics.tinycircuit.Models.Scenarios.DesignScenario;
 import com.edulectronics.tinycircuit.R;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Set;
 
 
 /**
- * Created by Maaike on 14-12-2016.
+ * Created by Jesper on 1/4/2017.
  */
 
-public class Scenario2 extends DesignScenario {
-
-    public  Scenario2(){}
-    public Scenario2(Circuit circuit) {
+public class Scenario3 extends DesignScenario {
+    public  Scenario3(){}
+    public Scenario3(Circuit circuit) {
         super(circuit);
     }
 
     @Override
     public int getPrompt() {
-        return R.string.scenario2_explanation;
+        return R.string.scenario3_explanation;
     }
 
     @Override
     public boolean isCompleted(Circuit circuit) {
         boolean hasLightbulb = false;
-        boolean hasSwitch = false;
+        boolean has2Batterys = false;
         boolean isFullCircle = false;
 
         for (Component component : circuit.getAllComponents()) {
@@ -41,8 +42,8 @@ public class Scenario2 extends DesignScenario {
                     hasLightbulb = true;
                     continue;
                 }
-                if(component.getClass() == Switch.class) {
-                    hasSwitch = true;
+                if(Collections.frequency(Arrays.asList(circuit.getAllComponents()), Powersource.class)== 2){
+                    has2Batterys = true;
                     continue;
                 }
                 if (component.getClass() == Powersource.class) {
@@ -53,7 +54,7 @@ public class Scenario2 extends DesignScenario {
             }
         }
 
-        return (isFullCircle && hasLightbulb && hasSwitch);
+        return (isFullCircle && hasLightbulb && has2Batterys);
     }
 
     public Set<Component> getAvailableComponents() {
@@ -76,12 +77,15 @@ public class Scenario2 extends DesignScenario {
         ArrayList<Component> components = new ArrayList<>();
         Powersource powersource = new Powersource(5);
         Lightbulb bulb = new Lightbulb();
+        Switch switch1 = new Switch();
 
         Connector.connect(powersource.getOutput(), bulb.getConnectionPointByIndex(1));
-        Connector.connect(powersource.getInput(), bulb.getConnectionPointByIndex(0));
+        Connector.connect(bulb.getConnectionPointByIndex(0),switch1.getConnectionPointByIndex(0));
+        Connector.connect(powersource.getInput(), switch1.getConnectionPointByIndex(0));
 
         components.add(powersource);
         components.add(bulb);
+        components.add(switch1);
         return components;
     }
 }
