@@ -15,15 +15,20 @@
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_height="fill_parent"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_centerHorizontal="true"
         android:layout_centerInParent="true"
         android:orientation="vertical">
 
-        <ImageView
-            android:layout_width="388dp"
-            android:layout_height="116dp"
-            app:srcCompat="@drawable/title_text" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="125dp"
+            android:layout_gravity="center"
+            android:text="@string/app_name"
+            android:textSize="50dp"
+            android:textColor="@android:color/black"
+            android:shadowRadius="16"
+            android:shadowColor="@android:color/white"/>
 
         <ListView
             android:layout_width="198dp"
