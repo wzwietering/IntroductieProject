@@ -18,12 +18,12 @@ public class Line {
 
     public boolean isTouched(Point point){
         float width = WireView.paint.getStrokeWidth() * 4;
-        if(point.x > a.x - width && point.y > a.y - width &&
-                point.x < b.x + width && point.y < b.y + width) {
-            return true;
-        //This else if is necessary in case the wire is connected from right to left
-        } else if (point.x < a.x + width && point.y < a.y + width &&
-                point.x > b.x - width && point.y > b.y - width){
+        int minX = Math.min(a.x, b.x);
+        int maxX = Math.max(a.x, b.x);
+        int minY = Math.min(a.y, b.y);
+        int maxY = Math.max(a.y, b.y);
+        if(point.x > minX - width && point.y > minY - width &&
+                point.x < maxX + width && point.y < maxY + width) {
             return true;
         } else {
             return false;

@@ -32,7 +32,7 @@ public class WireController {
     }
 
     public void makeWire(Component component, MotionEvent event) {
-        if(component != null) {
+        if (component != null) {
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
                 if (!connecting) {
                     first = component;
@@ -170,5 +170,9 @@ public class WireController {
             default:
                 throw new IllegalArgumentException();
         }
+    }
+
+    public void redraw() {
+        wireView.invalidate();
     }
 }
