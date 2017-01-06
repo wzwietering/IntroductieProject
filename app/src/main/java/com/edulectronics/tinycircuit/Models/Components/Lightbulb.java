@@ -30,4 +30,8 @@ public class Lightbulb extends Component {
         super.reset();
         this.isOn = false;
     }
+
+    public boolean isBroken() {
+        return this.isOn && !this.hasResistance;
+    }
 }

@@ -192,7 +192,7 @@ public class CircuitActivity extends Activity
             Resources r = getResources();
             Component component = ((GridCell) ((IDragSource) v)).getComponent();
             if (component != null) {
-                wireController.wire(component, ev);
+                wireController.makeWire(component, ev);
 
                 if (scenario.isCompleted(circuitController.circuit)) {
                     scenarioCompleted();

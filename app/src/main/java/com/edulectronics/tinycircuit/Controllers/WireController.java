@@ -8,7 +8,7 @@ import com.edulectronics.tinycircuit.Models.Components.Connectors.Connection;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.ConnectionPoint;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.ConnectionPointOrientation;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.Connector;
-import com.edulectronics.tinycircuit.Models.Line;
+import com.edulectronics.tinycircuit.Models.Components.Connectors.Line;
 import com.edulectronics.tinycircuit.Views.WireView;
 
 import java.util.ArrayList;
@@ -22,6 +22,7 @@ public class WireController {
     private Component first;
     private ConnectionPointOrientation firstOrientation;
     private WireView wireView;
+
     private int cellHeight, cellWidth;
     private boolean connecting = false;
 
@@ -31,7 +32,7 @@ public class WireController {
         this.cellHeight = cellHeight;
     }
 
-    public void wire(Component component, MotionEvent event) {
+    public void makeWire(Component component, MotionEvent event) {
         if(component != null) {
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
                 if (!connecting) {
