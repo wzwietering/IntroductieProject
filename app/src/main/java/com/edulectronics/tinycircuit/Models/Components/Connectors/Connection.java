@@ -51,4 +51,12 @@ public class Connection {
         }
         return false;
     }
+
+    public ConnectionPoint getOtherPoint(ConnectionPoint connectionPoint){
+        if (connectionPoint == pointB || connectionPoint.getParentComponent() == pointB.getParentComponent()){
+            return pointA;
+        } else {
+            return pointB;
+        }
+    }
 }
