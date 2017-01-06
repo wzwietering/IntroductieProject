@@ -91,6 +91,12 @@ public class LightbulbTest {
     @Test
     public void imageResource(){
         Lightbulb lightbulb = new Lightbulb();
+        assertEquals(R.drawable.lightbulb_off, lightbulb.getImage());
+
+        lightbulb.isOn = true;
+        assertEquals(R.drawable.lightbulb_broken, lightbulb.getImage());
+
+        lightbulb.setResistance(true);
         assertEquals(R.drawable.lightbulb_on, lightbulb.getImage());
     }
 }
