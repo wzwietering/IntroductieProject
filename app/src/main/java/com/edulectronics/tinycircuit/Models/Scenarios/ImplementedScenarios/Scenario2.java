@@ -77,8 +77,8 @@ public class Scenario2 extends DesignScenario {
         Powersource powersource = new Powersource(5);
         Lightbulb bulb = new Lightbulb();
 
-        Connector.connect(powersource.getOutput(), bulb.getConnectionPointByIndex(1));
-        Connector.connect(powersource.getInput(), bulb.getConnectionPointByIndex(0));
+        Connector.connect(powersource.getOutput(), bulb.getConnectionPointByIndex(0));
+        Connector.connect(powersource.getInput(), bulb.getConnectionPointByIndex(1));
 
         components.add(powersource);
         components.add(bulb);

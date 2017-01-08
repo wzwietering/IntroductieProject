@@ -24,6 +24,7 @@ public class Scenario3 extends DesignScenario {
     public Scenario3(Circuit circuit) {
         super(circuit);
     }
+    public ArrayList<Component> components = new ArrayList<>();
 
     @Override
     public int getPrompt() {
@@ -32,29 +33,27 @@ public class Scenario3 extends DesignScenario {
 
     @Override
     public boolean isCompleted(Circuit circuit) {
-        boolean hasLightbulb = false;
         boolean has2Batterys = false;
         boolean isFullCircle = false;
+//      int batterycount = 0;
 
         for (Component component : circuit.getAllComponents()) {
             if(component != null) {
-                if (component.getClass() == Lightbulb.class) {
-                    hasLightbulb = true;
-                    continue;
-                }
-                if(Collections.frequency(Arrays.asList(circuit.getAllComponents()), Powersource.class)== 2){
-                    has2Batterys = true;
+                if(Collections.frequency(components, Powersource.class) == 2){
+//                    batterycount++;
+//                    if (batterycount == 2)
+                        has2Batterys = true;
                     continue;
                 }
                 if (component.getClass() == Powersource.class) {
                     if (component.hasOutputConnection(((Powersource) component).getInput())) {
                         isFullCircle = true;
                     }
+
                 }
             }
         }
-
-        return (isFullCircle && hasLightbulb && has2Batterys);
+        return (isFullCircle && has2Batterys);
     }
 
     public Set<Component> getAvailableComponents() {
@@ -74,14 +73,13 @@ public class Scenario3 extends DesignScenario {
             return super.loadComponents();
         }
 
-        ArrayList<Component> components = new ArrayList<>();
         Powersource powersource = new Powersource(5);
         Lightbulb bulb = new Lightbulb();
         Switch switch1 = new Switch();
 
         Connector.connect(powersource.getOutput(), bulb.getConnectionPointByIndex(1));
         Connector.connect(bulb.getConnectionPointByIndex(0),switch1.getConnectionPointByIndex(0));
-        Connector.connect(powersource.getInput(), switch1.getConnectionPointByIndex(0));
+        Connector.connect(powersource.getInput(), switch1.getConnectionPointByIndex(1));
 
         components.add(powersource);
         components.add(bulb);
