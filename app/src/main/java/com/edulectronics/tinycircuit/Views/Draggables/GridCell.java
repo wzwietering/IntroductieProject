@@ -24,7 +24,6 @@ import com.edulectronics.tinycircuit.Views.Draggables.Interfaces.IDropTarget;
  */
 
 public class GridCell extends ImageView implements IDragSource, IDropTarget {
-    public boolean isEmpty = true;
     public int mCellNumber = -1;
     public GridView mGrid;
 
@@ -51,8 +50,14 @@ public class GridCell extends ImageView implements IDragSource, IDropTarget {
         }
     }
 
+    public boolean isEmpty() {
+        if(mCellNumber != -1) {
+            return CircuitController.getInstance().getComponent(this.mCellNumber) == null;
+        }
+        return false;
+    }
+
     public void setComponent(Component component) {
-        this.isEmpty = false;
         setBackgroundResource(R.color.cell);
 
         if(this.mCellNumber > -1) {
@@ -64,7 +69,6 @@ public class GridCell extends ImageView implements IDragSource, IDropTarget {
     }
 
     public void removeComponent() {
-        isEmpty = true;
         setBackgroundResource(R.color.cell);
 
         if(this.mCellNumber > -1) {
@@ -84,7 +88,7 @@ public class GridCell extends ImageView implements IDragSource, IDropTarget {
     
     public boolean allowDrag() {
         // There is something to drag if the cell is not empty.
-        return !this.isEmpty;
+        return !this.isEmpty();
     }
 
     public void onDropCompleted (View target, boolean success)
@@ -130,7 +134,7 @@ public class GridCell extends ImageView implements IDragSource, IDropTarget {
      * Provide the user with some visual feedback.
      */
     public void onDragEnter(IDragSource source, int x, int y, int xOffset, int yOffset, DragView dragView, Object dragInfo) {
-        int bg = isEmpty ? R.color.cell_empty_hover : R.color.cell_filled_hover;
+        int bg = isEmpty() ? R.color.cell_empty_hover : R.color.cell_filled_hover;
         setBackgroundResource(bg);
     }
 
@@ -147,23 +151,19 @@ public class GridCell extends ImageView implements IDragSource, IDropTarget {
     }
 
     public boolean acceptDrop() {
-        return isEmpty ;
+        return isEmpty() ;
     }
 
-    public boolean isEmpty()
-    {
-        return isEmpty;
-    }
 
     public boolean performClick()
     {
-        if (!isEmpty) return super.performClick ();
+        if (!isEmpty()) return super.performClick ();
         return false;
     }
 
     public boolean performLongClick()
     {
-        if (!isEmpty) return super.performLongClick ();
+        if (!isEmpty()) return super.performLongClick ();
         return false;
     }
 }

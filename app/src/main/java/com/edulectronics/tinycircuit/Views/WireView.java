@@ -21,7 +21,7 @@ import com.edulectronics.tinycircuit.R;
  */
 
 public class WireView extends View {
-    Paint paint = new Paint();
+    public static Paint paint = new Paint();
     private CircuitController controller;
     private CoordinateHelper coordinateHelper;
     private WireController wireController;

@@ -23,6 +23,7 @@ public class Node {
 
     public void release(){
         occupied = false;
+        //TODO: remove component as it's added in occupy()?
     }
 
     public boolean isOccupied(){
