@@ -44,4 +44,8 @@ public class Circuit implements Serializable{
     public Component[] getAllComponents() {
         return this.components;
     }
+
+    public int getSize() {
+        return size;
+    }
 }

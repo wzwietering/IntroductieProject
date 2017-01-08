@@ -17,7 +17,6 @@ import com.edulectronics.tinycircuit.Views.Draggables.GridCell;
  */
 
 public class CircuitAdapter extends BaseAdapter {
-    public ViewGroup mParentView = null;
     private Context context;
     private CircuitController circuitController;
 
@@ -27,12 +26,12 @@ public class CircuitAdapter extends BaseAdapter {
     }
 
     public int getCount() {
-        return circuitController.circuit.size;
+        return circuitController.getCircuitSize();
     }
 
     public Object getItem(int position)
     {
-        return circuitController.circuit.getComponent(position);
+        return circuitController.getComponent(position);
     }
 
     public long getItemId(int position) {
@@ -81,7 +80,6 @@ public class CircuitAdapter extends BaseAdapter {
         int cellSize = context.getResources().getInteger(R.integer.cell_size);
         cell.setLayoutParams(new GridView.LayoutParams(cellSize, cellSize));
         cell.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        cell.setPadding(8, 8, 8, 8);
         return cell;
     }
 }

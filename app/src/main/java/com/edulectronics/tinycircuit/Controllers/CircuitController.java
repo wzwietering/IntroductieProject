@@ -130,4 +130,8 @@ public class CircuitController implements Serializable {
         }
         return connections;
     }
+
+    public int getCircuitSize() {
+        return circuit.getSize();
+    }
 }

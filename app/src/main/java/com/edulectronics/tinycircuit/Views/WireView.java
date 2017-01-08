@@ -10,16 +10,11 @@ import android.view.View;
 import android.view.WindowManager;
 
 import com.edulectronics.tinycircuit.Controllers.CircuitController;
-import com.edulectronics.tinycircuit.Controllers.CoordinateHelper;
+import com.edulectronics.tinycircuit.Helpers.CoordinateHelper;
 import com.edulectronics.tinycircuit.Controllers.WireController;
-import com.edulectronics.tinycircuit.Models.Components.Component;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.Connection;
-import com.edulectronics.tinycircuit.Models.Components.Connectors.ConnectionPoint;
 import com.edulectronics.tinycircuit.Models.Line;
 import com.edulectronics.tinycircuit.R;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Wilmer on 9-12-2016.

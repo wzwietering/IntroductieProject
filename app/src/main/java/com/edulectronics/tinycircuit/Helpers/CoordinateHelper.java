@@ -1,4 +1,4 @@
-package com.edulectronics.tinycircuit.Controllers;
+package com.edulectronics.tinycircuit.Helpers;
 
 import android.graphics.Point;
 
