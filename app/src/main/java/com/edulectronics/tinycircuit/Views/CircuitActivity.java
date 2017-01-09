@@ -167,7 +167,7 @@ public class CircuitActivity extends Activity
             for (int j = 1; j < headings[i].length; j++) {
                 MenuItem subitem = new MenuItem();
                 subitem.setIconName(headings[i][j]);
-                subitem.setIconImage(textures[i]);
+                subitem.setIconImage(textures[i + j - 1]);
                 heading.add(subitem);
             }
             children.put(headers.get(i), heading);
