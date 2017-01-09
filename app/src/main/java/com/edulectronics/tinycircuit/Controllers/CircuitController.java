@@ -26,38 +26,23 @@ import java.util.Stack;
  */
 
 public class CircuitController implements Serializable {
-
-    private static CircuitController ourInstance = new CircuitController();
-
-    public static CircuitController getInstance() {
-        return ourInstance;
-    }
-
-    private CircuitController() {
-    }
-
     public Circuit circuit;
-
-    // When a new component is created, we save it here. It hasn't been dragged to the circuit yet.
-    public Component newComponent;
+    public Component newComponent; // When a new component is created, we save it here. It hasn't been dragged to the circuit yet.
 
     // Set the circuit to some predefined circuit passed as arguments.
-    public void setProperties(int width, int size, ArrayList<Component> components){
+    public CircuitController(int width, int size, ArrayList<Component> components) {
         this.circuit = new Circuit(width, size);
-        if (components != null) {
-            int position = width / 2;
-            for (Component component : components) {
-                // TODO: Move positioning of components to the scenario. Either based on relative
-                // positions (depending on grid size) or lock the grid to a default size.
+        int position = width / 2;
+        for (Component component : components) {
+            // TODO: Move positioning of components to the scenario. Either based on relative
+            // positions (depending on grid size) or lock the grid to a default size.
 
-                addComponent(component, position);
-                position+= 10;
-            }
+            addComponent(component, position);
+            position+= 10;
         }
     }
 
-    public void addNewComponent(String componentName, CircuitActivity activity)
-    {
+    public void addNewComponent(String componentName, CircuitActivity activity) {
         Component component = ComponentFactory.CreateComponent(componentName, 5.0);
 
         FrameLayout componentHolder = (FrameLayout) activity.findViewById
@@ -82,9 +67,13 @@ public class CircuitController implements Serializable {
 
     public void addComponent(Component component, int position){
         // Only add if tile is available and allowed
-        if(!circuit.occupied(position)) {
+        if(placementAllowed(position)) {
             circuit.add(component, position);
         }
+    }
+
+    private boolean placementAllowed(int position) {
+        return !circuit.occupied(position);
     }
 
     public void removeComponent(int position){
@@ -153,7 +142,6 @@ public class CircuitController implements Serializable {
         for (Component component: this.getComponents()) {
             if(component != null && component.getClass() == Powersource.class) {
                 if(((Powersource)component).hasOutputConnection()) {
-                    // If yes, create graph.
                     Graph graph = new Graph((Powersource)component, this.getAllConnections());
 
                     // Now check all paths on the graph.

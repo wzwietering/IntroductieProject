@@ -35,12 +35,8 @@ public class ExerciseMenuActivity extends AppCompatActivity {
     public void startExercise(View v) {
         TextView text = (TextView) v.findViewById(R.id.levelnumber);
         String levelnumber = text.getText().toString();
-
-        ScenarioFactory factory = new ScenarioFactory();
-        IScenario scenario = factory.getScenario(levelnumber);
-
         Intent intent = new Intent(this, CircuitActivity.class);
-        intent.putExtra("scenario", scenario);
+        intent.putExtra("scenario", levelnumber);
         startActivity(intent);
     }
 }

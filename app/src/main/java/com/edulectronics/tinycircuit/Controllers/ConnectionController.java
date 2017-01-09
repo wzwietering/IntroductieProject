@@ -18,37 +18,47 @@ import java.util.List;
  * Created by Wilmer on 11-12-2016.
  */
 
-public class WireController {
+public class ConnectionController {
     private Component firstComponent;
     private ConnectionPointOrientation firstOrientation;
     private WireView wireView;
     private int cellHeight, cellWidth;
     public boolean connecting = false;
 
-    public WireController(WireView wireView, int cellWidth, int cellHeight) {
+    public ConnectionController(WireView wireView, int cellWidth, int cellHeight) {
         this.wireView = wireView;
         this.cellWidth = cellWidth;
         this.cellHeight = cellHeight;
     }
 
     public void makeWire(Component component, MotionEvent event) {
-        if (component != null) {
-            if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                if (!connecting) {
-                    firstComponent = component;
-                    firstOrientation = getClickedArea((int) event.getX(), (int) event.getY());
-                    connecting = true;
-                } else {
-                    Connector connector = new Connector();
-                    ConnectionPointOrientation secondOrientation = getClickedArea((int) event.getX(), (int) event.getY());
-                    connector.connect(
-                            getConnectionPoint(firstComponent, firstOrientation),
-                            getConnectionPoint(component, secondOrientation));
-                    connecting = false;
-                    wireView.invalidate();
-                }
+        if (mayConnect(component, event)) {
+            if (!connecting) {
+                setSelected(component, event);
+            } else {
+                connect(component, event);
             }
         }
+    }
+
+    private void connect(Component component, MotionEvent event) {
+        Connector connector = new Connector();
+        ConnectionPointOrientation secondOrientation = getClickedArea((int) event.getX(), (int) event.getY());
+        connector.connect(
+                getConnectionPoint(firstComponent, firstOrientation),
+                getConnectionPoint(component, secondOrientation));
+        connecting = false;
+        redraw();
+    }
+
+    private void setSelected(Component component, MotionEvent event) {
+        firstComponent = component;
+        firstOrientation = getClickedArea((int) event.getX(), (int) event.getY());
+        connecting = true;
+    }
+
+    private boolean mayConnect(Component component, MotionEvent event) {
+        return (component != null & event.getAction() == MotionEvent.ACTION_DOWN);
     }
 
     public ConnectionPointOrientation getClickedArea(int x, int y) {

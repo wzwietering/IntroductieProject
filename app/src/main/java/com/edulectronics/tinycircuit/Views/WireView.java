@@ -11,7 +11,7 @@ import android.view.WindowManager;
 
 import com.edulectronics.tinycircuit.Controllers.CircuitController;
 import com.edulectronics.tinycircuit.Helpers.CoordinateHelper;
-import com.edulectronics.tinycircuit.Controllers.WireController;
+import com.edulectronics.tinycircuit.Controllers.ConnectionController;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.Connection;
 import com.edulectronics.tinycircuit.Models.Line;
 import com.edulectronics.tinycircuit.R;
@@ -24,7 +24,7 @@ public class WireView extends View {
     public static Paint paint = new Paint();
     private CircuitController controller;
     private CoordinateHelper coordinateHelper;
-    private WireController wireController;
+    private ConnectionController connectionController;
 
     private Point screenSize = new Point();
 
@@ -44,7 +44,7 @@ public class WireView extends View {
 
         this.controller = controller;
         coordinateHelper = new CoordinateHelper(controller.circuit.width, cellWidth, cellHeight);
-        wireController = new WireController(this, cellWidth, cellHeight);
+        connectionController = new ConnectionController(this, cellWidth, cellHeight);
     }
 
     @Override
@@ -60,7 +60,7 @@ public class WireView extends View {
                         c.pointB.orientation
                 );
 
-                wireController.setLines(c, startPoint, endPoint);
+                connectionController.setLines(c, startPoint, endPoint);
 
                 for (Line line : c.getLines()) {
                     canvas.drawLine(line.a.x, line.a.y, line.b.x, line.b.y, paint);

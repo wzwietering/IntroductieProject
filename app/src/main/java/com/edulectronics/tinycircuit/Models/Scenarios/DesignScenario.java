@@ -2,6 +2,8 @@ package com.edulectronics.tinycircuit.Models.Scenarios;
 
 import com.edulectronics.tinycircuit.Models.Circuit;
 import com.edulectronics.tinycircuit.Models.Components.Component;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -15,7 +17,7 @@ import java.util.Set;
 
 public abstract class DesignScenario implements IScenario {
 
-    protected Component[] initialComponents;
+    protected ArrayList<Component> initialComponents;
 
     public DesignScenario() {}
 
@@ -38,9 +40,7 @@ public abstract class DesignScenario implements IScenario {
     @Override
     public ArrayList<Component> loadComponents() {
         if(this.initialComponents != null) {
-            ArrayList list = new ArrayList<Component>();
-            list.addAll(Arrays.asList(this.initialComponents));
-            return list;
+            return new ArrayList(Arrays.asList(initialComponents));
         }
         return null;
     }

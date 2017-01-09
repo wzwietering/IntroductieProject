@@ -18,8 +18,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.edulectronics.tinycircuit.Controllers.CircuitController;
+import com.edulectronics.tinycircuit.Controllers.LevelController;
 import com.edulectronics.tinycircuit.Controllers.MessageController;
-import com.edulectronics.tinycircuit.Controllers.WireController;
+import com.edulectronics.tinycircuit.Controllers.ConnectionController;
 import com.edulectronics.tinycircuit.Models.Components.Component;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.Connection;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.Connector;
@@ -51,11 +52,12 @@ public class CircuitActivity extends Activity
     private List<MenuItem> headers;
     private HashMap<MenuItem, List<MenuItem>> children;
     private CircuitController circuitController;
-    private WireController wireController;
+    private ConnectionController connectionController;
     private IScenario scenario;
-    private Set<Component> availableComponents;
     private MessageController messageController = new MessageController(getFragmentManager());
     private boolean isInWireMode = false;
+    private LevelController levelController;
+    private int cellSize;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,15 +66,12 @@ public class CircuitActivity extends Activity
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_circuit);
 
-        int cellSize = getResources().getInteger(R.integer.cell_size);
-        wireController = new WireController((WireView) findViewById(R.id.draw_view), cellSize, cellSize);
+        cellSize = getResources().getInteger(R.integer.cell_size);
+        connectionController = new ConnectionController((WireView) findViewById(R.id.draw_view), cellSize, cellSize);
 
         ImageView hamburger = (ImageView) findViewById(R.id.hamburger);
         hamburger.setImageResource(R.drawable.ic_hamburger);
-
-        scenario = (IScenario) getIntent().getSerializableExtra("scenario");
-        availableComponents = scenario.getAvailableComponents();
-        getController();
+        setControllers();
         GridView grid = setCircuit();
         createDragControls(grid);
         createMenu();
@@ -107,15 +106,18 @@ public class CircuitActivity extends Activity
         return circuitGrid;
     }
 
-    private void getController() {
+    private void setControllers() {
+        Point size = getDisplaySize();
+        levelController = new LevelController(getIntent().getStringExtra("scenario"));
+        // Width or height divided by cellsize fits the maxiumum amount of cells inside the screen
+        circuitController = new CircuitController(size.x / cellSize, size.y / cellSize, levelController.getAvailableComponents());
+    }
+
+    private Point getDisplaySize() {
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
-        int cellSize = getResources().getInteger(R.integer.cell_size);
-        //Width or height divided by cellsize fits the maxiumum amount of cells inside the screen
-
-        circuitController = CircuitController.getInstance();
-        circuitController.setProperties(size.x / cellSize, size.y / cellSize, scenario.loadComponents());
+        return size;
     }
 
     private void createDragControls(GridView grid) {
@@ -145,7 +147,13 @@ public class CircuitActivity extends Activity
         String[] items = getResources().getStringArray(R.array.menuitems);
         children = new HashMap<>();
         /*Temporary! Should work different!*/
-        int[] textures = {0, R.drawable.battery, R.drawable.lightbulb_on, R.drawable.resistor, R.drawable.switch_on};
+        int[] textures = {
+                0,
+                R.drawable.battery,
+                R.drawable.lightbulb_on,
+                R.drawable.resistor,
+                R.drawable.switch_on
+        };
 
         TypedArray typedArray = getResources().obtainTypedArray(R.array.categories);
         int length = typedArray.length();
@@ -177,7 +185,7 @@ public class CircuitActivity extends Activity
     public void onClick(View v) {
         if (!isInWireMode) {
             // Let clicked component handle the tap.
-            if (CircuitController.getInstance().handleClick(((GridCell) v).mCellNumber)) {
+            if (circuitController.handleClick(((GridCell) v).mCellNumber)) {
                 ((GridCell) v).resetImage();
             }
         }
@@ -195,14 +203,14 @@ public class CircuitActivity extends Activity
                     if (connection.isTouched(ev)) {
                         Connector connector = new Connector();
                         connector.disconnect(connection.pointA, connection.pointB);
-                        wireController.redraw();
+                        connectionController.redraw();
                     }
                 }
             }
 
             Component component = ((GridCell) v).getComponent();
             if(component != null && action == MotionEvent.ACTION_DOWN) {
-                wireController.makeWire(component, ev);
+                connectionController.makeWire(component, ev);
 
                 if (scenario.isCompleted(circuitController.circuit)) {
                     scenarioCompleted();
