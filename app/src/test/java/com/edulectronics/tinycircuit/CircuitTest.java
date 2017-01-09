@@ -1,6 +1,5 @@
-package com.edulectronics.tinycircuit.CircuitTest;
+package com.edulectronics.tinycircuit;
 
-import com.edulectronics.tinycircuit.CircuitBuilder;
 import com.edulectronics.tinycircuit.Controllers.CircuitController;
 import com.edulectronics.tinycircuit.Models.Components.Component;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.Connector;
