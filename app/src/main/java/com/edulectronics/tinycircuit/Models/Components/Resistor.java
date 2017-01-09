@@ -8,19 +8,9 @@ import com.edulectronics.tinycircuit.R;
  */
 
 public class Resistor extends Component {
-    double resistance;
-
-    public Resistor(double resistance){
-        this.resistance = resistance;
-    }
 
     @Override
     public int getImage(){
-        //TODO use different texture for different types
-        if(this.resistance == 0){
-            return R.drawable.resistor;
-        }else{
-            return R.drawable.resistor;
-        }
+        return R.drawable.resistor;
     }
 }

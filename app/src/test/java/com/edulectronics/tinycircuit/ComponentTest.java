@@ -17,7 +17,7 @@ import static org.junit.Assert.*;
 public class ComponentTest {
     @Test
     public void connectedPowersource() throws Exception {
-        Powersource powersource = new Powersource(5);
+        Powersource powersource = new Powersource();
         ConnectionPoint output = powersource.getConnectionPointByIndex(0);
         ConnectionPoint input = powersource.getConnectionPointByIndex(1);
 
@@ -28,13 +28,13 @@ public class ComponentTest {
 
     @Test
     public void disconnectedPowersource(){
-        Powersource powersource = new Powersource(5);
+        Powersource powersource = new Powersource();
         assertFalse(powersource.hasOutputConnection());
     }
 
     @Test
     public void disconnectedCircuit(){
-        Powersource powersource = new Powersource(5);
+        Powersource powersource = new Powersource();
         ConnectionPoint powerOutput = powersource.getConnectionPointByIndex(0);
 
         Lightbulb bulb = new Lightbulb();
@@ -47,7 +47,7 @@ public class ComponentTest {
 
     @Test
     public void imageResource(){
-        Powersource powersource = new Powersource(5);
+        Powersource powersource = new Powersource();
         assertEquals(R.drawable.battery, powersource.getImage());
     }
 }

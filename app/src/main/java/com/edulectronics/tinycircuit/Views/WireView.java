@@ -13,7 +13,7 @@ import com.edulectronics.tinycircuit.Controllers.CircuitController;
 import com.edulectronics.tinycircuit.Controllers.CoordinateHelper;
 import com.edulectronics.tinycircuit.Controllers.WireController;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.Connection;
-import com.edulectronics.tinycircuit.Models.Line;
+import com.edulectronics.tinycircuit.Models.Components.Connectors.Line;
 import com.edulectronics.tinycircuit.R;
 
 /**
