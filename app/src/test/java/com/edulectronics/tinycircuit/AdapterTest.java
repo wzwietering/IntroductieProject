@@ -6,7 +6,7 @@ import com.edulectronics.tinycircuit.Views.Adapters.CircuitAdapter;
 
 import org.junit.Test;
 
-import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 
 /**

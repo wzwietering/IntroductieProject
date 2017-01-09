@@ -1,9 +1,7 @@
 package com.edulectronics.tinycircuit.Models.Components.Connectors;
 
 import com.edulectronics.tinycircuit.Models.Components.Component;
-import com.edulectronics.tinycircuit.Models.Components.Powersource;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,48 +15,13 @@ public class ConnectionPoint {
     private Component parentComponent;
     private ArrayList<Connection> connections = new ArrayList<Connection>();
 
-    /*
-    TODO: Depending on implementation for current calulations, voltageIn and -Out might
-    be replaced by a single Voltage value.
-    */
-    private double voltageOut;
-    private double voltageIn;
-
     public ConnectionPoint(Component parent, ConnectionPointOrientation orientation) {
         this.parentComponent = parent;
         this.orientation = orientation;
     }
 
-    public double getVoltageOut() {
-        return this.voltageOut;
-    }
-
-    public double getVoltageIn() {
-        return this.voltageIn;
-    }
-
-    // Set a new output voltage. Only a component is allowed to do this to its own connection
-    // points.
-//    public void setVoltageOut(double voltage) {
-//        this.voltageOut = voltage;
-//        for (Connection connection: connections) {
-//            connection.calculateVoltageIn();
-//        }
-//    }
-
-//    // Returns the accumulated voltage of all connectionpoints.
-//    private void calculateVoltageIn() {
-//        double voltage = 0;
-//        for (ConnectionPoint connectionPoint: connections) {
-//            voltage += connectionPoint.getVoltageOut();
-//        }
-//        this.voltageIn = voltage;
-//        parentComponent.handleInputChange();
-//    }
-
     public boolean hasOutputConnection() {
         for (Connection connection: connections) {
-            // ALWAYS check if parent is a powersource FIRST. Otherwise you get stackoverflow.
             if(connection.hasOutputConnection(this))
                 return true;
         }

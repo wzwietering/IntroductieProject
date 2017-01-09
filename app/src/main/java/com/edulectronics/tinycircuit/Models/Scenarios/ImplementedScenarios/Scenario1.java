@@ -9,8 +9,6 @@ import com.edulectronics.tinycircuit.Models.Scenarios.DesignScenario;
 import com.edulectronics.tinycircuit.R;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.ResourceBundle;
 import java.util.Set;
 
 /**
@@ -54,14 +52,14 @@ public class Scenario1 extends DesignScenario {
     public Set<Component> getAvailableComponents() {
         Set set = super.getAvailableComponents();
         set.add(new Lightbulb());
-        set.add(new Powersource(5));
+        set.add(new Powersource());
 
         return set;
     }
 
     public ArrayList<Component> loadComponents() {
         ArrayList<Component> components = new ArrayList<>();
-        Powersource powersource = new Powersource(5);
+        Powersource powersource = new Powersource();
         Lightbulb bulb = new Lightbulb();
 
         Connector.connect(powersource.getOutput(), bulb.getConnectionPointByIndex(0));

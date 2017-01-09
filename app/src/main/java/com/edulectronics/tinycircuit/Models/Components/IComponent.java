@@ -13,10 +13,6 @@ public interface IComponent {
     // Check to see whether this component had an outgoing connection.
     public boolean hasOutputConnection(ConnectionPoint connectionPoint);
 
-    public void handleInputChange();
-
-    public void setNewOutputValues();
-
     // Get the icon for this component
     public int getImage();
 
