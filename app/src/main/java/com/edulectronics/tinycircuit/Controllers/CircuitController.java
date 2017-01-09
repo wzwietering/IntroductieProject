@@ -52,7 +52,7 @@ public class CircuitController implements Serializable {
 
     public void addNewComponent(String componentName, CircuitActivity activity)
     {
-        Component component = ComponentFactory.CreateComponent(componentName, 5.0);
+        Component component = ComponentFactory.CreateComponent(componentName);
 
         FrameLayout componentHolder = (FrameLayout) activity.findViewById
                 (R.id.component_source_frame);

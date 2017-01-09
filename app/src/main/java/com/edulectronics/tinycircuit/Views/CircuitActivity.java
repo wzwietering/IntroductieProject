@@ -8,12 +8,13 @@ import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Display;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -46,10 +47,9 @@ public class CircuitActivity extends Activity
         implements View.OnClickListener, View.OnTouchListener, View.OnLongClickListener { //  , AdapterView.OnItemClickListener
     private DragController mDragController;   // Object that handles a drag-drop sequence. It interacts with DragSource and DropTarget objects.
     private DragLayer mDragLayer;             // The ViewGroup within which an object can be dragged.
-	private List<MenuItem> headers;
+    private List<MenuItem> headers;
     private HashMap<MenuItem, List<MenuItem>> children;
     private CircuitController circuitController;
-    private GridView circuitGrid;
     private WireController wireController;
     private IScenario scenario;
     private Set<Component> availableComponents;
@@ -62,13 +62,18 @@ public class CircuitActivity extends Activity
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_circuit);
-        wireController = new WireController((WireView) findViewById(R.id.draw_view));
+
+        int cellSize = getResources().getInteger(R.integer.cell_size);
+        wireController = new WireController((WireView) findViewById(R.id.draw_view), cellSize, cellSize);
+
+        ImageView hamburger = (ImageView) findViewById(R.id.hamburger);
+        hamburger.setImageResource(R.drawable.ic_hamburger);
 
         scenario = (IScenario) getIntent().getSerializableExtra("scenario");
         availableComponents = scenario.getAvailableComponents();
         getController();
-        setCircuit();
-        createDragControls();
+        GridView grid = setCircuit();
+        createDragControls(grid);
         createMenu();
         createDrawView();
 
@@ -82,14 +87,14 @@ public class CircuitActivity extends Activity
         wireView.setControllers(circuitController);
     }
 
-    private void setCircuit() {
-        circuitGrid = (GridView) findViewById(R.id.circuit);
+    private GridView setCircuit() {
+        GridView circuitGrid = (GridView) findViewById(R.id.circuit);
 
         /*Prevents scrolling, stuff can still be rendered outside screen*/
         circuitGrid.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_MOVE){
+                if (event.getAction() == MotionEvent.ACTION_MOVE) {
                     return true;
                 }
                 return false;
@@ -98,6 +103,7 @@ public class CircuitActivity extends Activity
 
         circuitGrid.setNumColumns(circuitController.circuit.width);
         circuitGrid.setAdapter(new CircuitAdapter(this));
+        return circuitGrid;
     }
 
     private void getController() {
@@ -111,22 +117,22 @@ public class CircuitActivity extends Activity
         circuitController.setProperties(size.x / cellSize, size.y / cellSize, scenario.loadComponents());
     }
 
-    private void createDragControls() {
+    private void createDragControls(GridView grid) {
         mDragController = new DragController(this);
         mDragLayer = (DragLayer) findViewById(R.id.drag_layer);
-        mDragLayer.setDragController (mDragController);
-        mDragLayer.setGridView(circuitGrid);
-        mDragController.setDragListener (mDragLayer);
+        mDragLayer.setDragController(mDragController);
+        mDragLayer.setGridView(grid);
+        mDragController.setDragListener(mDragLayer);
     }
 
     /*This code adds a menu to the side*/
-    private void createMenu(){
+    private void createMenu() {
         ExpandableListView expandableList = (ExpandableListView) findViewById(R.id.expandablelist);
         makeLists();
 
         ExpandableListAdapter adapter = new ExpandableListAdapter(
-                                            this, headers, children, expandableList
-                                        );
+                this, headers, children, expandableList
+        );
         expandableList.setAdapter(adapter);
         expandableList.setOnChildClickListener(onChildClick());
         expandableList.setOnGroupClickListener(onGroupClick());
@@ -138,26 +144,26 @@ public class CircuitActivity extends Activity
         String[] items = getResources().getStringArray(R.array.menuitems);
         children = new HashMap<>();
         /*Temporary! Should work different!*/
-        int[] textures = {R.drawable.battery, R.drawable.lightbulb_on, R.drawable.resistor};
+        int[] textures = {R.drawable.battery, R.drawable.lightbulb_on, R.drawable.resistor, R.drawable.switch_on};
 
         TypedArray typedArray = getResources().obtainTypedArray(R.array.categories);
         int length = typedArray.length();
         String[][] headings = new String[length][];
 
-        for (int i = 0; i < length; i++){
+        for (int i = 0; i < length; i++) {
             int id = typedArray.getResourceId(i, 0);
             headings[i] = getResources().getStringArray(id);
         }
         typedArray.recycle();
 
-        for(int i = 0; i < items.length; i++){
+        for (int i = 0; i < items.length; i++) {
             MenuItem item = new MenuItem();
             item.setIconName(items[i]);
             item.setIconImage(textures[i]);
             headers.add(item);
 
             List<MenuItem> heading = new ArrayList();
-            for(int j = 1; j < headings[i].length; j++){
+            for (int j = 1; j < headings[i].length; j++) {
                 MenuItem subitem = new MenuItem();
                 subitem.setIconName(headings[i][j]);
                 subitem.setIconImage(textures[i]);
@@ -167,26 +173,26 @@ public class CircuitActivity extends Activity
         }
     }
 
-    public void onClick(View v)
-    {
-        if(!isInWireMode) {
+    public void onClick(View v) {
+        if (!isInWireMode) {
             // Let clicked component handle the tap.
-            if (CircuitController.getInstance().handleClick(((GridCell)v).mCellNumber)) {
-                ((GridCell)v).resetImage();
-            };
+            if (CircuitController.getInstance().handleClick(((GridCell) v).mCellNumber)) {
+                ((GridCell) v).resetImage();
+            }
+            ;
         }
     }
 
-    public boolean onTouch (View v, MotionEvent ev) {
+    public boolean onTouch(View v, MotionEvent ev) {
         boolean handledHere = false;
         final int action = ev.getAction();
 
         // In the situation where a long click is not needed to initiate a drag, simply start on the down event.
         if (isInWireMode) {
             Resources r = getResources();
-            Component component = ((GridCell)((IDragSource) v)).getComponent();
-            if(component != null) {
-                wireController.wire(component, ev, r.getInteger(R.integer.cell_size));
+            Component component = ((GridCell) ((IDragSource) v)).getComponent();
+            if (component != null) {
+                wireController.makeWire(component, ev);
 
                 if (scenario.isCompleted(circuitController.circuit)) {
                     scenarioCompleted();
@@ -204,8 +210,7 @@ public class CircuitActivity extends Activity
                 true));
     }
 
-    public boolean onLongClick(View v)
-    {
+    public boolean onLongClick(View v) {
         // Make sure the drag was started by a long press as opposed to a long click.
         // (Note: I got this from the Workspace object in the Android Launcher code.
         //  I think it is here to ensure that the device is still in touch mode as we start the drag operation.)
@@ -216,49 +221,58 @@ public class CircuitActivity extends Activity
         return startDrag(v);
     }
 
-    public boolean startDrag (View v)
-    {
+    public boolean startDrag(View v) {
         IDragSource dragSource = (IDragSource) v;
-        mDragController.startDrag (v, dragSource, dragSource);
+        mDragController.startDrag(v, dragSource, dragSource);
         return true;
     }
 
-    public void onClickAddComponent(String text)
-    {
+    public void onClickAddComponent(String text) {
         circuitController.addNewComponent(text, this);
         NavigationView view = (NavigationView) findViewById(R.id.navigationview);
         ((DrawerLayout) findViewById(R.id.activity_main)).closeDrawer(view);
     }
 
-    public ExpandableListView.OnGroupClickListener onGroupClick(){
+    public ExpandableListView.OnGroupClickListener onGroupClick() {
         return new ExpandableListView.OnGroupClickListener() {
             @Override
             public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+                if (groupPosition == 0) {
+                    LinearLayout group = (LinearLayout) v;
+                    toggleMode(group);
+                    NavigationView view = (NavigationView) findViewById(R.id.navigationview);
+                    ((DrawerLayout) findViewById(R.id.activity_main)).closeDrawer(view);
+                }
                 return false;
             }
         };
     }
 
-    public ExpandableListView.OnChildClickListener onChildClick(){
+    public ExpandableListView.OnChildClickListener onChildClick() {
         return new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-                LinearLayout group = (LinearLayout) ((LinearLayout)v).getChildAt(0);
+                LinearLayout group = (LinearLayout) ((LinearLayout) v).getChildAt(0);
                 View child = group.getChildAt(1);
-                String text = (String) ((TextView)child).getText();
+                String text = (String) ((TextView) child).getText();
                 onClickAddComponent(text);
                 return false;
             }
         };
     }
 
-    public void toggleMode(View v){
+    public void toggleMode(LinearLayout linearLayout) {
         isInWireMode = !isInWireMode;
+        if (isInWireMode) {
+            linearLayout.setBackgroundResource(R.color.wiremode_on);
+        } else {
+            linearLayout.setBackgroundResource(R.color.wiremode_off);
+            ;
+        }
+    }
 
-        int buttonColor = isInWireMode? R.color.button_wiremode_on : R.color.button_wiremode_off;
-        ((Button) findViewById(R.id.button_add_wire)).setBackgroundColor(
-                getResources().getColor(buttonColor)
-        );
+    public void openMenu(View v) {
+        ((DrawerLayout) findViewById(R.id.activity_main)).openDrawer(Gravity.LEFT);
     }
 
     public void startNextScenario() {
@@ -266,5 +280,10 @@ public class CircuitActivity extends Activity
         // Obviously this is very very bad code. I know. I will fix it when we have a scenario-
         // controller.
         this.scenario = new Scenario2(this.circuitController.circuit);
+    }
+
+    public void run(View view) {
+        circuitController.run();
+        ((GridView)findViewById(R.id.circuit)).invalidateViews();
     }
 }

@@ -1,34 +1,42 @@
 <resources>
     <string name="app_name">TinyCircuit</string>
     <string-array name="menuitems">
+        <item>Draad</item>
         <item>Stroombronnen</item>
         <item>Lampen</item>
         <item>Weerstanden</item>
     </string-array>
     <array name="categories">
+        <item>@array/draad</item>
         <item>@array/stroombronnen</item>
         <item>@array/lampen</item>
         <item>@array/weerstanden</item>
     </array>
-    <string-array name="stroombronnen">
+    <string-array name="draad">
         <item name="id">0</item>
+    </string-array>
+    <string-array name="stroombronnen">
+        <item name="id">1</item>
         <item>Batterij</item>
     </string-array>
     <string-array name="lampen">
-        <item name="id">1</item>
+        <item name="id">2</item>
         <item>Gloeilamp</item>
     </string-array>
     <string-array name="weerstanden">
-        <item name="id">2</item>
-        <item>Weerstand</item>
         <item name="id">3</item>
+        <item>Weerstand</item>
         <item>Schakelaar</item>
     </string-array>
+    <string name="exercise" >Opgaven</string>
+    <string name="freeplay" >Vrij spel</string>
     <string name="button_ok" >Ik snap het</string>
     <string name="scenario_explanation_title" >Uitleg</string>
+    <string name="freeplay_explanation" >Dit is vrijspel! je kan hier in alle vrijheid je eigencircuit ontwerpen.</string>
     <string name="scenario1_explanation" >Verbind het lampje met de batterij, zodat het lampje aan gaat.</string>
-    <string name="scenario2_explanation" >Voeg nu een schakelaar toe aan het circuit, zodat je het lampje aan en uit kunt zetten.</string>
-    <string name="scenario3_explanation">Voeg een tweede batterij toe aan het circuit, zodat het lampje feller schijnt.</string>
+    <string name="scenario2_explanation" >Om de lamp niet te laten knappen voegen we nu een weerstand toe.</string>
+    <string name="scenario4_explanation" >Maak nu vanuit deze batterij met 2 brandende lampen. </string>
+    <string name="scenario3_explanation" >Voeg nu een knop toe aan het circuit, zodat je de lamp aan en uit kan zetten.</string>
     <string name="scenario_complete" >Goed gedaan!</string>
     <string name="button_add_wire" >draden tekenen</string>
 </resources>

@@ -13,14 +13,14 @@ public class ComponentFactory {
 
     //TODO: geen hardcoded strings gebruiken!!! Uit resources halen.
 
-    public static Component CreateComponent(String name, double value) {
+    public static Component CreateComponent(String name) {
         switch (name) {
             case "Batterij":
                 return new Powersource(value);
             case "Gloeilamp":
                 return new Lightbulb();
             case "Weerstand":
-                return new Resistor(value);
+                return new Resistor();
             case "Schakelaar":
                 return new Switch();
         }

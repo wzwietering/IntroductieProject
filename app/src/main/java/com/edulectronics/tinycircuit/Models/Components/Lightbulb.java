@@ -41,4 +41,8 @@ public class Lightbulb extends Component {
     public int getImage(){
         return R.drawable.lightbulb_on;
     }
+
+    public boolean isBroken() {
+        return this.isOn && !this.hasResistance;
+    }
 }
