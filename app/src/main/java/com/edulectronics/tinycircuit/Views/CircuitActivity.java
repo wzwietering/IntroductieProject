@@ -191,9 +191,10 @@ public class CircuitActivity extends Activity
         if (isInWireMode) {
             //Check if wire is touched, but only on the down. This is necessary to prevent line
             //removal on the up event.
+            Component component = ((GridCell) v).getComponent();
             if(action == MotionEvent.ACTION_DOWN) {
                 for (Connection connection : circuitController.getAllConnections()) {
-                    if (connection.isTouched(ev)) {
+                    if (connection.isTouched(ev) && component == null) {
                         Connector connector = new Connector();
                         connector.disconnect(connection.pointA, connection.pointB);
                         wireController.redraw();
@@ -201,7 +202,6 @@ public class CircuitActivity extends Activity
                 }
             }
 
-            Component component = ((GridCell) v).getComponent();
             if(component != null && action == MotionEvent.ACTION_DOWN) {
                 wireController.makeWire(component, ev);
 
