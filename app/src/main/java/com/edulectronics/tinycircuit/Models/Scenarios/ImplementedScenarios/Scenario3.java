@@ -5,6 +5,7 @@ import com.edulectronics.tinycircuit.Models.Components.Component;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.Connector;
 import com.edulectronics.tinycircuit.Models.Components.Lightbulb;
 import com.edulectronics.tinycircuit.Models.Components.Powersource;
+import com.edulectronics.tinycircuit.Models.Components.Resistor;
 import com.edulectronics.tinycircuit.Models.Components.Switch;
 import com.edulectronics.tinycircuit.Models.Scenarios.DesignScenario;
 import com.edulectronics.tinycircuit.R;
@@ -33,34 +34,36 @@ public class Scenario3 extends DesignScenario {
 
     @Override
     public boolean isCompleted(Circuit circuit) {
-        boolean has2Batterys = false;
+        boolean hasConnectedSwitch = false;
         boolean isFullCircle = false;
-//      int batterycount = 0;
+        boolean lampIsOn = false;
 
         for (Component component : circuit.getAllComponents()) {
             if(component != null) {
-                if(Collections.frequency(components, Powersource.class) == 2){
-//                    batterycount++;
-//                    if (batterycount == 2)
-                        has2Batterys = true;
-                    continue;
-                }
                 if (component.getClass() == Powersource.class) {
                     if (component.hasOutputConnection(((Powersource) component).getInput())) {
                         isFullCircle = true;
                     }
-
+                }
+                if(component.getClass() == Lightbulb.class) {
+                    if (((Lightbulb) component).isOn) {
+                        lampIsOn = true;
+                    }
+                }
+                if(component.getClass() == Switch.class){
+                    if (component.hasOutputConnection(((Switch) component).getConnectionPointByIndex(1)))
+                        hasConnectedSwitch = true;
                 }
             }
         }
-        return (isFullCircle && has2Batterys);
+        return (isFullCircle && hasConnectedSwitch && lampIsOn);
     }
 
     public Set<Component> getAvailableComponents() {
         Set set = super.getAvailableComponents();
         set.add(new Lightbulb());
-        set.add(new Powersource(5));
-        set.add(new Switch());
+        set.add(new Powersource());
+        set.add(new Resistor());
 
         return set;
     }
@@ -73,17 +76,17 @@ public class Scenario3 extends DesignScenario {
             return super.loadComponents();
         }
 
-        Powersource powersource = new Powersource(5);
+        Powersource powersource = new Powersource();
         Lightbulb bulb = new Lightbulb();
-        Switch switch1 = new Switch();
+        Resistor resistor = new Resistor();
 
         Connector.connect(powersource.getOutput(), bulb.getConnectionPointByIndex(1));
-        Connector.connect(bulb.getConnectionPointByIndex(0),switch1.getConnectionPointByIndex(0));
-        Connector.connect(powersource.getInput(), switch1.getConnectionPointByIndex(1));
+        Connector.connect(bulb.getConnectionPointByIndex(0),resistor.getConnectionPointByIndex(0));
+        Connector.connect(powersource.getInput(), resistor.getConnectionPointByIndex(1));
 
         components.add(powersource);
         components.add(bulb);
-        components.add(switch1);
+        components.add(resistor);
         return components;
     }
 }
