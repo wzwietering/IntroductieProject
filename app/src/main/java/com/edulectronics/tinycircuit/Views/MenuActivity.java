@@ -23,7 +23,7 @@ public class MenuActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_menu);
         //The split is used because language tags like 'en-US' and 'en-GB' should all use English
-        language = Locale.getDefault().toLanguageTag().split("-")[0];
+        language = Locale.getDefault().toLanguageTag().substring(0, 2);
         setFlag();
         this.createMenu();
     }
