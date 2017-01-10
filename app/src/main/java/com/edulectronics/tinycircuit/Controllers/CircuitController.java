@@ -42,7 +42,7 @@ public class CircuitController implements Serializable {
     public Component newComponent;
 
     // Set the circuit to some predefined circuit passed as arguments.
-    public void setProperties(int width, int size, ArrayList<Component> components){
+    public void setProperties(int width, int size, ArrayList<Component> components) {
         this.circuit = new Circuit(width, size);
         if (components != null) {
             int position = width / 2;
@@ -51,13 +51,12 @@ public class CircuitController implements Serializable {
                 // positions (depending on grid size) or lock the grid to a default size.
 
                 addComponent(component, position);
-                position+= 10;
+                position += 10;
             }
         }
     }
 
-    public void addNewComponent(String componentName, CircuitActivity activity)
-    {
+    public void addNewComponent(String componentName, CircuitActivity activity) {
         Component component = ComponentFactory.CreateComponent(componentName);
 
         FrameLayout componentHolder = (FrameLayout) activity.findViewById
@@ -65,7 +64,7 @@ public class CircuitController implements Serializable {
         componentHolder.setVisibility(View.VISIBLE);
 
         if (componentHolder != null) {
-            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams (LayoutParams.MATCH_PARENT,
+            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT,
                     LayoutParams.MATCH_PARENT,
                     Gravity.CENTER);
             GridCell newView = new GridCell(activity);
@@ -80,24 +79,24 @@ public class CircuitController implements Serializable {
         }
     }
 
-    public void addComponent(Component component, int position){
+    public void addComponent(Component component, int position) {
         // Only add if tile is available and allowed
-        if(!circuit.occupied(position)) {
+        if (!circuit.occupied(position)) {
             circuit.add(component, position);
         }
     }
 
-    public void removeComponent(int position){
-        if(circuit.occupied(position)) {
+    public void removeComponent(int position) {
+        if (circuit.occupied(position)) {
             circuit.remove(position);
         }
     }
 
-    public Component getComponent(int position){
+    public Component getComponent(int position) {
         return circuit.getComponent(position);
     }
 
-    public Component[] getComponents(){
+    public Component[] getComponents() {
         return circuit.getAllComponents();
     }
 
@@ -108,7 +107,7 @@ public class CircuitController implements Serializable {
         }
 
         Component component = getComponent(position);
-        if(component != null) {
+        if (component != null) {
             return component.handleClick();
         }
         return false;
@@ -119,8 +118,8 @@ public class CircuitController implements Serializable {
     // Don't worry. All this does is it gets all unique connections in a circuit.
     public ArrayList<Connection> getAllConnections() {
         ArrayList<Connection> connections = new ArrayList<Connection>();
-        for (Component component: this.getComponents()) {
-            if(component != null) {
+        for (Component component : this.getComponents()) {
+            if (component != null) {
                 for (ConnectionPoint cp : component.getConnectionPoints()) {
                     if (cp != null) {
                         for (Connection c : cp.getConnections()) {
@@ -137,8 +136,8 @@ public class CircuitController implements Serializable {
 
     // Reset all the components to their standard values (eg. lightbulbs turned off and not broken)
     public void reset() {
-        for (Component component: this.circuit.getAllComponents()) {
-            if(component != null) component.reset();
+        for (Component component : this.circuit.getAllComponents()) {
+            if (component != null) component.reset();
         }
     }
 
@@ -147,11 +146,11 @@ public class CircuitController implements Serializable {
         reset();
 
         // Check if there are outgoing connections.
-        for (Component component: this.getComponents()) {
-            if(component != null && component.getClass() == Powersource.class) {
-                if(((Powersource)component).hasOutputConnection()) {
+        for (Component component : this.getComponents()) {
+            if (component != null && component.getClass() == Powersource.class) {
+                if (((Powersource) component).hasOutputConnection()) {
                     // If yes, create graph.
-                    Graph graph = new Graph((Powersource)component, this.getAllConnections());
+                    Graph graph = new Graph((Powersource) component, this.getAllConnections());
 
                     // Now check all paths on the graph.
                     checkPaths(graph);
@@ -162,7 +161,7 @@ public class CircuitController implements Serializable {
 
     // Check all paths on the graph to see if there is resistance
     private void checkPaths(Graph graph) {
-        for (Stack path: graph.findAllPaths()) {
+        for (Stack path : graph.findAllPaths()) {
             boolean pathHasResistor = false;
 
             Object[] elements = path.toArray();
@@ -179,10 +178,14 @@ public class CircuitController implements Serializable {
                 }
             }
 
-            //Only handle input for the connected elements
-            for (Object element : elements) {
-                ((Component) element).handleInputHigh();
-            }
+            handleHighInputs(elements);
+        }
+    }
+
+    //Only handle input for the connected elements
+    private void handleHighInputs(Object[] elements) {
+        for (Object element : elements) {
+            ((Component) element).handleInputHigh();
         }
     }
 }
