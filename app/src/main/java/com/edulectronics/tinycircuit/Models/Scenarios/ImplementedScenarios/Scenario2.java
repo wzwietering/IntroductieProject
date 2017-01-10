@@ -37,16 +37,16 @@ public class Scenario2 extends DesignScenario {
 
         for (Component component : circuit.getAllComponents()) {
             if(component != null) {
-                if(component.getClass() == Resistor.class) {
+                if(component.getClass() == Resistor.class && circuit.getComponentCount(component) == 1) {
                     hasResistor = true;
                     continue;
                 }
-                if (component.getClass() == Powersource.class) {
+                if (component.getClass() == Powersource.class && circuit.getComponentCount(component) == 1) {
                     if (component.hasOutputConnection(((Powersource) component).getInput())) {
                         isFullCircle = true;
                     }
                 }
-                if(component.getClass() == Lightbulb.class){
+                if(component.getClass() == Lightbulb.class && circuit.getComponentCount(component) == 1){
                     if(((Lightbulb) component).isOn){
                         lampIsOn = true;
                     }

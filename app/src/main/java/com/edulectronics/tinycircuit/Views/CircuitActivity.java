@@ -206,9 +206,7 @@ public class CircuitActivity extends Activity
                 wireController.makeWire(component, ev);
             }
         }
-        if (scenario.isCompleted(circuitController.circuit)) {
-            scenarioCompleted();
-        }
+        checkScenarioComplete();
 
         return handledHere;
     }
@@ -294,5 +292,12 @@ public class CircuitActivity extends Activity
     public void run(View view) {
         circuitController.run();
         ((GridView)findViewById(R.id.circuit)).invalidateViews();
+        checkScenarioComplete();
+    }
+
+    private void checkScenarioComplete(){
+        if (scenario.isCompleted(circuitController.circuit)) {
+            scenarioCompleted();
+        }
     }
 }
