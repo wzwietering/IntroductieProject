@@ -167,7 +167,6 @@ public class CircuitController implements Serializable {
 
             Object[] elements = path.toArray();
             for (Object element : elements) {
-                ((Component) element).setResistance(false);
                 if (element.getClass() == Resistor.class) {
                     pathHasResistor = true;
                     break;
