@@ -163,10 +163,11 @@ public class CircuitController implements Serializable {
     // Check all paths on the graph to see if there is resistance
     private void checkPaths(Graph graph) {
         for (Stack path: graph.findAllPaths()) {
-            boolean pathHasResistor =  false;
+            boolean pathHasResistor = false;
 
             Object[] elements = path.toArray();
             for (Object element : elements) {
+                ((Component) element).setResistance(false);
                 if (element.getClass() == Resistor.class) {
                     pathHasResistor = true;
                     break;
@@ -175,12 +176,14 @@ public class CircuitController implements Serializable {
 
             if (!pathHasResistor) {
                 for (Object element : elements) {
-                    ((Component)element).setResistance(false);
+                    ((Component) element).setResistance(false);
                 }
             }
-        }
-        for (Component node: graph.nodes) {
-            node.handleInputHigh();
+
+            //Only handle input for the connected elements
+            for (Object element : elements) {
+                ((Component) element).handleInputHigh();
+            }
         }
     }
 }
