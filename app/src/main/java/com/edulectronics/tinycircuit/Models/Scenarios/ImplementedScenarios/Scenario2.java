@@ -79,6 +79,7 @@ public class Scenario2 extends DesignScenario {
         Lightbulb bulb = new Lightbulb();
 
         Connector.connect(powersource.getInput(), bulb.getConnectionPointByIndex(0));
+        Connector.connect(powersource.getOutput(), bulb.getConnectionPointByIndex(1));
 
         components.add(powersource);
         components.add(bulb);

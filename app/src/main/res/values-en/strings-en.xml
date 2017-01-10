@@ -34,7 +34,7 @@
     <string name="button_ok">I understand</string>
     <string name="scenario_explanation_title">Explanation</string>
     <string name="scenario1_explanation">Turn on the light by connection the battery with the lamp.</string>
-    <string name="scenario2_explanation">Add a resistor to the circuit, so the light won\'t break. Run the circuit when you are done.</string>
+    <string name="scenario2_explanation">Add a resistor to the circuit, so the light won\'t break. To add the resistor, you have to remove a wire. This can be done by touching a wire in wire mode. Run the circuit when you are done.</string>
     <string name="scenario_complete">Good job!</string>
     <string name="button_add_wire">draw wires</string>
 </resources>
