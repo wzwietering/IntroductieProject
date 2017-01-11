@@ -304,18 +304,21 @@ public class CircuitActivity extends Activity
 
     private void negativeFeedback(){
         String[] negativeFeedback = getResources().getStringArray(R.array.negative_feedback);
-        Random random = new Random();
-        String feedback = negativeFeedback[random.nextInt(negativeFeedback.length)];
-        messageController.displayMessage(new MessageArgs(feedback, MessageTypes.Mistake));
+        messageController.displayMessage(new MessageArgs(
+                giveFeedback(negativeFeedback),
+                MessageTypes.Mistake));
     }
 
     private void positiveFeedback(){
         String[] positiveFeedback = getResources().getStringArray(R.array.positive_feedback);
-        Random random = new Random();
-        String feedback = positiveFeedback[random.nextInt(positiveFeedback.length)];
         messageController.displayMessage(new MessageArgs(
-                feedback,
+                giveFeedback(positiveFeedback),
                 MessageTypes.ScenarioComplete,
                 true));
+    }
+
+    private String giveFeedback(String[] options){
+        Random random = new Random();
+        return options[random.nextInt(options.length)];
     }
 }
