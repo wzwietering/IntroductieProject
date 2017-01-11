@@ -1,7 +1,6 @@
 package com.edulectronics.tinycircuit.Views;
 
 import android.app.Activity;
-import android.content.res.TypedArray;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -10,22 +9,24 @@ import android.view.Display;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup.LayoutParams;
 import android.view.WindowManager;
 import android.widget.ExpandableListView;
+import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.edulectronics.tinycircuit.Controllers.CircuitController;
+import com.edulectronics.tinycircuit.Controllers.ConnectionController;
 import com.edulectronics.tinycircuit.Controllers.LevelController;
 import com.edulectronics.tinycircuit.Controllers.MessageController;
-import com.edulectronics.tinycircuit.Controllers.ConnectionController;
 import com.edulectronics.tinycircuit.Models.Components.Component;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.Connection;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.Connector;
+import com.edulectronics.tinycircuit.Models.Factories.ComponentFactory;
 import com.edulectronics.tinycircuit.Models.Menu;
-import com.edulectronics.tinycircuit.Models.MenuItem;
 import com.edulectronics.tinycircuit.Models.MessageArgs;
 import com.edulectronics.tinycircuit.Models.MessageTypes;
 import com.edulectronics.tinycircuit.Models.Scenarios.IScenario;
@@ -38,11 +39,6 @@ import com.edulectronics.tinycircuit.Views.Draggables.DragController;
 import com.edulectronics.tinycircuit.Views.Draggables.DragLayer;
 import com.edulectronics.tinycircuit.Views.Draggables.GridCell;
 import com.edulectronics.tinycircuit.Views.Draggables.Interfaces.IDragSource;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
 
 import static com.edulectronics.tinycircuit.Models.MessageTypes.Explanation;
 
@@ -212,7 +208,26 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
     }
 
     public void onClickAddComponent(String text) {
-        circuitController.addNewComponent(text, this);
+        Component component = ComponentFactory.CreateComponent(text, 5.0);
+
+        FrameLayout componentHolder = (FrameLayout) findViewById(R.id.component_source_frame);
+        componentHolder.setVisibility(View.VISIBLE);
+
+        if (componentHolder != null) {
+            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams (LayoutParams.MATCH_PARENT,
+                    LayoutParams.MATCH_PARENT,
+                    Gravity.CENTER);
+            GridCell newView = new GridCell(this);
+            newView.setComponent(component);
+            componentHolder.addView(newView, lp);
+            newView.mCellNumber = -1;
+
+            // Have this activity listen to touch and click events for the view.
+            newView.setOnClickListener(this);
+            newView.setOnLongClickListener(this);
+            newView.setOnTouchListener(this);
+        }
+
         NavigationView view = (NavigationView) findViewById(R.id.navigationview);
         ((DrawerLayout) findViewById(R.id.activity_main)).closeDrawer(view);
     }
