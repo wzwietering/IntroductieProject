@@ -19,9 +19,12 @@ import java.util.Set;
  */
 
 public class Scenario3 extends DesignScenario {
+    public Scenario3(){}
+
     public Scenario3(Circuit circuit) {
         super(circuit);
     }
+
     public ArrayList<Component> components = new ArrayList<>();
 
     @Override
