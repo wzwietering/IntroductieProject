@@ -29,7 +29,6 @@ import com.edulectronics.tinycircuit.Models.Factories.ComponentFactory;
 import com.edulectronics.tinycircuit.Models.Menu;
 import com.edulectronics.tinycircuit.Models.MessageArgs;
 import com.edulectronics.tinycircuit.Models.MessageTypes;
-import com.edulectronics.tinycircuit.Models.Scenarios.IScenario;
 import com.edulectronics.tinycircuit.Models.Scenarios.ImplementedScenarios.FreePlayScenario;
 import com.edulectronics.tinycircuit.Models.Scenarios.ImplementedScenarios.Scenario2;
 import com.edulectronics.tinycircuit.R;
@@ -219,7 +218,7 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
             FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams (LayoutParams.MATCH_PARENT,
                     LayoutParams.MATCH_PARENT,
                     Gravity.CENTER);
-            GridCell newView = new GridCell(this);
+            GridCell newView = new GridCell(circuitController, this);
             newView.setComponent(component);
             componentHolder.addView(newView, lp);
             newView.mCellNumber = -1;
