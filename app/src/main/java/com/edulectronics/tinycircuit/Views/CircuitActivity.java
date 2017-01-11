@@ -187,10 +187,7 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
     }
 
     private void scenarioCompleted() {
-        messageController.displayMessage(new MessageArgs(
-                R.string.scenario_complete,
-                MessageTypes.ScenarioComplete,
-                true));
+        messageController.displayMessage(new MessageArgs(R.string.scenario_complete, MessageTypes.ScenarioComplete, true));
     }
 
     public boolean onLongClick(View v) {
