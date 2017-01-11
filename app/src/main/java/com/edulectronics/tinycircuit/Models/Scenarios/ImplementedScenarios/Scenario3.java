@@ -11,8 +11,6 @@ import com.edulectronics.tinycircuit.Models.Scenarios.DesignScenario;
 import com.edulectronics.tinycircuit.R;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Set;
 
 
@@ -88,5 +86,9 @@ public class Scenario3 extends DesignScenario {
         components.add(bulb);
         components.add(resistor);
         return components;
+    }
+
+    public int getID(){
+        return 3;
     }
 }

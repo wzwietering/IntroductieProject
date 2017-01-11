@@ -37,7 +37,6 @@ public class QuizScenario implements IScenario {
         return null;
     }
 
-    @Override
     public int getID(){
         return 0;
     }
