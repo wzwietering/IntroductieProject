@@ -35,6 +35,7 @@ import com.edulectronics.tinycircuit.Models.Scenarios.ImplementedScenarios.Scena
 import com.edulectronics.tinycircuit.R;
 import com.edulectronics.tinycircuit.Views.Adapters.CircuitAdapter;
 import com.edulectronics.tinycircuit.Views.Adapters.ExpandableListAdapter;
+import com.edulectronics.tinycircuit.Views.Draggables.DeleteZone;
 import com.edulectronics.tinycircuit.Views.Draggables.DragController;
 import com.edulectronics.tinycircuit.Views.Draggables.DragLayer;
 import com.edulectronics.tinycircuit.Views.Draggables.GridCell;
@@ -49,7 +50,6 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
     private LevelController levelController;
     private DragLayer mDragLayer; // The ViewGroup within which an object can be dragged.
     private Menu menu;
-    private IScenario scenario;
     private MessageController messageController = new MessageController(getFragmentManager());
     private boolean isInWireMode = false;
     private int cellSize;
@@ -75,8 +75,8 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
     }
 
     private void showMessages() {
-        if (scenario.getClass() != FreePlayScenario.class) {
-            messageController.displayMessage(new MessageArgs(scenario.getPrompt(), Explanation));
+        if (levelController.getScenario().getClass() != FreePlayScenario.class) {
+            messageController.displayMessage(new MessageArgs(levelController.getScenario().getPrompt(), Explanation));
         }
     }
 
@@ -115,6 +115,8 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
         levelController = new LevelController(getIntent().getStringExtra("scenario"));
         // Width or height divided by cellsize fits the maxiumum amount of cells inside the screen
         circuitController = new CircuitController(size.x / cellSize, size.y / cellSize, levelController.getAvailableComponents());
+        DeleteZone deleteZone = (DeleteZone) findViewById(R.id.delete_zone_view);
+        deleteZone.setCircuitController(circuitController);
     }
 
     private Point getDisplaySize() {
@@ -174,7 +176,7 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
             if(component != null && action == MotionEvent.ACTION_DOWN) {
                 connectionController.makeWire(component, ev);
 
-                if (scenario.isCompleted(circuitController.circuit)) {
+                if (levelController.getScenario().isCompleted(circuitController.circuit)) {
                     scenarioCompleted();
                 }
             }
@@ -277,7 +279,7 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
         // TODO: Implemented by scenariocontroller.
         // Obviously this is very very bad code. I know. I will fix it when we have a scenario-
         // controller.
-        this.scenario = new Scenario2(this.circuitController.circuit);
+        levelController.setScenario(new Scenario2(this.circuitController.circuit));
     }
 
     public void run(View view) {

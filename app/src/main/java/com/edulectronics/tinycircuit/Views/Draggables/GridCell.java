@@ -26,25 +26,29 @@ import com.edulectronics.tinycircuit.Views.Draggables.Interfaces.IDropTarget;
 public class GridCell extends ImageView implements IDragSource, IDropTarget {
     public int mCellNumber = -1;
     public GridView mGrid;
+    private CircuitController circuitController;
 
     // Constructors
-    public GridCell(Context context) {
+    public GridCell(CircuitController controller, Context context) {
         super(context);
+        circuitController = controller;
         setBackgroundResource(R.color.cell);
     }
 
-    public GridCell(Context context, AttributeSet attrs) {
+    public GridCell(CircuitController controller, Context context, AttributeSet attrs) {
         super (context, attrs);
+        circuitController = controller;
         setBackgroundResource(R.color.cell);
     }
 
-    public GridCell(Context context, AttributeSet attrs, int style) {
+    public GridCell(CircuitController controller, Context context, AttributeSet attrs, int style) {
         super (context, attrs, style);
+        circuitController = controller;
         setBackgroundResource(R.color.cell);
     }
 
     public void resetImage() {
-        Component component = CircuitController.getInstance().getComponent(mCellNumber);
+        Component component = circuitController.getComponent(mCellNumber);
         if(component != null) {
             this.setImageResource(component.getImage());
         }
@@ -52,7 +56,7 @@ public class GridCell extends ImageView implements IDragSource, IDropTarget {
 
     public boolean isEmpty() {
         if(mCellNumber != -1) {
-            return CircuitController.getInstance().getComponent(this.mCellNumber) == null;
+            return circuitController.getComponent(this.mCellNumber) == null;
         }
         return false;
     }
@@ -61,9 +65,9 @@ public class GridCell extends ImageView implements IDragSource, IDropTarget {
         setBackgroundResource(R.color.cell);
 
         if(this.mCellNumber > -1) {
-            CircuitController.getInstance().addComponent(component, this.mCellNumber);
+            circuitController.addComponent(component, this.mCellNumber);
         } else {
-            CircuitController.getInstance().newComponent = component;
+            circuitController.newComponent = component;
         }
         this.setImageResource(component.getImage());
     }
@@ -72,18 +76,18 @@ public class GridCell extends ImageView implements IDragSource, IDropTarget {
         setBackgroundResource(R.color.cell);
 
         if(this.mCellNumber > -1) {
-            CircuitController.getInstance().removeComponent(this.mCellNumber);
+            circuitController.removeComponent(this.mCellNumber);
         } else {
-            CircuitController.getInstance().newComponent = null;
+            circuitController.newComponent = null;
         }
         setImageDrawable(null);
     }
 
     public Component getComponent(){
         if(this.mCellNumber == -1) {
-            return CircuitController.getInstance().newComponent;
+            return circuitController.newComponent;
         }
-        return CircuitController.getInstance().circuit.getComponent(this.mCellNumber);
+        return circuitController.circuit.getComponent(this.mCellNumber);
     }
     
     public boolean allowDrag() {
@@ -121,10 +125,10 @@ public class GridCell extends ImageView implements IDragSource, IDropTarget {
         Component component;
         if(((GridCell)source).mCellNumber  == -1) {
             // The source is a GridCell with index -1, therefore a new component
-            component = CircuitController.getInstance().newComponent;
+            component = circuitController.newComponent;
         } else {
             // Source is an existing GridCell. Get its component from the controller.
-            component = CircuitController.getInstance().getComponent(((GridCell)source).mCellNumber);
+            component = circuitController.getComponent(((GridCell)source).mCellNumber);
         }
         this.setComponent(component);
     }
