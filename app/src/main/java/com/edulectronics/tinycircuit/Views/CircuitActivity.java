@@ -118,7 +118,11 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
         connectionController = new ConnectionController((WireView) findViewById(R.id.draw_view), cellSize, cellSize);
         levelController = new LevelController(getIntent().getStringExtra("scenario"));
         // Width or height divided by cellsize fits the maxiumum amount of cells inside the screen
-        circuitController = new CircuitController(size.x / cellSize, size.y / cellSize, levelController.getAvailableComponents());
+        if (getIntent().getStringExtra("scenario").equals("freeplay")) {
+            circuitController = new CircuitController(size.x / cellSize, size.y / cellSize);
+        } else {
+            circuitController = new CircuitController(size.x / cellSize, size.y / cellSize, levelController.getAvailableComponents());
+        }
         DeleteZone deleteZone = (DeleteZone) findViewById(R.id.delete_zone_view);
         deleteZone.setCircuitController(circuitController);
     }
@@ -160,7 +164,6 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
     }
 
     public boolean onTouch(View v, MotionEvent ev) {
-        boolean handledHere = false;
         final int action = ev.getAction();
 
         if (isInWireMode) {
@@ -185,8 +188,7 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
                 }
             }
         }
-
-        return handledHere;
+        return true;
     }
 
     private void scenarioCompleted() {

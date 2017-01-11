@@ -74,9 +74,7 @@ public class MainMenuAdapter extends BaseAdapter {
 
     private void startFreeplay() {
         Intent intent = new Intent(context, CircuitActivity.class);
-        ScenarioFactory factory = new ScenarioFactory();
-        IScenario iScenario = factory.getScenario("freeplay");
-        intent.putExtra("scenario", iScenario);
+        intent.putExtra("scenario", "freeplay");
         context.startActivity(intent);
     }
 

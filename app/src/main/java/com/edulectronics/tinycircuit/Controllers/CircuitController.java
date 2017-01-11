@@ -29,6 +29,11 @@ public class CircuitController implements Serializable {
     public Circuit circuit;
     public Component newComponent; // When a new component is created, we save it here. It hasn't been dragged to the circuit yet.
 
+    public CircuitController(int width, int size) {
+        this.circuit = new Circuit(width, size);
+        int position = width / 2;
+    }
+
     // Set the circuit to some predefined circuit passed as arguments.
     public CircuitController(int width, int size, ArrayList<Component> components) {
         this.circuit = new Circuit(width, size);
