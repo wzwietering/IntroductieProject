@@ -15,7 +15,6 @@ public class LevelController {
     private IScenario scenario;
 
     public LevelController(String scenarioNr) {
-        System.out.println(scenarioNr);
         ScenarioFactory factory = new ScenarioFactory();
         scenario = factory.getScenario(scenarioNr);
 
