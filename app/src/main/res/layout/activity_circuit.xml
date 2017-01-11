@@ -6,6 +6,14 @@
     android:layout_height="match_parent"
 	android:background="@color/background"
     tools:context="com.edulectronics.tinycircuit.Views.CircuitActivity">
+
+	<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		xmlns:tools="http://schemas.android.com/tools"
+		android:id="@+id/wires"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		/>
+
     <com.edulectronics.tinycircuit.Views.Draggables.DragLayer
         android:id="@+id/drag_layer"
         android:layout_width="fill_parent"
@@ -59,11 +67,6 @@
 			android:onClick="run"/>
 
 	</com.edulectronics.tinycircuit.Views.Draggables.DragLayer>
-
-	<LinearLayout android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:id="@+id/wire_layout"
-		android:orientation="vertical"/>
 
 	<android.support.design.widget.NavigationView
 		android:id="@+id/navigationview"

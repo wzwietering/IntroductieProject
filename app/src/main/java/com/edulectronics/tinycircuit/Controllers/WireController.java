@@ -91,7 +91,7 @@ public class WireController {
 
     private void clearLines() {
         for (Wire wire : wires) {
-            DrawerLayout parentLayout = (DrawerLayout)((Activity)context).findViewById(R.id.activity_main);
+            DrawerLayout parentLayout = (DrawerLayout)((Activity)context).findViewById(R.id.wires);
             parentLayout.removeView(wire);
 
         }
@@ -153,7 +153,7 @@ public class WireController {
         connectionWires.add(endWire);
 
         // Parent layout
-        DrawerLayout parentLayout = (DrawerLayout)((Activity)context).findViewById(R.id.activity_main);
+        DrawerLayout parentLayout = (DrawerLayout)((Activity)context).findViewById(R.id.wires);
 
         for (Wire wire : connectionWires) {
             // Add the view to the parent layout
