@@ -40,6 +40,7 @@ import com.edulectronics.tinycircuit.Views.Draggables.Interfaces.IDragSource;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 import static com.edulectronics.tinycircuit.Models.MessageTypes.Explanation;
@@ -79,7 +80,8 @@ public class CircuitActivity extends Activity
         createDrawView();
 
         if (scenario.getClass() != FreePlayScenario.class) {
-            messageController.displayMessage(new MessageArgs(scenario.getPrompt(), Explanation));
+            String prompt = getResources().getString(scenario.getPrompt());
+            messageController.displayMessage(new MessageArgs(prompt, Explanation));
         }
     }
 
@@ -206,16 +208,13 @@ public class CircuitActivity extends Activity
                 wireController.makeWire(component, ev);
             }
         }
-        checkScenarioComplete();
+        checkScenarioComplete(false);
 
         return handledHere;
     }
 
     private void scenarioCompleted() {
-        messageController.displayMessage(new MessageArgs(
-                R.string.scenario_complete,
-                MessageTypes.ScenarioComplete,
-                true));
+        positiveFeedback();
     }
 
     public boolean onLongClick(View v) {
@@ -292,12 +291,31 @@ public class CircuitActivity extends Activity
     public void run(View view) {
         circuitController.run();
         ((GridView)findViewById(R.id.circuit)).invalidateViews();
-        checkScenarioComplete();
+        checkScenarioComplete(true);
     }
 
-    private void checkScenarioComplete(){
+    private void checkScenarioComplete(boolean run){
         if (scenario.isCompleted(circuitController.circuit)) {
             scenarioCompleted();
+        } else if (run && scenario.getClass() != FreePlayScenario.class) {
+            negativeFeedback();
         }
+    }
+
+    private void negativeFeedback(){
+        String[] negativeFeedback = getResources().getStringArray(R.array.negative_feedback);
+        Random random = new Random();
+        String feedback = negativeFeedback[random.nextInt(negativeFeedback.length)];
+        messageController.displayMessage(new MessageArgs(feedback, MessageTypes.Mistake));
+    }
+
+    private void positiveFeedback(){
+        String[] positiveFeedback = getResources().getStringArray(R.array.positive_feedback);
+        Random random = new Random();
+        String feedback = positiveFeedback[random.nextInt(positiveFeedback.length)];
+        messageController.displayMessage(new MessageArgs(
+                feedback,
+                MessageTypes.ScenarioComplete,
+                true));
     }
 }
