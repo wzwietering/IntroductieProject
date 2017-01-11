@@ -68,4 +68,9 @@ public class Scenario1 extends DesignScenario {
         components.add(bulb);
         return components;
     }
+
+    @Override
+    public int getID(){
+        return 1;
+    }
 }

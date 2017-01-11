@@ -36,4 +36,9 @@ public class QuizScenario implements IScenario {
         // TODO: Get Components from DB
         return null;
     }
+
+    @Override
+    public int getID(){
+        return 0;
+    }
 }

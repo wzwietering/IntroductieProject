@@ -18,8 +18,6 @@ import java.util.Set;
  */
 
 public class Scenario2 extends DesignScenario {
-
-    public  Scenario2(){}
     public Scenario2(Circuit circuit) {
         super(circuit);
     }
@@ -84,5 +82,10 @@ public class Scenario2 extends DesignScenario {
         components.add(powersource);
         components.add(bulb);
         return components;
+    }
+
+    @Override
+    public int getID(){
+        return 2;
     }
 }

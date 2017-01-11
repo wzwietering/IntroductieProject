@@ -38,7 +38,7 @@ public class CircuitController implements Serializable {
 
     public Circuit circuit;
 
-    // When a new component is created, we save it here. It hasn't been dragged to the circuit yet.
+    // When a new component is created, we saveProgress it here. It hasn't been dragged to the circuit yet.
     public Component newComponent;
 
     // Set the circuit to some predefined circuit passed as arguments.

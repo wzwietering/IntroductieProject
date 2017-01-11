@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.edulectronics.tinycircuit.Controllers.CircuitController;
 import com.edulectronics.tinycircuit.Controllers.MessageController;
 import com.edulectronics.tinycircuit.Controllers.WireController;
+import com.edulectronics.tinycircuit.DataStorage.VariableHandler;
 import com.edulectronics.tinycircuit.Models.Components.Component;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.Connection;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.Connector;
@@ -216,6 +217,8 @@ public class CircuitActivity extends Activity
                 R.string.scenario_complete,
                 MessageTypes.ScenarioComplete,
                 true));
+        VariableHandler variableHandler = new VariableHandler(this);
+        variableHandler.saveProgress(scenario.getID());
     }
 
     public boolean onLongClick(View v) {
