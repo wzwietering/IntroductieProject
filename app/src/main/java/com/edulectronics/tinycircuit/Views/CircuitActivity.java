@@ -294,8 +294,5 @@ public class CircuitActivity extends Activity
     public void run(View view){
         circuitController.run();
         ((GridView)findViewById(R.id.circuit)).invalidateViews();
-        if (scenario.isCompleted(circuitController.circuit)) {
-            scenarioCompleted();
-        }
     }
 }

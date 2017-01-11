@@ -12,6 +12,7 @@ import java.io.Serializable;
 public class FreePlayScenario extends DesignScenario {
 
     @Override
-    public int getPrompt() {return R.string.scenario_freeplay;
+    public int getPrompt() {
+        return R.string.scenario_freeplay;
     }
 }
