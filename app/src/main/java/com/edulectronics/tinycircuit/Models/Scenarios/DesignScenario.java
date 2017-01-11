@@ -17,7 +17,7 @@ import java.util.Set;
 
 public abstract class DesignScenario implements IScenario {
 
-    protected ArrayList<Component> initialComponents;
+    protected Component[] initialComponents;
 
     public DesignScenario() {}
 

@@ -13,7 +13,7 @@ import com.edulectronics.tinycircuit.Models.Scenarios.IScenario;
 import com.edulectronics.tinycircuit.R;
 
 public class ExerciseMenuActivity extends AppCompatActivity {
-    int exercise_amount = 10;
+    int exercise_amount = 10; //TODO: make this dynamic
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

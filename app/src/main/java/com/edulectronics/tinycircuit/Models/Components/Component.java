@@ -6,6 +6,7 @@ import com.edulectronics.tinycircuit.Models.Components.Connectors.ConnectionPoin
 import com.edulectronics.tinycircuit.Models.Components.Connectors.Connector;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -65,7 +66,9 @@ public abstract class Component implements IComponent {
     }
 
     public List<ConnectionPoint> getConnectionPoints() {
-        return connectionPoints;
+        List<ConnectionPoint> connectionPointList = connectionPoints;
+        connectionPointList.removeAll(Collections.singleton(null));
+        return connectionPointList;
     }
 
     public void removeAllConnections(){

@@ -63,23 +63,25 @@ public class MainMenuAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 TextView textView = (TextView) view;
-                RelativeLayout parent = (RelativeLayout) textView.getParent();
                 if(textView.getText() == context.getResources().getString(R.string.exercise)){
-                    startScenario(null, ExerciseMenuActivity.class);
+                    startExerciseMenu();
                 } else {
-                    startScenario("freeplay", CircuitActivity.class);
+                    startFreeplay();
                 }
             }
         };
     }
 
-    private void startScenario(String scenario, Class c){
-        Intent intent = new Intent(context, c);
-        if(scenario != null){
-            ScenarioFactory factory = new ScenarioFactory();
-            IScenario iscenario = factory.getScenario(scenario);
-            intent.putExtra("scenario", iscenario);
-        }
+    private void startFreeplay() {
+        Intent intent = new Intent(context, CircuitActivity.class);
+        ScenarioFactory factory = new ScenarioFactory();
+        IScenario iScenario = factory.getScenario("freeplay");
+        intent.putExtra("scenario", iScenario);
+        context.startActivity(intent);
+    }
+
+    private void startExerciseMenu() {
+        Intent intent = new Intent(context, ExerciseMenuActivity.class);
         context.startActivity(intent);
     }
 }

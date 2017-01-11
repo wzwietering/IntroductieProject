@@ -24,6 +24,7 @@ import com.edulectronics.tinycircuit.Controllers.ConnectionController;
 import com.edulectronics.tinycircuit.Models.Components.Component;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.Connection;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.Connector;
+import com.edulectronics.tinycircuit.Models.Menu;
 import com.edulectronics.tinycircuit.Models.MenuItem;
 import com.edulectronics.tinycircuit.Models.MessageArgs;
 import com.edulectronics.tinycircuit.Models.MessageTypes;
@@ -45,18 +46,16 @@ import java.util.Set;
 
 import static com.edulectronics.tinycircuit.Models.MessageTypes.Explanation;
 
-public class CircuitActivity extends Activity
-        implements View.OnClickListener, View.OnTouchListener, View.OnLongClickListener { //  , AdapterView.OnItemClickListener
-    private DragController mDragController;   // Object that handles a drag-drop sequence. It interacts with DragSource and DropTarget objects.
-    private DragLayer mDragLayer;             // The ViewGroup within which an object can be dragged.
-    private List<MenuItem> headers;
-    private HashMap<MenuItem, List<MenuItem>> children;
+public class CircuitActivity extends Activity implements View.OnClickListener, View.OnTouchListener, View.OnLongClickListener {
+    private DragController mDragController; // Object that handles a drag-drop sequence. It interacts with DragSource and DropTarget objects.
     private CircuitController circuitController;
     private ConnectionController connectionController;
+    private LevelController levelController;
+    private DragLayer mDragLayer; // The ViewGroup within which an object can be dragged.
+    private Menu menu;
     private IScenario scenario;
     private MessageController messageController = new MessageController(getFragmentManager());
     private boolean isInWireMode = false;
-    private LevelController levelController;
     private int cellSize;
 
     @Override
@@ -67,19 +66,27 @@ public class CircuitActivity extends Activity
         setContentView(R.layout.activity_circuit);
 
         cellSize = getResources().getInteger(R.integer.cell_size);
-        connectionController = new ConnectionController((WireView) findViewById(R.id.draw_view), cellSize, cellSize);
-
-        ImageView hamburger = (ImageView) findViewById(R.id.hamburger);
-        hamburger.setImageResource(R.drawable.ic_hamburger);
         setControllers();
-        GridView grid = setCircuit();
-        createDragControls(grid);
+        initializeView();
+    }
+
+    private void initializeView() {
+        createMenuButton();
+        createDragControls(createCircuit());
         createMenu();
         createDrawView();
+        showMessages();
+    }
 
+    private void showMessages() {
         if (scenario.getClass() != FreePlayScenario.class) {
             messageController.displayMessage(new MessageArgs(scenario.getPrompt(), Explanation));
         }
+    }
+
+    private void createMenuButton() {
+        ImageView hamburger = (ImageView) findViewById(R.id.hamburger);
+        hamburger.setImageResource(R.drawable.ic_hamburger);
     }
 
     private void createDrawView() {
@@ -87,7 +94,7 @@ public class CircuitActivity extends Activity
         wireView.setControllers(circuitController);
     }
 
-    private GridView setCircuit() {
+    private GridView createCircuit() {
         GridView circuitGrid = (GridView) findViewById(R.id.circuit);
 
         /*Prevents scrolling, stuff can still be rendered outside screen*/
@@ -102,12 +109,13 @@ public class CircuitActivity extends Activity
         });
 
         circuitGrid.setNumColumns(circuitController.circuit.width);
-        circuitGrid.setAdapter(new CircuitAdapter(this));
+        circuitGrid.setAdapter(new CircuitAdapter(this, circuitController));
         return circuitGrid;
     }
 
     private void setControllers() {
         Point size = getDisplaySize();
+        connectionController = new ConnectionController((WireView) findViewById(R.id.draw_view), cellSize, cellSize);
         levelController = new LevelController(getIntent().getStringExtra("scenario"));
         // Width or height divided by cellsize fits the maxiumum amount of cells inside the screen
         circuitController = new CircuitController(size.x / cellSize, size.y / cellSize, levelController.getAvailableComponents());
@@ -130,56 +138,14 @@ public class CircuitActivity extends Activity
 
     /*This code adds a menu to the side*/
     private void createMenu() {
+        menu = new Menu(this);
         ExpandableListView expandableList = (ExpandableListView) findViewById(R.id.expandablelist);
-        makeLists();
-
         ExpandableListAdapter adapter = new ExpandableListAdapter(
-                this, headers, children, expandableList
+                this, menu.getHeaders(), menu.getChildren(), expandableList
         );
         expandableList.setAdapter(adapter);
         expandableList.setOnChildClickListener(onChildClick());
         expandableList.setOnGroupClickListener(onGroupClick());
-    }
-
-    /*Makes the groups and children*/
-    private void makeLists() {
-        headers = new ArrayList<>();
-        String[] items = getResources().getStringArray(R.array.menuitems);
-        children = new HashMap<>();
-        /*Temporary! Should work different!*/
-        int[] textures = {
-                0,
-                R.drawable.battery,
-                R.drawable.lightbulb_on,
-                R.drawable.resistor,
-                R.drawable.switch_on
-        };
-
-        TypedArray typedArray = getResources().obtainTypedArray(R.array.categories);
-        int length = typedArray.length();
-        String[][] headings = new String[length][];
-
-        for (int i = 0; i < length; i++) {
-            int id = typedArray.getResourceId(i, 0);
-            headings[i] = getResources().getStringArray(id);
-        }
-        typedArray.recycle();
-
-        for (int i = 0; i < items.length; i++) {
-            MenuItem item = new MenuItem();
-            item.setIconName(items[i]);
-            item.setIconImage(textures[i]);
-            headers.add(item);
-
-            List<MenuItem> heading = new ArrayList();
-            for (int j = 1; j < headings[i].length; j++) {
-                MenuItem subitem = new MenuItem();
-                subitem.setIconName(headings[i][j]);
-                subitem.setIconImage(textures[i]);
-                heading.add(subitem);
-            }
-            children.put(headers.get(i), heading);
-        }
     }
 
     public void onClick(View v) {
@@ -301,6 +267,6 @@ public class CircuitActivity extends Activity
 
     public void run(View view) {
         circuitController.run();
-        ((GridView)findViewById(R.id.circuit)).invalidateViews();
+        ((GridView) findViewById(R.id.circuit)).invalidateViews();
     }
 }

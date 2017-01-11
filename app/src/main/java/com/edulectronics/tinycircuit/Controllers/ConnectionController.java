@@ -3,6 +3,7 @@ package com.edulectronics.tinycircuit.Controllers;
 import android.graphics.Point;
 import android.view.MotionEvent;
 
+import com.edulectronics.tinycircuit.Helpers.CoordinateHelper;
 import com.edulectronics.tinycircuit.Models.Components.Component;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.Connection;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.ConnectionPoint;
@@ -61,36 +62,6 @@ public class ConnectionController {
         return (component != null & event.getAction() == MotionEvent.ACTION_DOWN);
     }
 
-    public ConnectionPointOrientation getClickedArea(int x, int y) {
-        if (x < 0.5 * cellHeight && y < 0.5 * cellHeight) {
-            if (x >= y) {
-                return ConnectionPointOrientation.Top;
-            } else {
-                return ConnectionPointOrientation.Left;
-            }
-        } else if (x >= 0.5 * cellHeight && y < 0.5 * cellHeight) {
-            if (y < cellHeight - x) {
-                return ConnectionPointOrientation.Top;
-            } else {
-                return ConnectionPointOrientation.Right;
-            }
-        } else if (x < 0.5 * cellHeight && y >= 0.5 * cellHeight) {
-            if (y < cellHeight - x) {
-                return ConnectionPointOrientation.Left;
-            } else {
-                return ConnectionPointOrientation.Bottom;
-            }
-        } else if (x >= 0.5 * cellHeight && y >= 0.5 * cellHeight) {
-            if (x >= y) {
-                return ConnectionPointOrientation.Right;
-            } else {
-                return ConnectionPointOrientation.Bottom;
-            }
-        } else {
-            throw new IllegalArgumentException();
-        }
-    }
-
     private ConnectionPoint getConnectionPoint(Component component, ConnectionPointOrientation cpo) {
         for (ConnectionPoint cp : component.getConnectionPoints()) {
             if (cp.orientation == cpo) {
@@ -99,7 +70,6 @@ public class ConnectionController {
         }
         return null;
     }
-
 
     public void setLines(Connection c, Point startPoint, Point endPoint) {
         List<Line> lines = new ArrayList<Line>();
@@ -179,6 +149,20 @@ public class ConnectionController {
                 }
             default:
                 throw new IllegalArgumentException();
+        }
+    }
+
+    public ConnectionPointOrientation getClickedArea(int x, int y) {
+        if (y < 0.5 * cellHeight && ((x < 0.5 * cellHeight && x >= y) || (x >= 0.5 * cellHeight && y < cellHeight - x))) {
+            return ConnectionPointOrientation.Top;
+        } else if (y >= 0.5 * cellHeight && ((x >= 0.5 * cellHeight && !(x >= y)) || (x < 0.5 * cellHeight && !(y < cellHeight - x)))) {
+            return ConnectionPointOrientation.Bottom;
+        } else if (x < 0.5 * cellHeight && ((y < 0.5 * cellHeight && !(x >= y)) || (y >= 0.5 * cellHeight && y < cellHeight - x))) {
+            return ConnectionPointOrientation.Left;
+        } else if (x >= 0.5 * cellHeight && ((y < 0.5 * cellHeight && !(y < cellHeight - x)) || (y >= 0.5 * cellHeight && x >= y))) {
+            return ConnectionPointOrientation.Right;
+        } else {
+            throw new IllegalArgumentException();
         }
     }
 

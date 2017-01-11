@@ -3,7 +3,9 @@ package com.edulectronics.tinycircuit.Models;
 import com.edulectronics.tinycircuit.Models.Components.Component;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 /**
  * Created by Wilmer on 28-11-2016.
@@ -43,7 +45,9 @@ public class Circuit implements Serializable{
     }
 
     public Component[] getAllComponents() {
-        return this.components;
+        ArrayList<Component> componentList = new ArrayList<>(Arrays.asList(components));
+        componentList.removeAll(Collections.singleton(null));
+        return componentList.toArray(new Component[componentList.size()]);
     }
 
     public int getSize() {

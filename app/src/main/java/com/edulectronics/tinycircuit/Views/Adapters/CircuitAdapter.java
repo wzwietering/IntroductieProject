@@ -20,9 +20,9 @@ public class CircuitAdapter extends BaseAdapter {
     private Context context;
     private CircuitController circuitController;
 
-    public CircuitAdapter(Context context) {
+    public CircuitAdapter(Context context, CircuitController circuitController) {
         this.context = context;
-        this.circuitController = CircuitController.getInstance();
+        this.circuitController = circuitController;
     }
 
     public int getCount() {
