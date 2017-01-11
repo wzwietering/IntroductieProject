@@ -1,7 +1,6 @@
 package com.edulectronics.tinycircuit.Views;
 
 import android.app.Activity;
-import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Point;
 import android.os.Bundle;
@@ -22,6 +21,8 @@ import com.edulectronics.tinycircuit.Controllers.CircuitController;
 import com.edulectronics.tinycircuit.Controllers.MessageController;
 import com.edulectronics.tinycircuit.Controllers.WireController;
 import com.edulectronics.tinycircuit.Models.Components.Component;
+import com.edulectronics.tinycircuit.Models.Components.Connectors.Connection;
+import com.edulectronics.tinycircuit.Models.Components.Connectors.Connector;
 import com.edulectronics.tinycircuit.Models.MenuItem;
 import com.edulectronics.tinycircuit.Models.MessageArgs;
 import com.edulectronics.tinycircuit.Models.MessageTypes;
@@ -145,7 +146,7 @@ public class CircuitActivity extends Activity
         String[] items = getResources().getStringArray(R.array.menuitems);
         children = new HashMap<>();
         /*Temporary! Should work different!*/
-        int[] textures = {R.drawable.battery, R.drawable.lightbulb_on, R.drawable.resistor, R.drawable.switch_on};
+        int[] textures = {0, R.drawable.battery, R.drawable.lightbulb_on, R.drawable.resistor, R.drawable.switch_on};
 
         TypedArray typedArray = getResources().obtainTypedArray(R.array.categories);
         int length = typedArray.length();
@@ -167,7 +168,7 @@ public class CircuitActivity extends Activity
             for (int j = 1; j < headings[i].length; j++) {
                 MenuItem subitem = new MenuItem();
                 subitem.setIconName(headings[i][j]);
-                subitem.setIconImage(textures[i]);
+                subitem.setIconImage(textures[i + j - 1]);
                 heading.add(subitem);
             }
             children.put(headers.get(i), heading);
@@ -180,7 +181,6 @@ public class CircuitActivity extends Activity
             if (CircuitController.getInstance().handleClick(((GridCell) v).mCellNumber)) {
                 ((GridCell) v).resetImage();
             }
-            ;
         }
     }
 
@@ -189,16 +189,24 @@ public class CircuitActivity extends Activity
 
         // In the situation where a long click is not needed to initiate a drag, simply start on the down event.
         if (isInWireMode) {
-            Resources r = getResources();
-            Component component = ((GridCell) ((IDragSource) v)).getComponent();
-            if (component != null) {
-                wireController.makeWire(component, ev);
-
-                if (scenario.isCompleted(circuitController.circuit)) {
-                    scenarioCompleted();
+            //Check if wire is touched, but only on the down. This is necessary to prevent line
+            //removal on the up event.
+            Component component = ((GridCell) v).getComponent();
+            if(action == MotionEvent.ACTION_DOWN) {
+                for (Connection connection : circuitController.getAllConnections()) {
+                    if (connection.isTouched(ev) && component == null) {
+                        Connector connector = new Connector();
+                        connector.disconnect(connection.pointA, connection.pointB);
+                        wireController.redraw();
+                    }
                 }
             }
+
+            if(component != null && action == MotionEvent.ACTION_DOWN) {
+                wireController.makeWire(component, ev);
+            }
         }
+        checkScenarioComplete();
 
         return handledHere;
     }
@@ -267,7 +275,6 @@ public class CircuitActivity extends Activity
             linearLayout.setBackgroundResource(R.color.wiremode_on);
         } else {
             linearLayout.setBackgroundResource(R.color.wiremode_off);
-            ;
         }
     }
 
@@ -285,5 +292,12 @@ public class CircuitActivity extends Activity
     public void run(View view) {
         circuitController.run();
         ((GridView)findViewById(R.id.circuit)).invalidateViews();
+        checkScenarioComplete();
+    }
+
+    private void checkScenarioComplete(){
+        if (scenario.isCompleted(circuitController.circuit)) {
+            scenarioCompleted();
+        }
     }
 }

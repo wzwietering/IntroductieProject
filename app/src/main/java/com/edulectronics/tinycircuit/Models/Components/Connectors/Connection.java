@@ -1,7 +1,8 @@
 package com.edulectronics.tinycircuit.Models.Components.Connectors;
 
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
+
+import android.graphics.Point;
+import android.view.MotionEvent;
 
 import com.edulectronics.tinycircuit.Models.Components.Powersource;
 import com.edulectronics.tinycircuit.Views.Wire;
@@ -31,14 +32,6 @@ public class Connection {
     // @param connectionPoint: the incoming connectionPoint, either point a or point b in this
     // connection. We want to check whether the OTHER connectionPoint has an outgoing connection.
     public boolean hasOutputConnection(ConnectionPoint connectionPoint) {
-
-        Bitmap.Config conf = Bitmap.Config.ARGB_8888; // see other conf types
-        Bitmap bmp = Bitmap.createBitmap(1000, 1000, conf); // this creates a MUTABLE bitmap
-        Canvas canvas = new Canvas(bmp);
-
-        for (Wire wire :this.wires) {
-            wire.highLight(canvas);
-        }
         // Check whether the incoming connection point is A or B. We have to check if the OHTER
         // one has an outgoing connection.
         ConnectionPoint outGoingConnectionPoint = connectionPoint == pointA ? pointB : pointA;
@@ -60,6 +53,16 @@ public class Connection {
 
     public List<Wire> getWires() {
         return wires;
+    }
+
+    public boolean isTouched(MotionEvent motionEvent){
+        Point point = new Point((int) motionEvent.getRawX(), (int) motionEvent.getRawY());
+        for (Wire wire : wires){
+            if(wire.isTouched(point)){
+                return true;
+            }
+        }
+        return false;
     }
 
     public ConnectionPoint getOtherPoint(ConnectionPoint connectionPoint){

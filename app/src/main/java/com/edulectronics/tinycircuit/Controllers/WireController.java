@@ -25,13 +25,13 @@ import java.util.List;
 public class WireController {
     private Context context;
     private CircuitController circuitController;
-    private Component first;
+    private Component firstComponent;
     private ConnectionPointOrientation firstOrientation;
     private List<Wire> wires = new ArrayList<Wire>();
     private CoordinateHelper coordinateHelper;
 
     private int cellHeight, cellWidth;
-    private boolean connecting = false;
+    public boolean connecting = false;
 
     public WireController(Context context, int cellWidth, int cellHeight) {
         this.context = context;
@@ -46,17 +46,17 @@ public class WireController {
     }
 
     public void makeWire(Component component, MotionEvent event) {
-        if(component != null) {
+        if (component != null) {
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
                 if (!connecting) {
-                    first = component;
+                    firstComponent = component;
                     firstOrientation = getClickedArea((int) event.getX(), (int) event.getY());
                     connecting = true;
                 } else {
                     Connector connector = new Connector();
                     ConnectionPointOrientation secondOrientation = getClickedArea((int) event.getX(), (int) event.getY());
                     connector.connect(
-                            getConnectionPoint(first, firstOrientation),
+                            getConnectionPoint(firstComponent, firstOrientation),
                             getConnectionPoint(component, secondOrientation));
                     connecting = false;
 
@@ -98,7 +98,7 @@ public class WireController {
     }
 
 
-    private ConnectionPointOrientation getClickedArea(int x, int y) {
+    public ConnectionPointOrientation getClickedArea(int x, int y) {
         if (x < 0.5 * cellHeight && y < 0.5 * cellHeight) {
             if (x >= y) {
                 return ConnectionPointOrientation.Top;
@@ -106,13 +106,13 @@ public class WireController {
                 return ConnectionPointOrientation.Left;
             }
         } else if (x >= 0.5 * cellHeight && y < 0.5 * cellHeight) {
-            if (y < 0.5 * cellHeight - x) {
+            if (y < cellHeight - x) {
                 return ConnectionPointOrientation.Top;
             } else {
                 return ConnectionPointOrientation.Right;
             }
         } else if (x < 0.5 * cellHeight && y >= 0.5 * cellHeight) {
-            if (y < 0.5 * cellHeight - x) {
+            if (y < cellHeight - x) {
                 return ConnectionPointOrientation.Left;
             } else {
                 return ConnectionPointOrientation.Bottom;
@@ -152,12 +152,8 @@ public class WireController {
         connectionWires.addAll(getInBetweenLines(startWire.b, endWire.b, drawVerticalLineFirst));
         connectionWires.add(endWire);
 
-
         // Parent layout
         DrawerLayout parentLayout = (DrawerLayout)((Activity)context).findViewById(R.id.activity_main);
-
-        // Layout inflater
-        LayoutInflater layoutInflater = ((Activity)context).getLayoutInflater();
 
         for (Wire wire : connectionWires) {
             // Add the view to the parent layout

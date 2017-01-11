@@ -1,9 +1,7 @@
 package com.edulectronics.tinycircuit.Models.Components.Connectors;
 
 import com.edulectronics.tinycircuit.Models.Components.Component;
-import com.edulectronics.tinycircuit.Models.Components.Powersource;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
