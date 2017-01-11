@@ -186,7 +186,7 @@ public class CircuitActivity extends Activity
 
     public boolean onTouch(View v, MotionEvent ev) {
         boolean handledHere = false;
-
+        int action = ev.getAction();
         // In the situation where a long click is not needed to initiate a drag, simply start on the down event.
         if (isInWireMode) {
             //Check if wire is touched, but only on the down. This is necessary to prevent line
@@ -197,7 +197,7 @@ public class CircuitActivity extends Activity
                     if (connection.isTouched(ev) && component == null) {
                         Connector connector = new Connector();
                         connector.disconnect(connection.pointA, connection.pointB);
-                        wireController.redraw();
+                        wireController.redrawWires();
                     }
                 }
             }
