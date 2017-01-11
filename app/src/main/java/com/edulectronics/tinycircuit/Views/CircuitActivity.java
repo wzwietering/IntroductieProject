@@ -64,7 +64,7 @@ public class CircuitActivity extends Activity
         setContentView(R.layout.activity_circuit);
 
         int cellSize = getResources().getInteger(R.integer.cell_size);
-        wireController = new WireController((WireView) findViewById(R.id.draw_view), cellSize, cellSize);
+        wireController = new WireController(this, cellSize, cellSize);
 
         ImageView hamburger = (ImageView) findViewById(R.id.hamburger);
         hamburger.setImageResource(R.drawable.ic_hamburger);
@@ -83,8 +83,8 @@ public class CircuitActivity extends Activity
     }
 
     private void createDrawView() {
-        WireView wireView = (WireView) findViewById(R.id.draw_view);
-        wireView.setControllers(circuitController);
+        wireController.setControllers(circuitController);
+        wireController.redrawWires();
     }
 
     private GridView setCircuit() {
@@ -123,6 +123,7 @@ public class CircuitActivity extends Activity
         mDragLayer.setDragController(mDragController);
         mDragLayer.setGridView(grid);
         mDragController.setDragListener(mDragLayer);
+        mDragController.setWireController(this.wireController);
     }
 
     /*This code adds a menu to the side*/
@@ -185,7 +186,6 @@ public class CircuitActivity extends Activity
 
     public boolean onTouch(View v, MotionEvent ev) {
         boolean handledHere = false;
-        final int action = ev.getAction();
 
         // In the situation where a long click is not needed to initiate a drag, simply start on the down event.
         if (isInWireMode) {

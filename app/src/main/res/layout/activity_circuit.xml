@@ -21,11 +21,6 @@
 			android:background="@android:color/transparent"
 			android:id="@+id/circuit" />
 
-		<com.edulectronics.tinycircuit.Views.WireView
-            android:id="@+id/draw_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-
 		<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
 			 android:id="@+id/component_source_frame"
 			 android:layout_weight="0.5"
@@ -64,6 +59,11 @@
 			android:onClick="run"/>
 
 	</com.edulectronics.tinycircuit.Views.Draggables.DragLayer>
+
+	<LinearLayout android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:id="@+id/wire_layout"
+		android:orientation="vertical"/>
 
 	<android.support.design.widget.NavigationView
 		android:id="@+id/navigationview"

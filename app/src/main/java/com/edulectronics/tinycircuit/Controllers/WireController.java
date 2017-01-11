@@ -1,6 +1,10 @@
 package com.edulectronics.tinycircuit.Controllers;
 
+import android.app.Activity;
+import android.content.Context;
 import android.graphics.Point;
+import android.support.v4.widget.DrawerLayout;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 
 import com.edulectronics.tinycircuit.Models.Components.Component;
@@ -8,8 +12,8 @@ import com.edulectronics.tinycircuit.Models.Components.Connectors.Connection;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.ConnectionPoint;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.ConnectionPointOrientation;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.Connector;
-import com.edulectronics.tinycircuit.Models.Components.Connectors.Line;
-import com.edulectronics.tinycircuit.Views.WireView;
+import com.edulectronics.tinycircuit.R;
+import com.edulectronics.tinycircuit.Views.Wire;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,17 +23,26 @@ import java.util.List;
  */
 
 public class WireController {
+    private Context context;
+    private CircuitController circuitController;
     private Component first;
     private ConnectionPointOrientation firstOrientation;
-    private WireView wireView;
+    private List<Wire> wires = new ArrayList<Wire>();
+    private CoordinateHelper coordinateHelper;
 
     private int cellHeight, cellWidth;
     private boolean connecting = false;
 
-    public WireController(WireView wireView, int cellWidth, int cellHeight) {
-        this.wireView = wireView;
+    public WireController(Context context, int cellWidth, int cellHeight) {
+        this.context = context;
         this.cellWidth = cellWidth;
         this.cellHeight = cellHeight;
+    }
+
+    public void setControllers(CircuitController circuitController) {
+        this.circuitController = circuitController;
+        coordinateHelper = new CoordinateHelper(circuitController.circuit.width, cellWidth, cellHeight);
+        coordinateHelper = new CoordinateHelper(circuitController.circuit.width, cellWidth, cellHeight);
     }
 
     public void makeWire(Component component, MotionEvent event) {
@@ -46,11 +59,44 @@ public class WireController {
                             getConnectionPoint(first, firstOrientation),
                             getConnectionPoint(component, secondOrientation));
                     connecting = false;
-                    wireView.invalidate();
+
+                    redrawWires();
                 }
             }
         }
     }
+
+    public void redrawWires() {
+        clearLines();
+
+        for (Connection c : circuitController.getAllConnections()) {
+            if (c != null) {
+                Point startPoint = coordinateHelper.getNodeLocation(
+                        c.pointA.getParentComponent().position,
+                        c.pointA.orientation);
+
+                Point endPoint = coordinateHelper.getNodeLocation(
+                        c.pointB.getParentComponent().position,
+                        c.pointB.orientation
+                );
+
+                setLines(c, startPoint, endPoint);
+
+            }
+        }
+        for (Wire wire : this.wires) {
+            wire.invalidate();
+        }
+    }
+
+    private void clearLines() {
+        for (Wire wire : wires) {
+            DrawerLayout parentLayout = (DrawerLayout)((Activity)context).findViewById(R.id.activity_main);
+            parentLayout.removeView(wire);
+
+        }
+    }
+
 
     private ConnectionPointOrientation getClickedArea(int x, int y) {
         if (x < 0.5 * cellHeight && y < 0.5 * cellHeight) {
@@ -93,79 +139,97 @@ public class WireController {
 
 
     public void setLines(Connection c, Point startPoint, Point endPoint) {
-        List<Line> lines = new ArrayList<Line>();
-        Line startLine = getEndPointLine(startPoint, endPoint, c.pointA.orientation);
-        Line endLine = getEndPointLine(endPoint, startPoint, c.pointB.orientation);
+        List<Wire> connectionWires = new ArrayList<Wire>();
+        Wire startWire = getEndPointLine(startPoint, endPoint, c.pointA.orientation);
+        Wire endWire = getEndPointLine(endPoint, startPoint, c.pointB.orientation);
 
         // If the connection point has a orientation left or right we first draw a vertical
         // line, then a horizontal one. It looks better (trust me).
         boolean drawVerticalLineFirst = c.pointA.orientation == ConnectionPointOrientation.Left
                 || c.pointA.orientation == ConnectionPointOrientation.Right;
 
-        lines.add(startLine);
-        lines.addAll(getInBetweenLines(startLine.b, endLine.b, drawVerticalLineFirst));
-        lines.add(endLine);
+        connectionWires.add(startWire);
+        connectionWires.addAll(getInBetweenLines(startWire.b, endWire.b, drawVerticalLineFirst));
+        connectionWires.add(endWire);
 
-        c.setLines(lines);
+
+        // Parent layout
+        DrawerLayout parentLayout = (DrawerLayout)((Activity)context).findViewById(R.id.activity_main);
+
+        // Layout inflater
+        LayoutInflater layoutInflater = ((Activity)context).getLayoutInflater();
+
+        for (Wire wire : connectionWires) {
+            // Add the view to the parent layout
+            parentLayout.addView(wire);
+            this.wires.add(wire);
+        }
+
+        c.setWires(connectionWires);
     }
 
-    public List<Line> getInBetweenLines(Point a, Point b, boolean drawVerticalLineFirst) {
-        List<Line> lines = new ArrayList<>();
+    public List<Wire> getInBetweenLines(Point a, Point b, boolean drawVerticalLineFirst) {
+        List<Wire> wires = new ArrayList<>();
         Point lastPoint = a;
-        Line l;
+        Wire l;
 
         l = drawVerticalLineFirst ? getVerticalWire(lastPoint, b) : getHorizontalWire(lastPoint, b);
 
         if (l != null) {
             lastPoint = l.b;
-            lines.add(l);
+            wires.add(l);
         }
 
         l = drawVerticalLineFirst ? getHorizontalWire(lastPoint, b) : getVerticalWire(lastPoint, b);
 
         if (l != null) {
-            lines.add(l);
+            wires.add(l);
         }
-        return lines;
+        return wires;
+    }
+    private Wire createLine(Point a, Point b) {
+        Wire wire = new Wire(context, null);
+        wire.setCoordinates(a, b);
+        return wire;
     }
 
-    public Line getHorizontalWire(Point a, Point b) {
+    public Wire getHorizontalWire(Point a, Point b) {
         if (a.x == b.x)
             return null;
-        return new Line(new Point(a.x, a.y), new Point(b.x, a.y));
+        return createLine(new Point(a.x, a.y), new Point(b.x, a.y));
     }
 
-    public Line getVerticalWire(Point a, Point b) {
+    public Wire getVerticalWire(Point a, Point b) {
         if (a.y == b.y)
             return null;
-        return new Line(new Point(a.x, a.y), new Point(a.x, b.y - (Math.abs(a.y - b.y) % 150)));
+        return createLine(new Point(a.x, a.y), new Point(a.x, b.y - (Math.abs(a.y - b.y) % 150)));
     }
 
     // First go half a cell up/down/left/right, ddepending on where the connectionpoint is
     // and where the endpoint is. Otherwise the next lines will be drawn right through other
     // components.
-    public Line getEndPointLine(Point startPoint, Point endPoint, ConnectionPointOrientation orientation) {
+    public Wire getEndPointLine(Point startPoint, Point endPoint, ConnectionPointOrientation orientation) {
         switch (orientation) {
             case Left:
             case Right:
                 if (startPoint.y < endPoint.y) {
                     // Go up half a cell
-                    return new Line(startPoint,
+                    return createLine(startPoint,
                                     new Point(startPoint.x, startPoint.y + (int) (0.5 * cellHeight)));
                 } else {
                     // Go down half a cell
-                    return new Line (startPoint,
+                    return createLine(startPoint,
                             new Point(startPoint.x, startPoint.y - (int) (0.5 * cellHeight)));
                 }
             case Bottom:
             case Top:
                 if (startPoint.x > endPoint.x) {
                     // Go left half a cell
-                    return new Line(startPoint,
+                    return createLine(startPoint,
                             new Point(startPoint.x - (int) (0.5 * cellWidth), startPoint.y));
                 } else {
                     // Go right half a cell
-                    return new Line(startPoint,
+                    return createLine(startPoint,
                             new Point(startPoint.x + (int) (0.5 * cellWidth), startPoint.y));
                 }
             default:
