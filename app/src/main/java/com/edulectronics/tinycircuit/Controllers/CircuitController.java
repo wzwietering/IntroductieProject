@@ -183,4 +183,8 @@ public class CircuitController implements Serializable {
             node.handleInputHigh();
         }
     }
+
+    public int getComponentCount(Component component) {
+        return circuit.getComponentCount(component);
+    }
 }
