@@ -3,6 +3,7 @@ package com.edulectronics.tinycircuit.Controllers;
 import com.edulectronics.tinycircuit.Models.Components.Component;
 import com.edulectronics.tinycircuit.Models.Factories.ScenarioFactory;
 import com.edulectronics.tinycircuit.Models.Scenarios.IScenario;
+import com.edulectronics.tinycircuit.Models.Scenarios.ImplementedScenarios.Scenario2;
 
 import java.util.ArrayList;
 
@@ -20,5 +21,13 @@ public class LevelController {
 
     public ArrayList<Component> getAvailableComponents() {
         return scenario.loadComponents();
+    }
+    
+    public IScenario getScenario() {
+        return scenario;
+    }
+
+    public void setScenario(IScenario scenario) {
+        this.scenario = scenario;
     }
 }

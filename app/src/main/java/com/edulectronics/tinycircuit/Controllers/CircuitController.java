@@ -50,7 +50,7 @@ public class CircuitController implements Serializable {
             FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams (LayoutParams.MATCH_PARENT,
                     LayoutParams.MATCH_PARENT,
                     Gravity.CENTER);
-            GridCell newView = new GridCell(activity);
+            GridCell newView = new GridCell(this, activity);
             newView.setComponent(component);
             componentHolder.addView(newView, lp);
             newView.mCellNumber = -1;

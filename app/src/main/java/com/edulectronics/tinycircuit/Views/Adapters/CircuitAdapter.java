@@ -76,7 +76,7 @@ public class CircuitAdapter extends BaseAdapter {
     }
 
     private GridCell createNewGridCell() {
-        GridCell cell = new GridCell(context);
+        GridCell cell = new GridCell(circuitController, context);
         int cellSize = context.getResources().getInteger(R.integer.cell_size);
         cell.setLayoutParams(new GridView.LayoutParams(cellSize, cellSize));
         cell.setScaleType(ImageView.ScaleType.CENTER_CROP);
