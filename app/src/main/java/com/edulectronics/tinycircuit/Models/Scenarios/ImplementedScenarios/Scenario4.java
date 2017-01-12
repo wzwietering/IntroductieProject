@@ -6,55 +6,47 @@ import com.edulectronics.tinycircuit.Models.Components.Connectors.Connector;
 import com.edulectronics.tinycircuit.Models.Components.Lightbulb;
 import com.edulectronics.tinycircuit.Models.Components.Powersource;
 import com.edulectronics.tinycircuit.Models.Components.Resistor;
+import com.edulectronics.tinycircuit.Models.Components.Switch;
 import com.edulectronics.tinycircuit.Models.Scenarios.DesignScenario;
 import com.edulectronics.tinycircuit.R;
 
 import java.util.ArrayList;
 import java.util.Set;
 
-
-/**
- * Created by Maaike on 14-12-2016.
- */
-
-public class Scenario2 extends DesignScenario {
-
-    public  Scenario2(){}
-    public Scenario2(Circuit circuit) {
-        super(circuit);
-    }
+public class Scenario4 extends DesignScenario {
 
     @Override
     public int getPrompt() {
-        return R.string.scenario2_explanation;
+        return R.string.scenario4_explanation;
     }
 
     @Override
     public boolean isCompleted(Circuit circuit) {
-        boolean hasResistor = false;
+        boolean lampRequirementsMet = true;
         boolean isFullCircle = false;
-        boolean lampIsOn = false;
+        boolean hasSwitch = false;
 
         for (Component component : circuit.getAllComponents()) {
-            if(component != null && circuit.getComponentCount(component) == 1) {
-                if(component.getClass() == Resistor.class ) {
-                    hasResistor = true;
-                    continue;
+            if(component != null) {
+                if (component.getClass() == Lightbulb.class) {
+                    if (!((Lightbulb) component).isOn  || circuit.getComponentCount(component) != 2) {
+                        lampRequirementsMet = false;
+                    }
                 }
-                if (component.getClass() == Powersource.class) {
+                if (component.getClass() == Powersource.class && circuit.getComponentCount(component) == 1) {
                     if (component.hasOutputConnection(((Powersource) component).getInput())) {
                         isFullCircle = true;
                     }
                 }
-                if(component.getClass() == Lightbulb.class){
-                    if(((Lightbulb) component).isOn){
-                        lampIsOn = true;
+                if (component.getClass() == Switch.class && circuit.getComponentCount(component) == 1){
+                    if (component.hasOutputConnection(((Switch) component).getConnectionPointByIndex(1))){
+                        hasSwitch = true;
                     }
                 }
             }
         }
 
-        return (isFullCircle && hasResistor && lampIsOn);
+        return (isFullCircle && lampRequirementsMet && hasSwitch);
     }
 
     public Set<Component> getAvailableComponents() {
@@ -62,27 +54,17 @@ public class Scenario2 extends DesignScenario {
         set.add(new Lightbulb());
         set.add(new Powersource());
         set.add(new Resistor());
+        set.add(new Switch());
 
         return set;
     }
 
     public ArrayList<Component> loadComponents() {
-        // If this scenario already has components in its base that means it was instantiated
-        // with a user-designed circuit as an argument. Meaning the user continues this scenario
-        // with his own self-made circuit.
-        if (super.loadComponents() != null) {
-            return super.loadComponents();
-        }
-
         ArrayList<Component> components = new ArrayList<>();
         Powersource powersource = new Powersource();
-        Lightbulb bulb = new Lightbulb();
-
-        Connector.connect(powersource.getInput(), bulb.getConnectionPointByIndex(0));
-        Connector.connect(powersource.getOutput(), bulb.getConnectionPointByIndex(1));
 
         components.add(powersource);
-        components.add(bulb);
+
         return components;
     }
 }
