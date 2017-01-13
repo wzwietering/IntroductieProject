@@ -217,7 +217,7 @@ public class CircuitActivity extends Activity
                 R.string.scenario_complete,
                 MessageTypes.ScenarioComplete,
                 true));
-        VariableHandler variableHandler = new VariableHandler(this);
+        VariableHandler variableHandler = new VariableHandler(getApplicationContext());
         variableHandler.saveProgress(scenario.getID());
     }
 

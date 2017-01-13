@@ -18,6 +18,8 @@ import java.util.Set;
  */
 
 public class Scenario2 extends DesignScenario {
+    public Scenario2(){}
+
     public Scenario2(Circuit circuit) {
         super(circuit);
     }
