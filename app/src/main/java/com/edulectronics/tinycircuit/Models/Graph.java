@@ -3,7 +3,6 @@ package com.edulectronics.tinycircuit.Models;
 import com.edulectronics.tinycircuit.Models.Components.Component;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.Connection;
 import com.edulectronics.tinycircuit.Models.Components.Powersource;
-import com.edulectronics.tinycircuit.Models.Components.Switch;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -80,6 +79,8 @@ public class Graph {
                 for (Component node1 : connectionPath)
                     temp.add(node1);
                 connectionPaths.add(temp);
+            } else if (nextNode.equals(source)) {
+                continue;
             } else if (connectionPath.size() < 10) {
                 connectionPath.push(nextNode);
                 findPaths(nextNode, targetNode);
