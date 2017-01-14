@@ -26,6 +26,7 @@ import com.edulectronics.tinycircuit.Models.Components.Connectors.Connector;
 import com.edulectronics.tinycircuit.Models.MenuItem;
 import com.edulectronics.tinycircuit.Models.MessageArgs;
 import com.edulectronics.tinycircuit.Models.MessageTypes;
+import com.edulectronics.tinycircuit.Models.Scenarios.DesignScenario;
 import com.edulectronics.tinycircuit.Models.Scenarios.IScenario;
 import com.edulectronics.tinycircuit.Models.Scenarios.ImplementedScenarios.FreePlayScenario;
 import com.edulectronics.tinycircuit.Models.Scenarios.ImplementedScenarios.Scenario2;
@@ -214,7 +215,7 @@ public class CircuitActivity extends Activity
     }
 
     private void scenarioCompleted() {
-        positiveFeedback();
+        givePositiveFeedback();
     }
 
     public boolean onLongClick(View v) {
@@ -294,22 +295,28 @@ public class CircuitActivity extends Activity
         checkScenarioComplete(true);
     }
 
+    //The boolean is used to give the user only negative feedback when they press the run button.
+    //Giving negative feedback when this method runs using the onTouch method is a nightmare,
+    //because you will get negative messages all the time.
     private void checkScenarioComplete(boolean run){
         if (scenario.isCompleted(circuitController.circuit)) {
             scenarioCompleted();
         } else if (run && scenario.getClass() != FreePlayScenario.class) {
-            negativeFeedback();
+            giveNegativeFeedback();
         }
     }
 
-    private void negativeFeedback(){
+    //Create a negative feedback message
+    private void giveNegativeFeedback(){
         String[] negativeFeedback = getResources().getStringArray(R.array.negative_feedback);
+        String feedback = getResources().getString(((DesignScenario) scenario).getHint());
         messageController.displayMessage(new MessageArgs(
-                giveFeedback(negativeFeedback),
+                giveFeedback(negativeFeedback) + " " + feedback,
                 MessageTypes.Mistake));
     }
 
-    private void positiveFeedback(){
+    //Create a positive feedback message
+    private void givePositiveFeedback(){
         String[] positiveFeedback = getResources().getStringArray(R.array.positive_feedback);
         messageController.displayMessage(new MessageArgs(
                 giveFeedback(positiveFeedback),
@@ -317,6 +324,8 @@ public class CircuitActivity extends Activity
                 true));
     }
 
+    //This methods returns a random string from an array. It is used to give the user more
+    //interesting feedback, because the string is not always the same.
     private String giveFeedback(String[] options){
         Random random = new Random();
         return options[random.nextInt(options.length)];

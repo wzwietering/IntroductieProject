@@ -36,8 +36,14 @@
     <string name="scenario1_explanation">Turn on the light by connection the battery with the lamp.</string>
     <string name="scenario2_explanation">Add a resistor to the circuit, so the light won\'t break. To add the resistor, you have to remove a wire. This can be done by touching a wire in wire mode. Run the circuit when you are done.</string>
     <string name="scenario_complete">Good job!</string>
-    <string name="scenario_not_complete">You are not finished yet!</string>
+    <string name="scenario_not_complete">The circuit is not right yet!</string>
     <string name="button_add_wire">draw wires</string>
+
+    <!--Specific feedback-->
+    <string name="missing_component">A component is missing</string>
+    <string name="no_full_circle">The circuit is not closed yet</string>
+    <string name="wrong_connection">A connection is wrong</string>
+    <string name="lamp_off">The lamp is not yet on</string>
 
     <!--Arrays with feedback-->
     <string-array name="positive_feedback">
