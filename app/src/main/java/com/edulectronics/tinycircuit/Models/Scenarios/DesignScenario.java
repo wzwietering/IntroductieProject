@@ -51,5 +51,7 @@ public abstract class DesignScenario implements IScenario {
 
     // Get the scenario id
     @Override
-    public abstract int getID();
+    public int getID(){
+        return 0;
+    }
 }

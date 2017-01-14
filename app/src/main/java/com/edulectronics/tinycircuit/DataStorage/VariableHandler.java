@@ -9,6 +9,7 @@ import android.preference.PreferenceManager;
  */
 
 public class VariableHandler {
+    //Shared preferences is the Android interface to store variables
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
 
