@@ -2,9 +2,9 @@ package com.edulectronics.tinycircuit.Views;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.Display;
 import android.view.View;
@@ -18,9 +18,13 @@ import com.edulectronics.tinycircuit.R;
  */
 
 public class Wire extends View {
+    public static int delay = 0;
+
     public Point a, b;
     Paint paint = new Paint();
     private Point screenSize = new Point();
+    private WireDrawingMode drawingMode = WireDrawingMode.normal;
+    private int thisDelay = 0;
 
 
     public Wire(Context context, AttributeSet attr) {
@@ -40,54 +44,50 @@ public class Wire extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        canvas.drawLine(a.x, a.y, b.x, b.y, paint);
+       switch (this.drawingMode) {
+           case normal:
+               canvas.drawLine(a.x, a.y, b.x, b.y, paint);
+               break;
+           case highlight:
+               int minX = Math.min(a.x, b.x);
+               int maxX = Math.max(a.x, b.x);
+               int minY = Math.min(a.y, b.y);
+               int maxY = Math.max(a.y, b.y);
+
+               canvas.drawLine(minX, minY, maxX, maxY, paint);
+               break;
+       }
         super.onDraw(canvas);
-
     }
 
-    public void highLight(Canvas canvas) {
+    // Highlight the wire. We change the paint color andd call the onDraw() method again with
+    // a delay.
+    public void highLight(int color) {
+        this.paint.setColor(color);
+        // Get the delay for this wire from the current state of the global delay
+        this.thisDelay = delay;
+        // Set drawingmode (which is checked in the onDraw() method)
+        this.drawingMode = WireDrawingMode.highlight;
 
-        LineThread thread = new LineThread(canvas);
-        thread.run();
-    }
+        Handler handler = new Handler(this.getContext().getMainLooper());
 
-    public class LineThread implements Runnable {
-        Canvas canvas;
+        // We need a runnable that accepts argument. Create the class here because it will NOT
+        // be used anywhere else, and I don't see the point of making a whole new file for this.
+        class drawingRunnable implements Runnable {
+            private final Wire wire;
 
-        public LineThread(Canvas canvas) {
-            this.canvas = canvas;
-        }
-
-        public void run() {
-            try {
-                Paint paint = new Paint();
-                paint.setColor(Color.YELLOW);
-
-                int minX = Math.min(a.x, b.x);
-                int maxX = Math.max(a.x, b.x);
-                int minY = Math.min(a.y, b.y);
-                int maxY = Math.max(a.y, b.y);
-
-                if (minX != maxX) {
-                    for (int x = minX; x < maxX; x+=5) {
-                        {
-                            canvas.drawLine(minX, minY, x, minY, paint);
-                     //      Thread.sleep(10);
-                        }
-                    }
-                }
-
-                if (minY != maxY) {
-                    for (int y = minY; y < maxY; y+=5) {
-                        canvas.drawLine(minX, minY, minX, y, paint);
-                       // Thread.sleep(10);
-                    }
-                }
+            public drawingRunnable(Wire wire) {
+                this.wire = wire;
             }
-            catch (Exception ex) {
-
+            // This runnable invalidates the wire and thus onDraw() is called on the wire.
+            public void run() {
+                wire.invalidate();
             }
         }
+
+        // Magic happens here! The handler posts the runnable to the UI thread, but with a delay.
+        // This way we don't block the UI thread.
+        handler.postDelayed(new drawingRunnable(this), thisDelay);
     }
 
     public boolean isTouched(Point point){
@@ -103,5 +103,11 @@ public class Wire extends View {
         } else {
             return false;
         }
+    }
+
+    public enum WireDrawingMode {
+        normal,
+        highlight,
+        running
     }
 }

@@ -9,6 +9,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.MotionEvent;
+import android.view.SurfaceHolder;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ExpandableListView;
@@ -206,8 +207,6 @@ public class CircuitActivity extends Activity
                 wireController.makeWire(component, ev);
             }
         }
-        checkScenarioComplete();
-
         return handledHere;
     }
 
@@ -296,8 +295,8 @@ public class CircuitActivity extends Activity
     }
 
     private void checkScenarioComplete(){
-        if (scenario.isCompleted(circuitController.circuit)) {
-            scenarioCompleted();
-        }
+     //   if (scenario.isCompleted(circuitController.circuit)) {
+     //       scenarioCompleted();
+     //   }
     }
 }

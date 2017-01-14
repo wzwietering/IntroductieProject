@@ -66,9 +66,12 @@ public class WireController {
         }
     }
 
+    // Redraw all the wire views in the grid
     public void redrawWires() {
-        clearLines();
+        // First clear the existing wires
+        clearWires();
 
+        // ... and rebuild.
         for (Connection c : circuitController.getAllConnections()) {
             if (c != null) {
                 Point startPoint = coordinateHelper.getNodeLocation(
@@ -81,7 +84,6 @@ public class WireController {
                 );
 
                 setLines(c, startPoint, endPoint);
-
             }
         }
         for (Wire wire : this.wires) {
@@ -89,11 +91,10 @@ public class WireController {
         }
     }
 
-    private void clearLines() {
+    private void clearWires() {
         for (Wire wire : wires) {
             DrawerLayout parentLayout = (DrawerLayout)((Activity)context).findViewById(R.id.wires);
             parentLayout.removeView(wire);
-
         }
     }
 
@@ -160,7 +161,6 @@ public class WireController {
             parentLayout.addView(wire);
             this.wires.add(wire);
         }
-
         c.setWires(connectionWires);
     }
 
@@ -201,7 +201,7 @@ public class WireController {
         return createLine(new Point(a.x, a.y), new Point(a.x, b.y - (Math.abs(a.y - b.y) % 150)));
     }
 
-    // First go half a cell up/down/left/right, ddepending on where the connectionpoint is
+    // First go half a cell up/down/left/right, depending on where the connectionpoint is
     // and where the endpoint is. Otherwise the next lines will be drawn right through other
     // components.
     public Wire getEndPointLine(Point startPoint, Point endPoint, ConnectionPointOrientation orientation) {

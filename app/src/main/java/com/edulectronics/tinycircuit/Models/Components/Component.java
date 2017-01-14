@@ -39,6 +39,7 @@ public abstract class Component implements IComponent {
     };
 
     public boolean hasOutputConnection(ConnectionPoint connectionpoint) {
+
         for (ConnectionPoint c : getOutgoingConnections(connectionpoint)) {
             if (c.hasOutputConnection())
                 return true;
