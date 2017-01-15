@@ -22,8 +22,8 @@ public class Graph {
     // In the circuit, these are represented by the same powersource.
     // In the graph however, the connections of the powersource output are 'source',
     // and connection of the powersource input are 'base'.
-    private final Powersource source;
-    private final Component base;
+    public final Powersource source;
+    public final Component base;
 
     public Set<Component> nodes = new HashSet<>();
     List<Edge> edges = new ArrayList<Edge>();
@@ -69,7 +69,7 @@ public class Graph {
         connectionPath = new Stack();
         connectionPaths = new ArrayList<>();
 
-        findPaths(source, base);
+        findPaths(base, source);
         return this.connectionPaths;
     }
 

@@ -37,9 +37,6 @@ public class Connection {
         // one has an outgoing connection.
         ConnectionPoint outGoingConnectionPoint = connectionPoint == pointA ? pointB : pointA;
 
-        // Highlight this connection
-        highlight();
-
         // ALWAYS check if parent is a powersource FIRST. Otherwise you get stackoverflow.
         if(outGoingConnectionPoint.getParentComponent().getClass() == Powersource.class) {
             // Next component is a powersource, so always return true.
@@ -49,14 +46,6 @@ public class Connection {
             // connection, so return that! (recurse!) =)
             return outGoingConnectionPoint.getParentComponent().hasOutputConnection(outGoingConnectionPoint);
         }
-    }
-
-    private void highlight() {
-        for (Wire wire: wires) {
-            wire.highLight(Color.YELLOW);
-        }
-        // Next wire will be highlighted a bit later so the current is visualized as 'running'
-        Wire.delay += 500;
     }
 
     public void setWires(List<Wire> wires) {

@@ -1,5 +1,6 @@
 package com.edulectronics.tinycircuit.Controllers;
 
+import android.graphics.Color;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
@@ -40,6 +41,9 @@ public class CircuitController implements Serializable {
 
     // When a new component is created, we save it here. It hasn't been dragged to the circuit yet.
     public Component newComponent;
+
+    // a wire animator to animate the wires when the user runs the circuit.
+    CircuitAnimator animator;
 
     // Set the circuit to some predefined circuit passed as arguments.
     public void setProperties(int width, int size, ArrayList<Component> components) {
@@ -152,7 +156,11 @@ public class CircuitController implements Serializable {
                     // If yes, create graph.
                     Graph graph = new Graph((Powersource) component, this.getAllConnections());
 
-                    // Now check all paths on the graph.
+                    // Animate the current through the wires.
+                    animator = new CircuitAnimator(graph);
+                    animator.highlightPaths();
+
+                    // Now check all paths on the graph to see if there is resistance.
                     checkPaths(graph);
                 }
             }
@@ -173,11 +181,11 @@ public class CircuitController implements Serializable {
             }
 
             if (!pathHasResistor) {
+                animator.highlightPath(path, Color.RED, 0);
                 for (Object element : elements) {
                     ((Component) element).setResistance(false);
                 }
             }
-
             handleHighInputs(elements);
         }
     }

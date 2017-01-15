@@ -207,6 +207,9 @@ public class CircuitActivity extends Activity
                 wireController.makeWire(component, ev);
             }
         }
+
+        checkScenarioComplete();
+
         return handledHere;
     }
 
@@ -295,8 +298,8 @@ public class CircuitActivity extends Activity
     }
 
     private void checkScenarioComplete(){
-     //   if (scenario.isCompleted(circuitController.circuit)) {
-     //       scenarioCompleted();
-     //   }
+        if (scenario.isCompleted(circuitController.circuit)) {
+            scenarioCompleted();
+        }
     }
 }

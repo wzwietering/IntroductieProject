@@ -42,7 +42,6 @@ public class WireController {
     public void setControllers(CircuitController circuitController) {
         this.circuitController = circuitController;
         coordinateHelper = new CoordinateHelper(circuitController.circuit.width, cellWidth, cellHeight);
-        coordinateHelper = new CoordinateHelper(circuitController.circuit.width, cellWidth, cellHeight);
     }
 
     public void makeWire(Component component, MotionEvent event) {
@@ -92,8 +91,8 @@ public class WireController {
     }
 
     private void clearWires() {
+        DrawerLayout parentLayout = (DrawerLayout)((Activity)context).findViewById(R.id.wires);
         for (Wire wire : wires) {
-            DrawerLayout parentLayout = (DrawerLayout)((Activity)context).findViewById(R.id.wires);
             parentLayout.removeView(wire);
         }
     }

@@ -15,7 +15,6 @@ public class Powersource extends Component {
     // This is the 'start' of checking whether a circuit is actually a circuit.
     // Always call this method on the powersource first.
     public boolean hasOutputConnection() {
-        Wire.delay = 0;
         return super.hasOutputConnection(this.getInput());
     }
 
