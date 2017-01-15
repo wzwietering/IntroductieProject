@@ -1,6 +1,8 @@
 package com.edulectronics.tinycircuit.Controllers;
 
+import android.app.Activity;
 import android.graphics.Color;
+import android.os.Handler;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
@@ -17,6 +19,7 @@ import com.edulectronics.tinycircuit.Models.Graph;
 import com.edulectronics.tinycircuit.R;
 import com.edulectronics.tinycircuit.Views.CircuitActivity;
 import com.edulectronics.tinycircuit.Views.Draggables.GridCell;
+import com.edulectronics.tinycircuit.Views.Wire;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -146,7 +149,7 @@ public class CircuitController implements Serializable {
     }
 
     // Run the circuit!
-    public void run() {
+    public void run(Activity circuitActivity) {
         reset();
 
         // Check if there are outgoing connections.
@@ -157,7 +160,7 @@ public class CircuitController implements Serializable {
                     Graph graph = new Graph((Powersource) component, this.getAllConnections());
 
                     // Animate the current through the wires.
-                    animator = new CircuitAnimator(graph);
+                    animator = new CircuitAnimator(graph, circuitActivity);
                     animator.highlightPaths();
 
                     // Now check all paths on the graph to see if there is resistance.
@@ -185,15 +188,11 @@ public class CircuitController implements Serializable {
                 for (Object element : elements) {
                     ((Component) element).setResistance(false);
                 }
+            } else {
+                animator.animateCurrentFlow(path);
             }
-            handleHighInputs(elements);
-        }
-    }
 
-    //Only handle input for the connected elements
-    private void handleHighInputs(Object[] elements) {
-        for (Object element : elements) {
-            ((Component) element).handleInputHigh();
+            animator.handleHighInputs(elements);
         }
     }
 

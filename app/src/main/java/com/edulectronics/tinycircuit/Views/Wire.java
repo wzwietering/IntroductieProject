@@ -51,6 +51,7 @@ public class Wire extends View {
             case highlight:
                 canvas.drawLine(a.x, a.y, b.x, b.y, paint);
 
+                // Flash the wire a few times.
                 if (numberOfFlashes < 4) {
                     if (paint.getColor() == Color.WHITE) {
                         paint.setColor(Color.YELLOW);
@@ -67,7 +68,6 @@ public class Wire extends View {
     // Highlight the wire. We change the paint color andd call the onDraw() method again with
     // a delay.
     public void highLight(int color, int delay) {
-
         // Set drawingmode (which is checked in the onDraw() method)
         this.drawingMode = WireDrawingMode.highlight;
 
@@ -88,7 +88,9 @@ public class Wire extends View {
                 wire.invalidate();
             }
         }
+        // Reset the number of times we have made the wire flash.
         this.numberOfFlashes = 0;
+        // Post a new runnable to the UI thread with a delay.
         handler.postDelayed(new drawingRunnable(this, color), delay);
     }
 

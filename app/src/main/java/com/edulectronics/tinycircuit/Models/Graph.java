@@ -21,7 +21,7 @@ public class Graph {
     // We have a source and base between which we can check all connections.
     // In the circuit, these are represented by the same powersource.
     // In the graph however, the connections of the powersource output are 'source',
-    // and connection of the powersource input are 'base'.
+    // and connection of the powerSource input are 'base'.
     public final Powersource source;
     public final Component base;
 
@@ -92,9 +92,9 @@ public class Graph {
     private Set<Component> getNeighbours(Component component) {
         Set<Component> neighbours = new HashSet<>();
         for (Edge edge : this.edges) {
-            if (edge.a == component) {
+            if (edge.a == component && edge.b != this.base) {
                     neighbours.add(edge.b);
-            } else if (edge.b == component) {
+            } else if (edge.b == component && edge.a != this.base) {
                     neighbours.add(edge.a);
             }
         }

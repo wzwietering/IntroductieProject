@@ -1,16 +1,23 @@
 package com.edulectronics.tinycircuit.Controllers;
 
+import android.app.Activity;
 import android.graphics.Color;
+import android.os.Handler;
+import android.os.Looper;
+import android.widget.GridView;
 
 import com.edulectronics.tinycircuit.Models.Components.Component;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.Connection;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.ConnectionPoint;
 import com.edulectronics.tinycircuit.Models.Graph;
+import com.edulectronics.tinycircuit.R;
 import com.edulectronics.tinycircuit.Views.Wire;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Maaike on 15-1-2017.
@@ -20,16 +27,19 @@ public class CircuitAnimator {
 
     // How long to wait before animating the wire (in ms)
     public int delay;
-    // Components that have already been animated
-    // (paths can contain the same components multiple times)
-    private List<Component> animatedComponents = new ArrayList<Component>();
-    // Connections that have already been animated (two components share a connection)
+
+    // Keeps track of the connections that have already been animated
+    // (two components share a connection)
     private List<Connection> animatedConnections = new ArrayList<Connection>();
+
     // The graph to animate
     private Graph graph;
 
-    public CircuitAnimator(Graph graph) {
+    private Activity circuitActivity;
+
+    public CircuitAnimator(Graph graph, Activity circuitActivity) {
         this.graph = graph;
+        this.circuitActivity = circuitActivity;
     }
 
     // Show how the current runs through the paths. Connections light up in yellow one by one.
@@ -37,16 +47,15 @@ public class CircuitAnimator {
         this.delay = 0;
 
         for (Stack path: graph.findAllPaths() ) {
-            this.highlightPath(path, Color.YELLOW, 1000);
+            this.highlightPath(path, Color.YELLOW, 1500);
         }
-        // When we are done, reset which components and connections have been highlighted.
+        // When we are done, reset which connections have been highlighted.
         // e.g. we want to highlight again in a different color, this needs to be reset.
         reset();
     }
 
-    // Reset which components and connections have been highlighted already
+    // Reset which connections have been highlighted already
     public void reset() {
-        animatedComponents = new ArrayList<Component>();
         animatedConnections = new ArrayList<Connection>();
     }
 
@@ -58,18 +67,15 @@ public class CircuitAnimator {
 
         while(!path.empty()) {
             nextComponent = (Component) path.pop();
-            if (!animatedComponents.contains(currentComponent)) {
-                this.highlightBetween(currentComponent, nextComponent, color, interval);
-                animatedComponents.add(currentComponent);
-            }
+            this.highlightBetween(currentComponent, nextComponent, color, interval);
 
             // move to the next component
             currentComponent = nextComponent;
         }
 
-        // Path is empty, so we highlight the last connection, going to the base.
-        nextComponent = graph.base;
-        this.highlightBetween(currentComponent, nextComponent, Color.RED, interval);
+        // Path is empty, so we (attempt to) highlight the last connection, going back to the source.
+        nextComponent = graph.source;
+        this.highlightBetween(currentComponent, nextComponent, color, interval);
     }
 
     // Highlight connection(s) between two components.
@@ -96,5 +102,32 @@ public class CircuitAnimator {
         for (Wire wire: c.getWires()) {
             wire.highLight(color, this.delay);
         }
+    }
+
+    //Only handle input for the connected elements. Do this after a delay!
+    public void handleHighInputs(Object[] elements) {
+        // We declare a runnable which takes our elements as input.
+        class highInputRunnable implements Runnable {
+            Object[] elements;
+
+            public highInputRunnable(Object[] elements) {
+                this.elements = elements;
+            }
+            //When this runs, all elements get a high input, and then the grid is invalidated.
+            @Override
+            public void run() {
+                for (Object element : elements) {
+                    ((Component) element).handleInputHigh();
+                }
+                ((GridView)circuitActivity.findViewById(R.id.circuit)).invalidateViews();
+            }
+        }
+
+        // Create a new thread to execute the runnable after a delay.
+        new Handler(Looper.getMainLooper()).postDelayed(
+                new highInputRunnable(elements), this.delay);
+    }
+
+    public void animateCurrentFlow(Stack path) {
     }
 }

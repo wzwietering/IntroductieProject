@@ -95,6 +95,7 @@ public class WireController {
         for (Wire wire : wires) {
             parentLayout.removeView(wire);
         }
+        this.wires.clear();
     }
 
 
