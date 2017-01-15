@@ -48,4 +48,6 @@ public abstract class DesignScenario implements IScenario {
     // Get the Id of a message explaining to the user what they need to do
     @Override
     public abstract int getPrompt();
+
+    public abstract int getHint();
 }
