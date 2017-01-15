@@ -35,7 +35,7 @@ public class CoordinateHelper {
             case Left:
                 return (getColumn(position) - 1) * cellWidth + 13;
             case Right:
-                return getColumn(position) * cellWidth + magicOffsetFunction(gridCells);
+                return getColumn(position) * cellWidth - 13;
             default:
                 throw new InvalidParameterException("Invalid orientation given");
         }
@@ -61,14 +61,5 @@ public class CoordinateHelper {
 
     private int getColumn(int position) {
         return (position % gridWidth) + 1;
-    }
-
-    // This interesting function was found by collecting the right offset for different screens, and
-    // then those offsets were combined with the grid cells and put into this calculator:
-    // http://www.xuru.org/rt/PR.asp#CopyPaste to get the function. The first number is the amount
-    // of gridcells in the width, the second one is the desired offset:
-    // 7, -34; 11, -27; 5, -26
-    private int magicOffsetFunction(int gridCells){
-        return (int) Math.round(0.9583333333 * Math.pow(gridCells, 2) - 15.5 * gridCells + 27.54166667);
     }
 }
