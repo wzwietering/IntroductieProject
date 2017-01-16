@@ -55,7 +55,7 @@
             android:onClick="openMenu"
 			android:id="@+id/hamburger"/>
 		<Button
-			android:text="Run"
+			android:text="@string/run"
 			android:layout_width="wrap_content"
 			android:layout_gravity="right"
 			android:layout_marginTop="2dp"

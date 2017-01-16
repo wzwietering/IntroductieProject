@@ -44,6 +44,7 @@
     <string name="scenario_complete">Good job!</string>
     <string name="scenario_not_complete">The circuit is not right yet!</string>
     <string name="button_add_wire">draw wires</string>
+    <string name="run">Run</string>
 
     <!--Specific feedback-->
     <string name="missing_component">A component is missing.</string>
