@@ -13,15 +13,19 @@ public class ComponentFactory {
 
     //TODO: geen hardcoded strings gebruiken!!! Uit resources halen.
 
-    public static Component CreateComponent(String name, double value) {
+    public static Component CreateComponent(String name) {
         switch (name) {
             case "Batterij":
+            case "Battery":
                 return new Powersource();
             case "Gloeilamp":
+            case "Lightbulb":
                 return new Lightbulb();
             case "Weerstand":
-                return new Resistor(value);
+            case "Resistor":
+                return new Resistor();
             case "Schakelaar":
+            case "Switch":
                 return new Switch();
         }
         throw new IllegalArgumentException("component name unknown");

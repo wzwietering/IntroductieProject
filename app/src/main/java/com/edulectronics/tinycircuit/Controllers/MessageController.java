@@ -45,6 +45,8 @@ public class MessageController {
                 return R.string.scenario_explanation_title;
             case ScenarioComplete:
                 return R.string.scenario_complete;
+            case ScenarioLocked:
+                return R.string.scenario_locked;
             default:
                 return 0;
         }

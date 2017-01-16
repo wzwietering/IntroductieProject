@@ -22,6 +22,7 @@ import com.edulectronics.tinycircuit.Controllers.CircuitController;
 import com.edulectronics.tinycircuit.Controllers.ConnectionController;
 import com.edulectronics.tinycircuit.Controllers.LevelController;
 import com.edulectronics.tinycircuit.Controllers.MessageController;
+import com.edulectronics.tinycircuit.DataStorage.VariableHandler;
 import com.edulectronics.tinycircuit.Models.Components.Component;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.Connection;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.Connector;
@@ -29,6 +30,7 @@ import com.edulectronics.tinycircuit.Models.Factories.ComponentFactory;
 import com.edulectronics.tinycircuit.Models.Menu;
 import com.edulectronics.tinycircuit.Models.MessageArgs;
 import com.edulectronics.tinycircuit.Models.MessageTypes;
+import com.edulectronics.tinycircuit.Models.Scenarios.IScenario;
 import com.edulectronics.tinycircuit.Models.Scenarios.ImplementedScenarios.FreePlayScenario;
 import com.edulectronics.tinycircuit.Models.Scenarios.ImplementedScenarios.Scenario2;
 import com.edulectronics.tinycircuit.R;
@@ -52,6 +54,7 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
     private MessageController messageController = new MessageController(getFragmentManager());
     private boolean isInWireMode = false;
     private int cellSize;
+    private IScenario scenario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -161,12 +164,14 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
     public boolean onTouch(View v, MotionEvent ev) {
         final int action = ev.getAction();
 
+        // In the situation where a long click is not needed to initiate a drag, simply start on the down event.
         if (isInWireMode) {
             //Check if wire is touched, but only on the down. This is necessary to prevent line
             //removal on the up event.
+            Component component = ((GridCell) v).getComponent();
             if(action == MotionEvent.ACTION_DOWN) {
                 for (Connection connection : circuitController.getAllConnections()) {
-                    if (connection.isTouched(ev)) {
+                    if (connection.isTouched(ev) && component == null) {
                         Connector connector = new Connector();
                         connector.disconnect(connection.pointA, connection.pointB);
                         connectionController.redraw();
@@ -174,7 +179,6 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
                 }
             }
 
-            Component component = ((GridCell) v).getComponent();
             if(component != null && action == MotionEvent.ACTION_DOWN) {
                 connectionController.makeWire(component, ev);
 
@@ -187,7 +191,12 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
     }
 
     private void scenarioCompleted() {
-        messageController.displayMessage(new MessageArgs(R.string.scenario_complete, MessageTypes.ScenarioComplete, true));
+        messageController.displayMessage(new MessageArgs(
+                R.string.scenario_complete,
+                MessageTypes.ScenarioComplete,
+                true));
+        VariableHandler variableHandler = new VariableHandler(getApplicationContext());
+        variableHandler.saveProgress(levelController.getScenarioID());
     }
 
     public boolean onLongClick(View v) {
@@ -208,7 +217,7 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
     }
 
     public void onClickAddComponent(String text) {
-        Component component = ComponentFactory.CreateComponent(text, 5.0);
+        Component component = ComponentFactory.CreateComponent(text);
 
         FrameLayout componentHolder = (FrameLayout) findViewById(R.id.component_source_frame);
         componentHolder.setVisibility(View.VISIBLE);
@@ -280,8 +289,15 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
         levelController.setScenario(new Scenario2(this.circuitController.circuit));
     }
 
-    public void run(View view) {
+    public void run(View view){
         circuitController.run();
-        ((GridView) findViewById(R.id.circuit)).invalidateViews();
+        ((GridView)findViewById(R.id.circuit)).invalidateViews();
+        checkScenarioComplete();
+    }
+
+    private void checkScenarioComplete(){
+        if (levelController.levelIsCompleted(circuitController.circuit)) {
+            scenarioCompleted();
+        }
     }
 }

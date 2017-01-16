@@ -18,7 +18,7 @@ public class ConnectorTest {
     @Test
     public void connectTest(){
         Lightbulb lightbulb = new Lightbulb();
-        Powersource powersource = new Powersource(5);
+        Powersource powersource = new Powersource();
 
         //create ConnectionPoints to use in Connector.connect method
         ConnectionPoint input = new ConnectionPoint(lightbulb, ConnectionPointOrientation.Left);
