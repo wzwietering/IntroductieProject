@@ -14,11 +14,9 @@ import static junit.framework.Assert.assertEquals;
 public class ConnectionControllerTest {
     @Test
     public void wireControllerTest() {
-        ConnectionController connectionController = new ConnectionController(null, 150, 150);
-
-        assertEquals(ConnectionPointOrientation.Top, connectionController.getClickedArea(80, 40));
+        ConnectionController connectionController = new ConnectionController(null, 200, 200);
 
         //Test the edge of two areas
-        assertEquals(ConnectionPointOrientation.Right, connectionController.getClickedArea(100, 100));
+        assertEquals(ConnectionPointOrientation.Right, connectionController.getClickedArea(100));
     }
 }

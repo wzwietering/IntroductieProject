@@ -21,13 +21,13 @@ import static junit.framework.Assert.assertEquals;
 public class CoordinateHelperTest {
     @Test
     public void coordinateTest(){
-        CoordinateHelper coordinateHelper = new CoordinateHelper(5, 150, 150);
-        ConnectionPointOrientation connectionPointOrientation = ConnectionPointOrientation.Bottom;
+        CoordinateHelper coordinateHelper = new CoordinateHelper(5, 200, 200);
+        ConnectionPointOrientation connectionPointOrientation = ConnectionPointOrientation.Left;
         int position = 7;
 
         int resultX = coordinateHelper.getXLocation(position, connectionPointOrientation);
         int resultY = coordinateHelper.getYLocation(position, connectionPointOrientation);
-        assertEquals(375, resultX);
+        assertEquals(413, resultX);
         assertEquals(300, resultY);
     }
 }

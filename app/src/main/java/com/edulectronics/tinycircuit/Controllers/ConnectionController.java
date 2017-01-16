@@ -3,7 +3,6 @@ package com.edulectronics.tinycircuit.Controllers;
 import android.graphics.Point;
 import android.view.MotionEvent;
 
-import com.edulectronics.tinycircuit.Helpers.CoordinateHelper;
 import com.edulectronics.tinycircuit.Models.Components.Component;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.Connection;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.ConnectionPoint;
@@ -44,17 +43,24 @@ public class ConnectionController {
 
     private void connect(Component component, MotionEvent event) {
         Connector connector = new Connector();
-        ConnectionPointOrientation secondOrientation = getClickedArea((int) event.getX(), (int) event.getY());
-        connector.connect(
-                getConnectionPoint(firstComponent, firstOrientation),
-                getConnectionPoint(component, secondOrientation));
-        connecting = false;
-        redraw();
+        ConnectionPointOrientation secondOrientation = getClickedArea((int) event.getX());
+
+        ConnectionPoint firstConnectionPoint = getConnectionPoint(firstComponent, firstOrientation);
+        ConnectionPoint secondConnectionPoint = getConnectionPoint(component, secondOrientation);
+
+        //Connectionpoints should not connect with themself
+        if(firstConnectionPoint != secondConnectionPoint) {
+            connector.connect(
+                    getConnectionPoint(firstComponent, firstOrientation),
+                    getConnectionPoint(component, secondOrientation));
+            connecting = false;
+            redraw();
+        }
     }
 
     private void setSelected(Component component, MotionEvent event) {
         firstComponent = component;
-        firstOrientation = getClickedArea((int) event.getX(), (int) event.getY());
+        firstOrientation = getClickedArea((int) event.getX());
         connecting = true;
     }
 
@@ -117,7 +123,7 @@ public class ConnectionController {
     public Line getVerticalWire(Point a, Point b) {
         if (a.y == b.y)
             return null;
-        return new Line(new Point(a.x, a.y), new Point(a.x, b.y - (Math.abs(a.y - b.y) % 150)));
+        return new Line(new Point(a.x, a.y), new Point(a.x, b.y - (Math.abs(a.y - b.y) % 200)));
     }
 
     // First go half a cell up/down/left/right, ddepending on where the connectionpoint is
@@ -136,30 +142,15 @@ public class ConnectionController {
                     return new Line(startPoint,
                             new Point(startPoint.x, startPoint.y - (int) (0.5 * cellHeight)));
                 }
-            case Bottom:
-            case Top:
-                if (startPoint.x > endPoint.x) {
-                    // Go left half a cell
-                    return new Line(startPoint,
-                            new Point(startPoint.x - (int) (0.5 * cellWidth), startPoint.y));
-                } else {
-                    // Go right half a cell
-                    return new Line(startPoint,
-                            new Point(startPoint.x + (int) (0.5 * cellWidth), startPoint.y));
-                }
             default:
                 throw new IllegalArgumentException();
         }
     }
 
-    public ConnectionPointOrientation getClickedArea(int x, int y) {
-        if (y < 0.5 * cellHeight && ((x < 0.5 * cellHeight && x >= y) || (x >= 0.5 * cellHeight && y < cellHeight - x))) {
-            return ConnectionPointOrientation.Top;
-        } else if (y >= 0.5 * cellHeight && ((x >= 0.5 * cellHeight && !(x >= y)) || (x < 0.5 * cellHeight && !(y < cellHeight - x)))) {
-            return ConnectionPointOrientation.Bottom;
-        } else if (x < 0.5 * cellHeight && ((y < 0.5 * cellHeight && !(x >= y)) || (y >= 0.5 * cellHeight && y < cellHeight - x))) {
+    public ConnectionPointOrientation getClickedArea(int x) {
+        if (x < 0.5 * cellHeight) {
             return ConnectionPointOrientation.Left;
-        } else if (x >= 0.5 * cellHeight && ((y < 0.5 * cellHeight && !(y < cellHeight - x)) || (y >= 0.5 * cellHeight && x >= y))) {
+        } else if (x >= 0.5 * cellHeight) {
             return ConnectionPointOrientation.Right;
         } else {
             throw new IllegalArgumentException();
