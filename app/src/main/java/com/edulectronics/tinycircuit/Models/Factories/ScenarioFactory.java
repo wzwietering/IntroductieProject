@@ -2,7 +2,6 @@ package com.edulectronics.tinycircuit.Models.Factories;
 
 import com.edulectronics.tinycircuit.Models.Scenarios.IScenario;
 import com.edulectronics.tinycircuit.Models.Scenarios.ImplementedScenarios.FreePlayScenario;
-import com.edulectronics.tinycircuit.Models.Scenarios.ImplementedScenarios.NonExistingScenario;
 import com.edulectronics.tinycircuit.Models.Scenarios.ImplementedScenarios.Scenario1;
 import com.edulectronics.tinycircuit.Models.Scenarios.ImplementedScenarios.Scenario2;
 import com.edulectronics.tinycircuit.Models.Scenarios.ImplementedScenarios.Scenario3;
@@ -30,8 +29,7 @@ public class ScenarioFactory {
             case "4":
                     return new Scenario4();
             default:
-                    return new NonExistingScenario();
-
+                throw new NullPointerException();
         }
     }
 }
