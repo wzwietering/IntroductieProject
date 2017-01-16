@@ -71,6 +71,7 @@ public class Scenario4 extends DesignScenario {
         return components;
     }
 
+    @Override
     public int getID(){
         return 4;
     }
