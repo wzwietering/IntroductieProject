@@ -75,7 +75,7 @@ public class CircuitController implements Serializable {
                     LayoutParams.MATCH_PARENT,
                     Gravity.CENTER);
             GridCell newView = new GridCell(activity);
-            newView.setComponent(component);
+            newView.setComponent(component, -1, -1);
             componentHolder.addView(newView, lp);
             newView.mCellNumber = -1;
 
@@ -184,7 +184,7 @@ public class CircuitController implements Serializable {
             }
 
             if (!pathHasResistor) {
-                animator.highlightPath(path, Color.RED, 0);
+                animator.highlightPath(path, Color.RED, Wire.WireDrawingMode.flashingHighlight);
                 for (Object element : elements) {
                     ((Component) element).setResistance(false);
                 }

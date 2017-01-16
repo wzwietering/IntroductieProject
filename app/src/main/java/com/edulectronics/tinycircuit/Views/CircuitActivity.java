@@ -294,7 +294,7 @@ public class CircuitActivity extends Activity
         wireController.redrawWires();
         ((GridView)findViewById(R.id.circuit)).invalidateViews();
 
-        //TODO: get the delay back from the circuitcontroller (which gets it from wirecontroller)
+        // TODO: get the delay back from the circuitcontroller (which gets it from wirecontroller)
         // to delay the scenario complete check until the whole circuit has been animated.
         circuitController.run(this);
         checkScenarioComplete();

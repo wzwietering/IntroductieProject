@@ -2,6 +2,7 @@ package com.edulectronics.tinycircuit.Controllers;
 
 import android.app.Activity;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.os.Handler;
 import android.os.Looper;
 import android.widget.GridView;
@@ -16,8 +17,6 @@ import com.edulectronics.tinycircuit.Views.Wire;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
-import java.util.concurrent.ScheduledThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Maaike on 15-1-2017.
@@ -47,11 +46,15 @@ public class CircuitAnimator {
         this.delay = 0;
 
         for (Stack path: graph.findAllPaths() ) {
-            this.highlightPath(path, Color.YELLOW, 1500);
+            this.runningHighlightPath(path);
         }
         // When we are done, reset which connections have been highlighted.
         // e.g. we want to highlight again in a different color, this needs to be reset.
         reset();
+    }
+
+    private void runningHighlightPath(Stack path) {
+        this.highlightPath(path, Color.YELLOW, Wire.WireDrawingMode.runningHighlight);
     }
 
     // Reset which connections have been highlighted already
@@ -59,15 +62,15 @@ public class CircuitAnimator {
         animatedConnections = new ArrayList<Connection>();
     }
 
-    // There is no resistance on this path, so make it flash red
-    public void highlightPath(Stack path, int color, int interval) {
+    // Highlight a path in a certain mode and color.
+    public void highlightPath(Stack path, int color, Wire.WireDrawingMode drawingMode) {
         // start at the source
         Component currentComponent = graph.source;
         Component nextComponent;
 
         while(!path.empty()) {
             nextComponent = (Component) path.pop();
-            this.highlightBetween(currentComponent, nextComponent, color, interval);
+            this.highlightBetween(currentComponent, nextComponent, color, drawingMode);
 
             // move to the next component
             currentComponent = nextComponent;
@@ -75,11 +78,14 @@ public class CircuitAnimator {
 
         // Path is empty, so we (attempt to) highlight the last connection, going back to the source.
         nextComponent = graph.source;
-        this.highlightBetween(currentComponent, nextComponent, color, interval);
+        this.highlightBetween(currentComponent, nextComponent, color, drawingMode);
     }
 
     // Highlight connection(s) between two components.
-    private void highlightBetween(Component a, Component b, int color, int interval) {
+    private void highlightBetween(Component a,
+                                  Component b,
+                                  int color,
+                                  Wire.WireDrawingMode drawingMode) {
         List<ConnectionPoint> currentConnectionPoints = a.getConnectionPoints();
         List<ConnectionPoint> nextConnectionPoints = b.getConnectionPoints();
 
@@ -87,10 +93,8 @@ public class CircuitAnimator {
             for (Connection c: cp.getConnections()) {
                 if(nextConnectionPoints.contains(c.getOtherPoint(cp))) {
                     if(!animatedConnections.contains(c)) {
-                        animateConnection(c, color);
+                        animateConnection(cp, c, color, drawingMode);
                         animatedConnections.add(c);
-
-                        delay += interval;
                     }
                 }
             }
@@ -98,10 +102,61 @@ public class CircuitAnimator {
     }
 
     // Highlight all wires of this connection.
-    private void animateConnection(Connection c, int color) {
-        for (Wire wire: c.getWires()) {
-            wire.highLight(color, this.delay);
+    private void animateConnection(ConnectionPoint origin,
+                                   Connection c,
+                                   int color,
+                                   Wire.WireDrawingMode drawingMode) {
+        for (Wire wire: sortWires(origin, new ArrayList<Wire>(c.getWires()))) {
+            wire.highLight(color, this.delay, drawingMode);
+
+            // Increase the delay depending on the type of highlight (some take longer than others)
+            if(drawingMode == drawingMode.runningHighlight)
+                delay += wire.getLength() * 4;
         }
+    }
+
+    // Sort the wires so they are highlighted in correct order.
+    private List<Wire> sortWires(ConnectionPoint connectionpoint, List<Wire> wires) {
+        List<Wire> sortedWires = new ArrayList<>();
+        Point origin = connectionpoint.getParentComponent().coordinates;
+
+        Wire closestWire = null;
+        int currentDistance = 0;
+
+        while(wires.size() > 0) {
+            for (Wire wire: wires) {
+                // Get distance between wire endpoints and component
+                int distanceA = getDistance(wire.a, origin);
+                int distanceB = getDistance(wire.b, origin);
+
+                // If any end point is closer to the component than the current endpoint, take
+                // that as the new closest wire.
+                if(closestWire == null || distanceA < currentDistance || distanceB < currentDistance) {
+                    closestWire = wire;
+                    if(distanceA > distanceB) {
+                        currentDistance = distanceA;
+                        wire.setDrawDirection(wire.a, wire.b);
+                    } else {
+                        currentDistance = distanceB;
+                        wire.setDrawDirection(wire.b, wire.a);
+                    }
+                }
+            }
+            // Add the wire that turns out to be the closest wire to the sorted list.
+            sortedWires.add(closestWire);
+            // ... and remove from the list that needs to be sorted.
+            wires.remove(closestWire);
+            // ... and repeat until all wires are sorted.
+            closestWire = null;
+        }
+        return sortedWires;
+    }
+
+    // Get distance between two points (pythagoras)
+    private int getDistance(Point a, Point b) {
+        int distX = Math.abs(b.x - a.x);
+        int distY = Math.abs(b.y - a.y);
+        return distX * distX + distY * distY;
     }
 
     //Only handle input for the connected elements. Do this after a delay!

@@ -20,21 +20,31 @@ import com.edulectronics.tinycircuit.R;
 
 public class Wire extends View {
     public Point a, b;
-    public Paint paint = new Paint();
+    public Paint whitePaint = new Paint();
+    public Paint highlightPaint = new Paint();
+
     private Point screenSize = new Point();
     public WireDrawingMode drawingMode = WireDrawingMode.normal;
-    private int thisDelay = 0;
-    private int numberOfFlashes = 0;
+
+    // These determine which end of the wire gets drawn first.
+    public Point drawStart;
+    public Point drawEnd;
+    // these are counters for drawing the line
+    int drawUntilX;
+    int drawUntilY;
+    private int numberOfFlashes;
 
 
     public Wire(Context context, AttributeSet attr) {
         super(context, attr);
-        paint.setColor(getResources().getColor(R.color.wire_default));
+        whitePaint.setColor(getResources().getColor(R.color.wire_default));
 
         WindowManager windowManager = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
         Display display = windowManager.getDefaultDisplay();
         display.getSize(screenSize);
-        paint.setStrokeWidth(screenSize.y / 100);
+        whitePaint.setStrokeWidth(screenSize.y / 100);
+
+        highlightPaint.setStrokeWidth(whitePaint.getStrokeWidth());
     }
 
     public void setCoordinates(Point a, Point b) {
@@ -46,56 +56,75 @@ public class Wire extends View {
     protected void onDraw(Canvas canvas) {
         switch (this.drawingMode) {
             case normal:
-                canvas.drawLine(a.x, a.y, b.x, b.y, paint);
+                canvas.drawLine(a.x, a.y, b.x, b.y, whitePaint);
                 break;
-            case highlight:
-                canvas.drawLine(a.x, a.y, b.x, b.y, paint);
+            case runningHighlight:
+                // Draw the running highlight...
+                canvas.drawLine(drawStart.x, drawStart.y, drawUntilX, drawUntilY, this.highlightPaint);
+                // ... and the rest of the line still in white.
+                canvas.drawLine(drawEnd.x, drawEnd.y, drawUntilX, drawUntilY, this.whitePaint);
 
-                // Flash the wire a few times.
-                if (numberOfFlashes < 4) {
-                    if (paint.getColor() == Color.WHITE) {
-                        paint.setColor(Color.YELLOW);
+                // Up the coordinates and repeat! (until we're at drawEnd)
+                if (drawUntilX < drawEnd.x) {
+                    drawUntilX+=5;
+                    postInvalidateDelayed(10);
+                }
+                else if(drawUntilY < drawEnd.y) {
+                    drawUntilY+=5;
+                    postInvalidateDelayed(10);
+                }
+                break;
+            case staticHighlight:
+                canvas.drawLine(a.x, a.y, b.x, b.y, highlightPaint);
+                break;
+            case flashingHighlight:
+                canvas.drawLine(a.x, a.y, b.x, b.y, highlightPaint);
+                if (numberOfFlashes < 5) {
+                    if(numberOfFlashes % 2 == 0) {
+                        canvas.drawLine(a.x, a.y, b.x, b.y, highlightPaint);
                     } else {
-                        paint.setColor(Color.WHITE);
+                        canvas.drawLine(a.x, a.y, b.x, b.y, whitePaint);
                     }
                     numberOfFlashes++;
                     postInvalidateDelayed(300); // set time here
                 }
+                break;
         }
         super.onDraw(canvas);
     }
 
     // Highlight the wire. We change the paint color andd call the onDraw() method again with
     // a delay.
-    public void highLight(int color, int delay) {
+    public void highLight(int color, int delay, WireDrawingMode drawingMode) {
         Handler handler = new Handler(this.getContext().getMainLooper());
         // We need a runnable that accepts argument. Create the class here because it will NOT
         // be used anywhere else, and I don't see the point of making a whole new file for this.
         class drawingRunnable implements Runnable {
             private final Wire wire;
             private final int color;
+            private final WireDrawingMode drawingMode;
 
-            public drawingRunnable(Wire wire, int color) {
+            public drawingRunnable(Wire wire, int color, WireDrawingMode drawingMode) {
                 this.wire = wire;
                 this.color = color;
+                this.drawingMode = drawingMode;
             }
             // This runnable invalidates the wire and thus onDraw() is called on the wire.
             public void run() {
                 // Set drawingmode (which is checked in the onDraw() method)
-                wire.drawingMode = drawingMode.highlight;
-                wire.paint.setColor(this.color);
+                wire.drawingMode = drawingMode;
+                wire.highlightPaint.setColor(this.color);
+                wire.numberOfFlashes = 0;
                 wire.invalidate();
             }
         }
-        // Reset the number of times we have made the wire flash.
-        this.numberOfFlashes = 0;
         // Post a new runnable to the UI thread with a delay.
-        handler.postDelayed(new drawingRunnable(this, color), delay);
+        handler.postDelayed(new drawingRunnable(this, color, drawingMode), delay);
     }
 
     public boolean isTouched(Point point){
         //Modify the multiplier to change the detection area of the tap.
-        float width = this.paint.getStrokeWidth() * 4;
+        float width = this.whitePaint.getStrokeWidth() * 4;
         int minX = Math.min(a.x, b.x);
         int maxX = Math.max(a.x, b.x);
         int minY = Math.min(a.y, b.y);
@@ -108,9 +137,21 @@ public class Wire extends View {
         }
     }
 
+    public void setDrawDirection(Point b, Point a) {
+        this.drawStart = a;
+        this.drawEnd = b;
+        this.drawUntilX = a.x;
+        this.drawUntilY = a.y;
+    }
+
+    public int getLength() {
+        return Math.max(Math.abs(a.x - b.x), Math.abs(a.y - b.y));
+    }
+
     public enum WireDrawingMode {
         normal,
-        highlight,
-        running
+        runningHighlight,
+        staticHighlight,
+        flashingHighlight
     }
 }
