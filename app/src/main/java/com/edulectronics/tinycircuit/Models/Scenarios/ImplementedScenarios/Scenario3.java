@@ -20,7 +20,6 @@ import java.util.Set;
 
 public class Scenario3 extends DesignScenario {
     public Scenario3(){}
-
     public Scenario3(Circuit circuit) {
         super(circuit);
     }
@@ -39,7 +38,7 @@ public class Scenario3 extends DesignScenario {
         boolean lampIsOn = false;
 
         for (Component component : circuit.getAllComponents()) {
-            if(component != null) {
+            if(component != null && circuit.getComponentCount(component) == 1) {
                 if (component.getClass() == Powersource.class) {
                     if (component.hasOutputConnection(((Powersource) component).getInput())) {
                         isFullCircle = true;
