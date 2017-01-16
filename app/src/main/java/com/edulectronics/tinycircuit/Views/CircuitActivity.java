@@ -310,7 +310,7 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
     //Create a negative feedback message
     private void giveNegativeFeedback(){
         String[] negativeFeedback = getResources().getStringArray(R.array.negative_feedback);
-        String feedback = getResources().getString(((DesignScenario) scenario).getHint());
+        String feedback = getResources().getString(((DesignScenario) levelController.getScenario()).getHint());
         messageController.displayMessage(new MessageArgs(
                 giveFeedback(negativeFeedback) + " " + feedback,
                 MessageTypes.Mistake));
