@@ -90,4 +90,8 @@ public class Scenario3 extends DesignScenario {
         components.add(resistor);
         return components;
     }
+
+    public int getID(){
+        return 3;
+    }
 }

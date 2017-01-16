@@ -32,6 +32,8 @@
     <string name="exercise">Exercises</string>
     <string name="freeplay">Free play</string>
     <string name="button_ok">I understand</string>
+    <string name="scenario_locked">Unavailable</string>
+    <string name="scenario_locked_explanation">This scenario is not yet available. Play the previous scenarios to unlock this one!</string>
     <string name="scenario_explanation_title">Explanation</string>
     <string name="scenario_freeplay">This is the free play mode. Here you can design your own ciruit.</string>
     <string name="scenario1_explanation">Turn on the light by connection the battery with the lamp.</string>

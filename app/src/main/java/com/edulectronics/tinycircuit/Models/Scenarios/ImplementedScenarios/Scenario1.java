@@ -68,4 +68,8 @@ public class Scenario1 extends DesignScenario {
         components.add(bulb);
         return components;
     }
+
+    public int getID(){
+        return 1;
+    }
 }
