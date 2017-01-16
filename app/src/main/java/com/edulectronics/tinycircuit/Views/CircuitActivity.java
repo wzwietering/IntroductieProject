@@ -194,7 +194,7 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
                 }
             }
         }
-        return true;
+        return false;
     }
 
     private void scenarioCompleted() {
@@ -295,7 +295,7 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
 
     public void run(View view){
         circuitController.run();
-        ((GridView)findViewById(R.id.circuit)).invalidateViews();
+        ((GridView) findViewById(R.id.circuit)).invalidateViews();
         checkScenarioComplete(true);
     }
 
