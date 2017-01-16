@@ -21,8 +21,10 @@ public class VariableHandler {
 
     //Save the scenario id
     public void saveProgress(int scenarioID) {
-        editor.putInt("scenario", scenarioID);
-        editor.apply();
+        if (scenarioID >= loadProgress()) {
+            editor.putInt("scenario", scenarioID);
+            editor.apply();
+        }
     }
 
     //Load the current scenario id
