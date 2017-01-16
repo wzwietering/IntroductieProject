@@ -30,6 +30,7 @@ import com.edulectronics.tinycircuit.Models.Factories.ComponentFactory;
 import com.edulectronics.tinycircuit.Models.Menu;
 import com.edulectronics.tinycircuit.Models.MessageArgs;
 import com.edulectronics.tinycircuit.Models.MessageTypes;
+import com.edulectronics.tinycircuit.Models.Scenarios.DesignScenario;
 import com.edulectronics.tinycircuit.Models.Scenarios.IScenario;
 import com.edulectronics.tinycircuit.Models.Scenarios.ImplementedScenarios.FreePlayScenario;
 import com.edulectronics.tinycircuit.Models.Scenarios.ImplementedScenarios.Scenario2;
@@ -42,6 +43,11 @@ import com.edulectronics.tinycircuit.Views.Draggables.DragLayer;
 import com.edulectronics.tinycircuit.Views.Draggables.GridCell;
 import com.edulectronics.tinycircuit.Views.Draggables.Interfaces.IDragSource;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Random;
+import java.util.Set;
 import static com.edulectronics.tinycircuit.Models.MessageTypes.Explanation;
 
 public class CircuitActivity extends Activity implements View.OnClickListener, View.OnTouchListener, View.OnLongClickListener {
@@ -78,7 +84,8 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
 
     private void showMessages() {
         if (levelController.getScenario().getClass() != FreePlayScenario.class) {
-            messageController.displayMessage(new MessageArgs(levelController.getScenario().getPrompt(), Explanation));
+            String prompt = getResources().getString(levelController.getScenario().getPrompt());
+            messageController.displayMessage(new MessageArgs(prompt, Explanation));
         }
     }
 
@@ -191,12 +198,9 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
     }
 
     private void scenarioCompleted() {
-        messageController.displayMessage(new MessageArgs(
-                R.string.scenario_complete,
-                MessageTypes.ScenarioComplete,
-                true));
         VariableHandler variableHandler = new VariableHandler(getApplicationContext());
         variableHandler.saveProgress(levelController.getScenarioID());
+        givePositiveFeedback();
     }
 
     public boolean onLongClick(View v) {
@@ -292,12 +296,42 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
     public void run(View view){
         circuitController.run();
         ((GridView)findViewById(R.id.circuit)).invalidateViews();
-        checkScenarioComplete();
+        checkScenarioComplete(true);
     }
 
-    private void checkScenarioComplete(){
+    private void checkScenarioComplete(boolean run){
+        //The boolean is used to give the user only negative feedback when they press the run button.
+        //Giving negative feedback when this method runs using the onTouch method is a nightmare,
+        //because you will get negative messages all the time.
         if (levelController.levelIsCompleted(circuitController.circuit)) {
             scenarioCompleted();
+        } else if (run && levelController.getScenario().getClass() != FreePlayScenario.class) {
+            giveNegativeFeedback();
         }
+    }
+
+    //Create a negative feedback message
+    private void giveNegativeFeedback(){
+        String[] negativeFeedback = getResources().getStringArray(R.array.negative_feedback);
+        String feedback = getResources().getString(((DesignScenario) scenario).getHint());
+        messageController.displayMessage(new MessageArgs(
+                giveFeedback(negativeFeedback) + " " + feedback,
+                MessageTypes.Mistake));
+    }
+
+    //Create a positive feedback message
+    private void givePositiveFeedback(){
+        String[] positiveFeedback = getResources().getStringArray(R.array.positive_feedback);
+        messageController.displayMessage(new MessageArgs(
+                giveFeedback(positiveFeedback),
+                MessageTypes.ScenarioComplete,
+                true));
+    }
+
+    //This methods returns a random string from an array. It is used to give the user more
+    //interesting feedback, because the string is not always the same.
+    private String giveFeedback(String[] options){
+        Random random = new Random();
+        return options[random.nextInt(options.length)];
     }
 }

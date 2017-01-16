@@ -27,10 +27,12 @@ public class Scenario1 extends DesignScenario {
         return R.string.scenario1_explanation;
     }
 
+    private boolean hasLightbulb, isFullCircle;
+
     @Override
     public boolean isCompleted(Circuit circuit) {
-        boolean hasLightbulb = false;
-        boolean isFullCircle = false;
+        hasLightbulb = false;
+        isFullCircle = false;
 
         for (Component component : circuit.getAllComponents()) {
             if(component != null) {
@@ -69,7 +71,17 @@ public class Scenario1 extends DesignScenario {
         return components;
     }
 
-    public int getID(){
+    public int getID() {
         return 1;
+    }
+
+    public int getHint(){
+        if (!hasLightbulb){
+            return R.string.missing_component;
+        }
+        if (!isFullCircle){
+            return R.string.no_full_circle;
+        }
+        return 0;
     }
 }

@@ -43,7 +43,7 @@ public class ExerciseMenuActivity extends AppCompatActivity {
         String levelnumber = text.getText().toString();
         if(currentScenario < Integer.parseInt(levelnumber)){
             MessageController messageController = new MessageController(getFragmentManager());
-            messageController.displayMessage(new MessageArgs(R.string.scenario_locked_explanation, MessageTypes.ScenarioLocked));
+            messageController.displayMessage(new MessageArgs(getResources().getString(R.string.scenario_locked_explanation), MessageTypes.ScenarioLocked));
         } else {
             Intent intent = new Intent(this, CircuitActivity.class);
             intent.putExtra("scenario", levelnumber);

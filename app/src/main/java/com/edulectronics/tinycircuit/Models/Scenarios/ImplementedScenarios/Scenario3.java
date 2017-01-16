@@ -94,4 +94,9 @@ public class Scenario3 extends DesignScenario {
     public int getID(){
         return 3;
     }
+
+    @Override
+    public int getHint() {
+        return R.string.app_name; // TODO: add hints
+    }
 }

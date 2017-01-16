@@ -54,4 +54,6 @@ public abstract class DesignScenario implements IScenario {
     public int getID(){
         return 0;
     }
+
+    public abstract int getHint();
 }

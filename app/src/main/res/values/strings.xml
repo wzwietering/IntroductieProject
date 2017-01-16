@@ -39,5 +39,28 @@
     <string name="scenario2_explanation">Voeg een weerstand toe aan het circuit, zodat je het lampje niet kapot gaat. Om een weerstand toe te voegen, moet je een draad weg halen. Dit kan je doen door in draad modus op een draad te tikken. Voer het circuit uit als je klaar bent.</string>
     <string name="scenario3_explanation">Voeg een schakelaar toe aan het circuit, zodat je het lampje aan en uit kan zetten. Druk daarna op de knop om de lamp aan te zetten.</string>
     <string name="scenario_complete">Goed gedaan!</string>
+    <string name="scenario_not_complete">Het circuit klopt nog niet!</string>
     <string name="button_add_wire">draden tekenen</string>
+
+    <!--Specific feedback-->
+    <string name="missing_component">Er ontbreekt een component</string>
+    <string name="no_full_circle">Het circuit is nog niet gesloten</string>
+    <string name="wrong_connection">Een verbinding klopt niet</string>
+    <string name="lamp_off">De lamp staat nog niet aan</string>
+
+    <!--Arrays with feedback-->
+    <string-array name="positive_feedback">
+        <item>"Goed gedaan!"</item>
+        <item>"Dit circuit klopt!"</item>
+        <item>"Het gaat goed!"</item>
+        <item>"Je bent klaar voor een grotere uitdaging!"</item>
+        <item>"Volgens mij was dit te makkelijk!"</item>
+    </string-array>
+    <string-array name="negative_feedback">
+        <item>"Er klopt iets niet."</item>
+        <item>"Je bent goed bezig, maar er zit een foutje in het circuit."</item>
+        <item>"Kijk nog eens goed naar het circuit."</item>
+        <item>"De opdracht is nog niet voltooid, maar je bent er bijna!"</item>
+        <item>"Er is nog een aanpassing nodig!"</item>
+    </string-array>
 </resources>

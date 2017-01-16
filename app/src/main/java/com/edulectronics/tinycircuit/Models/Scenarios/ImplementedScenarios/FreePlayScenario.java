@@ -13,4 +13,8 @@ public class FreePlayScenario extends DesignScenario {
     public int getPrompt() {
         return R.string.scenario_freeplay;
     }
+
+    public int getHint(){
+        return 0;
+    }
 }
