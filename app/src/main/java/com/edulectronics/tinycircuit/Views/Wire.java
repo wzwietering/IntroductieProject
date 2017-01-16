@@ -22,7 +22,7 @@ public class Wire extends View {
     public Point a, b;
     public Paint paint = new Paint();
     private Point screenSize = new Point();
-    private WireDrawingMode drawingMode = WireDrawingMode.normal;
+    public WireDrawingMode drawingMode = WireDrawingMode.normal;
     private int thisDelay = 0;
     private int numberOfFlashes = 0;
 
@@ -52,7 +52,7 @@ public class Wire extends View {
                 canvas.drawLine(a.x, a.y, b.x, b.y, paint);
 
                 // Flash the wire a few times.
-                if (numberOfFlashes < 5) {
+                if (numberOfFlashes < 4) {
                     if (paint.getColor() == Color.WHITE) {
                         paint.setColor(Color.YELLOW);
                     } else {
@@ -68,9 +68,6 @@ public class Wire extends View {
     // Highlight the wire. We change the paint color andd call the onDraw() method again with
     // a delay.
     public void highLight(int color, int delay) {
-        // Set drawingmode (which is checked in the onDraw() method)
-        this.drawingMode = WireDrawingMode.highlight;
-
         Handler handler = new Handler(this.getContext().getMainLooper());
         // We need a runnable that accepts argument. Create the class here because it will NOT
         // be used anywhere else, and I don't see the point of making a whole new file for this.
@@ -84,6 +81,8 @@ public class Wire extends View {
             }
             // This runnable invalidates the wire and thus onDraw() is called on the wire.
             public void run() {
+                // Set drawingmode (which is checked in the onDraw() method)
+                wire.drawingMode = drawingMode.highlight;
                 wire.paint.setColor(this.color);
                 wire.invalidate();
             }

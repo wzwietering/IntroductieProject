@@ -290,9 +290,13 @@ public class CircuitActivity extends Activity
     }
 
     public void run(View view) {
+        // Reset the circuit before animating it; so all wires start out white, and lightbulbs whole.
         wireController.redrawWires();
-        circuitController.run(this);
         ((GridView)findViewById(R.id.circuit)).invalidateViews();
+
+        //TODO: get the delay back from the circuitcontroller (which gets it from wirecontroller)
+        // to delay the scenario complete check until the whole circuit has been animated.
+        circuitController.run(this);
         checkScenarioComplete();
     }
 
