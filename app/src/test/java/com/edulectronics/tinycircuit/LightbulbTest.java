@@ -1,7 +1,6 @@
 package com.edulectronics.tinycircuit;
 
 import com.edulectronics.tinycircuit.Controllers.CircuitController;
-import com.edulectronics.tinycircuit.Controllers.CircuitController;
 import com.edulectronics.tinycircuit.Models.Components.Component;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.ConnectionPoint;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.Connector;
@@ -9,9 +8,7 @@ import com.edulectronics.tinycircuit.Models.Components.Lightbulb;
 import com.edulectronics.tinycircuit.Models.Components.Powersource;
 import com.edulectronics.tinycircuit.Models.Components.Resistor;
 
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.experimental.theories.internal.ParameterizedAssertionError;
 
 import java.util.ArrayList;
 

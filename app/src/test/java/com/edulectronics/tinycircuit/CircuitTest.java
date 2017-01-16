@@ -7,6 +7,7 @@ import com.edulectronics.tinycircuit.Models.Components.Lightbulb;
 import com.edulectronics.tinycircuit.Models.Components.Powersource;
 import com.edulectronics.tinycircuit.Models.Components.Resistor;
 
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ import static org.junit.Assert.assertTrue;
  */
 
 public class CircuitTest {
-    CircuitController c;
+    static CircuitController c;
     Lightbulb light = new Lightbulb();
 
     @BeforeClass
@@ -37,8 +38,7 @@ public class CircuitTest {
 
     @Test
     public void removeComponent(){
-        c = CircuitController.getInstance();
-        c.setProperties(5, 5, null);
+        c = CircuitBuilder.getCircuitController();
         c.removeComponent(1);
 
         assertEquals(false, c.circuit.occupied(5));
