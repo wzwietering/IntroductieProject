@@ -2,7 +2,6 @@ package com.edulectronics.tinycircuit.Models.Scenarios.ImplementedScenarios;
 
 import com.edulectronics.tinycircuit.Models.Circuit;
 import com.edulectronics.tinycircuit.Models.Components.Component;
-import com.edulectronics.tinycircuit.Models.Components.Connectors.Connector;
 import com.edulectronics.tinycircuit.Models.Components.Lightbulb;
 import com.edulectronics.tinycircuit.Models.Components.Powersource;
 import com.edulectronics.tinycircuit.Models.Components.Resistor;
@@ -20,11 +19,15 @@ public class Scenario4 extends DesignScenario {
         return R.string.scenario4_explanation;
     }
 
+    boolean lampRequirementsMet;
+    boolean isFullCircle;
+    boolean hasSwitch;
+
     @Override
     public boolean isCompleted(Circuit circuit) {
-        boolean lampRequirementsMet = true;
-        boolean isFullCircle = false;
-        boolean hasSwitch = false;
+        lampRequirementsMet = true;
+        isFullCircle = false;
+        hasSwitch = false;
 
         for (Component component : circuit.getAllComponents()) {
             if(component != null) {
@@ -68,8 +71,20 @@ public class Scenario4 extends DesignScenario {
         return components;
     }
 
-    @Override
+    public int getID(){
+        return 4;
+    }
+
     public int getHint() {
-        return R.string.app_name; // TODO: add hints
+        if(!lampRequirementsMet){
+            return R.string.lamp_off;
+        }
+        if(!isFullCircle){
+            return R.string.no_full_circle;
+        }
+        if(!hasSwitch){
+            return R.string.missing_component;
+        }
+        return 0;
     }
 }

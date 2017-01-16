@@ -31,11 +31,15 @@ public class Scenario3 extends DesignScenario {
         return R.string.scenario3_explanation;
     }
 
+    boolean hasConnectedSwitch;
+    boolean isFullCircle;
+    boolean lampIsOn;
+
     @Override
     public boolean isCompleted(Circuit circuit) {
-        boolean hasConnectedSwitch = false;
-        boolean isFullCircle = false;
-        boolean lampIsOn = false;
+        hasConnectedSwitch = false;
+        isFullCircle = false;
+        lampIsOn = false;
 
         for (Component component : circuit.getAllComponents()) {
             if(component != null && circuit.getComponentCount(component) == 1) {
@@ -90,12 +94,21 @@ public class Scenario3 extends DesignScenario {
         return components;
     }
 
+    @Override
     public int getID(){
         return 3;
     }
 
-    @Override
     public int getHint() {
-        return R.string.app_name; // TODO: add hints
+        if(!hasConnectedSwitch){
+            return R.string.no_connection;
+        }
+        if(!isFullCircle){
+            return R.string.no_full_circle;
+        }
+        if(!lampIsOn){
+            return R.string.lamp_off;
+        }
+        return 0;
     }
 }

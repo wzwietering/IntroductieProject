@@ -46,10 +46,11 @@
     <string name="button_add_wire">draw wires</string>
 
     <!--Specific feedback-->
-    <string name="missing_component">A component is missing</string>
-    <string name="no_full_circle">The circuit is not closed yet</string>
-    <string name="wrong_connection">A connection is wrong</string>
-    <string name="lamp_off">The lamp is not yet on</string>
+    <string name="missing_component">A component is missing.</string>
+    <string name="no_full_circle">The circuit is not closed yet.</string>
+    <string name="wrong_connection">A connection is wrong.</string>
+    <string name="lamp_off">The lamp is not yet on.</string>
+    <string name="no_connection">A component is not connected.</string>
 
     <!--Arrays with feedback-->
     <string-array name="positive_feedback">
