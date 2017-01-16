@@ -9,7 +9,7 @@ import com.edulectronics.tinycircuit.Models.Components.Connectors.Connection;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.ConnectionPoint;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.ConnectionPointOrientation;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.Connector;
-import com.edulectronics.tinycircuit.Models.Line;
+import com.edulectronics.tinycircuit.Models.Components.Connectors.Line;
 import com.edulectronics.tinycircuit.Views.WireView;
 
 import java.util.ArrayList;

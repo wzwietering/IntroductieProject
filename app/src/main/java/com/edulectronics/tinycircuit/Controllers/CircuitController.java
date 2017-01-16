@@ -51,11 +51,11 @@ public class CircuitController implements Serializable {
         }
     }
 
-    public Component getComponent(int position){
+    public Component getComponent(int position) {
         return circuit.getComponent(position);
     }
 
-    public Component[] getComponents(){
+    public Component[] getComponents() {
         return circuit.getAllComponents();
     }
 
@@ -66,7 +66,7 @@ public class CircuitController implements Serializable {
         }
 
         Component component = getComponent(position);
-        if(component != null) {
+        if (component != null) {
             return component.handleClick();
         }
         return false;
@@ -93,9 +93,8 @@ public class CircuitController implements Serializable {
 
     // Reset all the components to their standard values (eg. lightbulbs turned off and not broken)
     public void reset() {
-        for (Component component: circuit.getAllComponents()) {
+        for (Component component: circuit.getAllComponents())
             component.reset();
-        }
     }
 
     // Run the circuit!
@@ -103,9 +102,10 @@ public class CircuitController implements Serializable {
         reset();
 
         // Check if there are outgoing connections.
-        for (Component component: this.getComponents()) {
-            if(component != null && component.getClass() == Powersource.class) {
-                if(((Powersource) component).hasOutputConnection()) {
+        for (Component component : this.getComponents()) {
+            if (component != null && component.getClass() == Powersource.class) {
+                if (((Powersource) component).hasOutputConnection()) {
+                    // If yes, create graph.
                     Graph graph = new Graph((Powersource) component, this.getAllConnections());
 
                     // Now check all paths on the graph.
@@ -117,8 +117,8 @@ public class CircuitController implements Serializable {
 
     // Check all paths on the graph to see if there is resistance
     private void checkPaths(Graph graph) {
-        for (Stack path: graph.findAllPaths()) {
-            boolean pathHasResistor =  false;
+        for (Stack path : graph.findAllPaths()) {
+            boolean pathHasResistor = false;
 
             Object[] elements = path.toArray();
             for (Object element : elements) {
@@ -133,9 +133,19 @@ public class CircuitController implements Serializable {
                     ((Component) element).setResistance(false);
                 }
             }
+
+            handleHighInputs(elements);
         }
-        for (Component node: graph.nodes) {
-            node.handleInputHigh();
+    }
+
+    //Only handle input for the connected elements
+    private void handleHighInputs(Object[] elements) {
+        for (Object element : elements) {
+            ((Component) element).handleInputHigh();
         }
+    }
+
+    public int getComponentCount(Component component) {
+        return circuit.getComponentCount(component);
     }
 }

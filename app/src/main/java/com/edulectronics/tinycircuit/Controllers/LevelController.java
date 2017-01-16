@@ -1,5 +1,6 @@
 package com.edulectronics.tinycircuit.Controllers;
 
+import com.edulectronics.tinycircuit.Models.Circuit;
 import com.edulectronics.tinycircuit.Models.Components.Component;
 import com.edulectronics.tinycircuit.Models.Factories.ScenarioFactory;
 import com.edulectronics.tinycircuit.Models.Scenarios.IScenario;
@@ -17,6 +18,14 @@ public class LevelController {
     public LevelController(String scenarioNr) {
         ScenarioFactory factory = new ScenarioFactory();
         scenario = factory.getScenario(scenarioNr);
+    }
+
+    public boolean levelIsCompleted(Circuit circuit) {
+        return scenario.isCompleted(circuit);
+    }
+
+    public int getScenarioID() {
+        return scenario.getID();
     }
 
     public ArrayList<Component> getAvailableComponents() {

@@ -62,4 +62,16 @@ public class Circuit implements Serializable{
         }
         return -1;
     }
+
+    public int getComponentCount(Component component) {
+        int componentCount = 0;
+        for (Component comp : components){
+            if(comp != null) {
+                if (comp.getClass() == component.getClass()) {
+                    componentCount++;
+                }
+            }
+        }
+        return componentCount;
+    }
 }

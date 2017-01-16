@@ -25,4 +25,7 @@ import java.util.Set;
 
     // Load the preset components for displaying the circuit that is part of this scenario.
     ArrayList<Component> loadComponents();
+
+    // Returns the id of the scenario, which is its number.
+    public int getID();
 }

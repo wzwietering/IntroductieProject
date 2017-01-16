@@ -6,6 +6,7 @@ import com.edulectronics.tinycircuit.Models.Components.Connectors.Connector;
 import com.edulectronics.tinycircuit.Models.Components.Lightbulb;
 import com.edulectronics.tinycircuit.Models.Components.Powersource;
 import com.edulectronics.tinycircuit.Models.Components.Resistor;
+import com.edulectronics.tinycircuit.Models.Components.Switch;
 import com.edulectronics.tinycircuit.Models.Scenarios.DesignScenario;
 import com.edulectronics.tinycircuit.R;
 
@@ -14,49 +15,47 @@ import java.util.Set;
 
 
 /**
- * Created by Maaike on 14-12-2016.
+ * Created by Jesper on 1/4/2017.
  */
 
-public class Scenario2 extends DesignScenario {
-    public Scenario2(){}
-
-    public Scenario2(Circuit circuit) {
+public class Scenario3 extends DesignScenario {
+    public Scenario3(){}
+    public Scenario3(Circuit circuit) {
         super(circuit);
     }
 
+    public ArrayList<Component> components = new ArrayList<>();
+
     @Override
     public int getPrompt() {
-        return R.string.scenario2_explanation;
+        return R.string.scenario3_explanation;
     }
-
-    boolean hasResistor, isFullCircle, lampIsOn;
 
     @Override
     public boolean isCompleted(Circuit circuit) {
-        hasResistor = false;
-        isFullCircle = false;
-        lampIsOn = false;
+        boolean hasConnectedSwitch = false;
+        boolean isFullCircle = false;
+        boolean lampIsOn = false;
 
         for (Component component : circuit.getAllComponents()) {
             if(component != null && circuit.getComponentCount(component) == 1) {
-                if(component.getClass() == Resistor.class ) {
-                    hasResistor = true;
-                    continue;
-                }
                 if (component.getClass() == Powersource.class) {
                     if (component.hasOutputConnection(((Powersource) component).getInput())) {
                         isFullCircle = true;
                     }
                 }
-                if(component.getClass() == Lightbulb.class){
-                    if(((Lightbulb) component).isOn){
+                if(component.getClass() == Lightbulb.class) {
+                    if (((Lightbulb) component).isOn) {
                         lampIsOn = true;
                     }
                 }
+                if(component.getClass() == Switch.class){
+                    if (component.hasOutputConnection(((Switch) component).getConnectionPointByIndex(1)))
+                        hasConnectedSwitch = true;
+                }
             }
         }
-
-        return (isFullCircle && hasResistor && lampIsOn);
+        return (isFullCircle && hasConnectedSwitch && lampIsOn);
     }
 
     public Set<Component> getAvailableComponents() {
@@ -64,6 +63,7 @@ public class Scenario2 extends DesignScenario {
         set.add(new Lightbulb());
         set.add(new Powersource());
         set.add(new Resistor());
+        set.add(new Switch());
 
         return set;
     }
@@ -76,32 +76,26 @@ public class Scenario2 extends DesignScenario {
             return super.loadComponents();
         }
 
-        ArrayList<Component> components = new ArrayList<>();
         Powersource powersource = new Powersource();
         Lightbulb bulb = new Lightbulb();
+        Resistor resistor = new Resistor();
 
-        Connector.connect(powersource.getInput(), bulb.getConnectionPointByIndex(0));
         Connector.connect(powersource.getOutput(), bulb.getConnectionPointByIndex(1));
+        Connector.connect(bulb.getConnectionPointByIndex(0),resistor.getConnectionPointByIndex(0));
+        Connector.connect(powersource.getInput(), resistor.getConnectionPointByIndex(1));
 
         components.add(powersource);
         components.add(bulb);
+        components.add(resistor);
         return components;
     }
 
-    public int getID() {
-        return 2;
+    public int getID(){
+        return 3;
     }
 
+    @Override
     public int getHint() {
-        if(!hasResistor){
-            return R.string.missing_component;
-        }
-        if(!isFullCircle){
-            return R.string.no_full_circle;
-        }
-        if(!lampIsOn){
-            return R.string.lamp_off;
-        }
-        return 0;
+        return R.string.app_name; // TODO: add hints
     }
 }
