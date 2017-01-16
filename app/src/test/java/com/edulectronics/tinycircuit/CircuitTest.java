@@ -15,12 +15,12 @@ import static org.junit.Assert.assertTrue;
  */
 
 public class CircuitTest {
-    static CircuitController c = CircuitController.getInstance();
+    static CircuitController c;
     Lightbulb light = new Lightbulb();
 
     @BeforeClass
     public static void setup(){
-        c.setProperties(5, 5, null);
+        c = new CircuitController(5, 5);
     }
 
     @Test
@@ -43,15 +43,5 @@ public class CircuitTest {
         c.addComponent(light, position);
         assertEquals(light, c.getComponent(position));
         c.removeComponent(6);
-    }
-
-    @Test
-    public void setProperties(){
-        int dimension = 8;
-        c.setProperties(dimension, dimension, null);
-        assertEquals(dimension * dimension, c.circuit.getAllComponents().length);
-
-        //Return to original state for other tests
-        setup();
     }
 }

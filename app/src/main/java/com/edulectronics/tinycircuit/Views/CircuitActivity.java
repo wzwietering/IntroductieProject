@@ -284,4 +284,8 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
         circuitController.run();
         ((GridView) findViewById(R.id.circuit)).invalidateViews();
     }
+
+    public CircuitController getCircuitController(){
+        return circuitController;
+    }
 }

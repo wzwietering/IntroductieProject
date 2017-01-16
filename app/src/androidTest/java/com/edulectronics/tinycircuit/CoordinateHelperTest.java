@@ -1,9 +1,12 @@
 package com.edulectronics.tinycircuit;
 
-import com.edulectronics.tinycircuit.Controllers.CoordinateHelper;
+import android.support.test.runner.AndroidJUnit4;
+
+import com.edulectronics.tinycircuit.Helpers.CoordinateHelper;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.ConnectionPointOrientation;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import static junit.framework.Assert.assertEquals;
 
@@ -11,9 +14,13 @@ import static junit.framework.Assert.assertEquals;
  * Created by Wilmer on 12-12-2016.
  */
 
+//This class is an Android test because the coordinatehelper uses the Resources, which are only
+//existent when running the test on a device
+
+@RunWith(AndroidJUnit4.class)
 public class CoordinateHelperTest {
     @Test
-    public void getXTest(){
+    public void coordinateTest(){
         CoordinateHelper coordinateHelper = new CoordinateHelper(5, 150, 150);
         ConnectionPointOrientation connectionPointOrientation = ConnectionPointOrientation.Bottom;
         int position = 7;

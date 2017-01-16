@@ -22,7 +22,7 @@ import static junit.framework.Assert.assertTrue;
 @RunWith(AndroidJUnit4.class)
 public class DragTest {
     Context context = InstrumentationRegistry.getTargetContext();
-    CircuitController controller = new CircuitController(5, 5, null);
+    CircuitController controller = new CircuitController(5, 5);
 
     @Test
     public void emptyGridCell(){
