@@ -208,8 +208,6 @@ public class CircuitActivity extends Activity
             }
         }
 
-        checkScenarioComplete();
-
         return handledHere;
     }
 
