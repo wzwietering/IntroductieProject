@@ -52,7 +52,7 @@ public class Wire extends View {
                 canvas.drawLine(a.x, a.y, b.x, b.y, paint);
 
                 // Flash the wire a few times.
-                if (numberOfFlashes < 4) {
+                if (numberOfFlashes < 5) {
                     if (paint.getColor() == Color.WHITE) {
                         paint.setColor(Color.YELLOW);
                     } else {
