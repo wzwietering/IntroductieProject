@@ -45,10 +45,11 @@
     <string name="button_add_wire">draden tekenen</string>
 
     <!--Specific feedback-->
-    <string name="missing_component">Er ontbreekt een component</string>
-    <string name="no_full_circle">Het circuit is nog niet gesloten</string>
-    <string name="wrong_connection">Een verbinding klopt niet</string>
-    <string name="lamp_off">De lamp staat nog niet aan</string>
+    <string name="missing_component">Er ontbreekt een component.</string>
+    <string name="no_full_circle">Het circuit is nog niet gesloten.</string>
+    <string name="wrong_connection">Een verbinding klopt niet.</string>
+    <string name="lamp_off">De lamp staat nog niet aan.</string>
+    <string name="no_connection">Een component is niet verbonden.</string>
 
     <!--Arrays with feedback-->
     <string-array name="positive_feedback">
