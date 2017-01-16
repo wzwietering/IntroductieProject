@@ -22,7 +22,6 @@ public class CircuitController implements Serializable {
 
     public CircuitController(int width, int size) {
         this.circuit = new Circuit(width, size);
-        int position = width / 2;
     }
 
     // Set the circuit to some predefined circuit passed as arguments.

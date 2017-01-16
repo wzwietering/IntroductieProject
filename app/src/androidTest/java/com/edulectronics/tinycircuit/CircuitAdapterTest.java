@@ -35,12 +35,7 @@ import static org.hamcrest.Matchers.not;
 
 @RunWith(AndroidJUnit4.class)
 public class CircuitAdapterTest {
-    static CircuitController circuitController = CircuitController.getInstance();
-
-    @BeforeClass
-    public static void setup(){
-        circuitController.setProperties(4, 4, null);
-    }
+    CircuitController circuitController = new CircuitController(4, 4);
 
     @Rule
     public ActivityTestRule<CircuitActivity> circuitActivity = new ActivityTestRule<>(CircuitActivity.class);

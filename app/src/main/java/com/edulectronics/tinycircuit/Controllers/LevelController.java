@@ -17,7 +17,6 @@ public class LevelController {
     public LevelController(String scenarioNr) {
         ScenarioFactory factory = new ScenarioFactory();
         scenario = factory.getScenario(scenarioNr);
-
     }
 
     public ArrayList<Component> getAvailableComponents() {
