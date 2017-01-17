@@ -90,11 +90,13 @@ public class CircuitAnimator {
         List<ConnectionPoint> nextConnectionPoints = b.getConnectionPoints();
 
         for (ConnectionPoint cp : currentConnectionPoints) {
-            for (Connection c: cp.getConnections()) {
-                if(nextConnectionPoints.contains(c.getOtherPoint(cp))) {
-                    if(!animatedConnections.contains(c)) {
-                        animateConnection(cp, c, color, drawingMode);
-                        animatedConnections.add(c);
+            if(a != graph.source || (a == graph.source && cp != graph.source.getInput())) {
+                for (Connection c : cp.getConnections()) {
+                    if (nextConnectionPoints.contains(c.getOtherPoint(cp))) {
+                        if (!animatedConnections.contains(c)) {
+                            animateConnection(a, c, color, drawingMode);
+                            animatedConnections.add(c);
+                        }
                     }
                 }
             }
@@ -102,7 +104,7 @@ public class CircuitAnimator {
     }
 
     // Highlight all wires of this connection.
-    private void animateConnection(ConnectionPoint origin,
+    private void animateConnection(Component origin,
                                    Connection c,
                                    int color,
                                    Wire.WireDrawingMode drawingMode) {
@@ -111,14 +113,13 @@ public class CircuitAnimator {
 
             // Increase the delay depending on the type of highlight (some take longer than others)
             if(drawingMode == drawingMode.runningHighlight)
-                delay += wire.getLength() * 4;
+                delay += wire.getLength() * 2;
         }
     }
 
     // Sort the wires so they are highlighted in correct order.
-    private List<Wire> sortWires(ConnectionPoint connectionpoint, List<Wire> wires) {
+    private List<Wire> sortWires(Component origin, List<Wire> wires) {
         List<Wire> sortedWires = new ArrayList<>();
-        Point origin = connectionpoint.getParentComponent().coordinates;
 
         Wire closestWire = null;
         int currentDistance = 0;
@@ -126,14 +127,14 @@ public class CircuitAnimator {
         while(wires.size() > 0) {
             for (Wire wire: wires) {
                 // Get distance between wire endpoints and component
-                int distanceA = getDistance(wire.a, origin);
-                int distanceB = getDistance(wire.b, origin);
+                int distanceA = getDistance(wire.a, origin.coordinates);
+                int distanceB = getDistance(wire.b, origin.coordinates);
 
                 // If any end point is closer to the component than the current endpoint, take
                 // that as the new closest wire.
                 if(closestWire == null || distanceA < currentDistance || distanceB < currentDistance) {
                     closestWire = wire;
-                    if(distanceA > distanceB) {
+                    if(distanceA < distanceB) {
                         currentDistance = distanceA;
                         wire.setDrawDirection(wire.a, wire.b);
                     } else {
@@ -184,5 +185,6 @@ public class CircuitAnimator {
     }
 
     public void animateCurrentFlow(Stack path) {
+        highlightPath(path, Color.YELLOW, Wire.WireDrawingMode.staticHighlight);
     }
 }

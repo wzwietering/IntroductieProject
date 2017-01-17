@@ -23,7 +23,7 @@ public class Graph {
     // In the graph however, the connections of the powersource output are 'source',
     // and connection of the powerSource input are 'base'.
     public final Powersource source;
-    public final Component base;
+    public final Powersource base;
 
     public Set<Component> nodes = new HashSet<>();
     List<Edge> edges = new ArrayList<Edge>();
@@ -47,9 +47,11 @@ public class Graph {
             // all paths between source and base, even though they really go from source to source.
             if (edge.a == source || edge.b == source) {
                 if (source.getInput() == connection.pointA) {
+                    // relocate to base
                     edge.a = base;
                 }
                 if (source.getInput() == connection.pointB) {
+                    // relocate to base
                     edge.b = base;
                 }
             }

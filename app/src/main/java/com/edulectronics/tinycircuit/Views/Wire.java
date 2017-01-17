@@ -32,8 +32,11 @@ public class Wire extends View {
     // these are counters for drawing the line
     int drawUntilX;
     int drawUntilY;
-    private int numberOfFlashes;
 
+    // used for flash mode to keep track of the number of times we flashed
+    private int numberOfFlashes;
+    // used for 'running' highlight mode to see what color we used last
+    boolean useHighlightColorFirst = true;
 
     public Wire(Context context, AttributeSet attr) {
         super(context, attr);
@@ -59,6 +62,8 @@ public class Wire extends View {
                 canvas.drawLine(a.x, a.y, b.x, b.y, whitePaint);
                 break;
             case runningHighlight:
+                checkIfEndWasReached();
+
                 // Draw the running highlight...
                 canvas.drawLine(drawStart.x, drawStart.y, drawUntilX, drawUntilY, this.highlightPaint);
                 // ... and the rest of the line still in white.
@@ -66,16 +71,39 @@ public class Wire extends View {
 
                 // Up the coordinates and repeat! (until we're at drawEnd)
                 if (drawUntilX < drawEnd.x) {
-                    drawUntilX+=5;
+                    drawUntilX+=15;
                     postInvalidateDelayed(10);
                 }
                 else if(drawUntilY < drawEnd.y) {
-                    drawUntilY+=5;
+                    drawUntilY+=15;
                     postInvalidateDelayed(10);
                 }
                 break;
             case staticHighlight:
-                canvas.drawLine(a.x, a.y, b.x, b.y, highlightPaint);
+                drawUntilX = drawStart.x;
+                drawUntilY = drawStart.y;
+                boolean useHighlightColor = this.useHighlightColorFirst;
+
+                while(drawUntilX < drawEnd.x || drawUntilY < drawEnd.y)
+                {
+                    if (drawUntilX < drawEnd.x) {
+                        drawUntilX += 20;
+                        checkIfEndWasReached();
+                        canvas.drawLine(drawUntilX - 20, drawUntilY, drawUntilX, drawUntilY,
+                                useHighlightColor ? this.highlightPaint : this.whitePaint);
+                    }
+                    else if(drawUntilY < drawEnd.y) {
+                        drawUntilY += 20;
+                        checkIfEndWasReached();
+                        canvas.drawLine(drawUntilX, drawUntilY - 20, drawUntilX, drawUntilY,
+                                useHighlightColor ? this.highlightPaint : this.whitePaint);
+                    }
+
+                    useHighlightColor = !useHighlightColor;
+                }
+                this.useHighlightColorFirst = !this.useHighlightColorFirst;
+                postInvalidateDelayed(1000);
+
                 break;
             case flashingHighlight:
                 canvas.drawLine(a.x, a.y, b.x, b.y, highlightPaint);
@@ -91,6 +119,15 @@ public class Wire extends View {
                 break;
         }
         super.onDraw(canvas);
+    }
+
+    private void checkIfEndWasReached() {
+        if (drawUntilX > drawEnd.x) {
+            drawUntilX = drawEnd.x;
+        }
+        if (drawUntilY > drawEnd.y) {
+            drawUntilY = drawEnd.y;
+        }
     }
 
     // Highlight the wire. We change the paint color andd call the onDraw() method again with
@@ -137,7 +174,7 @@ public class Wire extends View {
         }
     }
 
-    public void setDrawDirection(Point b, Point a) {
+    public void setDrawDirection(Point a, Point b) {
         this.drawStart = a;
         this.drawEnd = b;
         this.drawUntilX = a.x;
