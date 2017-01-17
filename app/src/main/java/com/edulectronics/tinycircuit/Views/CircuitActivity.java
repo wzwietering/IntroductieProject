@@ -237,7 +237,7 @@ public class CircuitActivity extends Activity
         if (isInWireMode) {
             view.setBackgroundResource(R.color.wiremode_on);
         } else {
-            view.setBackgroundResource(R.color.wiremode_off);
+            view.setBackgroundResource(R.color.background);
         }
     }
 
