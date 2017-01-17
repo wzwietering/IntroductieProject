@@ -80,8 +80,14 @@ public class Wire extends View {
                 }
                 break;
             case staticHighlight:
+                drawStart.x = Math.min(a.x, b.x);
+                drawEnd.x = Math.max(a.x, b.x);
+                drawStart.y = Math.min(a.y, b.y);
+                drawEnd.y = Math.max(a.y, b.y);
+
                 drawUntilX = drawStart.x;
                 drawUntilY = drawStart.y;
+
                 boolean useHighlightColor = this.useHighlightColorFirst;
 
                 while(drawUntilX < drawEnd.x || drawUntilY < drawEnd.y)
@@ -175,8 +181,8 @@ public class Wire extends View {
     }
 
     public void setDrawDirection(Point a, Point b) {
-        this.drawStart = a;
-        this.drawEnd = b;
+        this.drawStart = new Point(a);
+        this.drawEnd = new Point(b);
         this.drawUntilX = a.x;
         this.drawUntilY = a.y;
     }
