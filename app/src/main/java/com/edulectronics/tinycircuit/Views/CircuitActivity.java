@@ -1,7 +1,6 @@
 package com.edulectronics.tinycircuit.Views;
 
 import android.app.Activity;
-import android.content.res.TypedArray;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -11,10 +10,11 @@ import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.ExpandableListView;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.edulectronics.tinycircuit.Controllers.CircuitController;
@@ -31,14 +31,13 @@ import com.edulectronics.tinycircuit.Models.Scenarios.ImplementedScenarios.FreeP
 import com.edulectronics.tinycircuit.Models.Scenarios.ImplementedScenarios.Scenario2;
 import com.edulectronics.tinycircuit.R;
 import com.edulectronics.tinycircuit.Views.Adapters.CircuitAdapter;
-import com.edulectronics.tinycircuit.Views.Adapters.ExpandableListAdapter;
+import com.edulectronics.tinycircuit.Views.Adapters.ListAdapter;
 import com.edulectronics.tinycircuit.Views.Draggables.DragController;
 import com.edulectronics.tinycircuit.Views.Draggables.DragLayer;
 import com.edulectronics.tinycircuit.Views.Draggables.GridCell;
 import com.edulectronics.tinycircuit.Views.Draggables.Interfaces.IDragSource;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
@@ -48,8 +47,7 @@ public class CircuitActivity extends Activity
         implements View.OnClickListener, View.OnTouchListener, View.OnLongClickListener { //  , AdapterView.OnItemClickListener
     private DragController mDragController;   // Object that handles a drag-drop sequence. It interacts with DragSource and DropTarget objects.
     private DragLayer mDragLayer;             // The ViewGroup within which an object can be dragged.
-    private List<MenuItem> headers;
-    private HashMap<MenuItem, List<MenuItem>> children;
+    private List<MenuItem> componentlist;
     private CircuitController circuitController;
     private WireController wireController;
     private IScenario scenario;
@@ -66,9 +64,6 @@ public class CircuitActivity extends Activity
 
         int cellSize = getResources().getInteger(R.integer.cell_size);
         wireController = new WireController((WireView) findViewById(R.id.draw_view), cellSize, cellSize);
-
-        ImageView hamburger = (ImageView) findViewById(R.id.hamburger);
-        hamburger.setImageResource(R.drawable.ic_hamburger);
 
         scenario = (IScenario) getIntent().getSerializableExtra("scenario");
         availableComponents = scenario.getAvailableComponents();
@@ -128,51 +123,36 @@ public class CircuitActivity extends Activity
 
     /*This code adds a menu to the side*/
     private void createMenu() {
-        ExpandableListView expandableList = (ExpandableListView) findViewById(R.id.expandablelist);
+        ListView listView = (ListView) findViewById(R.id.list);
         makeLists();
 
-        ExpandableListAdapter adapter = new ExpandableListAdapter(
-                this, headers, children, expandableList
+        ListAdapter adapter = new ListAdapter(
+                this, componentlist, listView
         );
-        expandableList.setAdapter(adapter);
-        expandableList.setOnChildClickListener(onChildClick());
-        expandableList.setOnGroupClickListener(onGroupClick());
+        listView.setAdapter(adapter);
+        listView.setOnItemClickListener(onItemClick());
     }
 
-    /*Makes the groups and children*/
+    /*Makes the list of components*/
     private void makeLists() {
-        headers = new ArrayList<>();
-        String[] items = getResources().getStringArray(R.array.menuitems);
-        children = new HashMap<>();
-        /*Temporary! Should work different!*/
-        int[] textures = {0, R.drawable.battery, R.drawable.lightbulb_on, R.drawable.resistor, R.drawable.switch_on};
-
-        TypedArray typedArray = getResources().obtainTypedArray(R.array.categories);
-        int length = typedArray.length();
-        String[][] headings = new String[length][];
-
-        for (int i = 0; i < length; i++) {
-            int id = typedArray.getResourceId(i, 0);
-            headings[i] = getResources().getStringArray(id);
+        componentlist = new ArrayList<>();
+        int componentCount = availableComponents.size();
+        if (componentCount == 0){
+            componentCount = 4;
         }
-        typedArray.recycle();
 
-        for (int i = 0; i < items.length; i++) {
+        String[] items = getResources().getStringArray(R.array.menuitems);
+        int[] textures = {R.drawable.battery, R.drawable.lightbulb_on, R.drawable.resistor, R.drawable.switch_on};
+
+        for (int i = 0; i < componentCount; i++) {
             MenuItem item = new MenuItem();
             item.setIconName(items[i]);
             item.setIconImage(textures[i]);
-            headers.add(item);
-
-            List<MenuItem> heading = new ArrayList();
-            for (int j = 1; j < headings[i].length; j++) {
-                MenuItem subitem = new MenuItem();
-                subitem.setIconName(headings[i][j]);
-                subitem.setIconImage(textures[i + j - 1]);
-                heading.add(subitem);
-            }
-            children.put(headers.get(i), heading);
+            componentlist.add(item);
         }
     }
+
+
 
     public void onClick(View v) {
         if (!isInWireMode) {
@@ -241,40 +221,23 @@ public class CircuitActivity extends Activity
         ((DrawerLayout) findViewById(R.id.activity_main)).closeDrawer(view);
     }
 
-    public ExpandableListView.OnGroupClickListener onGroupClick() {
-        return new ExpandableListView.OnGroupClickListener() {
-            @Override
-            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
-                if (groupPosition == 0) {
-                    LinearLayout group = (LinearLayout) v;
-                    toggleMode(group);
-                    NavigationView view = (NavigationView) findViewById(R.id.navigationview);
-                    ((DrawerLayout) findViewById(R.id.activity_main)).closeDrawer(view);
-                }
-                return false;
-            }
-        };
-    }
-
-    public ExpandableListView.OnChildClickListener onChildClick() {
-        return new ExpandableListView.OnChildClickListener() {
-            @Override
-            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-                LinearLayout group = (LinearLayout) ((LinearLayout) v).getChildAt(0);
-                View child = group.getChildAt(1);
-                String text = (String) ((TextView) child).getText();
+    public ListView.OnItemClickListener onItemClick() {
+        return new ListView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                LinearLayout group = (LinearLayout) view;
+                TextView textView = (TextView) group.findViewById(R.id.submenu);
+                String text = (String) textView.getText();
                 onClickAddComponent(text);
-                return false;
             }
         };
     }
 
-    public void toggleMode(LinearLayout linearLayout) {
+    public void toggleMode(View view) {
         isInWireMode = !isInWireMode;
         if (isInWireMode) {
-            linearLayout.setBackgroundResource(R.color.wiremode_on);
+            view.setBackgroundResource(R.color.wiremode_on);
         } else {
-            linearLayout.setBackgroundResource(R.color.wiremode_off);
+            view.setBackgroundResource(R.color.wiremode_off);
         }
     }
 
