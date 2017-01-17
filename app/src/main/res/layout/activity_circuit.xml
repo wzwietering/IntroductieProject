@@ -62,9 +62,8 @@
 			android:layout_height="wrap_content"
 			android:layout_gravity="start"
 			android:layout_marginTop="44dp"
-			android:layout_marginLeft="-4dp"
 			android:padding="4dp"
-			android:src="@drawable/trashcan"
+			android:src="@drawable/wire"
 			android:onClick="toggleMode"
 			android:id="@+id/wire"/>
 
