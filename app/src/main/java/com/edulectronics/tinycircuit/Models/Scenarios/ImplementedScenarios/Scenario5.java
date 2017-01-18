@@ -32,7 +32,9 @@ public class Scenario5 extends DesignScenario {
 
     @Override
     public boolean isCompleted(Circuit circuit) {
-        if (!super.isCompleted(circuit)) return false;
+        isFullCircle = super.isCompleted(circuit);
+        if (!isFullCircle) return false;
+
         lampRequirementsMet = false;
         hasSwitch = false;
         hasResistor = false;

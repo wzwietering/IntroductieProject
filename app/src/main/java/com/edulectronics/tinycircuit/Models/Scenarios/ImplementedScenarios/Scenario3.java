@@ -11,6 +11,8 @@ import com.edulectronics.tinycircuit.Models.Scenarios.DesignScenario;
 import com.edulectronics.tinycircuit.R;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
 
 
@@ -32,7 +34,9 @@ public class Scenario3 extends DesignScenario {
 
     @Override
     public boolean isCompleted(Circuit circuit) {
-        if (!super.isCompleted(circuit)) return false;
+        isFullCircle = super.isCompleted(circuit);
+        if (!isFullCircle) return false;
+
         hasConnectedSwitch = false;
         lampIsOn = false;
 

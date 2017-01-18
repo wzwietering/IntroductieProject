@@ -23,7 +23,7 @@ import java.util.Set;
  */
 
 public class Scenario1 extends DesignScenario {
-    private boolean hasLightbulb;
+    private boolean hasLightbulb, isFullCircle;
 
     @Override
     public int getPrompt() {
@@ -32,7 +32,9 @@ public class Scenario1 extends DesignScenario {
 
     @Override
     public boolean isCompleted(Circuit circuit) {
-        if (!super.isCompleted(circuit)) return false;
+        isFullCircle = super.isCompleted(circuit);
+        if (!isFullCircle) return false;
+
         hasLightbulb = false;
 
         for (Component component : circuit.getAllComponents()) {

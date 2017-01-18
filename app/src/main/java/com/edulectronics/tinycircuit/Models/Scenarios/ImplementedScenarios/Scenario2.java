@@ -10,6 +10,8 @@ import com.edulectronics.tinycircuit.Models.Scenarios.DesignScenario;
 import com.edulectronics.tinycircuit.R;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
 
 
@@ -29,11 +31,13 @@ public class Scenario2 extends DesignScenario {
         return R.string.scenario2_explanation;
     }
 
-    boolean hasResistor, lampIsOn;
+    boolean hasResistor, lampIsOn, isFullCircle;
 
     @Override
     public boolean isCompleted(Circuit circuit) {
-        if (!super.isCompleted(circuit)) return false;
+        isFullCircle = super.isCompleted(circuit);
+        if (!isFullCircle) return false;
+
         hasResistor = false;
         lampIsOn = false;
 
@@ -51,7 +55,7 @@ public class Scenario2 extends DesignScenario {
             }
         }
 
-        return (isFullCircle && hasResistor && lampIsOn);
+        return (hasResistor && lampIsOn);
     }
 
     public Set<Component> getAvailableComponents() {
