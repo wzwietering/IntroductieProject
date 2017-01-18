@@ -12,6 +12,7 @@ import com.edulectronics.tinycircuit.R;
 import com.edulectronics.tinycircuit.Views.Adapters.MainMenuAdapter;
 
 import java.util.Locale;
+import java.util.Objects;
 
 public class MenuActivity extends AppCompatActivity {
     String language = "nl";
@@ -46,7 +47,7 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     private void switchLanguage(){
-        if (language == "nl"){
+        if (language.equals("nl")){
             language = "en";
         } else {
             language = "nl";
@@ -56,7 +57,7 @@ public class MenuActivity extends AppCompatActivity {
 
     private void setFlag(){
         ImageView flag = (ImageView) findViewById(R.id.flag);
-        if (language == "nl") {
+        if (language.equals("nl")) {
             flag.setImageResource(R.drawable.dutchflag);
         }
         else {

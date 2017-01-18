@@ -9,7 +9,6 @@ import com.edulectronics.tinycircuit.Models.Components.Powersource;
 import com.edulectronics.tinycircuit.Models.Components.Resistor;
 
 import org.junit.Test;
-import org.junit.experimental.theories.internal.ParameterizedAssertionError;
 
 import java.util.ArrayList;
 
@@ -42,10 +41,9 @@ public class LightbulbTest {
         components.add(powersource);
         CircuitController controller = CircuitBuilder.getCircuitController(components);
 
-        controller.run();
+        controller.run(null);
         assertTrue(bulb.isBroken());
     }
-
 
     @Test
     public void disconnectedLightBulbIsOff(){
@@ -62,7 +60,7 @@ public class LightbulbTest {
         components.add(powersource);
         CircuitController controller = CircuitBuilder.getCircuitController(components);
 
-        controller.run();
+        controller.run(null);
         assertFalse(bulb.isOn);
     }
 
@@ -83,7 +81,7 @@ public class LightbulbTest {
         components.add(resistor);
         CircuitController controller = CircuitBuilder.getCircuitController(components);
 
-        controller.run();
+        controller.run(null);
         assertTrue(bulb.isOn);
         assertFalse(bulb.isBroken());
     }

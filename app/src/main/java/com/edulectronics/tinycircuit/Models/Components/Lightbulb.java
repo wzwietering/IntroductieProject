@@ -6,7 +6,6 @@ import com.edulectronics.tinycircuit.R;
  */
 
 public class Lightbulb extends Component {
-
     public boolean isOn = false;
 
     @Override
@@ -14,8 +13,9 @@ public class Lightbulb extends Component {
         if (isOn) {
             if(hasResistance) {
                 return R.drawable.lightbulb_on;
+            } else {
+                return R.drawable.lightbulb_broken;
             }
-            return  R.drawable.lightbulb_broken;
         }
         return R.drawable.lightbulb_off;
     }

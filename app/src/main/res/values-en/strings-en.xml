@@ -2,39 +2,51 @@
 <resources>
     <string name="app_name">TinyCircuit</string>
     <string-array name="menuitems">
-        <item>Wires</item>
-        <item>Powersources</item>
-        <item>Lightsources</item>
-        <item>Resisitors</item>
-    </string-array>
-    <array name="categories">
-        <item>@array/wires</item>
-        <item>@array/powersources</item>
-        <item>@array/lightsources</item>
-        <item>@array/resistors</item>
-    </array>
-    <string-array name="wires">
-        <item name="id">0</item>
-    </string-array>
-    <string-array name="powersources">
-        <item name="id">1</item>
         <item>Battery</item>
-    </string-array>
-    <string-array name="lightsources">
-        <item name="id">2</item>
         <item>Lightbulb</item>
-    </string-array>
-    <string-array name="resistors">
-        <item name="id">3</item>
         <item>Resistor</item>
         <item>Switch</item>
     </string-array>
+
     <string name="exercise">Exercises</string>
     <string name="freeplay">Free play</string>
-    <string name="button_ok" >I understand</string>
-    <string name="scenario_explanation_title" >Explanation</string>
-    <string name="scenario1_explanation" >Turn on the light by connection the battery with the lamp!</string>
-    <string name="scenario2_explanation" >Add a switch to the circuit, so the light can be turned off and on!</string>
-    <string name="scenario_complete" >Good job!</string>
-    <string name="button_add_wire" >draw wires</string>
+    <string name="button_ok">Okay</string>
+    <string name="scenario_locked">Unavailable</string>
+    <string name="scenario_locked_explanation">This scenario is not yet available. Play the previous scenarios to unlock this one!</string>
+    <string name="scenario_explanation_title">Explanation</string>
+    <string name="scenario_freeplay">This is the free play mode. Here you can design your own ciruit.</string>
+    <string name="scenario1_explanation">Connect the lamp with the battery, to give the lamp power.</string>
+    <string name="scenario2_explanation">Add a resistor to the circuit, so the light won\'t break. To add the resistor, you have to remove a wire. This can be done by touching a wire in wire mode. Run the circuit when you are done.</string>
+    <string name="scenario3_explanation">Add a switch to the circuit, so you can flick the Lamp on and off. Afterwards press the switch to turn the lamp on.</string>
+    <string name="scenario4_explanation">Now you understand all components, make your own circuit with 2 lightbulbs and a way to turn the lights off and on.</string>
+    <string name="scenario5_explanation">You now know how to build a circuit, time to try it out yourself! Make circuit with a switch and a lamp, and ensure that the lamp turns on.</string>
+    <string name="scenario_nonexisting">Unfortunately this scenario does not yet exist. You can create your own circuit here.</string>
+    <string name="scenario_complete">Good job!</string>
+    <string name="scenario_not_complete">The circuit is not right yet!</string>
+    <string name="run">Run</string>
+
+    <!--Specific feedback-->
+    <string name="no_full_circle">The circuit is not closed yet.</string>
+    <string name="wrong_connection">A connection is wrong.</string>
+    <string name="lamp_off">The lamp is not on.</string>
+    <string name="no_connection">A component is not connected.</string>
+    <string name="resistance_required">A circuit requires resistance.</string>
+    <string name="switch_required">Make sure that you can switch the lamp on and off.</string>
+    <string name="lamp_required">It\'s still dark, add a lamp!</string>
+
+    <!--Arrays with feedback-->
+    <string-array name="positive_feedback">
+        <item>"Good job!"</item>
+        <item>"This circuit is right!"</item>
+        <item>"You are on the right track!"</item>
+        <item>"You're ready for a bigger challenge!"</item>
+        <item>"This was too easy!"</item>
+    </string-array>
+    <string-array name="negative_feedback">
+        <item>"Something isn't right."</item>
+        <item>"You are doing a good job, but there is a mistake in the circuit."</item>
+        <item>"Have another look at the circuit."</item>
+        <item>"The exercise is not finished yet, but you are nearly there!"</item>
+        <item>"You need to change something!"</item>
+    </string-array>
 </resources>

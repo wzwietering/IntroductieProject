@@ -1,9 +1,12 @@
 package com.edulectronics.tinycircuit.Models.Components.Connectors;
 
+
+import android.graphics.Color;
 import android.graphics.Point;
 import android.view.MotionEvent;
 
 import com.edulectronics.tinycircuit.Models.Components.Powersource;
+import com.edulectronics.tinycircuit.Views.Wire;
 
 import java.util.List;
 
@@ -16,7 +19,7 @@ public class Connection {
     public ConnectionPoint pointB;
 
     // The drawn lines that represent this connections wire
-    private List<Line> lines;
+    private List<Wire> wires;
 
     public Connection(ConnectionPoint a, ConnectionPoint b) {
         this.pointA = a;
@@ -45,18 +48,18 @@ public class Connection {
         }
     }
 
-    public void setLines(List<Line> lines) {
-        this.lines = lines;
+    public void setWires(List<Wire> wires) {
+        this.wires = wires;
     }
 
-    public List<Line> getLines() {
-        return lines;
+    public List<Wire> getWires() {
+        return wires;
     }
 
     public boolean isTouched(MotionEvent motionEvent){
         Point point = new Point((int) motionEvent.getRawX(), (int) motionEvent.getRawY());
-        for (Line line : lines){
-            if(line.isTouched(point)){
+        for (Wire wire : wires){
+            if(wire.isTouched(point)){
                 return true;
             }
         }

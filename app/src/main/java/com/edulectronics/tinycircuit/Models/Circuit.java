@@ -3,15 +3,13 @@ package com.edulectronics.tinycircuit.Models;
 import com.edulectronics.tinycircuit.Models.Components.Component;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
-
-/**
- * Created by Wilmer on 28-11-2016.
- */
+import java.util.Collections;
 
 public class Circuit implements Serializable{
 
-    Component[] components;
+    private Component[] components;
     public int size;
     public int width;
 
@@ -19,10 +17,6 @@ public class Circuit implements Serializable{
         components = new Component[width * height];
         this.size = width * height;
         this.width = width;
-    }
-
-    public boolean isCompleteCircle() {
-        return false;
     }
 
     public void add(Component component, int i) {
@@ -43,15 +37,24 @@ public class Circuit implements Serializable{
     }
 
     public Component[] getAllComponents() {
-        return this.components;
+        ArrayList<Component> componentList = new ArrayList<>(Arrays.asList(components));
+        componentList.removeAll(Collections.singleton(null));
+        return componentList.toArray(new Component[componentList.size()]);
     }
 
-    public int getPosition(Component component) {
-        for  (int i = 0; i < components.length; i++) {
-            if(components[i] == component) {
-                return i;
+    public int getSize() {
+        return size;
+    }
+
+    public int getComponentCount(Component component) {
+        int componentCount = 0;
+        for (Component comp : components){
+            if(comp != null) {
+                if (comp.getClass() == component.getClass()) {
+                    componentCount++;
+                }
             }
         }
-        return -1;
+        return componentCount;
     }
 }

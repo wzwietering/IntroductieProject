@@ -6,6 +6,13 @@
     android:layout_height="match_parent"
 	android:background="@color/background"
     tools:context="com.edulectronics.tinycircuit.Views.CircuitActivity">
+
+	<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		xmlns:tools="http://schemas.android.com/tools"
+		android:id="@+id/wires"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"/>
+
     <com.edulectronics.tinycircuit.Views.Draggables.DragLayer
         android:id="@+id/drag_layer"
         android:layout_width="fill_parent"
@@ -19,12 +26,9 @@
 			android:layout_margin="0dp"
 			android:scrollbars="none"
 			android:background="@android:color/transparent"
+            android:columnWidth="200px"
+            android:stretchMode="none"
 			android:id="@+id/circuit" />
-
-		<com.edulectronics.tinycircuit.Views.WireView
-            android:id="@+id/draw_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
 
 		<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
 			 android:id="@+id/component_source_frame"
@@ -52,17 +56,29 @@
 			android:layout_height="wrap_content"
 			android:layout_gravity="start"
 			android:padding="4dp"
-            android:onClick="openMenu"
-			android:id="@+id/hamburger"/>
+			android:onClick="openMenu"
+			android:src="@drawable/ic_hamburger"
+			android:id="@+id/hamburger"
+			android:layout_above="@+id/wire"/>
+
+		<ImageView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="start"
+			android:layout_marginLeft="56dp"
+			android:padding="4dp"
+			android:src="@drawable/wire"
+			android:onClick="toggleMode"
+			android:id="@+id/wire"/>
+
 		<Button
-			android:text="Run"
+			android:text="@string/run"
 			android:layout_width="wrap_content"
 			android:layout_gravity="right"
 			android:layout_marginTop="2dp"
 			android:layout_height="wrap_content"
 			android:id="@+id/Run"
 			android:onClick="run"/>
-
 	</com.edulectronics.tinycircuit.Views.Draggables.DragLayer>
 
 	<android.support.design.widget.NavigationView
@@ -72,11 +88,12 @@
 		android:layout_gravity="start"
 		android:fitsSystemWindows="true">
 
-		<ExpandableListView
-			android:id="@+id/expandablelist"
+		<ListView
+			android:id="@+id/list"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
-			android:background="#ffffff"
-            android:groupIndicator="@null"/>
+			android:background="#ffffff" />
 	</android.support.design.widget.NavigationView>
+
+
 </android.support.v4.widget.DrawerLayout>
