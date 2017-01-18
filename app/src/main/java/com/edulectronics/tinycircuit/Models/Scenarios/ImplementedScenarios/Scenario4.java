@@ -27,22 +27,20 @@ public class Scenario4 extends DesignScenario {
 
     @Override
     public boolean isCompleted(Circuit circuit) {
+        if (!super.isCompleted(circuit)) return false;
         lampRequirementsMet = false;
-        isFullCircle = false;
         hasSwitch = false;
 
         for (Component component : circuit.getAllComponents()) {
             if(component != null) {
                 if (component.getClass() == Lightbulb.class) {
                     lampRequirementsMet = (((Lightbulb) component).isOn && circuit.getComponentCount(component) == 2);
-                } else if (component.getClass() == Powersource.class && circuit.getComponentCount(component) == 1) {
-                    isFullCircle = component.hasOutputConnection(((Powersource) component).getInput());
                 } else if (component.getClass() == Switch.class && circuit.getComponentCount(component) == 1){
                     hasSwitch = component.hasOutputConnection(component.getConnectionPointByIndex(1)) && component.isConductive();
                 }
             }
         }
-        return (isFullCircle && lampRequirementsMet && hasSwitch);
+        return (lampRequirementsMet && hasSwitch);
     }
 
     public Set<Component> getAvailableComponents() {

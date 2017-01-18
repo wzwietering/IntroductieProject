@@ -21,18 +21,17 @@ import java.util.Set;
  */
 
 public class Scenario1 extends DesignScenario {
+    private boolean hasLightbulb;
 
     @Override
     public int getPrompt() {
         return R.string.scenario1_explanation;
     }
 
-    private boolean hasLightbulb, isFullCircle;
-
     @Override
     public boolean isCompleted(Circuit circuit) {
+        if (!super.isCompleted(circuit)) return false;
         hasLightbulb = false;
-        isFullCircle = false;
 
         for (Component component : circuit.getAllComponents()) {
             if(component != null) {
@@ -40,15 +39,10 @@ public class Scenario1 extends DesignScenario {
                     hasLightbulb = true;
                     continue;
                 }
-                if (component.getClass() == Powersource.class) {
-                    if (component.hasOutputConnection(((Powersource) component).getInput())) {
-                        isFullCircle = true;
-                    }
-                }
             }
         }
 
-        return (isFullCircle && hasLightbulb);
+        return (hasLightbulb);
     }
 
     public Set<Component> getAvailableComponents() {

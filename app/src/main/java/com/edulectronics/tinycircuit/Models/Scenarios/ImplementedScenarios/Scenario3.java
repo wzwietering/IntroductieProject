@@ -37,17 +37,12 @@ public class Scenario3 extends DesignScenario {
 
     @Override
     public boolean isCompleted(Circuit circuit) {
+        if (!super.isCompleted(circuit)) return false;
         hasConnectedSwitch = false;
-        isFullCircle = false;
         lampIsOn = false;
 
         for (Component component : circuit.getAllComponents()) {
             if(component != null && circuit.getComponentCount(component) == 1) {
-                if (component.getClass() == Powersource.class) {
-                    if (component.hasOutputConnection(((Powersource) component).getInput())) {
-                        isFullCircle = true;
-                    }
-                }
                 if(component.getClass() == Lightbulb.class) {
                     if (((Lightbulb) component).isOn) {
                         lampIsOn = true;
@@ -59,7 +54,7 @@ public class Scenario3 extends DesignScenario {
                 }
             }
         }
-        return (isFullCircle && hasConnectedSwitch && lampIsOn);
+        return (hasConnectedSwitch && lampIsOn);
     }
 
     public Set<Component> getAvailableComponents() {
