@@ -10,6 +10,8 @@ import com.edulectronics.tinycircuit.Models.Scenarios.DesignScenario;
 import com.edulectronics.tinycircuit.R;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -36,26 +38,15 @@ public class Scenario5 extends DesignScenario {
         hasResistor = false;
 
         for (Component component : circuit.getAllComponents()) {
-            if(component != null) {
+            if(component != null  && circuit.getComponentCount(component) == 1) {
                 if (component.getClass() == Lightbulb.class) {
-                    if (((Lightbulb) component).isOn && !((Lightbulb) component).isBroken()) {
-                        lampRequirementsMet = true;
-                    }
-                }
-                if (component.getClass() == Powersource.class) {
-                    if (component.hasOutputConnection(((Powersource) component).getInput())) {
-                        isFullCircle = true;
-                    }
-                }
-                if (component.getClass() == Switch.class){
-                    if (component.hasOutputConnection(((Switch) component).getConnectionPointByIndex(1))){
-                        hasSwitch = true;
-                    }
-                }
-                if (component.getClass() == Resistor.class){
-                    if (component.hasOutputConnection(((Resistor) component).getConnectionPointByIndex(1))){
-                        hasResistor = true;
-                    }
+                    lampRequirementsMet = (((Lightbulb) component).isOn && !((Lightbulb) component).isBroken());
+                } else if (component.getClass() == Powersource.class) {
+                    isFullCircle = component.hasOutputConnection(((Powersource) component).getInput());
+                } else if (component.getClass() == Switch.class){
+                    hasSwitch = component.hasOutputConnection(component.getConnectionPointByIndex(1));
+                } else if (component.getClass() == Resistor.class){
+                    hasResistor = component.hasOutputConnection(component.getConnectionPointByIndex(1));
                 }
             }
         }
@@ -64,13 +55,8 @@ public class Scenario5 extends DesignScenario {
     }
 
     public Set<Component> getAvailableComponents() {
-        Set set = super.getAvailableComponents();
-        set.add(new Lightbulb());
-        set.add(new Powersource());
-        set.add(new Resistor());
-        set.add(new Switch());
-
-        return set;
+        Component[] components = {new Lightbulb(), new Powersource(), new Resistor(), new Switch()};
+        return new HashSet<>(Arrays.asList(components));
     }
 
     public ArrayList<Component> loadComponents() {
