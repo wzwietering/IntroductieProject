@@ -2,6 +2,8 @@ package com.edulectronics.tinycircuit.Models.Scenarios;
 
 import com.edulectronics.tinycircuit.Models.Circuit;
 import com.edulectronics.tinycircuit.Models.Components.Component;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -31,16 +33,14 @@ public abstract class DesignScenario implements IScenario {
 
     // The component types that the user is allowed to use. Can differ for each scenario.
     public Set<Component> getAvailableComponents() {
-        return new HashSet<Component>();
+        return new HashSet<>();
     }
 
     // The preset components that are already part of the scenario.
     @Override
     public ArrayList<Component> loadComponents() {
         if(this.initialComponents != null) {
-            ArrayList list = new ArrayList<Component>();
-            list.addAll(Arrays.asList(this.initialComponents));
-            return list;
+            return new ArrayList(Arrays.asList(initialComponents));
         }
         return null;
     }
@@ -48,4 +48,12 @@ public abstract class DesignScenario implements IScenario {
     // Get the Id of a message explaining to the user what they need to do
     @Override
     public abstract int getPrompt();
+
+    // Get the scenario id
+    @Override
+    public int getID(){
+        return 0;
+    }
+
+    public abstract int getHint();
 }

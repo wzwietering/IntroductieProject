@@ -9,20 +9,25 @@ import com.edulectronics.tinycircuit.Views.Draggables.Interfaces.IDragSource;
 import com.edulectronics.tinycircuit.Views.Draggables.Interfaces.IDropTarget;
 
 
-public class DeleteZone extends ImageView
-        implements IDropTarget
-{
+public class DeleteZone extends ImageView implements IDropTarget {
     private DragController mDragController;
+    private CircuitController circuitController;
 
     // Constructors
-    public DeleteZone (Context context) {
-        super  (context);
+    public DeleteZone(Context context) {
+        super(context);
     }
-    public DeleteZone (Context context, AttributeSet attrs) {
-        super (context, attrs);
+
+    public DeleteZone(Context context, AttributeSet attrs) {
+        super(context, attrs);
     }
-    public DeleteZone (Context context, AttributeSet attrs, int style) {
-        super (context, attrs, style);
+
+    public DeleteZone(Context context, AttributeSet attrs, int style) {
+        super(context, attrs, style);
+    }
+
+    public void setCircuitController(CircuitController circuitController) {
+        this.circuitController = circuitController;
     }
 
     public DragController getDragController () {
@@ -55,11 +60,11 @@ public class DeleteZone extends ImageView
     public void onDrop(IDragSource source, int x, int y, int xOffset, int yOffset, DragView dragView, Object dragInfo) {
         Component component;
         if(((GridCell)source).mCellNumber == -1) {
-             CircuitController.getInstance().newComponent = null;
+             circuitController.newComponent = null;
         } else {
             // Source is an existing GridCell. Get its component from the controller.
-            CircuitController.getInstance().getComponent(((GridCell) source).mCellNumber).removeAllConnections();
-            CircuitController.getInstance().removeComponent(((GridCell) source).mCellNumber);
+            circuitController.getComponent(((GridCell) source).mCellNumber).removeAllConnections();
+            circuitController.removeComponent(((GridCell) source).mCellNumber);
         }
     }
 

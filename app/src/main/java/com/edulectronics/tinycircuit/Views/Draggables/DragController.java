@@ -32,7 +32,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
-import com.edulectronics.tinycircuit.Controllers.WireController;
+import com.edulectronics.tinycircuit.Controllers.ConnectionController;
 import com.edulectronics.tinycircuit.R;
 import com.edulectronics.tinycircuit.Views.Draggables.Interfaces.IDragListener;
 import com.edulectronics.tinycircuit.Views.Draggables.Interfaces.IDragSource;
@@ -104,7 +104,7 @@ public class DragController {
     private IDropTarget mLastDropTarget;
 
     private InputMethodManager mInputMethodManager;
-    private WireController wireController;
+    private ConnectionController connectionController;
 
     /**
      * Interface to receive notifications when a drag starts or stops
@@ -274,7 +274,7 @@ public class DragController {
             if (deleteZone != null) {
                 deleteZone.setVisibility(View.INVISIBLE);
             }
-            wireController.redrawWires();
+            connectionController.redrawWires();
         }
     }
 
@@ -458,7 +458,7 @@ public class DragController {
         mDropTargets = new ArrayList<IDropTarget> ();
     }
 
-    public void setWireController(WireController wireController) {
-        this.wireController = wireController;
+    public void setWireController(ConnectionController connectionController) {
+        this.connectionController = connectionController;
     }
 }

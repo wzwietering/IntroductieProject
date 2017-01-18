@@ -1,7 +1,6 @@
 package com.edulectronics.tinycircuit.Views;
 
 import android.app.Activity;
-import android.content.res.TypedArray;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -10,52 +9,57 @@ import android.view.Display;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup.LayoutParams;
 import android.view.WindowManager;
-import android.widget.ExpandableListView;
+import android.widget.FrameLayout;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.edulectronics.tinycircuit.Controllers.CircuitController;
+import com.edulectronics.tinycircuit.Controllers.ConnectionController;
+import com.edulectronics.tinycircuit.Controllers.LevelController;
 import com.edulectronics.tinycircuit.Controllers.MessageController;
-import com.edulectronics.tinycircuit.Controllers.WireController;
+import com.edulectronics.tinycircuit.DataStorage.VariableHandler;
 import com.edulectronics.tinycircuit.Models.Components.Component;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.Connection;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.Connector;
+import com.edulectronics.tinycircuit.Models.Factories.ComponentFactory;
 import com.edulectronics.tinycircuit.Models.MenuItem;
 import com.edulectronics.tinycircuit.Models.MessageArgs;
 import com.edulectronics.tinycircuit.Models.MessageTypes;
+import com.edulectronics.tinycircuit.Models.Scenarios.DesignScenario;
 import com.edulectronics.tinycircuit.Models.Scenarios.IScenario;
 import com.edulectronics.tinycircuit.Models.Scenarios.ImplementedScenarios.FreePlayScenario;
 import com.edulectronics.tinycircuit.Models.Scenarios.ImplementedScenarios.Scenario2;
 import com.edulectronics.tinycircuit.R;
 import com.edulectronics.tinycircuit.Views.Adapters.CircuitAdapter;
-import com.edulectronics.tinycircuit.Views.Adapters.ExpandableListAdapter;
+import com.edulectronics.tinycircuit.Views.Draggables.DeleteZone;
+import com.edulectronics.tinycircuit.Views.Adapters.ListAdapter;
 import com.edulectronics.tinycircuit.Views.Draggables.DragController;
 import com.edulectronics.tinycircuit.Views.Draggables.DragLayer;
 import com.edulectronics.tinycircuit.Views.Draggables.GridCell;
 import com.edulectronics.tinycircuit.Views.Draggables.Interfaces.IDragSource;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
+import java.util.Random;
 
 import static com.edulectronics.tinycircuit.Models.MessageTypes.Explanation;
+import java.util.ArrayList;
 
-public class CircuitActivity extends Activity
-        implements View.OnClickListener, View.OnTouchListener, View.OnLongClickListener { //  , AdapterView.OnItemClickListener
+public class CircuitActivity extends Activity implements View.OnClickListener, View.OnTouchListener, View.OnLongClickListener { //  , AdapterView.OnItemClickListener
     private DragController mDragController;   // Object that handles a drag-drop sequence. It interacts with DragSource and DropTarget objects.
     private DragLayer mDragLayer;             // The ViewGroup within which an object can be dragged.
-    private List<MenuItem> headers;
-    private HashMap<MenuItem, List<MenuItem>> children;
+    private List<MenuItem> componentlist;
     private CircuitController circuitController;
-    private WireController wireController;
-    private IScenario scenario;
-    private Set<Component> availableComponents;
+    private ConnectionController connectionController;
+    private LevelController levelController;
     private MessageController messageController = new MessageController(getFragmentManager());
     private boolean isInWireMode = false;
+    private int cellSize;
+    private IScenario scenario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,59 +67,71 @@ public class CircuitActivity extends Activity
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_circuit);
+        cellSize = getResources().getInteger(R.integer.cell_size);
+        setControllers();
+        initializeView();
+    }
 
-        int cellSize = getResources().getInteger(R.integer.cell_size);
-        wireController = new WireController(this, cellSize, cellSize);
-
-        ImageView hamburger = (ImageView) findViewById(R.id.hamburger);
-        hamburger.setImageResource(R.drawable.ic_hamburger);
-
-        scenario = (IScenario) getIntent().getSerializableExtra("scenario");
-        availableComponents = scenario.getAvailableComponents();
-        getController();
-        GridView grid = setCircuit();
-        createDragControls(grid);
+    private void initializeView() {
+        createMenuButton();
+        createDragControls(createCircuit());
         createMenu();
         createDrawView();
+        showMessages();
+    }
 
-        if (scenario.getClass() != FreePlayScenario.class) {
-            messageController.displayMessage(new MessageArgs(scenario.getPrompt(), Explanation));
+    private void showMessages() {
+        if (levelController.getScenario().getClass() != FreePlayScenario.class) {
+            String prompt = getResources().getString(levelController.getScenario().getPrompt());
+            messageController.displayMessage(new MessageArgs(prompt, Explanation));
         }
     }
 
-    private void createDrawView() {
-        wireController.setControllers(circuitController);
-        wireController.redrawWires();
+    private void createMenuButton() {
+        ImageView hamburger = (ImageView) findViewById(R.id.hamburger);
+        hamburger.setImageResource(R.drawable.ic_hamburger);
     }
 
-    private GridView setCircuit() {
+    private void createDrawView() {
+        connectionController.setControllers(circuitController);
+        connectionController.redrawWires();
+    }
+
+    private GridView createCircuit() {
         GridView circuitGrid = (GridView) findViewById(R.id.circuit);
 
         /*Prevents scrolling, stuff can still be rendered outside screen*/
         circuitGrid.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_MOVE) {
-                    return true;
-                }
-                return false;
+                return event.getAction() == MotionEvent.ACTION_MOVE;
             }
         });
 
         circuitGrid.setNumColumns(circuitController.circuit.width);
-        circuitGrid.setAdapter(new CircuitAdapter(this));
+        circuitGrid.setAdapter(new CircuitAdapter(this, circuitController));
         return circuitGrid;
     }
 
-    private void getController() {
+    private void setControllers() {
+        Point size = getDisplaySize();
+        connectionController = new ConnectionController(this, cellSize, cellSize);
+        levelController = new LevelController(getIntent().getStringExtra("scenario"));
+        // Width or height divided by cellsize fits the maxiumum amount of cells inside the screen
+        if (getIntent().getStringExtra("scenario").equals("freeplay")) {
+            circuitController = new CircuitController(size.x / cellSize, size.y / cellSize);
+        } else {
+            circuitController = new CircuitController(size.x / cellSize, size.y / cellSize, levelController.getAvailableComponents());
+        }
+        DeleteZone deleteZone = (DeleteZone) findViewById(R.id.delete_zone_view);
+        deleteZone.setCircuitController(circuitController);
+    }
+
+    private Point getDisplaySize() {
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
-        int cellSize = getResources().getInteger(R.integer.cell_size);
-        //Width or height divided by cellsize fits the maxiumum amount of cells inside the screen
-
-        circuitController = CircuitController.getInstance();
-        circuitController.setProperties(size.x / cellSize, size.y / cellSize, scenario.loadComponents());
+        return size;
     }
 
     private void createDragControls(GridView grid) {
@@ -124,68 +140,47 @@ public class CircuitActivity extends Activity
         mDragLayer.setDragController(mDragController);
         mDragLayer.setGridView(grid);
         mDragController.setDragListener(mDragLayer);
-        mDragController.setWireController(this.wireController);
+        mDragController.setWireController(this.connectionController);
     }
 
     /*This code adds a menu to the side*/
     private void createMenu() {
-        ExpandableListView expandableList = (ExpandableListView) findViewById(R.id.expandablelist);
+        ListView listView = (ListView) findViewById(R.id.list);
         makeLists();
 
-        ExpandableListAdapter adapter = new ExpandableListAdapter(
-                this, headers, children, expandableList
+        ListAdapter adapter = new ListAdapter(
+                this, componentlist, listView
         );
-        expandableList.setAdapter(adapter);
-        expandableList.setOnChildClickListener(onChildClick());
-        expandableList.setOnGroupClickListener(onGroupClick());
+        listView.setAdapter(adapter);
+        listView.setOnItemClickListener(onItemClick());
     }
 
-    /*Makes the groups and children*/
+    /*Makes the list of components*/
     private void makeLists() {
-        headers = new ArrayList<>();
+        componentlist = new ArrayList<>();
+        int componentCount = levelController.getAvailableComponents().size();
+
         String[] items = getResources().getStringArray(R.array.menuitems);
-        children = new HashMap<>();
-        /*Temporary! Should work different!*/
-        int[] textures = {0, R.drawable.battery, R.drawable.lightbulb_on, R.drawable.resistor, R.drawable.switch_on};
+        int[] textures = {R.drawable.battery, R.drawable.lightbulb_on, R.drawable.resistor, R.drawable.switch_on};
 
-        TypedArray typedArray = getResources().obtainTypedArray(R.array.categories);
-        int length = typedArray.length();
-        String[][] headings = new String[length][];
-
-        for (int i = 0; i < length; i++) {
-            int id = typedArray.getResourceId(i, 0);
-            headings[i] = getResources().getStringArray(id);
-        }
-        typedArray.recycle();
-
-        for (int i = 0; i < items.length; i++) {
+        for (int i = 0; i < componentCount; i++) {
             MenuItem item = new MenuItem();
             item.setIconName(items[i]);
             item.setIconImage(textures[i]);
-            headers.add(item);
-
-            List<MenuItem> heading = new ArrayList();
-            for (int j = 1; j < headings[i].length; j++) {
-                MenuItem subitem = new MenuItem();
-                subitem.setIconName(headings[i][j]);
-                subitem.setIconImage(textures[i + j - 1]);
-                heading.add(subitem);
-            }
-            children.put(headers.get(i), heading);
+            componentlist.add(item);
         }
     }
 
     public void onClick(View v) {
         if (!isInWireMode) {
             // Let clicked component handle the tap.
-            if (CircuitController.getInstance().handleClick(((GridCell) v).mCellNumber)) {
+            if (circuitController.handleClick(((GridCell) v).mCellNumber)) {
                 ((GridCell) v).resetImage();
             }
         }
     }
 
     public boolean onTouch(View v, MotionEvent ev) {
-        boolean handledHere = false;
         final int action = ev.getAction();
 
         // In the situation where a long click is not needed to initiate a drag, simply start on the down event.
@@ -196,26 +191,27 @@ public class CircuitActivity extends Activity
             if(action == MotionEvent.ACTION_DOWN) {
                 for (Connection connection : circuitController.getAllConnections()) {
                     if (connection.isTouched(ev) && component == null) {
-                        Connector connector = new Connector();
-                        connector.disconnect(connection.pointA, connection.pointB);
-                        wireController.redrawWires();
+                        Connector.disconnect(connection.pointA, connection.pointB);
+                        connectionController.redrawWires();
                     }
                 }
             }
 
             if(component != null && action == MotionEvent.ACTION_DOWN) {
-                wireController.makeWire(component, ev);
+                connectionController.makeWire(component, ev);
+
+                if (levelController.getScenario().isCompleted(circuitController.circuit)) {
+                    scenarioCompleted();
+                }
             }
         }
-
-        return handledHere;
+        return false;
     }
 
     private void scenarioCompleted() {
-        messageController.displayMessage(new MessageArgs(
-                R.string.scenario_complete,
-                MessageTypes.ScenarioComplete,
-                true));
+        VariableHandler variableHandler = new VariableHandler(getApplicationContext());
+        variableHandler.saveProgress(levelController.getScenarioID());
+        givePositiveFeedback();
     }
 
     public boolean onLongClick(View v) {
@@ -236,45 +232,47 @@ public class CircuitActivity extends Activity
     }
 
     public void onClickAddComponent(String text) {
-        circuitController.addNewComponent(text, this);
+        Component component = ComponentFactory.CreateComponent(text);
+
+        FrameLayout componentHolder = (FrameLayout) findViewById(R.id.component_source_frame);
+        componentHolder.setVisibility(View.VISIBLE);
+
+        if (componentHolder != null) {
+            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams (LayoutParams.MATCH_PARENT,
+                    LayoutParams.MATCH_PARENT,
+                    Gravity.CENTER);
+            GridCell newView = new GridCell(circuitController, this);
+            newView.setComponent(component);
+            componentHolder.addView(newView, lp);
+            newView.mCellNumber = -1;
+
+            // Have this activity listen to touch and click events for the view.
+            newView.setOnClickListener(this);
+            newView.setOnLongClickListener(this);
+            newView.setOnTouchListener(this);
+        }
+
         NavigationView view = (NavigationView) findViewById(R.id.navigationview);
         ((DrawerLayout) findViewById(R.id.activity_main)).closeDrawer(view);
     }
 
-    public ExpandableListView.OnGroupClickListener onGroupClick() {
-        return new ExpandableListView.OnGroupClickListener() {
-            @Override
-            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
-                if (groupPosition == 0) {
-                    LinearLayout group = (LinearLayout) v;
-                    toggleMode(group);
-                    NavigationView view = (NavigationView) findViewById(R.id.navigationview);
-                    ((DrawerLayout) findViewById(R.id.activity_main)).closeDrawer(view);
-                }
-                return false;
-            }
-        };
-    }
-
-    public ExpandableListView.OnChildClickListener onChildClick() {
-        return new ExpandableListView.OnChildClickListener() {
-            @Override
-            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-                LinearLayout group = (LinearLayout) ((LinearLayout) v).getChildAt(0);
-                View child = group.getChildAt(1);
-                String text = (String) ((TextView) child).getText();
+    public ListView.OnItemClickListener onItemClick() {
+        return new ListView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                LinearLayout group = (LinearLayout) view;
+                TextView textView = (TextView) group.findViewById(R.id.submenu);
+                String text = (String) textView.getText();
                 onClickAddComponent(text);
-                return false;
             }
         };
     }
 
-    public void toggleMode(LinearLayout linearLayout) {
+    public void toggleMode(View view) {
         isInWireMode = !isInWireMode;
         if (isInWireMode) {
-            linearLayout.setBackgroundResource(R.color.wiremode_on);
+            view.setBackgroundResource(R.color.wiremode_on);
         } else {
-            linearLayout.setBackgroundResource(R.color.wiremode_off);
+            view.setBackgroundResource(R.color.background);
         }
     }
 
@@ -286,23 +284,57 @@ public class CircuitActivity extends Activity
         // TODO: Implemented by scenariocontroller.
         // Obviously this is very very bad code. I know. I will fix it when we have a scenario-
         // controller.
-        this.scenario = new Scenario2(this.circuitController.circuit);
+        levelController.setScenario(new Scenario2(this.circuitController.circuit));
     }
 
     public void run(View view) {
         // Reset the circuit before animating it; so all wires start out white, and lightbulbs whole.
-        wireController.redrawWires();
+        connectionController.redrawWires();
         ((GridView)findViewById(R.id.circuit)).invalidateViews();
 
         // TODO: get the delay back from the circuitcontroller (which gets it from wirecontroller)
         // to delay the scenario complete check until the whole circuit has been animated.
         circuitController.run(this);
-        checkScenarioComplete();
+        checkScenarioComplete(true);
     }
 
-    private void checkScenarioComplete(){
-        if (scenario.isCompleted(circuitController.circuit)) {
+    private void checkScenarioComplete(boolean run){
+        //The boolean is used to give the user only negative feedback when they press the run button.
+        //Giving negative feedback when this method runs using the onTouch method is a nightmare,
+        //because you will get negative messages all the time.
+        if (levelController.levelIsCompleted(circuitController.circuit)) {
             scenarioCompleted();
+        } else if (run && levelController.getScenario().getClass() != FreePlayScenario.class) {
+            giveNegativeFeedback();
         }
+    }
+
+    //Create a negative feedback message
+    private void giveNegativeFeedback(){
+        String[] negativeFeedback = getResources().getStringArray(R.array.negative_feedback);
+        String feedback = getResources().getString(((DesignScenario) levelController.getScenario()).getHint());
+        messageController.displayMessage(new MessageArgs(
+                giveFeedback(negativeFeedback) + " " + feedback,
+                MessageTypes.Mistake));
+    }
+
+    //Create a positive feedback message
+    private void givePositiveFeedback(){
+        String[] positiveFeedback = getResources().getStringArray(R.array.positive_feedback);
+        messageController.displayMessage(new MessageArgs(
+                giveFeedback(positiveFeedback),
+                MessageTypes.ScenarioComplete,
+                true));
+    }
+
+    //This methods returns a random string from an array. It is used to give the user more
+    //interesting feedback, because the string is not always the same.
+    private String giveFeedback(String[] options){
+        Random random = new Random();
+        return options[random.nextInt(options.length)];
+    }
+
+    public CircuitController getCircuitController(){
+        return circuitController;
     }
 }

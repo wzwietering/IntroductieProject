@@ -9,6 +9,8 @@ import com.edulectronics.tinycircuit.Models.Scenarios.DesignScenario;
 import com.edulectronics.tinycircuit.R;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -27,34 +29,28 @@ public class Scenario1 extends DesignScenario {
         return R.string.scenario1_explanation;
     }
 
+    private boolean hasLightbulb, isFullCircle;
+
     @Override
     public boolean isCompleted(Circuit circuit) {
-        boolean hasLightbulb = false;
-        boolean isFullCircle = false;
+        hasLightbulb = false;
+        isFullCircle = false;
 
         for (Component component : circuit.getAllComponents()) {
-            if(component != null) {
+            if(component != null && circuit.getComponentCount(component) == 1) {
                 if (component.getClass() == Lightbulb.class) {
                     hasLightbulb = true;
-                    continue;
-                }
-                if (component.getClass() == Powersource.class) {
-                    if (component.hasOutputConnection(((Powersource) component).getInput())) {
-                        isFullCircle = true;
-                    }
+                } else if (component.getClass() == Powersource.class) {
+                    isFullCircle = component.hasOutputConnection(((Powersource) component).getInput());
                 }
             }
         }
-
         return (isFullCircle && hasLightbulb);
     }
 
     public Set<Component> getAvailableComponents() {
-        Set set = super.getAvailableComponents();
-        set.add(new Lightbulb());
-        set.add(new Powersource());
-
-        return set;
+        Component[] components = {new Lightbulb(), new Powersource()};
+        return new HashSet<>(Arrays.asList(components));
     }
 
     public ArrayList<Component> loadComponents() {
@@ -67,5 +63,19 @@ public class Scenario1 extends DesignScenario {
         components.add(powersource);
         components.add(bulb);
         return components;
+    }
+
+    public int getID() {
+        return 1;
+    }
+
+    public int getHint(){
+        if (!hasLightbulb){
+            return R.string.missing_component;
+        }
+        if (!isFullCircle){
+            return R.string.no_full_circle;
+        }
+        return 0;
     }
 }

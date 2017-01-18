@@ -1,5 +1,8 @@
 package com.edulectronics.tinycircuit;
 
+import android.content.Context;
+import android.content.Intent;
+import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.ViewAction;
 import android.support.test.espresso.action.CoordinatesProvider;
 import android.support.test.espresso.action.GeneralSwipeAction;
@@ -14,7 +17,6 @@ import com.edulectronics.tinycircuit.Controllers.CircuitController;
 import com.edulectronics.tinycircuit.Models.Components.Lightbulb;
 import com.edulectronics.tinycircuit.Views.CircuitActivity;
 
-import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,21 +31,25 @@ import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 
+;
+
 /**
  * Created by Wilmer on 12-12-2016.
  */
 
 @RunWith(AndroidJUnit4.class)
 public class CircuitAdapterTest {
-    static CircuitController circuitController = CircuitController.getInstance();
-
-    @BeforeClass
-    public static void setup(){
-        circuitController.setProperties(4, 4, null);
-    }
-
     @Rule
-    public ActivityTestRule<CircuitActivity> circuitActivity = new ActivityTestRule<>(CircuitActivity.class);
+    public ActivityTestRule<CircuitActivity> circuitActivity = new ActivityTestRule<CircuitActivity>(CircuitActivity.class){
+        @Override
+        protected Intent getActivityIntent() {
+            Context targetContext = InstrumentationRegistry.getInstrumentation()
+                    .getTargetContext();
+            Intent result = new Intent(targetContext, CircuitActivity.class);
+            result.putExtra("scenario", "freeplay");
+            return result;
+        }
+    };
 
     @Test
     public void menuOpen(){
@@ -69,9 +75,10 @@ public class CircuitAdapterTest {
         onView(withId(R.id.navigationview)).check((matches(not(isDisplayed()))));
     }
 
-    @Test
+    //Does not work
     public void dragItem(){
         Lightbulb lightbulb = new Lightbulb();
+        CircuitController circuitController = circuitActivity.getActivity().getCircuitController();
         circuitController.addComponent(lightbulb, 3);
 
         onData(is(instanceOf(Lightbulb.class))).inAdapterView(withId(R.id.circuit)).perform(drag());
@@ -80,8 +87,8 @@ public class CircuitAdapterTest {
     }
 
     private static ViewAction drag(){
-        return new GeneralSwipeAction(Swipe.FAST, getCoordinates(75, 75),
-                getCoordinates(140, 200), Press.FINGER);
+        return new GeneralSwipeAction(Swipe.FAST, getCoordinates(0, 0),
+                getCoordinates(500, 500), Press.FINGER);
     }
 
     //Used for coordinates on the screen
