@@ -36,6 +36,12 @@ public class CircuitAnimator {
 
     private Activity circuitActivity;
 
+    // Some variabled for sorting wires.
+    private Wire closestWire = null;
+    private int currentDistance = 0;
+    private int currentEndOfWireDistance = 0;
+    List<Wire> sortedWires = new ArrayList<>();
+
     public CircuitAnimator(Graph graph, Activity circuitActivity) {
         this.graph = graph;
         this.circuitActivity = circuitActivity;
@@ -90,6 +96,7 @@ public class CircuitAnimator {
         List<ConnectionPoint> nextConnectionPoints = b.getConnectionPoints();
 
         for (ConnectionPoint cp : currentConnectionPoints) {
+            // Skip the source output; that should be the last connectionpoint we highlight.
             if(a != graph.source || (a == graph.source && cp != graph.source.getInput())) {
                 for (Connection c : cp.getConnections()) {
                     if (nextConnectionPoints.contains(c.getOtherPoint(cp))) {
@@ -109,7 +116,7 @@ public class CircuitAnimator {
                                    int color,
                                    Wire.WireDrawingMode drawingMode) {
         for (Wire wire: sortWires(origin, new ArrayList<Wire>(c.getWires()))) {
-            wire.highLight(color, this.delay, drawingMode);
+            wire.scheduleHighLight(color, this.delay, drawingMode);
 
             // Increase the delay depending on the type of highlight (some take longer than others)
             if(drawingMode == drawingMode.runningHighlight)
@@ -119,10 +126,7 @@ public class CircuitAnimator {
 
     // Sort the wires so they are highlighted in correct order.
     private List<Wire> sortWires(Component origin, List<Wire> wires) {
-        List<Wire> sortedWires = new ArrayList<>();
-
-        Wire closestWire = null;
-        int currentDistance = 0;
+        sortedWires = new ArrayList<>();
 
         while(wires.size() > 0) {
             for (Wire wire: wires) {
@@ -133,13 +137,19 @@ public class CircuitAnimator {
                 // If any end point is closer to the component than the current endpoint, take
                 // that as the new closest wire.
                 if(closestWire == null || distanceA < currentDistance || distanceB < currentDistance) {
-                    closestWire = wire;
-                    if(distanceA < distanceB) {
-                        currentDistance = distanceA;
-                        wire.setDrawDirection(wire.a, wire.b);
-                    } else {
-                        currentDistance = distanceB;
-                        wire.setDrawDirection(wire.b, wire.a);
+                    setNewClosestWire(wire, distanceA, distanceB);
+                }
+
+                // Distance is equal to current, so check if the other end of the wire is closer
+                // than current wire.
+                else if(distanceA == currentDistance) {
+                    if(distanceB < currentEndOfWireDistance) {
+                        setNewClosestWire(wire, distanceA, distanceB);
+                    }
+                }
+                else if(distanceB == currentDistance) {
+                    if(distanceA < currentEndOfWireDistance) {
+                        setNewClosestWire(wire, distanceB, distanceA);
                     }
                 }
             }
@@ -151,6 +161,19 @@ public class CircuitAnimator {
             closestWire = null;
         }
         return sortedWires;
+    }
+
+    // This wire is the new closest wire in the sorting process.
+    private void setNewClosestWire(Wire wire, int distanceA, int distanceB) {
+        closestWire = wire;
+        currentDistance = Math.min(distanceA, distanceB);
+        currentEndOfWireDistance = Math.max(distanceA, distanceB);
+
+        if(distanceA < distanceB) {
+            wire.setDrawDirection(wire.a, wire.b);
+        } else {
+            wire.setDrawDirection(wire.b, wire.a);
+        }
     }
 
     // Get distance between two points (pythagoras)

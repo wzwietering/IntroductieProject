@@ -26,17 +26,22 @@ public class Wire extends View {
     private Point screenSize = new Point();
     public WireDrawingMode drawingMode = WireDrawingMode.normal;
 
-    // These determine which end of the wire gets drawn first.
+    // The next variables aree all necessary for drawing the wire.
+    // These determine which end of the wire gets drawn first:
     public Point drawStart;
     public Point drawEnd;
     // these are counters for drawing the line
-    int drawUntilX;
-    int drawUntilY;
+    int drawUpToX;
+    int drawUpToY;
+    // And these are intervals which we use for drawing; they can be positive and negative.
+    private int drawIntervalX;
+    private int drawIntervalY;
 
     // used for flash mode to keep track of the number of times we flashed
     private int numberOfFlashes;
     // used for 'running' highlight mode to see what color we used last
     boolean useHighlightColorFirst = true;
+
 
     public Wire(Context context, AttributeSet attr) {
         super(context, attr);
@@ -65,49 +70,39 @@ public class Wire extends View {
                 checkIfEndWasReached();
 
                 // Draw the running highlight...
-                canvas.drawLine(drawStart.x, drawStart.y, drawUntilX, drawUntilY, this.highlightPaint);
+                canvas.drawLine(drawStart.x, drawStart.y, drawUpToX, drawUpToY, this.highlightPaint);
                 // ... and the rest of the line still in white.
-                canvas.drawLine(drawEnd.x, drawEnd.y, drawUntilX, drawUntilY, this.whitePaint);
+                canvas.drawLine(drawEnd.x, drawEnd.y, drawUpToX, drawUpToY, this.whitePaint);
 
                 // Up the coordinates and repeat! (until we're at drawEnd)
-                if (drawUntilX < drawEnd.x) {
-                    drawUntilX+=15;
-                    postInvalidateDelayed(10);
-                }
-                else if(drawUntilY < drawEnd.y) {
-                    drawUntilY+=15;
+                if (drawUpToX != drawEnd.x || drawUpToY != drawEnd.y) {
+                    drawUpToX += drawIntervalX;
+                    drawUpToY += drawIntervalY;
                     postInvalidateDelayed(10);
                 }
                 break;
             case staticHighlight:
-                drawStart.x = Math.min(a.x, b.x);
-                drawEnd.x = Math.max(a.x, b.x);
-                drawStart.y = Math.min(a.y, b.y);
-                drawEnd.y = Math.max(a.y, b.y);
-
-                drawUntilX = drawStart.x;
-                drawUntilY = drawStart.y;
-
                 boolean useHighlightColor = this.useHighlightColorFirst;
 
-                while(drawUntilX < drawEnd.x || drawUntilY < drawEnd.y)
-                {
-                    if (drawUntilX < drawEnd.x) {
-                        drawUntilX += 20;
-                        checkIfEndWasReached();
-                        canvas.drawLine(drawUntilX - 20, drawUntilY, drawUntilX, drawUntilY,
-                                useHighlightColor ? this.highlightPaint : this.whitePaint);
-                    }
-                    else if(drawUntilY < drawEnd.y) {
-                        drawUntilY += 20;
-                        checkIfEndWasReached();
-                        canvas.drawLine(drawUntilX, drawUntilY - 20, drawUntilX, drawUntilY,
-                                useHighlightColor ? this.highlightPaint : this.whitePaint);
-                    }
+                while(drawUpToX != drawEnd.x || drawUpToY != drawEnd.y) {
+                    drawUpToX += drawIntervalX * 2;
+                    drawUpToY += drawIntervalY * 2;
+
+                    checkIfEndWasReached();
+
+                    canvas.drawLine( drawUpToX - drawIntervalX * 2,
+                            drawUpToY - drawIntervalY * 2,
+                            drawUpToX,
+                            drawUpToY,
+                            useHighlightColor ? this.highlightPaint : this.whitePaint);
 
                     useHighlightColor = !useHighlightColor;
-                }
+                  }
+
                 this.useHighlightColorFirst = !this.useHighlightColorFirst;
+                // Reset counters drawUpToX and Y.
+                this.resetCounters();
+
                 postInvalidateDelayed(1000);
 
                 break;
@@ -128,17 +123,19 @@ public class Wire extends View {
     }
 
     private void checkIfEndWasReached() {
-        if (drawUntilX > drawEnd.x) {
-            drawUntilX = drawEnd.x;
+        if (drawIntervalX > 0 && drawUpToX > drawEnd.x
+                || drawIntervalX < 0 && drawUpToX < drawEnd.x) {
+            drawUpToX = drawEnd.x;
         }
-        if (drawUntilY > drawEnd.y) {
-            drawUntilY = drawEnd.y;
+        if (drawIntervalY > 0 && drawUpToY > drawEnd.y
+                || drawIntervalY < 0 && drawUpToY < drawEnd.y) {
+            drawUpToY = drawEnd.y;
         }
     }
 
     // Highlight the wire. We change the paint color andd call the onDraw() method again with
     // a delay.
-    public void highLight(int color, int delay, WireDrawingMode drawingMode) {
+    public void scheduleHighLight(int color, int delay, WireDrawingMode drawingMode) {
         Handler handler = new Handler(this.getContext().getMainLooper());
         // We need a runnable that accepts argument. Create the class here because it will NOT
         // be used anywhere else, and I don't see the point of making a whole new file for this.
@@ -157,12 +154,20 @@ public class Wire extends View {
                 // Set drawingmode (which is checked in the onDraw() method)
                 wire.drawingMode = drawingMode;
                 wire.highlightPaint.setColor(this.color);
-                wire.numberOfFlashes = 0;
+                wire.resetCounters();
                 wire.invalidate();
             }
         }
         // Post a new runnable to the UI thread with a delay.
         handler.postDelayed(new drawingRunnable(this, color, drawingMode), delay);
+    }
+
+    // Reset the counter that are used for drawing the wire.
+    private void resetCounters() {
+        this.numberOfFlashes = 0;
+        // Reset the coordinate counters
+        this.drawUpToX = drawStart.x;
+        this.drawUpToY = drawStart.y;
     }
 
     public boolean isTouched(Point point){
@@ -180,11 +185,14 @@ public class Wire extends View {
         }
     }
 
+    // Set the direction in which the wire will be drawn.
     public void setDrawDirection(Point a, Point b) {
         this.drawStart = new Point(a);
         this.drawEnd = new Point(b);
-        this.drawUntilX = a.x;
-        this.drawUntilY = a.y;
+        this.drawUpToX = a.x;
+        this.drawUpToY = a.y;
+        this.drawIntervalX = b.x == a.x ? 0 : b.x > a.x ? 10 : -10;
+        this.drawIntervalY = b.y == a.y ? 0 : b.y > a.y ? 10 : -10;
     }
 
     public int getLength() {
