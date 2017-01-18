@@ -77,7 +77,7 @@ public class Scenario5 extends DesignScenario {
             return R.string.no_full_circle;
         }
         if(!hasSwitch){
-            return R.string.missing_component;
+            return R.string.switch_required;
         }
         if(!hasResistor){
             return R.string.resistance_required;

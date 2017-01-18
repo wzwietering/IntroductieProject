@@ -52,6 +52,7 @@
     <string name="lamp_off">De lamp staat nog niet aan.</string>
     <string name="no_connection">Een component is niet verbonden.</string>
     <string name="resistance_required">Een circuit heeft weerstand nodig.</string>
+    <string name="switch_required">Het licht moet aan en uit kunnen.</string>
 
     <!--Arrays with feedback-->
     <string-array name="positive_feedback">

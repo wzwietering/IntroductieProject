@@ -53,6 +53,7 @@
     <string name="lamp_off">The lamp is not on.</string>
     <string name="no_connection">A component is not connected.</string>
     <string name="resistance_required">A circuit requires resistance.</string>
+    <string name="switch_required">The light should be turned on and off.</string>
 
     <!--Arrays with feedback-->
     <string-array name="positive_feedback">
