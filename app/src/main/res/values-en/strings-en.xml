@@ -33,8 +33,10 @@
     <string name="freeplay">Free play</string>
     <string name="button_ok">I understand</string>
     <string name="scenario_explanation_title">Explanation</string>
+    <string name="scenario_freeplay">This is the free play mode. Here you can design your own ciruit.</string>
     <string name="scenario1_explanation">Turn on the light by connection the battery with the lamp.</string>
-    <string name="scenario2_explanation">Add a resistor to the circuit, so the light won\'t break. To add the resistor, you have to remove a wire. This can be done by touching a wire in wire mode. Run the circuit when you are done.</string>
+    <string name="scenario2_explanation">Add a resistor to the circuit, so the light won\'t break. Add a resistor to the circuit, so the light won\'t break. To add the resistor, you have to remove a wire. This can be done by touching a wire in wire mode. Run the circuit when you are done.</string>
+    <string name="scenario3_explanation">Add a switch to the circuit, so you can flick the Lamp on and off. Afterwards press the switch to turn the lamp on.</string>
     <string name="scenario_complete">Good job!</string>
     <string name="button_add_wire">draw wires</string>
 </resources>

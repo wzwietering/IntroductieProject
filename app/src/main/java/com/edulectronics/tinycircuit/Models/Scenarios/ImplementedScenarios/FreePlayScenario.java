@@ -1,6 +1,7 @@
 package com.edulectronics.tinycircuit.Models.Scenarios.ImplementedScenarios;
 
 import com.edulectronics.tinycircuit.Models.Scenarios.DesignScenario;
+import com.edulectronics.tinycircuit.R;
 
 import java.io.Serializable;
 
@@ -12,6 +13,6 @@ public class FreePlayScenario extends DesignScenario {
 
     @Override
     public int getPrompt() {
-        return -1;
+        return R.string.scenario_freeplay;
     }
 }

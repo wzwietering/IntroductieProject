@@ -56,7 +56,7 @@ public class MenuActivity extends AppCompatActivity {
 
     private void setFlag(){
         ImageView flag = (ImageView) findViewById(R.id.flag);
-        if (language == "nl") {
+        if (language.equals("nl")) {
             flag.setImageResource(R.drawable.dutchflag);
         }
         else {

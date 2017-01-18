@@ -9,7 +9,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.MotionEvent;
-import android.view.SurfaceHolder;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ExpandableListView;
@@ -187,7 +186,8 @@ public class CircuitActivity extends Activity
 
     public boolean onTouch(View v, MotionEvent ev) {
         boolean handledHere = false;
-        int action = ev.getAction();
+        final int action = ev.getAction();
+
         // In the situation where a long click is not needed to initiate a drag, simply start on the down event.
         if (isInWireMode) {
             //Check if wire is touched, but only on the down. This is necessary to prevent line
