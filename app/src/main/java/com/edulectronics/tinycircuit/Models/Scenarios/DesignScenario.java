@@ -2,6 +2,7 @@ package com.edulectronics.tinycircuit.Models.Scenarios;
 
 import com.edulectronics.tinycircuit.Models.Circuit;
 import com.edulectronics.tinycircuit.Models.Components.Component;
+import com.edulectronics.tinycircuit.Models.Components.Powersource;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -28,6 +29,11 @@ public abstract class DesignScenario implements IScenario {
     // Determines whether the user completed the task. Different implementation for each scenario.
     @Override
     public boolean isCompleted(Circuit circuit) {
+        for (Component component : circuit.getAllComponents()) {
+            if (component.getClass() == Powersource.class) {
+                return component.hasOutputConnection(((Powersource) component).getInput()) && circuit.getComponentCount(component) == 1;
+            }
+        }
         return false;
     }
 
