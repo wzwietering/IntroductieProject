@@ -53,7 +53,7 @@
     <string name="no_connection">A component is not connected.</string>
     <string name="resistance_required">A circuit requires resistance.</string>
     <string name="switch_required">Make sure that you can switch the lamp on and off.</string>
-    <string name="lamp_required">It's still dark, add a lamp!</string>
+    <string name="lamp_required">It\'s still dark, add a lamp!</string>
 
     <!--Arrays with feedback-->
     <string-array name="positive_feedback">
