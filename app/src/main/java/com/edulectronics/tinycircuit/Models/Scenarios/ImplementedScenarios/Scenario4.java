@@ -10,6 +10,8 @@ import com.edulectronics.tinycircuit.Models.Scenarios.DesignScenario;
 import com.edulectronics.tinycircuit.R;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
 
 public class Scenario4 extends DesignScenario {
@@ -30,21 +32,15 @@ public class Scenario4 extends DesignScenario {
         hasSwitch = false;
 
         for (Component component : circuit.getAllComponents()) {
-            if(component != null) {
+            if(component != null && circuit.getComponentCount(component) == 1) {
                 if (component.getClass() == Lightbulb.class) {
-                    if (!((Lightbulb) component).isOn  || circuit.getComponentCount(component) != 2) {
-                        lampRequirementsMet = false;
-                    }
+                    lampRequirementsMet = (!((Lightbulb) component).isOn  || circuit.getComponentCount(component) != 2);
                 }
                 if (component.getClass() == Powersource.class && circuit.getComponentCount(component) == 1) {
-                    if (component.hasOutputConnection(((Powersource) component).getInput())) {
-                        isFullCircle = true;
-                    }
+                    isFullCircle = component.hasOutputConnection(((Powersource) component).getInput());
                 }
                 if (component.getClass() == Switch.class && circuit.getComponentCount(component) == 1){
-                    if (component.hasOutputConnection(((Switch) component).getConnectionPointByIndex(1))){
-                        hasSwitch = true;
-                    }
+                    hasSwitch = component.hasOutputConnection(component.getConnectionPointByIndex(1));
                 }
             }
         }
@@ -53,13 +49,8 @@ public class Scenario4 extends DesignScenario {
     }
 
     public Set<Component> getAvailableComponents() {
-        Set set = super.getAvailableComponents();
-        set.add(new Lightbulb());
-        set.add(new Powersource());
-        set.add(new Resistor());
-        set.add(new Switch());
-
-        return set;
+        Component[] components = {new Lightbulb(), new Powersource(), new Resistor(), new Switch()};
+        return new HashSet<>(Arrays.asList(components));
     }
 
     public ArrayList<Component> loadComponents() {
