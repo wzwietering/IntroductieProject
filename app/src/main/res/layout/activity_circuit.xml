@@ -52,8 +52,21 @@
 			android:layout_height="wrap_content"
 			android:layout_gravity="start"
 			android:padding="4dp"
-            android:onClick="openMenu"
-			android:id="@+id/hamburger"/>
+			android:onClick="openMenu"
+			android:src="@drawable/ic_hamburger"
+			android:id="@+id/hamburger"
+			android:layout_above="@+id/wire"/>
+
+		<ImageView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="start"
+			android:layout_marginLeft="56dp"
+			android:padding="4dp"
+			android:src="@drawable/wire"
+			android:onClick="toggleMode"
+			android:id="@+id/wire"/>
+
 		<Button
 			android:text="@string/run"
 			android:layout_width="wrap_content"
@@ -62,7 +75,6 @@
 			android:layout_height="wrap_content"
 			android:id="@+id/Run"
 			android:onClick="run"/>
-
 	</com.edulectronics.tinycircuit.Views.Draggables.DragLayer>
 
 	<android.support.design.widget.NavigationView
@@ -72,11 +84,12 @@
 		android:layout_gravity="start"
 		android:fitsSystemWindows="true">
 
-		<ExpandableListView
-			android:id="@+id/expandablelist"
+		<ListView
+			android:id="@+id/list"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
-			android:background="#ffffff"
-            android:groupIndicator="@null"/>
+			android:background="#ffffff" />
 	</android.support.design.widget.NavigationView>
+
+
 </android.support.v4.widget.DrawerLayout>

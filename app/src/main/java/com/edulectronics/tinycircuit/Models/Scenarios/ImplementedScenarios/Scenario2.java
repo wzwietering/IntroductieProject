@@ -10,6 +10,8 @@ import com.edulectronics.tinycircuit.Models.Scenarios.DesignScenario;
 import com.edulectronics.tinycircuit.R;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
 
 
@@ -39,33 +41,21 @@ public class Scenario2 extends DesignScenario {
 
         for (Component component : circuit.getAllComponents()) {
             if(component != null && circuit.getComponentCount(component) == 1) {
-                if(component.getClass() == Resistor.class ) {
-                    hasResistor = true;
-                    continue;
-                }
-                if (component.getClass() == Powersource.class) {
-                    if (component.hasOutputConnection(((Powersource) component).getInput())) {
-                        isFullCircle = true;
-                    }
-                }
-                if(component.getClass() == Lightbulb.class){
-                    if(((Lightbulb) component).isOn){
-                        lampIsOn = true;
-                    }
+                if(component.getClass() == Resistor.class) {
+                    hasResistor = component.hasOutputConnection(component.getConnectionPointByIndex(1));
+                } else if (component.getClass() == Powersource.class) {
+                    isFullCircle = component.hasOutputConnection(((Powersource) component).getInput());
+                } else if(component.getClass() == Lightbulb.class) {
+                    lampIsOn = ((Lightbulb) component).isOn;
                 }
             }
         }
-
         return (isFullCircle && hasResistor && lampIsOn);
     }
 
     public Set<Component> getAvailableComponents() {
-        Set set = super.getAvailableComponents();
-        set.add(new Lightbulb());
-        set.add(new Powersource());
-        set.add(new Resistor());
-
-        return set;
+        Component[] components = {new Lightbulb(), new Powersource(), new Resistor()};
+        return new HashSet<>(Arrays.asList(components));
     }
 
     public ArrayList<Component> loadComponents() {

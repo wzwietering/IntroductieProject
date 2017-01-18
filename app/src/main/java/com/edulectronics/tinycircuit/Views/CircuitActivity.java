@@ -11,11 +11,12 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.view.WindowManager;
-import android.widget.ExpandableListView;
 import android.widget.FrameLayout;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.edulectronics.tinycircuit.Controllers.CircuitController;
@@ -28,6 +29,7 @@ import com.edulectronics.tinycircuit.Models.Components.Connectors.Connection;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.Connector;
 import com.edulectronics.tinycircuit.Models.Factories.ComponentFactory;
 import com.edulectronics.tinycircuit.Models.Menu;
+import com.edulectronics.tinycircuit.Models.MenuItem;
 import com.edulectronics.tinycircuit.Models.MessageArgs;
 import com.edulectronics.tinycircuit.Models.MessageTypes;
 import com.edulectronics.tinycircuit.Models.Scenarios.DesignScenario;
@@ -36,23 +38,25 @@ import com.edulectronics.tinycircuit.Models.Scenarios.ImplementedScenarios.FreeP
 import com.edulectronics.tinycircuit.Models.Scenarios.ImplementedScenarios.Scenario2;
 import com.edulectronics.tinycircuit.R;
 import com.edulectronics.tinycircuit.Views.Adapters.CircuitAdapter;
-import com.edulectronics.tinycircuit.Views.Adapters.ExpandableListAdapter;
 import com.edulectronics.tinycircuit.Views.Draggables.DeleteZone;
+import com.edulectronics.tinycircuit.Views.Adapters.ListAdapter;
 import com.edulectronics.tinycircuit.Views.Draggables.DragController;
 import com.edulectronics.tinycircuit.Views.Draggables.DragLayer;
 import com.edulectronics.tinycircuit.Views.Draggables.GridCell;
 import com.edulectronics.tinycircuit.Views.Draggables.Interfaces.IDragSource;
-
+import java.util.List;
 import java.util.Random;
 
 import static com.edulectronics.tinycircuit.Models.MessageTypes.Explanation;
+import java.util.ArrayList;
 
-public class CircuitActivity extends Activity implements View.OnClickListener, View.OnTouchListener, View.OnLongClickListener {
-    private DragController mDragController; // Object that handles a drag-drop sequence. It interacts with DragSource and DropTarget objects.
+public class CircuitActivity extends Activity implements View.OnClickListener, View.OnTouchListener, View.OnLongClickListener { //  , AdapterView.OnItemClickListener
+    private DragController mDragController;   // Object that handles a drag-drop sequence. It interacts with DragSource and DropTarget objects.
+    private DragLayer mDragLayer;             // The ViewGroup within which an object can be dragged.
+    private List<MenuItem> componentlist;
     private CircuitController circuitController;
     private ConnectionController connectionController;
     private LevelController levelController;
-    private DragLayer mDragLayer; // The ViewGroup within which an object can be dragged.
     private Menu menu;
     private MessageController messageController = new MessageController(getFragmentManager());
     private boolean isInWireMode = false;
@@ -65,7 +69,6 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_circuit);
-
         cellSize = getResources().getInteger(R.integer.cell_size);
         setControllers();
         initializeView();
@@ -103,10 +106,7 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
         circuitGrid.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_MOVE) {
-                    return true;
-                }
-                return false;
+                return event.getAction() == MotionEvent.ACTION_MOVE;
             }
         });
 
@@ -146,14 +146,30 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
 
     /*This code adds a menu to the side*/
     private void createMenu() {
-        menu = new Menu(this);
-        ExpandableListView expandableList = (ExpandableListView) findViewById(R.id.expandablelist);
-        ExpandableListAdapter adapter = new ExpandableListAdapter(
-                this, menu.getHeaders(), menu.getChildren(), expandableList
+        ListView listView = (ListView) findViewById(R.id.list);
+        makeLists();
+
+        ListAdapter adapter = new ListAdapter(
+                this, componentlist, listView
         );
-        expandableList.setAdapter(adapter);
-        expandableList.setOnChildClickListener(onChildClick());
-        expandableList.setOnGroupClickListener(onGroupClick());
+        listView.setAdapter(adapter);
+        listView.setOnItemClickListener(onItemClick());
+    }
+
+    /*Makes the list of components*/
+    private void makeLists() {
+        componentlist = new ArrayList<>();
+        int componentCount = levelController.getAvailableComponents().size();
+
+        String[] items = getResources().getStringArray(R.array.menuitems);
+        int[] textures = {R.drawable.battery, R.drawable.lightbulb_on, R.drawable.resistor, R.drawable.switch_on};
+
+        for (int i = 0; i < componentCount; i++) {
+            MenuItem item = new MenuItem();
+            item.setIconName(items[i]);
+            item.setIconImage(textures[i]);
+            componentlist.add(item);
+        }
     }
 
     public void onClick(View v) {
@@ -176,8 +192,7 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
             if(action == MotionEvent.ACTION_DOWN) {
                 for (Connection connection : circuitController.getAllConnections()) {
                     if (connection.isTouched(ev) && component == null) {
-                        Connector connector = new Connector();
-                        connector.disconnect(connection.pointA, connection.pointB);
+                        Connector.disconnect(connection.pointA, connection.pointB);
                         connectionController.redraw();
                     }
                 }
@@ -242,40 +257,23 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
         ((DrawerLayout) findViewById(R.id.activity_main)).closeDrawer(view);
     }
 
-    public ExpandableListView.OnGroupClickListener onGroupClick() {
-        return new ExpandableListView.OnGroupClickListener() {
-            @Override
-            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
-                if (groupPosition == 0) {
-                    LinearLayout group = (LinearLayout) v;
-                    toggleMode(group);
-                    NavigationView view = (NavigationView) findViewById(R.id.navigationview);
-                    ((DrawerLayout) findViewById(R.id.activity_main)).closeDrawer(view);
-                }
-                return false;
-            }
-        };
-    }
-
-    public ExpandableListView.OnChildClickListener onChildClick() {
-        return new ExpandableListView.OnChildClickListener() {
-            @Override
-            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-                LinearLayout group = (LinearLayout) ((LinearLayout) v).getChildAt(0);
-                View child = group.getChildAt(1);
-                String text = (String) ((TextView) child).getText();
+    public ListView.OnItemClickListener onItemClick() {
+        return new ListView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                LinearLayout group = (LinearLayout) view;
+                TextView textView = (TextView) group.findViewById(R.id.submenu);
+                String text = (String) textView.getText();
                 onClickAddComponent(text);
-                return false;
             }
         };
     }
 
-    public void toggleMode(LinearLayout linearLayout) {
+    public void toggleMode(View view) {
         isInWireMode = !isInWireMode;
         if (isInWireMode) {
-            linearLayout.setBackgroundResource(R.color.wiremode_on);
+            view.setBackgroundResource(R.color.wiremode_on);
         } else {
-            linearLayout.setBackgroundResource(R.color.wiremode_off);
+            view.setBackgroundResource(R.color.background);
         }
     }
 

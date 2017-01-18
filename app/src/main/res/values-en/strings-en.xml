@@ -2,33 +2,12 @@
 <resources>
     <string name="app_name">TinyCircuit</string>
     <string-array name="menuitems">
-        <item>Wires</item>
-        <item>Powersources</item>
-        <item>Lightsources</item>
-        <item>Resisitors</item>
-    </string-array>
-    <array name="categories">
-        <item>@array/wires</item>
-        <item>@array/powersources</item>
-        <item>@array/lightsources</item>
-        <item>@array/resistors</item>
-    </array>
-    <string-array name="wires">
-        <item name="id">0</item>
-    </string-array>
-    <string-array name="powersources">
-        <item name="id">1</item>
         <item>Battery</item>
-    </string-array>
-    <string-array name="lightsources">
-        <item name="id">2</item>
         <item>Lightbulb</item>
-    </string-array>
-    <string-array name="resistors">
-        <item name="id">3</item>
         <item>Resistor</item>
         <item>Switch</item>
     </string-array>
+
     <string name="exercise">Exercises</string>
     <string name="freeplay">Free play</string>
     <string name="button_ok">I understand</string>
