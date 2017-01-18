@@ -66,6 +66,8 @@ public class Wire extends View {
             case normal:
                 canvas.drawLine(a.x, a.y, b.x, b.y, whitePaint);
                 break;
+
+            // Highlight runs along the circuit to show which way the current flows.
             case runningHighlight:
                 checkIfEndWasReached();
 
@@ -81,13 +83,14 @@ public class Wire extends View {
                     postInvalidateDelayed(10);
                 }
                 break;
+
+            // Current flows through the whole circuit displayed like a dotted line.
             case staticHighlight:
                 boolean useHighlightColor = this.useHighlightColorFirst;
 
                 while(drawUpToX != drawEnd.x || drawUpToY != drawEnd.y) {
                     drawUpToX += drawIntervalX * 2;
                     drawUpToY += drawIntervalY * 2;
-
                     checkIfEndWasReached();
 
                     canvas.drawLine( drawUpToX - drawIntervalX * 2,
@@ -103,11 +106,14 @@ public class Wire extends View {
                 // Reset counters drawUpToX and Y.
                 this.resetCounters();
 
+                // ... and repeat every second.
                 postInvalidateDelayed(1000);
-
                 break;
+
+            // Flash this wire to indicate a mistake.
             case flashingHighlight:
                 canvas.drawLine(a.x, a.y, b.x, b.y, highlightPaint);
+                // Flash five times.
                 if (numberOfFlashes < 5) {
                     if(numberOfFlashes % 2 == 0) {
                         canvas.drawLine(a.x, a.y, b.x, b.y, highlightPaint);
@@ -115,7 +121,7 @@ public class Wire extends View {
                         canvas.drawLine(a.x, a.y, b.x, b.y, whitePaint);
                     }
                     numberOfFlashes++;
-                    postInvalidateDelayed(300); // set time here
+                    postInvalidateDelayed(300);
                 }
                 break;
         }
