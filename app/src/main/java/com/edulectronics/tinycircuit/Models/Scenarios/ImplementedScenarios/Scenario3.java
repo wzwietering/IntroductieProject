@@ -38,13 +38,10 @@ public class Scenario3 extends DesignScenario {
             if(component != null && circuit.getComponentCount(component) == 1) {
                 if (component.getClass() == Powersource.class) {
                     isFullCircle = component.hasOutputConnection(((Powersource) component).getInput());
-                    continue;
                 } else if(component.getClass() == Lightbulb.class) {
                     lampIsOn = ((Lightbulb) component).isOn;
-                    continue;
                 } else if(component.getClass() == Switch.class){
                     hasConnectedSwitch = component.hasOutputConnection(component.getConnectionPointByIndex(1));
-                    continue;
                 }
             }
         }
