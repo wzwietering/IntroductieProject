@@ -44,7 +44,7 @@ public class Scenario5 extends DesignScenario {
                 } else if (component.getClass() == Powersource.class) {
                     isFullCircle = component.hasOutputConnection(((Powersource) component).getInput());
                 } else if (component.getClass() == Switch.class){
-                    hasSwitch = component.hasOutputConnection(component.getConnectionPointByIndex(1));
+                    hasSwitch = component.hasOutputConnection(component.getConnectionPointByIndex(1)) && component.isConductive();
                 } else if (component.getClass() == Resistor.class){
                     hasResistor = component.hasOutputConnection(component.getConnectionPointByIndex(1));
                 }
