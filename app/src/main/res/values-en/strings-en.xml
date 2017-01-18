@@ -31,28 +31,28 @@
     </string-array>
     <string name="exercise">Exercises</string>
     <string name="freeplay">Free play</string>
-    <string name="button_ok">I understand</string>
+    <string name="button_ok">Okay</string>
     <string name="scenario_locked">Unavailable</string>
     <string name="scenario_locked_explanation">This scenario is not yet available. Play the previous scenarios to unlock this one!</string>
     <string name="scenario_explanation_title">Explanation</string>
     <string name="scenario_freeplay">This is the free play mode. Here you can design your own ciruit.</string>
-    <string name="scenario1_explanation">Turn on the light by connection the battery with the lamp.</string>
-    <string name="scenario2_explanation">Add a resistor to the circuit, so the light won\'t break. Add a resistor to the circuit, so the light won\'t break. To add the resistor, you have to remove a wire. This can be done by touching a wire in wire mode. Run the circuit when you are done.</string>
+    <string name="scenario1_explanation">Connect the lamp with the battery, to give the lamp power.</string>
+    <string name="scenario2_explanation">Add a resistor to the circuit, so the light won\'t break. To add the resistor, you have to remove a wire. This can be done by touching a wire in wire mode. Run the circuit when you are done.</string>
     <string name="scenario3_explanation">Add a switch to the circuit, so you can flick the Lamp on and off. Afterwards press the switch to turn the lamp on.</string>
     <string name="scenario4_explanation">Now you understand all components, make your own circuit with 2 lightbulbs and a way to turn the lights off and on.</string>
     <string name="scenario5_explanation">With this exercise you start with nothing! Make circuit with a switch and a lamp, and ensure that the lamp turns on.</string>
     <string name="scenario_nonexisting">Unfortunately this scenario does not yet exist. You can create your own circuit here.</string>
     <string name="scenario_complete">Good job!</string>
     <string name="scenario_not_complete">The circuit is not right yet!</string>
-    <string name="button_add_wire">draw wires</string>
     <string name="run">Run</string>
 
     <!--Specific feedback-->
     <string name="missing_component">A component is missing.</string>
     <string name="no_full_circle">The circuit is not closed yet.</string>
     <string name="wrong_connection">A connection is wrong.</string>
-    <string name="lamp_off">The lamp is not yet on.</string>
+    <string name="lamp_off">The lamp is not on.</string>
     <string name="no_connection">A component is not connected.</string>
+    <string name="resistance_required">A circuit requires resistance.</string>
 
     <!--Arrays with feedback-->
     <string-array name="positive_feedback">
@@ -67,6 +67,6 @@
         <item>"You are doing a good job, but there is a mistake in the circuit."</item>
         <item>"Have another look at the circuit."</item>
         <item>"The exercise is not finished yet, but you are nearly there!"</item>
-        <item>"A modification is required!"</item>
+        <item>"You need to change something!"</item>
     </string-array>
 </resources>
