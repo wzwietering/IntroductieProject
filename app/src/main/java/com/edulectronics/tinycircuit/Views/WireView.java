@@ -16,10 +16,6 @@ import com.edulectronics.tinycircuit.Models.Components.Connectors.Connection;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.Line;
 import com.edulectronics.tinycircuit.R;
 
-/**
- * Created by Wilmer on 9-12-2016.
- */
-
 public class WireView extends View {
     public static Paint paint = new Paint();
     private CircuitController controller;

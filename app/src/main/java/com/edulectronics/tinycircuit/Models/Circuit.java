@@ -7,13 +7,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
-/**
- * Created by Wilmer on 28-11-2016.
- */
-
 public class Circuit implements Serializable{
 
-    Component[] components;
+    private Component[] components;
     public int size;
     public int width;
 
@@ -21,10 +17,6 @@ public class Circuit implements Serializable{
         components = new Component[width * height];
         this.size = width * height;
         this.width = width;
-    }
-
-    public boolean isCompleteCircle() {
-        return false;
     }
 
     public void add(Component component, int i) {
@@ -52,15 +44,6 @@ public class Circuit implements Serializable{
 
     public int getSize() {
         return size;
-    }
-
-    public int getPosition(Component component) {
-        for  (int i = 0; i < components.length; i++) {
-            if(components[i] == component) {
-                return i;
-            }
-        }
-        return -1;
     }
 
     public int getComponentCount(Component component) {

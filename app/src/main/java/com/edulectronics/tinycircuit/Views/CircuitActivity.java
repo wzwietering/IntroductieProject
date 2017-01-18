@@ -28,12 +28,10 @@ import com.edulectronics.tinycircuit.Models.Components.Component;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.Connection;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.Connector;
 import com.edulectronics.tinycircuit.Models.Factories.ComponentFactory;
-import com.edulectronics.tinycircuit.Models.Menu;
 import com.edulectronics.tinycircuit.Models.MenuItem;
 import com.edulectronics.tinycircuit.Models.MessageArgs;
 import com.edulectronics.tinycircuit.Models.MessageTypes;
 import com.edulectronics.tinycircuit.Models.Scenarios.DesignScenario;
-import com.edulectronics.tinycircuit.Models.Scenarios.IScenario;
 import com.edulectronics.tinycircuit.Models.Scenarios.ImplementedScenarios.FreePlayScenario;
 import com.edulectronics.tinycircuit.Models.Scenarios.ImplementedScenarios.Scenario2;
 import com.edulectronics.tinycircuit.R;
@@ -52,16 +50,13 @@ import java.util.ArrayList;
 
 public class CircuitActivity extends Activity implements View.OnClickListener, View.OnTouchListener, View.OnLongClickListener { //  , AdapterView.OnItemClickListener
     private DragController mDragController;   // Object that handles a drag-drop sequence. It interacts with DragSource and DropTarget objects.
-    private DragLayer mDragLayer;             // The ViewGroup within which an object can be dragged.
     private List<MenuItem> componentlist;
     private CircuitController circuitController;
     private ConnectionController connectionController;
     private LevelController levelController;
-    private Menu menu;
     private MessageController messageController = new MessageController(getFragmentManager());
     private boolean isInWireMode = false;
     private int cellSize;
-    private IScenario scenario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,7 +133,7 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
 
     private void createDragControls(GridView grid) {
         mDragController = new DragController(this);
-        mDragLayer = (DragLayer) findViewById(R.id.drag_layer);
+        DragLayer mDragLayer = (DragLayer) findViewById(R.id.drag_layer);
         mDragLayer.setDragController(mDragController);
         mDragLayer.setGridView(grid);
         mDragController.setDragListener(mDragLayer);
@@ -219,11 +214,7 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
         // Make sure the drag was started by a long press as opposed to a long click.
         // (Note: I got this from the Workspace object in the Android Launcher code.
         //  I think it is here to ensure that the device is still in touch mode as we start the drag operation.)
-        if (!v.isInTouchMode()) {
-            return false;
-        }
-
-        return startDrag(v);
+        return v.isInTouchMode() && startDrag(v);
     }
 
     public boolean startDrag(View v) {
@@ -238,20 +229,18 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
         FrameLayout componentHolder = (FrameLayout) findViewById(R.id.component_source_frame);
         componentHolder.setVisibility(View.VISIBLE);
 
-        if (componentHolder != null) {
-            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams (LayoutParams.MATCH_PARENT,
-                    LayoutParams.MATCH_PARENT,
-                    Gravity.CENTER);
-            GridCell newView = new GridCell(circuitController, this);
-            newView.setComponent(component);
-            componentHolder.addView(newView, lp);
-            newView.mCellNumber = -1;
+        FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams (LayoutParams.MATCH_PARENT,
+                LayoutParams.MATCH_PARENT,
+                Gravity.CENTER);
+        GridCell newView = new GridCell(circuitController, this);
+        newView.setComponent(component);
+        componentHolder.addView(newView, lp);
+        newView.mCellNumber = -1;
 
-            // Have this activity listen to touch and click events for the view.
-            newView.setOnClickListener(this);
-            newView.setOnLongClickListener(this);
-            newView.setOnTouchListener(this);
-        }
+        // Have this activity listen to touch and click events for the view.
+        newView.setOnClickListener(this);
+        newView.setOnLongClickListener(this);
+        newView.setOnTouchListener(this);
 
         NavigationView view = (NavigationView) findViewById(R.id.navigationview);
         ((DrawerLayout) findViewById(R.id.activity_main)).closeDrawer(view);

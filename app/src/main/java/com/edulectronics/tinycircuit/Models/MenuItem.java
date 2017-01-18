@@ -1,12 +1,8 @@
 package com.edulectronics.tinycircuit.Models;
 
-/**
- * Created by Wilmer on 1-12-2016.
- */
-
 public class MenuItem {
-    String iconName;
-    int image;
+    private String iconName;
+    private int image;
 
     public String getIconName() {
         return iconName;
