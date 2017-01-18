@@ -9,14 +9,12 @@ import android.widget.TextView;
 
 import com.edulectronics.tinycircuit.Controllers.MessageController;
 import com.edulectronics.tinycircuit.DataStorage.VariableHandler;
-import com.edulectronics.tinycircuit.Models.Factories.ScenarioFactory;
 import com.edulectronics.tinycircuit.Models.MessageArgs;
 import com.edulectronics.tinycircuit.Models.MessageTypes;
-import com.edulectronics.tinycircuit.Models.Scenarios.IScenario;
 import com.edulectronics.tinycircuit.R;
 
 public class ExerciseMenuActivity extends AppCompatActivity {
-    int exercise_amount = 4;
+    int exercise_amount = 5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
