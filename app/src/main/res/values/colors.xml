@@ -7,7 +7,7 @@
     <color name="cell">#00000000</color>
     <color name="cell_empty_hover">#eaeaea</color>
     <color name="cell_filled_hover">#bbbbbb</color>
-    <color name="wiremode_on">#bbbbbb</color>
+    <color name="wiremode_on">#4120ab</color>
     <color name="wiremode_off">@android:color/transparent</color>
     <color name="background">#4141ab</color>
     <color name="wire_default">#ffffff</color>

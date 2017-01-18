@@ -137,9 +137,6 @@ public class CircuitActivity extends Activity
     private void makeLists() {
         componentlist = new ArrayList<>();
         int componentCount = availableComponents.size();
-        if (componentCount == 0){
-            componentCount = 4;
-        }
 
         String[] items = getResources().getStringArray(R.array.menuitems);
         int[] textures = {R.drawable.battery, R.drawable.lightbulb_on, R.drawable.resistor, R.drawable.switch_on};
@@ -237,7 +234,7 @@ public class CircuitActivity extends Activity
         if (isInWireMode) {
             view.setBackgroundResource(R.color.wiremode_on);
         } else {
-            view.setBackgroundResource(R.color.wiremode_off);
+            view.setBackgroundResource(R.color.background);
         }
     }
 
