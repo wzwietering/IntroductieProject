@@ -99,7 +99,7 @@ public class Scenario5 extends DesignScenario {
             return R.string.missing_component;
         }
         if(!hasResistor){
-
+            return R.string.resistance_required;
         }
         return 0;
     }
