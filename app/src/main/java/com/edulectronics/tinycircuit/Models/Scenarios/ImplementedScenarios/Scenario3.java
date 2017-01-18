@@ -11,6 +11,8 @@ import com.edulectronics.tinycircuit.Models.Scenarios.DesignScenario;
 import com.edulectronics.tinycircuit.R;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
 
 
@@ -19,12 +21,6 @@ import java.util.Set;
  */
 
 public class Scenario3 extends DesignScenario {
-    public Scenario3(){}
-
-    public Scenario3(Circuit circuit) {
-        super(circuit);
-    }
-
     public ArrayList<Component> components = new ArrayList<>();
 
     @Override
@@ -39,20 +35,16 @@ public class Scenario3 extends DesignScenario {
         boolean lampIsOn = false;
 
         for (Component component : circuit.getAllComponents()) {
-            if(component != null) {
+            if(component != null && circuit.getComponentCount(component) == 1) {
                 if (component.getClass() == Powersource.class) {
-                    if (component.hasOutputConnection(((Powersource) component).getInput())) {
-                        isFullCircle = true;
-                    }
-                }
-                if(component.getClass() == Lightbulb.class) {
-                    if (((Lightbulb) component).isOn) {
-                        lampIsOn = true;
-                    }
-                }
-                if(component.getClass() == Switch.class){
-                    if (component.hasOutputConnection(((Switch) component).getConnectionPointByIndex(1)))
-                        hasConnectedSwitch = true;
+                    isFullCircle = component.hasOutputConnection(((Powersource) component).getInput());
+                    continue;
+                } else if(component.getClass() == Lightbulb.class) {
+                    lampIsOn = ((Lightbulb) component).isOn;
+                    continue;
+                } else if(component.getClass() == Switch.class){
+                    hasConnectedSwitch = component.hasOutputConnection(component.getConnectionPointByIndex(1));
+                    continue;
                 }
             }
         }
@@ -60,13 +52,8 @@ public class Scenario3 extends DesignScenario {
     }
 
     public Set<Component> getAvailableComponents() {
-        Set set = super.getAvailableComponents();
-        set.add(new Lightbulb());
-        set.add(new Powersource());
-        set.add(new Resistor());
-        set.add(new Switch());
-
-        return set;
+        Component[] components = {new Lightbulb(), new Powersource(), new Resistor(), new Switch()};
+        return new HashSet<>(Arrays.asList(components));
     }
 
     public ArrayList<Component> loadComponents() {
