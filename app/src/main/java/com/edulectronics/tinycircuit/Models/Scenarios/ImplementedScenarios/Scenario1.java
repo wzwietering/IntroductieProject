@@ -77,7 +77,7 @@ public class Scenario1 extends DesignScenario {
 
     public int getHint(){
         if (!hasLightbulb){
-            return R.string.missing_component;
+            return R.string.lamp_required;
         }
         if (!isFullCircle){
             return R.string.no_full_circle;

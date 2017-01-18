@@ -39,20 +39,20 @@
     <string name="scenario2_explanation">Voeg een weerstand toe aan het circuit, zodat je het lampje niet kapot gaat. Om een weerstand toe te voegen, moet je een draad weg halen. Dit kan je doen door in draad modus op een draad te tikken. Voer het circuit uit als je klaar bent.</string>
     <string name="scenario3_explanation">Voeg een schakelaar toe aan het circuit, zodat je het lampje aan en uit kan zetten. Druk daarna op de knop om de lamp aan te zetten.</string>
     <string name="scenario4_explanation">Je snapt nu wat alle onderdelen doen. Maak nu zelf een circuit met 2 lampjes die door een schakelaar aan en uit gezet kunnen worden.</string>
-    <string name="scenario5_explanation">Bij deze opgave begin je met niets! Maak een circuit met een schakelaar en een lamp, en zorg er voor dat de lamp aan gaat.</string>
+    <string name="scenario5_explanation">Je weet nu hoe je een circuit moet maken, het is tijd om het zelf te proberen! Maak een circuit met een schakelaar en een lamp, en zorg er voor dat de lamp aan gaat.</string>
     <string name="scenario_nonexisting">Helaas bestaat dit scenario nog niet. Probeer als vervanger hier je eigen circuit te maken.</string>
     <string name="scenario_complete">Goed gedaan!</string>
     <string name="scenario_not_complete">Het circuit klopt nog niet!</string>
     <string name="run">Uitvoeren</string>
 
     <!--Specific feedback-->
-    <string name="missing_component">Er mist een component.</string>
     <string name="no_full_circle">Het circuit is nog niet gesloten.</string>
     <string name="wrong_connection">Een verbinding klopt niet.</string>
     <string name="lamp_off">De lamp staat nog niet aan.</string>
     <string name="no_connection">Een component is niet verbonden.</string>
     <string name="resistance_required">Een circuit heeft weerstand nodig.</string>
-    <string name="switch_required">Het licht moet aan en uit kunnen.</string>
+    <string name="switch_required">Zorg er voor dat het licht aan en uit kan.</string>
+    <string name="lamp_required">Het is nog donker, voeg een lamp toe!</string>
 
     <!--Arrays with feedback-->
     <string-array name="positive_feedback">
