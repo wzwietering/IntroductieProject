@@ -22,7 +22,7 @@ import java.util.List;
 public class ListAdapter extends BaseAdapter {
     private Context context;
     private List<MenuItem> componentlist;
-    ListView listView;
+    private ListView listView;
 
     public ListAdapter(Context context, List<MenuItem> componentlist, ListView list){
         this.context = context;
@@ -61,7 +61,6 @@ public class ListAdapter extends BaseAdapter {
     }
 
     public View getView(int id, View convertView, ViewGroup viewGroup){
-
         return createMenuItem(convertView, getItem(id), R.layout.header, R.id.iconimage);
     }
 }
