@@ -298,7 +298,7 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
             public void run() {
                 checkScenarioComplete();
             }
-        }, delay + 1000);
+        }, delay == 0 ? delay : delay + 1000);
     }
 
     private void checkScenarioComplete(){

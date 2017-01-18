@@ -124,7 +124,7 @@ public class CircuitController implements Serializable {
                 }
             }
         }
-        return animator.delay;
+        return animator == null ? 0 : animator.delay;
     }
 
     // Check all paths on the graph to see if there is resistance

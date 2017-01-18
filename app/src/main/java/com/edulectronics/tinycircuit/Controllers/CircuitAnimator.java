@@ -25,7 +25,7 @@ import java.util.Stack;
 public class CircuitAnimator {
 
     // How long to wait before animating the wire (in ms)
-    public int delay;
+    public int delay = 0;
 
     // Keeps track of the connections that have already been animated
     // (two components share a connection)
