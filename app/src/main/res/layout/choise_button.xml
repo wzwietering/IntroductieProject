@@ -6,13 +6,15 @@
     android:layout_height="fill_parent"
     android:onClick="startExercise"
     android:layout_marginStart="18dp"
-    android:layout_weight="1">
+    android:layout_weight="1"
+    android:padding="10dp">
 
     <ImageView
-        android:layout_width="118dp"
-        android:layout_height="139dp"
-        app:srcCompat="@drawable/exercisebuttonselector"
+        android:layout_width="120dp"
+        android:layout_height="100dp"
+        app:srcCompat="@drawable/mainmenuselector"
         android:layout_gravity="center_vertical"
+        android:scaleType="fitXY"
         android:id="@+id/exercise_image"/>
 
     <TextView
@@ -21,7 +23,8 @@
         android:layout_alignParentTop="true"
         android:id="@+id/levelnumber"
         android:textSize="60sp"
-        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
         android:layout_centerInParent="true"
         android:textColor="@android:color/white"/>
 </RelativeLayout>
