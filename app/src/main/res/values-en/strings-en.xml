@@ -4,7 +4,7 @@
     <string-array name="menuitems">
         <item>Battery</item>
         <item>Lightbulb</item>
-        <item>Resisitor</item>
+        <item>Resistor</item>
         <item>Switch</item>
     </string-array>
 
