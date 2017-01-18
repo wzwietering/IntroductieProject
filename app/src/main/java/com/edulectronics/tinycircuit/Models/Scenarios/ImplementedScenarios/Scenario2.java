@@ -94,7 +94,7 @@ public class Scenario2 extends DesignScenario {
 
     public int getHint() {
         if(!hasResistor){
-            return R.string.missing_component;
+            return R.string.resistance_required;
         }
         if(!isFullCircle){
             return R.string.no_full_circle;
