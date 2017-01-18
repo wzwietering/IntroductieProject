@@ -1,5 +1,8 @@
 package com.edulectronics.tinycircuit.Controllers;
 
+import android.app.Activity;
+import android.graphics.Color;
+
 import com.edulectronics.tinycircuit.Models.Circuit;
 import com.edulectronics.tinycircuit.Models.Components.Component;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.Connection;
@@ -7,6 +10,7 @@ import com.edulectronics.tinycircuit.Models.Components.Connectors.ConnectionPoin
 import com.edulectronics.tinycircuit.Models.Components.Powersource;
 import com.edulectronics.tinycircuit.Models.Components.Resistor;
 import com.edulectronics.tinycircuit.Models.Graph;
+import com.edulectronics.tinycircuit.Views.Wire;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -23,6 +27,9 @@ public class CircuitController implements Serializable {
     public CircuitController(int width, int size) {
         this.circuit = new Circuit(width, size);
     }
+
+    // a wire animator to animate the wires when the user runs the circuit.
+    CircuitAnimator animator;
 
     // Set the circuit to some predefined circuit passed as arguments.
     public CircuitController(int width, int size, ArrayList<Component> components) {
@@ -98,7 +105,7 @@ public class CircuitController implements Serializable {
     }
 
     // Run the circuit!
-    public void run() {
+    public void run(Activity circuitActivity) {
         reset();
 
         // Check if there are outgoing connections.
@@ -108,7 +115,11 @@ public class CircuitController implements Serializable {
                     // If yes, create graph.
                     Graph graph = new Graph((Powersource) component, this.getAllConnections());
 
-                    // Now check all paths on the graph.
+                    // Animate the current through the wires.
+                    animator = new CircuitAnimator(graph, circuitActivity);
+                    animator.highlightPaths();
+
+                    // Now check all paths on the graph to see if there is resistance.
                     checkPaths(graph);
                 }
             }
@@ -129,19 +140,15 @@ public class CircuitController implements Serializable {
             }
 
             if (!pathHasResistor) {
+                animator.highlightPath(path, Color.RED, Wire.WireDrawingMode.flashingHighlight);
                 for (Object element : elements) {
                     ((Component) element).setResistance(false);
                 }
+            } else {
+                animator.animateCurrentFlow(path);
             }
 
-            handleHighInputs(elements);
-        }
-    }
-
-    //Only handle input for the connected elements
-    private void handleHighInputs(Object[] elements) {
-        for (Object element : elements) {
-            ((Component) element).handleInputHigh();
+            animator.handleHighInputs(elements);
         }
     }
 

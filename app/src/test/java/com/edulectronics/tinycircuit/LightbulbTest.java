@@ -41,7 +41,7 @@ public class LightbulbTest {
         components.add(powersource);
         CircuitController controller = CircuitBuilder.getCircuitController(components);
 
-        controller.run();
+        controller.run(null);
         assertTrue(bulb.isBroken());
     }
 
@@ -60,7 +60,7 @@ public class LightbulbTest {
         components.add(powersource);
         CircuitController controller = CircuitBuilder.getCircuitController(components);
 
-        controller.run();
+        controller.run(null);
         assertFalse(bulb.isOn);
     }
 
@@ -81,7 +81,7 @@ public class LightbulbTest {
         components.add(resistor);
         CircuitController controller = CircuitBuilder.getCircuitController(components);
 
-        controller.run();
+        controller.run(null);
         assertTrue(bulb.isOn);
         assertFalse(bulb.isBroken());
     }

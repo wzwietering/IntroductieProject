@@ -9,6 +9,7 @@ import com.edulectronics.tinycircuit.Models.Components.Switch;
 import com.edulectronics.tinycircuit.Models.Scenarios.DesignScenario;
 import com.edulectronics.tinycircuit.R;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -26,8 +27,19 @@ public class FreePlayScenario extends DesignScenario {
         return 0;
     }
 
+    @Override
     public Set<Component> getAvailableComponents() {
         Component[] components = {new Lightbulb(), new Powersource(), new Resistor(), new Switch()};
         return new HashSet<>(Arrays.asList(components));
+    }
+
+    @Override
+    public ArrayList<Component> loadComponents() {
+        ArrayList<Component> components = new ArrayList<Component>();
+        components.add(new Lightbulb());
+        components.add(new Powersource());
+        components.add(new Resistor());
+        components.add(new Switch());
+        return components;
     }
 }

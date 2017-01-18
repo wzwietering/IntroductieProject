@@ -1,9 +1,12 @@
 package com.edulectronics.tinycircuit.Models.Components;
 
+import android.graphics.Point;
+
 import com.edulectronics.tinycircuit.Models.Components.Connectors.Connection;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.ConnectionPoint;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.ConnectionPointOrientation;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.Connector;
+import com.edulectronics.tinycircuit.Views.Wire;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,6 +28,7 @@ public abstract class Component implements IComponent {
     protected boolean hasResistance;
 
     protected List<ConnectionPoint> connectionPoints = new ArrayList<ConnectionPoint>(4);
+    public Point coordinates;
 
     public Component() {
         this.connectionPoints.add(new ConnectionPoint(this, ConnectionPointOrientation.Left));
@@ -40,6 +44,7 @@ public abstract class Component implements IComponent {
     };
 
     public boolean hasOutputConnection(ConnectionPoint connectionpoint) {
+
         for (ConnectionPoint c : getOutgoingConnections(connectionpoint)) {
             if (c.hasOutputConnection())
                 return true;
@@ -102,5 +107,9 @@ public abstract class Component implements IComponent {
 
     public void reset() {
         this.hasResistance = true;
+    }
+
+    public void setCoordinates(int x, int y) {
+        this.coordinates = new Point(x, y);
     }
 }

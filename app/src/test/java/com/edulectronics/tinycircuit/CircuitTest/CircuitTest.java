@@ -1,7 +1,10 @@
-package com.edulectronics.tinycircuit;
+package com.edulectronics.tinycircuit.CircuitTest;
 
+import com.edulectronics.tinycircuit.CircuitBuilder;
 import com.edulectronics.tinycircuit.Controllers.CircuitController;
 import com.edulectronics.tinycircuit.Models.Components.Component;
+import com.edulectronics.tinycircuit.Models.Components.Connectors.Connection;
+import com.edulectronics.tinycircuit.Models.Components.Connectors.ConnectionPoint;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.Connector;
 import com.edulectronics.tinycircuit.Models.Components.Lightbulb;
 import com.edulectronics.tinycircuit.Models.Components.Powersource;
@@ -11,10 +14,10 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * Created by Wilmer on 28-11-2016.
@@ -80,7 +83,7 @@ public class CircuitTest {
         components.add(bulb);
         CircuitController controller = CircuitBuilder.getCircuitController(components);
 
-        controller.run();
+        controller.run(null);
         assertTrue(bulb.isBroken());
     }
 
@@ -108,7 +111,7 @@ public class CircuitTest {
         components.add(bulb2);
         CircuitController controller = CircuitBuilder.getCircuitController(components);
 
-        controller.run();
+        controller.run(null);
         assertTrue(bulb.isBroken());
         assertFalse(bulb2.isBroken());
     }

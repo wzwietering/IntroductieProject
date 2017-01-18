@@ -90,8 +90,8 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
     }
 
     private void createDrawView() {
-        WireView wireView = (WireView) findViewById(R.id.draw_view);
-        wireView.setControllers(circuitController);
+        connectionController.setControllers(circuitController);
+        connectionController.redrawWires();
     }
 
     private GridView createCircuit() {
@@ -112,7 +112,7 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
 
     private void setControllers() {
         Point size = getDisplaySize();
-        connectionController = new ConnectionController((WireView) findViewById(R.id.draw_view), cellSize, cellSize);
+        connectionController = new ConnectionController(this, cellSize, cellSize);
         levelController = new LevelController(getIntent().getStringExtra("scenario"));
         // Width or height divided by cellsize fits the maxiumum amount of cells inside the screen
         if (getIntent().getStringExtra("scenario").equals("freeplay")) {
@@ -137,6 +137,7 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
         mDragLayer.setDragController(mDragController);
         mDragLayer.setGridView(grid);
         mDragController.setDragListener(mDragLayer);
+        mDragController.setWireController(this.connectionController);
     }
 
     /*This code adds a menu to the side*/
@@ -188,7 +189,7 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
                 for (Connection connection : circuitController.getAllConnections()) {
                     if (connection.isTouched(ev) && component == null) {
                         Connector.disconnect(connection.pointA, connection.pointB);
-                        connectionController.redraw();
+                        connectionController.redrawWires();
                     }
                 }
             }
@@ -277,9 +278,14 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
         levelController.setScenario(new Scenario2(this.circuitController.circuit));
     }
 
-    public void run(View view){
-        circuitController.run();
-        ((GridView) findViewById(R.id.circuit)).invalidateViews();
+    public void run(View view) {
+        // Reset the circuit before animating it; so all wires start out white, and lightbulbs whole.
+        connectionController.redrawWires();
+        ((GridView)findViewById(R.id.circuit)).invalidateViews();
+
+        // TODO: get the delay back from the circuitcontroller (which gets it from wirecontroller)
+        // to delay the scenario complete check until the whole circuit has been animated.
+        circuitController.run(this);
         checkScenarioComplete(true);
     }
 

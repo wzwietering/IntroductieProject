@@ -20,9 +20,9 @@ public class Graph {
     // We have a source and base between which we can check all connections.
     // In the circuit, these are represented by the same powersource.
     // In the graph however, the connections of the powersource output are 'source',
-    // and connection of the powersource input are 'base'.
-    private final Powersource source;
-    private final Component base;
+    // and connection of the powerSource input are 'base'.
+    public final Powersource source;
+    public final Powersource base;
 
     public Set<Component> nodes = new HashSet<>();
     List<Edge> edges = new ArrayList<Edge>();
@@ -46,9 +46,11 @@ public class Graph {
             // all paths between source and base, even though they really go from source to source.
             if (edge.a == source || edge.b == source) {
                 if (source.getInput() == connection.pointA) {
+                    // relocate to base
                     edge.a = base;
                 }
                 if (source.getInput() == connection.pointB) {
+                    // relocate to base
                     edge.b = base;
                 }
             }
@@ -68,7 +70,7 @@ public class Graph {
         connectionPath = new Stack();
         connectionPaths = new ArrayList<>();
 
-        findPaths(source, base);
+        findPaths(base, source);
         return this.connectionPaths;
     }
 
@@ -93,9 +95,9 @@ public class Graph {
     private Set<Component> getNeighbours(Component component) {
         Set<Component> neighbours = new HashSet<>();
         for (Edge edge : this.edges) {
-            if (edge.a == component) {
+            if (edge.a == component && edge.b != this.base) {
                     neighbours.add(edge.b);
-            } else if (edge.b == component) {
+            } else if (edge.b == component && edge.a != this.base) {
                     neighbours.add(edge.a);
             }
         }
