@@ -3,6 +3,7 @@ package com.edulectronics.tinycircuit.Views;
 import android.app.Activity;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Display;
@@ -199,10 +200,6 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
 
             if(component != null && action == MotionEvent.ACTION_DOWN) {
                 connectionController.makeWire(component, ev);
-
-                if (levelController.getScenario().isCompleted(circuitController.circuit)) {
-                    scenarioCompleted();
-                }
             }
         }
         return false;
@@ -294,17 +291,23 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
 
         // TODO: get the delay back from the circuitcontroller (which gets it from wirecontroller)
         // to delay the scenario complete check until the whole circuit has been animated.
-        circuitController.run(this);
-        checkScenarioComplete(true);
+        int delay = circuitController.run(this);
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                checkScenarioComplete();
+            }
+        }, delay + 1000);
     }
 
-    private void checkScenarioComplete(boolean run){
+    private void checkScenarioComplete(){
         //The boolean is used to give the user only negative feedback when they press the run button.
         //Giving negative feedback when this method runs using the onTouch method is a nightmare,
         //because you will get negative messages all the time.
         if (levelController.levelIsCompleted(circuitController.circuit)) {
             scenarioCompleted();
-        } else if (run && levelController.getScenario().getClass() != FreePlayScenario.class) {
+        } else if (levelController.getScenario().getClass() != FreePlayScenario.class) {
             giveNegativeFeedback();
         }
     }

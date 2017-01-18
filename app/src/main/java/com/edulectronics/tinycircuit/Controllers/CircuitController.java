@@ -105,7 +105,7 @@ public class CircuitController implements Serializable {
     }
 
     // Run the circuit!
-    public void run(Activity circuitActivity) {
+    public int run(Activity circuitActivity) {
         reset();
 
         // Check if there are outgoing connections.
@@ -124,6 +124,7 @@ public class CircuitController implements Serializable {
                 }
             }
         }
+        return animator.delay;
     }
 
     // Check all paths on the graph to see if there is resistance
