@@ -9,7 +9,6 @@ import com.edulectronics.tinycircuit.Models.Components.Powersource;
 import com.edulectronics.tinycircuit.Models.Components.Resistor;
 
 import org.junit.Test;
-import org.junit.experimental.theories.internal.ParameterizedAssertionError;
 
 import java.util.ArrayList;
 
@@ -45,7 +44,6 @@ public class LightbulbTest {
         controller.run();
         assertTrue(bulb.isBroken());
     }
-
 
     @Test
     public void disconnectedLightBulbIsOff(){

@@ -5,8 +5,6 @@ package com.edulectronics.tinycircuit.Models.Components.Connectors;
  */
 
 public enum ConnectionPointOrientation {
-    Top,
     Right,
-    Bottom,
     Left
 }

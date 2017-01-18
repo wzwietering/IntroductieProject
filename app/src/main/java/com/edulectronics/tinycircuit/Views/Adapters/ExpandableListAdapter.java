@@ -41,7 +41,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        try{
+        try {
             return children.get(headers.get(groupPosition)).size();
         } catch (NullPointerException e){
             return 0;

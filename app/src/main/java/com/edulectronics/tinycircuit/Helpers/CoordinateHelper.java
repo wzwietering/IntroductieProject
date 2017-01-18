@@ -1,4 +1,4 @@
-package com.edulectronics.tinycircuit.Controllers;
+package com.edulectronics.tinycircuit.Helpers;
 
 import android.content.res.Resources;
 import android.graphics.Point;
@@ -29,9 +29,6 @@ public class CoordinateHelper {
         int width = Resources.getSystem().getDisplayMetrics().widthPixels;
         int gridCells = (int) Math.floor(width / cellHeight);
         switch (orientation) {
-            case Top:
-            case Bottom:
-                return (getColumn(position) - 1) * cellWidth + (int) (0.5 * cellWidth);
             case Left:
                 return (getColumn(position) - 1) * cellWidth + 13;
             case Right:
@@ -46,10 +43,6 @@ public class CoordinateHelper {
             case Left:
             case Right:
                 return (getRow(position) - 1) * cellHeight + (int) (0.5 * cellHeight);
-            case Top:
-                return (getRow(position) - 1) * cellHeight;
-            case Bottom:
-                return getRow(position) * cellHeight;
             default:
                 throw new InvalidParameterException("Invalid orientation given");
         }
