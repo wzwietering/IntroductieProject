@@ -15,7 +15,6 @@ public class Lightbulb extends Component {
             if(hasResistance) {
                 return R.drawable.lightbulb_on;
             } else {
-                isOn = false;
                 return R.drawable.lightbulb_broken;
             }
         }
