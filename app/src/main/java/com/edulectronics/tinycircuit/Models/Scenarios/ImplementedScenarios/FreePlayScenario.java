@@ -37,6 +37,6 @@ public class FreePlayScenario extends DesignScenario {
         set.add(new Resistor());
         set.add(new Switch());
 
-        return super.getAvailableComponents();
+        return set;
     }
 }
