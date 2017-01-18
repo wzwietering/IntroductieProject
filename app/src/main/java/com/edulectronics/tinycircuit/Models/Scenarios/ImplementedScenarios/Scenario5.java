@@ -76,10 +76,6 @@ public class Scenario5 extends DesignScenario {
 
     public ArrayList<Component> loadComponents() {
         ArrayList<Component> components = new ArrayList<>();
-        Powersource powersource = new Powersource();
-
-        components.add(powersource);
-
         return components;
     }
 
