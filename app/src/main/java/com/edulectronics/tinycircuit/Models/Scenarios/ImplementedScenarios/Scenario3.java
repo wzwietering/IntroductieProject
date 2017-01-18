@@ -11,8 +11,6 @@ import com.edulectronics.tinycircuit.Models.Scenarios.DesignScenario;
 import com.edulectronics.tinycircuit.R;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.Set;
 
 
@@ -34,22 +32,20 @@ public class Scenario3 extends DesignScenario {
 
     @Override
     public boolean isCompleted(Circuit circuit) {
+        if (!super.isCompleted(circuit)) return false;
         hasConnectedSwitch = false;
-        isFullCircle = false;
         lampIsOn = false;
 
         for (Component component : circuit.getAllComponents()) {
             if(component != null && circuit.getComponentCount(component) == 1) {
-                if (component.getClass() == Powersource.class) {
-                    isFullCircle = component.hasOutputConnection(((Powersource) component).getInput());
-                } else if(component.getClass() == Lightbulb.class) {
+                if(component.getClass() == Lightbulb.class) {
                     lampIsOn = ((Lightbulb) component).isOn;
                 } else if(component.getClass() == Switch.class){
                     hasConnectedSwitch = component.hasOutputConnection(component.getConnectionPointByIndex(1));
                 }
             }
         }
-        return (isFullCircle && hasConnectedSwitch && lampIsOn);
+        return (hasConnectedSwitch && lampIsOn);
     }
 
     public Set<Component> getAvailableComponents() {

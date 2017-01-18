@@ -23,29 +23,28 @@ import java.util.Set;
  */
 
 public class Scenario1 extends DesignScenario {
+    private boolean hasLightbulb;
 
     @Override
     public int getPrompt() {
         return R.string.scenario1_explanation;
     }
 
-    private boolean hasLightbulb, isFullCircle;
-
     @Override
     public boolean isCompleted(Circuit circuit) {
+        if (!super.isCompleted(circuit)) return false;
         hasLightbulb = false;
-        isFullCircle = false;
 
         for (Component component : circuit.getAllComponents()) {
-            if(component != null && circuit.getComponentCount(component) == 1) {
+            if(component != null) {
                 if (component.getClass() == Lightbulb.class) {
                     hasLightbulb = true;
-                } else if (component.getClass() == Powersource.class) {
-                    isFullCircle = component.hasOutputConnection(((Powersource) component).getInput());
+                    continue;
                 }
             }
         }
-        return (isFullCircle && hasLightbulb);
+
+        return (hasLightbulb);
     }
 
     public Set<Component> getAvailableComponents() {
@@ -71,7 +70,7 @@ public class Scenario1 extends DesignScenario {
 
     public int getHint(){
         if (!hasLightbulb){
-            return R.string.missing_component;
+            return R.string.lamp_required;
         }
         if (!isFullCircle){
             return R.string.no_full_circle;

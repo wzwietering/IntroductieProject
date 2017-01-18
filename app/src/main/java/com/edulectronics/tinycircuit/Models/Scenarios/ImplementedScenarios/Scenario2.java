@@ -10,8 +10,6 @@ import com.edulectronics.tinycircuit.Models.Scenarios.DesignScenario;
 import com.edulectronics.tinycircuit.R;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.Set;
 
 
@@ -31,25 +29,28 @@ public class Scenario2 extends DesignScenario {
         return R.string.scenario2_explanation;
     }
 
-    boolean hasResistor, isFullCircle, lampIsOn;
+    boolean hasResistor, lampIsOn;
 
     @Override
     public boolean isCompleted(Circuit circuit) {
+        if (!super.isCompleted(circuit)) return false;
         hasResistor = false;
-        isFullCircle = false;
         lampIsOn = false;
 
         for (Component component : circuit.getAllComponents()) {
             if(component != null && circuit.getComponentCount(component) == 1) {
-                if(component.getClass() == Resistor.class) {
-                    hasResistor = component.hasOutputConnection(component.getConnectionPointByIndex(1));
-                } else if (component.getClass() == Powersource.class) {
-                    isFullCircle = component.hasOutputConnection(((Powersource) component).getInput());
-                } else if(component.getClass() == Lightbulb.class) {
-                    lampIsOn = ((Lightbulb) component).isOn;
+                if(component.getClass() == Resistor.class ) {
+                    hasResistor = true;
+                    continue;
+                }
+                if(component.getClass() == Lightbulb.class){
+                    if(((Lightbulb) component).isOn){
+                        lampIsOn = true;
+                    }
                 }
             }
         }
+
         return (isFullCircle && hasResistor && lampIsOn);
     }
 
@@ -84,7 +85,7 @@ public class Scenario2 extends DesignScenario {
 
     public int getHint() {
         if(!hasResistor){
-            return R.string.missing_component;
+            return R.string.resistance_required;
         }
         if(!isFullCircle){
             return R.string.no_full_circle;
