@@ -26,7 +26,6 @@ public class Scenario5 extends DesignScenario {
     boolean lampRequirementsMet;
     boolean isFullCircle;
     boolean hasSwitch;
-    boolean hasPower;
     boolean hasResistor;
 
     @Override
@@ -61,7 +60,7 @@ public class Scenario5 extends DesignScenario {
             }
         }
 
-        return (isFullCircle && lampRequirementsMet && hasSwitch);
+        return (isFullCircle && lampRequirementsMet && hasSwitch && hasResistor);
     }
 
     public Set<Component> getAvailableComponents() {
