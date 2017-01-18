@@ -182,7 +182,7 @@ public class ConnectionController {
     public Wire getVerticalWire(Point a, Point b) {
         if (a.y == b.y)
             return null;
-        return createLine(new Point(a.x, a.y), new Point(a.x, b.y - (Math.abs(a.y - b.y) % 150)));
+        return createLine(new Point(a.x, a.y), new Point(a.x, b.y - (Math.abs(a.y - b.y) % 200)));
     }
 
     // First go half a cell up/down/left/right, depending on where the connectionpoint is

@@ -26,7 +26,7 @@
 			android:layout_margin="0dp"
 			android:scrollbars="none"
 			android:background="@android:color/transparent"
-            android:columnWidth="150px"
+            android:columnWidth="200px"
             android:stretchMode="none"
 			android:id="@+id/circuit" />
 

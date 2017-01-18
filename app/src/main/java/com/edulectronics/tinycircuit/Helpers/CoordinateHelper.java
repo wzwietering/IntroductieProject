@@ -30,9 +30,9 @@ public class CoordinateHelper {
         int gridCells = (int) Math.floor(width / cellHeight);
         switch (orientation) {
             case Left:
-                return (getColumn(position) - 1) * cellWidth + 13;
+                return (getColumn(position) - 1) * cellWidth + 10;
             case Right:
-                return getColumn(position) * cellWidth - 13;
+                return getColumn(position) * cellWidth - 10;
             default:
                 throw new InvalidParameterException("Invalid orientation given");
         }
