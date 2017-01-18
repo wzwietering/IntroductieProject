@@ -9,6 +9,8 @@ import com.edulectronics.tinycircuit.Models.Scenarios.DesignScenario;
 import com.edulectronics.tinycircuit.R;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -33,15 +35,13 @@ public class Scenario1 extends DesignScenario {
         boolean isFullCircle = false;
 
         for (Component component : circuit.getAllComponents()) {
-            if(component != null) {
+            if(component != null && circuit.getComponentCount(component) == 1) {
                 if (component.getClass() == Lightbulb.class) {
                     hasLightbulb = true;
                     continue;
-                }
-                if (component.getClass() == Powersource.class) {
-                    if (component.hasOutputConnection(((Powersource) component).getInput())) {
-                        isFullCircle = true;
-                    }
+                } else if (component.getClass() == Powersource.class) {
+                    isFullCircle = component.hasOutputConnection(((Powersource) component).getInput());
+                    continue;
                 }
             }
         }
@@ -50,11 +50,8 @@ public class Scenario1 extends DesignScenario {
     }
 
     public Set<Component> getAvailableComponents() {
-        Set set = super.getAvailableComponents();
-        set.add(new Lightbulb());
-        set.add(new Powersource());
-
-        return set;
+        Component[] components = {new Lightbulb(), new Powersource()};
+        return new HashSet<>(Arrays.asList(components));
     }
 
     public ArrayList<Component> loadComponents() {

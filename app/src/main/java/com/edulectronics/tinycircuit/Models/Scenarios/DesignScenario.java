@@ -31,7 +31,7 @@ public abstract class DesignScenario implements IScenario {
 
     // The component types that the user is allowed to use. Can differ for each scenario.
     public Set<Component> getAvailableComponents() {
-        return new HashSet<Component>();
+        return new HashSet<>();
     }
 
     // The preset components that are already part of the scenario.
