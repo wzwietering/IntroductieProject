@@ -197,8 +197,9 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
                     }
                 }
             }
-
-            if(component != null && action == MotionEvent.ACTION_DOWN) {
+            // Only make a wire on the up action. The user might be making a long
+            // press and we don't want to make a wire on long press (longPress is for dragging)
+            if(component != null && action == MotionEvent.ACTION_UP) {
                 connectionController.makeWire(component, ev);
             }
         }
@@ -209,8 +210,6 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
         VariableHandler variableHandler = new VariableHandler(getApplicationContext());
         variableHandler.saveProgress(levelController.getScenarioID());
         givePositiveFeedback();
-        // after callback
-
     }
 
     public boolean onLongClick(View v) {
@@ -225,6 +224,7 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
     }
 
     public boolean startDrag(View v) {
+        connectionController.cancelConnection();
         IDragSource dragSource = (IDragSource) v;
         mDragController.startDrag(v, dragSource, dragSource);
         return true;

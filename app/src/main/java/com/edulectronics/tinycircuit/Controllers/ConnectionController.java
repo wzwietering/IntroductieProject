@@ -53,6 +53,10 @@ public class ConnectionController {
         }
     }
 
+    public void cancelConnection() {
+        this.connecting = false;
+    }
+
     private void connect(Component component, MotionEvent event) {
         Connector connector = new Connector();
         ConnectionPointOrientation secondOrientation = getClickedArea((int) event.getX());
@@ -111,7 +115,7 @@ public class ConnectionController {
     }
 
     private boolean mayConnect(Component component, MotionEvent event) {
-        return (component != null & event.getAction() == MotionEvent.ACTION_DOWN);
+        return (component != null & event.getAction() == MotionEvent.ACTION_UP);
     }
 
     private ConnectionPoint getConnectionPoint(Component component, ConnectionPointOrientation cpo) {
