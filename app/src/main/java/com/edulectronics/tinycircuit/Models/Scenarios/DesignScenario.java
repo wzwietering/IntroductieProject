@@ -31,6 +31,9 @@ public abstract class DesignScenario implements IScenario {
         return false;
     }
 
+    // Determines whether to reset circuit  to scenario default when user starts this scenario.
+    public boolean resetCircuitOnStart() { return false; }
+
     // The component types that the user is allowed to use. Can differ for each scenario.
     public Set<Component> getAvailableComponents() {
         return new HashSet<>();

@@ -3,6 +3,7 @@ package com.edulectronics.tinycircuit.Controllers;
 import com.edulectronics.tinycircuit.Models.Circuit;
 import com.edulectronics.tinycircuit.Models.Components.Component;
 import com.edulectronics.tinycircuit.Models.Factories.ScenarioFactory;
+import com.edulectronics.tinycircuit.Models.Scenarios.DesignScenario;
 import com.edulectronics.tinycircuit.Models.Scenarios.IScenario;
 import com.edulectronics.tinycircuit.Models.Scenarios.ImplementedScenarios.Scenario2;
 
@@ -38,7 +39,6 @@ public class LevelController {
         return scenario.loadComponents();
     }
 
-
     public IScenario getScenario() {
         return scenario;
     }
@@ -47,9 +47,11 @@ public class LevelController {
         this.scenario = scenario;
     }
 
-    public void goToNextLevel() {
+    public IScenario goToNextLevel() {
         int nextScenario = scenario.getID() + 1;
         ScenarioFactory factory = new ScenarioFactory();
         scenario = factory.getScenario(Integer.toString(nextScenario));
+
+        return scenario;
     }
 }

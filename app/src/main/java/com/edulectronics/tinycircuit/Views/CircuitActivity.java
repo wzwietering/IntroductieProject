@@ -117,10 +117,15 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
     }
 
     private void setControllers() {
-        Point size = getDisplaySize();
         connectionController = new ConnectionController(this, cellSize, cellSize);
         levelController = new LevelController(getIntent().getStringExtra("scenario"));
+        // now we have the levelcontroller we can set the circuitcontroller.
+        setCircuitController();
+    }
+
+    private void setCircuitController() {
         // Width or height divided by cellsize fits the maxiumum amount of cells inside the screen
+        Point size = getDisplaySize();
         if (getIntent().getStringExtra("scenario").equals("freeplay")) {
             circuitController = new CircuitController(size.x / cellSize, size.y / cellSize);
         } else {
@@ -282,7 +287,13 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
     }
 
     public void startNextScenario() {
-        levelController.goToNextLevel();
+        IScenario scenario = levelController.goToNextLevel();
+
+        if(scenario.resetCircuitOnStart()) {
+            setCircuitController();
+            initializeView();
+        }
+
         this.showMessages(false);
         // Reset the menu. There might be more components for the user to use.
         this.createMenu();
