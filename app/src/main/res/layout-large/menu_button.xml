@@ -7,7 +7,7 @@
 
     <ImageButton
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:src="@drawable/mainmenuselector"
         android:background="@android:color/transparent"
         android:id="@+id/menuButtonImage"
@@ -27,6 +27,6 @@
         android:layout_margin="1dp"
         android:gravity="center"
         android:textColor="#ffffff"
-        android:textSize="48dp"/>
+        android:textSize="48sp"/>
 
 </RelativeLayout>
