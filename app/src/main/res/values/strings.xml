@@ -23,7 +23,7 @@
     <string name="scenario_complete">Goed gedaan!</string>
     <string name="scenario_not_complete">Het circuit klopt nog niet!</string>
     <string name="run">Uitvoeren</string>
-    <string name="scenario1_complete">Zoals je zag, is de lamp kapot gegaan. In het volgende scenario ga je leren hoe je dat kan voorkomen.</string>
+    <string name="scenario1_complete">Jammer genoeg is de lamp kapot gegaan! In het volgende opdracht ga je leren hoe je de lamp heel houdt.</string>
 
     <!--Specific feedback-->
     <string name="no_full_circle">Het circuit is nog niet gesloten.</string>

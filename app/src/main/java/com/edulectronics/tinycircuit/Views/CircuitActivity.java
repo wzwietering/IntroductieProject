@@ -174,7 +174,6 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
             // Let clicked component handle the tap.
             if (circuitController.handleClick(((GridCell) v).mCellNumber)) {
                 ((GridCell) v).resetImage();
-                run();
             }
         }
     }
@@ -283,11 +282,6 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
     //The run method with view is necessary because the event handler of a button must be able to
     // pass a view, but we don't use the view, so this implementation is sufficient.
     public void run(View view) {
-        run();
-    }
-
-    //Run the circuit, which draws and animates the wires and checks if the scenario is completed
-    private void run(){
         // Reset the circuit before animating it; so all wires start out white, and lightbulbs whole.
         connectionController.redrawWires();
         ((GridView)findViewById(R.id.circuit)).invalidateViews();
