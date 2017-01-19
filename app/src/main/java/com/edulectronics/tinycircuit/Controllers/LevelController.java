@@ -7,6 +7,8 @@ import com.edulectronics.tinycircuit.Models.Scenarios.IScenario;
 import com.edulectronics.tinycircuit.Models.Scenarios.ImplementedScenarios.Scenario2;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by bernd on 09/01/2017.
@@ -28,15 +30,26 @@ public class LevelController {
         return scenario.getID();
     }
 
-    public ArrayList<Component> getAvailableComponents() {
+    public Set<Component> getAvailableComponents() {
+        return scenario.getAvailableComponents();
+    }
+
+    public ArrayList<Component> loadComponents() {
         return scenario.loadComponents();
     }
-    
+
+
     public IScenario getScenario() {
         return scenario;
     }
 
     public void setScenario(IScenario scenario) {
         this.scenario = scenario;
+    }
+
+    public void goToNextLevel() {
+        int nextScenario = scenario.getID() + 1;
+        ScenarioFactory factory = new ScenarioFactory();
+        scenario = factory.getScenario(Integer.toString(nextScenario));
     }
 }

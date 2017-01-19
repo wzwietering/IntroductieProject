@@ -122,7 +122,7 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
         if (getIntent().getStringExtra("scenario").equals("freeplay")) {
             circuitController = new CircuitController(size.x / cellSize, size.y / cellSize);
         } else {
-            circuitController = new CircuitController(size.x / cellSize, size.y / cellSize, levelController.getAvailableComponents());
+            circuitController = new CircuitController(size.x / cellSize, size.y / cellSize, levelController.loadComponents());
         }
         DeleteZone deleteZone = (DeleteZone) findViewById(R.id.delete_zone_view);
         deleteZone.setCircuitController(circuitController);
@@ -209,6 +209,8 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
         VariableHandler variableHandler = new VariableHandler(getApplicationContext());
         variableHandler.saveProgress(levelController.getScenarioID());
         givePositiveFeedback();
+        // after callback
+
     }
 
     public boolean onLongClick(View v) {
@@ -278,10 +280,10 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
     }
 
     public void startNextScenario() {
-        // TODO: Implemented by scenariocontroller.
-        // Obviously this is very very bad code. I know. I will fix it when we have a scenario-
-        // controller.
-        levelController.setScenario(new Scenario2(this.circuitController.circuit));
+        levelController.goToNextLevel();
+        this.showMessages();
+        // Reset the menu. There might be more components for the user to use.
+        this.createMenu();
     }
 
     public void run(View view) {
@@ -306,7 +308,7 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
         //Giving negative feedback when this method runs using the onTouch method is a nightmare,
         //because you will get negative messages all the time.
         if (levelController.levelIsCompleted(circuitController.circuit)) {
-            scenarioCompleted();
+            this.scenarioCompleted();
         } else if (levelController.getScenario().getClass() != FreePlayScenario.class) {
             giveNegativeFeedback();
         }

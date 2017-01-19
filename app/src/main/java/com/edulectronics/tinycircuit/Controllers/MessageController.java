@@ -34,9 +34,9 @@ public class MessageController {
     }
 
     private void showMessage(Bundle args) {
-        Message dialogFragment = new Message();
-        dialogFragment.setArguments(args);
-        dialogFragment.show(fragmentManager, "");
+        Message message = new Message();
+        message.setArguments(args);
+        message.show(fragmentManager, "");
     }
 
     private int getTitle(MessageTypes type) {
