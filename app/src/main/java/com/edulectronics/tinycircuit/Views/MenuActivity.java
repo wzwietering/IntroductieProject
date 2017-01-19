@@ -1,5 +1,6 @@
 package com.edulectronics.tinycircuit.Views;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -38,6 +39,11 @@ public class MenuActivity extends AppCompatActivity {
         getBaseContext().getResources().updateConfiguration(config,
                 getBaseContext().getResources().getDisplayMetrics());
         this.createMenu();
+    }
+
+    public void aboutActivity(View view){
+        Intent intent = new Intent(this, AboutActivity.class);
+        this.startActivity(intent);
     }
 
     private void createMenu(){
