@@ -11,8 +11,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.view.WindowManager;
-import android.widget.FrameLayout;
 import android.widget.AdapterView;
+import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -36,17 +36,18 @@ import com.edulectronics.tinycircuit.Models.Scenarios.ImplementedScenarios.FreeP
 import com.edulectronics.tinycircuit.Models.Scenarios.ImplementedScenarios.Scenario2;
 import com.edulectronics.tinycircuit.R;
 import com.edulectronics.tinycircuit.Views.Adapters.CircuitAdapter;
-import com.edulectronics.tinycircuit.Views.Draggables.DeleteZone;
 import com.edulectronics.tinycircuit.Views.Adapters.ListAdapter;
+import com.edulectronics.tinycircuit.Views.Draggables.DeleteZone;
 import com.edulectronics.tinycircuit.Views.Draggables.DragController;
 import com.edulectronics.tinycircuit.Views.Draggables.DragLayer;
 import com.edulectronics.tinycircuit.Views.Draggables.GridCell;
 import com.edulectronics.tinycircuit.Views.Draggables.Interfaces.IDragSource;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import static com.edulectronics.tinycircuit.Models.MessageTypes.Explanation;
-import java.util.ArrayList;
 
 public class CircuitActivity extends Activity implements View.OnClickListener, View.OnTouchListener, View.OnLongClickListener { //  , AdapterView.OnItemClickListener
     private DragController mDragController;   // Object that handles a drag-drop sequence. It interacts with DragSource and DropTarget objects.
@@ -312,8 +313,10 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
     //Create a positive feedback message
     private void givePositiveFeedback(){
         String[] positiveFeedback = getResources().getStringArray(R.array.positive_feedback);
+        String feedback = giveFeedback(positiveFeedback) + " " + getResources().getString(
+                levelController.getScenario().getCompletePrompt());
         messageController.displayMessage(new MessageArgs(
-                giveFeedback(positiveFeedback),
+                feedback,
                 MessageTypes.ScenarioComplete,
                 true));
     }

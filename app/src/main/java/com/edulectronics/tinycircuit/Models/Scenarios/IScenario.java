@@ -23,6 +23,9 @@ import java.util.Set;
     // Show a message to the user (explaining what to do, or a quiz question)
     public int getPrompt();
 
+    // Show a message to the user when the scenario is completed
+    public int getCompletePrompt();
+
     // Load the preset components for displaying the circuit that is part of this scenario.
     ArrayList<Component> loadComponents();
 
