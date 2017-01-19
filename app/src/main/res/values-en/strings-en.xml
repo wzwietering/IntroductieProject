@@ -24,7 +24,7 @@
     <string name="scenario_complete">Good job!</string>
     <string name="scenario_not_complete">The circuit is not right yet!</string>
     <string name="run">Run</string>
-    <string name="scenario1_complete">Sadly, the lamp broke. In the next exercise you will learn how to keep the lamp functional.</string>
+    <string name="scenario1_complete">Sadly, the lamp broke. In the next exercise you will learn how to keep the lamp working.</string>
 
     <!--Specific feedback-->
     <string name="no_full_circle">The circuit is not closed yet.</string>
