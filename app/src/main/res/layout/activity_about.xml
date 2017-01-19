@@ -13,24 +13,14 @@
     tools:context="com.edulectronics.tinycircuit.Views.AboutActivity">
 
     <TextView
-        android:text="@string/lead_developers"
+        android:text="@string/title_aboutactivity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20dp"
-        android:layout_marginBottom="15dp"
-        android:id="@+id/textView4"
-        android:layout_below="@+id/textView3"
-        android:layout_alignStart="@+id/textView" />
-
-    <TextView
-        android:text="@string/frontend_developer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
-        android:textSize="20dp"
-        android:id="@+id/textView5"
-        android:layout_below="@+id/textView4"
-        android:layout_alignStart="@+id/textView4" />
+        android:textSize="40sp"
+        android:id="@+id/textView"
+        android:textColor="Black"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:text="@string/project_manager"
@@ -39,23 +29,15 @@
         android:layout_marginTop="30dp"
         android:layout_marginBottom="15dp"
         android:textSize="20dp"
+        android:textColor="Black"
         android:id="@+id/textView3"
-        android:layout_below="@+id/textView"
-        android:layout_alignStart="@+id/textView4" />
-
-    <TextView
-        android:text="@string/title_aboutactivity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="40sp"
-        android:id="@+id/textView"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+        android:layout_below="@+id/textView" />
 
     <TextView
         android:text="@string/website"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="Black"
         android:layout_alignParentBottom="true"
         android:id="@+id/textView6" />
 
