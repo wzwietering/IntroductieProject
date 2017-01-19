@@ -13,6 +13,7 @@ public class MessageArgs implements Serializable{
 
     public boolean endActivity;
     public boolean goToNextScenario;
+    public boolean allowHint;
 
     public MessageArgs(String message, MessageTypes type) {
         this.message = message;

@@ -10,6 +10,7 @@
     <string name="exercise">Opgaven</string>
     <string name="freeplay">Vrij spel</string>
     <string name="button_ok">Ik snap het</string>
+    <string name="button_hint">geef me een hint</string>
     <string name="scenario_locked">Niet beschikbaar</string>
     <string name="scenario_locked_explanation">Dit scenario is nog niet beschikbaar. Speel de eerdere scenario\'s om deze vrij te spelen!</string>
     <string name="scenario_explanation_title">Uitleg</string>

@@ -78,13 +78,15 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
         createDragControls(createCircuit());
         createMenu();
         createDrawView();
-        showMessages();
+        showMessages(false);
     }
 
-    private void showMessages() {
+    private void showMessages(boolean allowHint) {
         if (levelController.getScenario().getClass() != FreePlayScenario.class) {
             String prompt = getResources().getString(levelController.getScenario().getPrompt());
-            messageController.displayMessage(new MessageArgs(prompt, Explanation));
+            MessageArgs args = new MessageArgs(prompt, Explanation);
+            args.allowHint = allowHint;
+            messageController.displayMessage(args);
         }
     }
 
@@ -281,7 +283,7 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
 
     public void startNextScenario() {
         levelController.goToNextLevel();
-        this.showMessages();
+        this.showMessages(false);
         // Reset the menu. There might be more components for the user to use.
         this.createMenu();
     }
@@ -291,8 +293,8 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
         connectionController.redrawWires();
         ((GridView)findViewById(R.id.circuit)).invalidateViews();
 
-        // TODO: get the delay back from the circuitcontroller (which gets it from wirecontroller)
-        // to delay the scenario complete check until the whole circuit has been animated.
+        // get the delay back from the circuitcontroller to delay the scenario complete check
+        // until the whole circuit has been animated.
         int delay = circuitController.run(this);
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
@@ -314,8 +316,12 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
         }
     }
 
+    public void getHelp(View view) {
+        showMessages(true);
+    }
+
     //Create a negative feedback message
-    private void giveNegativeFeedback(){
+    public void giveNegativeFeedback(){
         String[] negativeFeedback = getResources().getStringArray(R.array.negative_feedback);
         String feedback = getResources().getString(((DesignScenario) levelController.getScenario()).getHint());
         messageController.displayMessage(new MessageArgs(
