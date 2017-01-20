@@ -58,14 +58,10 @@ public class ConnectionController {
     }
 
     private void connect(Component component, MotionEvent event) {
-        Connector connector = new Connector();
-        ConnectionPointOrientation secondOrientation = getClickedArea((int) event.getX());
+        if (component != firstComponent) {
+            Connector connector = new Connector();
+            ConnectionPointOrientation secondOrientation = getClickedArea((int) event.getX());
 
-        ConnectionPoint firstConnectionPoint = getConnectionPoint(firstComponent, firstOrientation);
-        ConnectionPoint secondConnectionPoint = getConnectionPoint(component, secondOrientation);
-
-        //Connectionpoints should not connect with themself
-        if(firstConnectionPoint != secondConnectionPoint) {
             connector.connect(
                     getConnectionPoint(firstComponent, firstOrientation),
                     getConnectionPoint(component, secondOrientation));
