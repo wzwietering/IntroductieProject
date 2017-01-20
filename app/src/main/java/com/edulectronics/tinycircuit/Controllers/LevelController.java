@@ -47,11 +47,9 @@ public class LevelController {
         this.scenario = scenario;
     }
 
-    public IScenario goToNextLevel() {
+    public void goToNextLevel() {
         int nextScenario = scenario.getID() + 1;
         ScenarioFactory factory = new ScenarioFactory();
         scenario = factory.getScenario(Integer.toString(nextScenario));
-
-        return scenario;
     }
 }

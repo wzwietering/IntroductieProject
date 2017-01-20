@@ -287,9 +287,9 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
     }
 
     public void startNextScenario() {
-        IScenario scenario = levelController.goToNextLevel();
+        levelController.goToNextLevel();
 
-        if(scenario.resetCircuitOnStart()) {
+        if(levelController.getScenario().resetCircuitOnStart()) {
             setCircuitController();
             initializeView();
         }
