@@ -28,9 +28,9 @@ public class ExerciseMenuActivity extends AppCompatActivity {
             View button = getLayoutInflater().inflate(R.layout.choise_button, null);
             TextView text = (TextView) button.findViewById(R.id.levelnumber);
             if (levelAvailable(n)){
-                text.setText(Integer.toString(n));
-            } else {
                 text.setText("X");
+            } else {
+                text.setText(Integer.toString(n));
             }
             item.addView(button);
         }
