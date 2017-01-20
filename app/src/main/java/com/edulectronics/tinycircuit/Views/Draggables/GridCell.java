@@ -156,7 +156,7 @@ public class GridCell extends ImageView implements IDragSource, IDropTarget {
     }
 
     public boolean acceptDrop() {
-        return isEmpty() ;
+        return isEmpty() && mCellNumber > 1;
     }
 
 
