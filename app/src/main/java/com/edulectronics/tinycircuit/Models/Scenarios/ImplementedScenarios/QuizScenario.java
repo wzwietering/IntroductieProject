@@ -3,6 +3,7 @@ package com.edulectronics.tinycircuit.Models.Scenarios.ImplementedScenarios;
 import com.edulectronics.tinycircuit.Models.Circuit;
 import com.edulectronics.tinycircuit.Models.Components.Component;
 import com.edulectronics.tinycircuit.Models.Scenarios.IScenario;
+import com.edulectronics.tinycircuit.R;
 
 import java.util.ArrayList;
 import java.util.Set;
@@ -30,6 +31,11 @@ public class QuizScenario implements IScenario {
     public int getPrompt() {
         return 0;
         // TODO: Get text from DB
+    }
+
+    @Override
+    public int getCompletePrompt(){
+        return R.string.scenario_complete;
     }
 
     @Override

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:id="@+id/menuButton">
+
+    <ImageButton
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/mainmenuselector"
+        android:background="@android:color/transparent"
+        android:id="@+id/menuButtonImage"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:scaleType="fitXY"
+        android:adjustViewBounds="true"/>
+
+    <TextView
+        android:id="@+id/menuButtonText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/menuButtonImage"
+        android:layout_alignTop="@+id/menuButtonImage"
+        android:layout_alignRight="@+id/menuButtonImage"
+        android:layout_alignBottom="@+id/menuButtonImage"
+        android:layout_margin="1dp"
+        android:gravity="center"
+        android:textColor="#ffffff"
+        android:textSize="48sp"/>
+
+</RelativeLayout>
