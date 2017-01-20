@@ -7,13 +7,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
-public class Circuit implements Serializable{
+public class Circuit implements Serializable {
 
     private Component[] components;
     public int size;
     public int width;
 
-    public Circuit(int width, int height){
+    public Circuit(int width, int height) {
         components = new Component[width * height];
         this.size = width * height;
         this.width = width;
@@ -48,7 +48,7 @@ public class Circuit implements Serializable{
 
     public int getComponentCount(Component component) {
         int componentCount = 0;
-        for (Component comp : getAllComponents()){
+        for (Component comp : getAllComponents()) {
             if (comp.getClass() == component.getClass()) {
                 componentCount++;
             }

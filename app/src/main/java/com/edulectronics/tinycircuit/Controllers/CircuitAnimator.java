@@ -17,10 +17,6 @@ import com.edulectronics.tinycircuit.Views.Wire;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
-
-/**
- * Created by Maaike on 15-1-2017.
- */
 // This animated the circuit, so displayes how the current runs through the circuit.
 public class CircuitAnimator {
 
@@ -51,7 +47,7 @@ public class CircuitAnimator {
     public void highlightPaths() {
         this.delay = 0;
 
-        for (Stack path: graph.findAllPaths() ) {
+        for (Stack path : graph.findAllPaths()) {
             this.runningHighlightPath(path);
         }
         // When we are done, reset which connections have been highlighted.
@@ -74,7 +70,7 @@ public class CircuitAnimator {
         Component currentComponent = graph.source;
         Component nextComponent;
 
-        while(!path.empty()) {
+        while (!path.empty()) {
             nextComponent = (Component) path.pop();
             this.highlightBetween(currentComponent, nextComponent, color, drawingMode);
 
@@ -97,7 +93,7 @@ public class CircuitAnimator {
 
         for (ConnectionPoint cp : currentConnectionPoints) {
             // Skip the source output; that should be the last connectionpoint we highlight.
-            if(a != graph.source || (a == graph.source && cp != graph.source.getInput())) {
+            if (a != graph.source || (a == graph.source && cp != graph.source.getInput())) {
                 for (Connection c : cp.getConnections()) {
                     if (nextConnectionPoints.contains(c.getOtherPoint(cp))) {
                         if (!animatedConnections.contains(c)) {
@@ -115,11 +111,11 @@ public class CircuitAnimator {
                                    Connection c,
                                    int color,
                                    Wire.WireDrawingMode drawingMode) {
-        for (Wire wire: sortWires(origin, new ArrayList<Wire>(c.getWires()))) {
+        for (Wire wire : sortWires(origin, new ArrayList<Wire>(c.getWires()))) {
             wire.scheduleHighLight(color, this.delay, drawingMode);
 
             // Increase the delay depending on the type of highlight (some take longer than others)
-            if(drawingMode == drawingMode.runningHighlight)
+            if (drawingMode == drawingMode.runningHighlight)
                 delay += wire.getLength() * 2;
         }
     }
@@ -128,27 +124,26 @@ public class CircuitAnimator {
     private List<Wire> sortWires(Component origin, List<Wire> wires) {
         sortedWires = new ArrayList<>();
 
-        while(wires.size() > 0) {
-            for (Wire wire: wires) {
+        while (wires.size() > 0) {
+            for (Wire wire : wires) {
                 // Get distance between wire endpoints and component
                 int distanceA = getDistance(wire.a, origin.coordinates);
                 int distanceB = getDistance(wire.b, origin.coordinates);
 
                 // If any end point is closer to the component than the current endpoint, take
                 // that as the new closest wire.
-                if(closestWire == null || distanceA < currentDistance || distanceB < currentDistance) {
+                if (closestWire == null || distanceA < currentDistance || distanceB < currentDistance) {
                     setNewClosestWire(wire, distanceA, distanceB);
                 }
 
                 // Distance is equal to current, so check if the other end of the wire is closer
                 // than current wire.
-                else if(distanceA == currentDistance) {
-                    if(distanceB < currentEndOfWireDistance) {
+                else if (distanceA == currentDistance) {
+                    if (distanceB < currentEndOfWireDistance) {
                         setNewClosestWire(wire, distanceA, distanceB);
                     }
-                }
-                else if(distanceB == currentDistance) {
-                    if(distanceA < currentEndOfWireDistance) {
+                } else if (distanceB == currentDistance) {
+                    if (distanceA < currentEndOfWireDistance) {
                         setNewClosestWire(wire, distanceB, distanceA);
                     }
                 }
@@ -169,7 +164,7 @@ public class CircuitAnimator {
         currentDistance = Math.min(distanceA, distanceB);
         currentEndOfWireDistance = Math.max(distanceA, distanceB);
 
-        if(distanceA < distanceB) {
+        if (distanceA < distanceB) {
             wire.setDrawDirection(wire.a, wire.b);
         } else {
             wire.setDrawDirection(wire.b, wire.a);
@@ -192,13 +187,14 @@ public class CircuitAnimator {
             public highInputRunnable(Object[] elements) {
                 this.elements = elements;
             }
+
             //When this runs, all elements get a high input, and then the grid is invalidated.
             @Override
             public void run() {
                 for (Object element : elements) {
                     ((Component) element).handleInputHigh();
                 }
-                ((GridView)circuitActivity.findViewById(R.id.circuit)).invalidateViews();
+                ((GridView) circuitActivity.findViewById(R.id.circuit)).invalidateViews();
             }
         }
 

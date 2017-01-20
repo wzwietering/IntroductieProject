@@ -10,10 +10,6 @@ import org.junit.Test;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 
-/**
- * Created by Wilmer on 12-12-2016.
- */
-
 public class ConnectionPointTest {
     @Test
     public void cpTest(){

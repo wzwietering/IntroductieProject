@@ -36,24 +36,24 @@ import com.edulectronics.tinycircuit.Views.Draggables.Interfaces.IDropTarget;
  * A ViewGroup that supports dragging within it.
  * Dragging starts in an object that implements the DragSource interface and
  * ends in an object that implements the DropTarget interface.
- *
+ * <p>
  * <p> This class used DragLayer in the Android Launcher activity as a model.
  * It is a bit different in several respects: (1) it supports dragging to a grid view and trash area;
  * (2) it dynamically adds drop targets when a drag-drop sequence begins.
- * The child views of the GridView are assumed to implement the DropTarget interface. 
+ * The child views of the GridView are assumed to implement the DropTarget interface.
  */
 public class DragLayer extends FrameLayout implements IDragListener {
     DragController mDragController;
     GridView mGridView;
 
-    public DragLayer (Context context, AttributeSet attrs) {
+    public DragLayer(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
     public void setDragController(DragController controller) {
         mDragController = controller;
     }
-    
+
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
         return mDragController.dispatchKeyEvent(event) || super.dispatchKeyEvent(event);
@@ -74,36 +74,34 @@ public class DragLayer extends FrameLayout implements IDragListener {
         return mDragController.dispatchUnhandledMove(focused, direction);
     }
 
-    public void setGridView (GridView newValue) {
+    public void setGridView(GridView newValue) {
         mGridView = newValue;
     }
 
-    public void onDragStart(IDragSource source, Object info)
-    {
+    public void onDragStart(IDragSource source, Object info) {
         // We are starting a drag.
         // Build up a list of DropTargets from the child views of the GridView.
         // Tell the drag controller about them.
 
         if (mGridView != null) {
-           int numVisibleChildren = mGridView.getChildCount();
-           for ( int i = 0; i < numVisibleChildren; i++ ) {
-               IDropTarget view = (IDropTarget) mGridView.getChildAt (i);
-               mDragController.addDropTarget (view);
-           }
+            int numVisibleChildren = mGridView.getChildCount();
+            for (int i = 0; i < numVisibleChildren; i++) {
+                IDropTarget view = (IDropTarget) mGridView.getChildAt(i);
+                mDragController.addDropTarget(view);
+            }
         }
 
         // Always add the delete_zone so there is a place to get rid of views.
         // Find the delete_zone and add it as a drop target.
         // That gives the user a place to drag views to get them off the screen.
-        View v = findViewById (R.id.delete_zone_view);
+        View v = findViewById(R.id.delete_zone_view);
         if (v != null) {
             DeleteZone dz = (DeleteZone) v;
-            mDragController.addDropTarget (dz);
+            mDragController.addDropTarget(dz);
         }
     }
 
-    public void onDragEnd()
-    {
-        mDragController.removeAllDropTargets ();
+    public void onDragEnd() {
+        mDragController.removeAllDropTargets();
     }
 }

@@ -8,13 +8,12 @@ import java.util.ArrayList;
 import java.util.Set;
 
 /**
- * Created by Maaike on 12-12-2016.
  * The scenario interface.
  */
 
- public interface IScenario extends Serializable {
+public interface IScenario extends Serializable {
 
-   // Determines whether to reset circuit  to scenario default when user starts this scenario.
+    // Determines whether to reset circuit  to scenario default when user starts this scenario.
     public boolean resetCircuitOnStart();
 
     // Get the components that the user is allowed to use in this scenario

@@ -4,10 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-/**
- * Created by Wilmer on 11-1-2017.
- */
-
 public class VariableHandler {
     //Shared preferences is the Android interface to store variables
     private SharedPreferences sharedPreferences;

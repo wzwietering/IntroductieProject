@@ -14,10 +14,6 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * Created by Wilmer on 18-1-2017.
- */
-
 public class Scenario5 extends DesignScenario {
 
     @Override
@@ -40,12 +36,12 @@ public class Scenario5 extends DesignScenario {
         hasResistor = false;
 
         for (Component component : circuit.getAllComponents()) {
-            if(component != null  && circuit.getComponentCount(component) == 1) {
+            if (component != null && circuit.getComponentCount(component) == 1) {
                 if (component.getClass() == Lightbulb.class) {
                     lampRequirementsMet = (((Lightbulb) component).isOn && !((Lightbulb) component).isBroken());
-                } else if (component.getClass() == Switch.class){
+                } else if (component.getClass() == Switch.class) {
                     hasSwitch = component.hasOutputConnection(component.getConnectionPointByIndex(1)) && component.isConductive();
-                } else if (component.getClass() == Resistor.class){
+                } else if (component.getClass() == Resistor.class) {
                     hasResistor = component.hasOutputConnection(component.getConnectionPointByIndex(1));
                 }
             }
@@ -65,21 +61,21 @@ public class Scenario5 extends DesignScenario {
     }
 
     @Override
-    public int getID(){
+    public int getID() {
         return 5;
     }
 
     public int getHint() {
-        if(!lampRequirementsMet){
+        if (!lampRequirementsMet) {
             return R.string.lamp_off;
         }
-        if(!isFullCircle){
+        if (!isFullCircle) {
             return R.string.no_full_circle;
         }
-        if(!hasSwitch){
+        if (!hasSwitch) {
             return R.string.switch_required;
         }
-        if(!hasResistor){
+        if (!hasResistor) {
             return R.string.resistance_required;
         }
         return 0;

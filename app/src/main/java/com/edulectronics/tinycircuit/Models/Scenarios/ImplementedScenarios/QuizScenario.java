@@ -16,7 +16,10 @@ import java.util.Set;
  */
 
 public class QuizScenario implements IScenario {
-    public boolean resetCircuitOnStart() { return true;}
+    public boolean resetCircuitOnStart() {
+        return true;
+    }
+
     @Override
     public Set<Component> getAvailableComponents() {
         return null;
@@ -34,7 +37,7 @@ public class QuizScenario implements IScenario {
     }
 
     @Override
-    public int getCompletePrompt(){
+    public int getCompletePrompt() {
         return R.string.scenario_complete;
     }
 
@@ -44,7 +47,7 @@ public class QuizScenario implements IScenario {
         return null;
     }
 
-    public int getID(){
+    public int getID() {
         return 0;
     }
 }

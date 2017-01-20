@@ -23,10 +23,6 @@ import static android.support.test.runner.lifecycle.Stage.RESUMED;
 import static junit.framework.Assert.assertEquals;
 import static org.hamcrest.Matchers.anything;
 
-/**
- * Created by Wilmer on 14-12-2016.
- */
-
 @RunWith(AndroidJUnit4.class)
 public class MainMenuTest {
     @Rule

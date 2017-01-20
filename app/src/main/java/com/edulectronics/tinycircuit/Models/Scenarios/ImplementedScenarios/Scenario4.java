@@ -25,7 +25,9 @@ public class Scenario4 extends DesignScenario {
     boolean isFullCircle;
     boolean hasSwitch;
 
-    public boolean resetCircuitOnStart() { return true;}
+    public boolean resetCircuitOnStart() {
+        return true;
+    }
 
     @Override
     public boolean isCompleted(Circuit circuit) {

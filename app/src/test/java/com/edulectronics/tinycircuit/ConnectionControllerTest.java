@@ -7,10 +7,6 @@ import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;
 
-/**
- * Created by Wilmer on 12-12-2016.
- */
-
 public class ConnectionControllerTest {
     @Test
     public void wireControllerTest() {

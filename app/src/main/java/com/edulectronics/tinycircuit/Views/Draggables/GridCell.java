@@ -17,10 +17,9 @@ import com.edulectronics.tinycircuit.Views.Draggables.Interfaces.IDropTarget;
  * a GridCell knows which cell on the grid it is showing and which grid it is attached to
  * Cell numbers are from 0 to NumCells-1.
  * It also knows if it is empty, or if it contains a component.
- *
+ * <p>
  * <p> GridCell are places where components can be dragged from and dropped onto.
  * Therefore, this class implements both the DragSource and DropTarget interfaces.
- * 
  */
 
 public class GridCell extends ImageView implements IDragSource, IDropTarget {
@@ -36,26 +35,26 @@ public class GridCell extends ImageView implements IDragSource, IDropTarget {
     }
 
     public GridCell(CircuitController controller, Context context, AttributeSet attrs) {
-        super (context, attrs);
+        super(context, attrs);
         circuitController = controller;
         setBackgroundResource(R.color.cell);
     }
 
     public GridCell(CircuitController controller, Context context, AttributeSet attrs, int style) {
-        super (context, attrs, style);
+        super(context, attrs, style);
         circuitController = controller;
         setBackgroundResource(R.color.cell);
     }
 
     public void resetImage() {
         Component component = circuitController.getComponent(mCellNumber);
-        if(component != null) {
+        if (component != null) {
             this.setImageResource(component.getImage());
         }
     }
 
     public boolean isEmpty() {
-        if(mCellNumber != -1) {
+        if (mCellNumber != -1) {
             return circuitController.getComponent(this.mCellNumber) == null;
         }
         return false;
@@ -63,9 +62,9 @@ public class GridCell extends ImageView implements IDragSource, IDropTarget {
 
     public void setComponent(Component component) {
         setBackgroundResource(R.color.cell);
-        component.setCoordinates((int)this.getX(), (int)this.getY());
+        component.setCoordinates((int) this.getX(), (int) this.getY());
 
-        if(this.mCellNumber > -1) {
+        if (this.mCellNumber > -1) {
             circuitController.addComponent(component, this.mCellNumber);
         } else {
             circuitController.newComponent = component;
@@ -76,7 +75,7 @@ public class GridCell extends ImageView implements IDragSource, IDropTarget {
     public void removeComponent() {
         setBackgroundResource(R.color.cell);
 
-        if(this.mCellNumber > -1) {
+        if (this.mCellNumber > -1) {
             circuitController.removeComponent(this.mCellNumber);
         } else {
             circuitController.newComponent = null;
@@ -84,25 +83,23 @@ public class GridCell extends ImageView implements IDragSource, IDropTarget {
         setImageDrawable(null);
     }
 
-    public Component getComponent(){
-        if(this.mCellNumber == -1) {
+    public Component getComponent() {
+        if (this.mCellNumber == -1) {
             return circuitController.newComponent;
         }
         return circuitController.circuit.getComponent(this.mCellNumber);
     }
-    
+
     public boolean allowDrag() {
         // There is something to drag if the cell is not empty.
         return !this.isEmpty();
     }
 
-    public void onDropCompleted (View target, boolean success)
-    {
+    public void onDropCompleted(View target, boolean success) {
         if (success) {
             removeComponent();
-            View parent = (View)this.getParent();
-            if(parent.getId() == R.id.component_source_frame)
-            {
+            View parent = (View) this.getParent();
+            if (parent.getId() == R.id.component_source_frame) {
                 parent.setVisibility(View.INVISIBLE);
             }
         }
@@ -112,24 +109,24 @@ public class GridCell extends ImageView implements IDragSource, IDropTarget {
      * Handle an object being dropped on the DropTarget.
      * This is the where the drawable of the dragged view gets copied into the ImageCell.
      *
-     * @param source DragSource where the drag started
-     * @param x X coordinate of the drop location
-     * @param y Y coordinate of the drop location
-     * @param xOffset Horizontal offset with the object being dragged where the original
-     *          touch happened
-     * @param yOffset Vertical offset with the object being dragged where the original
-     *          touch happened
+     * @param source   DragSource where the drag started
+     * @param x        X coordinate of the drop location
+     * @param y        Y coordinate of the drop location
+     * @param xOffset  Horizontal offset with the object being dragged where the original
+     *                 touch happened
+     * @param yOffset  Vertical offset with the object being dragged where the original
+     *                 touch happened
      * @param dragView The DragView that's being dragged around on screen.
      * @param dragInfo Data associated with the object being dragged
      */
     public void onDrop(IDragSource source, int x, int y, int xOffset, int yOffset, DragView dragView, Object dragInfo) {
         Component component;
-        if(((GridCell)source).mCellNumber  == -1) {
+        if (((GridCell) source).mCellNumber == -1) {
             // The source is a GridCell with index -1, therefore a new component
             component = circuitController.newComponent;
         } else {
             // Source is an existing GridCell. Get its component from the controller.
-            component = circuitController.getComponent(((GridCell)source).mCellNumber);
+            component = circuitController.getComponent(((GridCell) source).mCellNumber);
         }
         this.setComponent(component);
     }
@@ -143,32 +140,27 @@ public class GridCell extends ImageView implements IDragSource, IDropTarget {
         setBackgroundResource(bg);
     }
 
-    /**
-     * React to something being dragged over the drop target.
-     */
-    public void onDragOver(IDragSource source, int x, int y, int xOffset, int yOffset, DragView dragView, Object dragInfo) {}
+    //React to something being dragged over the drop target.
+    public void onDragOver(IDragSource source, int x, int y, int xOffset, int yOffset, DragView dragView, Object dragInfo) {
+    }
 
-    /**
-     * React to a drag
-     */
+    //React to a drag
     public void onDragExit(IDragSource source, int x, int y, int xOffset, int yOffset, DragView dragView, Object dragInfo) {
         setBackgroundResource(R.color.cell);
     }
 
     public boolean acceptDrop() {
-        return isEmpty() ;
+        return isEmpty();
     }
 
 
-    public boolean performClick()
-    {
-        if (!isEmpty()) return super.performClick ();
+    public boolean performClick() {
+        if (!isEmpty()) return super.performClick();
         return false;
     }
 
-    public boolean performLongClick()
-    {
-        if (!isEmpty()) return super.performLongClick ();
+    public boolean performLongClick() {
+        if (!isEmpty()) return super.performLongClick();
         return false;
     }
 }

@@ -7,10 +7,6 @@ import com.edulectronics.tinycircuit.Models.Components.Connectors.ConnectionPoin
 
 import java.security.InvalidParameterException;
 
-/**
- * Created by bernd on 09/12/2016.
- */
-
 public class CoordinateHelper {
 
     private int gridWidth, cellWidth, cellHeight;

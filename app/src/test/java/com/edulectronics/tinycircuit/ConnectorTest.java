@@ -9,11 +9,6 @@ import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;
 
-
-/**
- * Created by Lennart on 12-12-2016.
- */
-
 public class ConnectorTest {
     @Test
     public void connectTest(){

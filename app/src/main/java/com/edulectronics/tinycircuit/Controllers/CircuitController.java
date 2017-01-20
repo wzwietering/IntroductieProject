@@ -15,11 +15,6 @@ import com.edulectronics.tinycircuit.Views.Wire;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Stack;
-
-/**
- * Created by Wilmer on 28-11-2016.
- */
-
 public class CircuitController implements Serializable {
     public Circuit circuit;
     public Component newComponent; // When a new component is created, we save it here. It hasn't been dragged to the circuit yet.
@@ -38,12 +33,12 @@ public class CircuitController implements Serializable {
         // TODO: Move positioning of components to the scenario. Either based on relative positions (depending on grid size) or lock the grid to a default size.
         for (Component component : components) {
             addComponent(component, position);
-            position+= width * 2;
+            position += width * 2;
         }
     }
 
     public void addComponent(Component component, int position) {
-        if(placementAllowed(position)) {
+        if (placementAllowed(position)) {
             circuit.add(component, position);
         }
     }
@@ -53,7 +48,7 @@ public class CircuitController implements Serializable {
     }
 
     public void removeComponent(int position) {
-        if(circuit.occupied(position)) {
+        if (circuit.occupied(position)) {
             circuit.remove(position);
         }
     }
@@ -82,7 +77,7 @@ public class CircuitController implements Serializable {
     // Gets all the unique connections in a circuit
     public ArrayList<Connection> getAllConnections() {
         ArrayList<Connection> connections = new ArrayList<Connection>();
-        for (Component component: getComponents()) {
+        for (Component component : getComponents()) {
             for (ConnectionPoint cp : component.getConnectionPoints()) {
                 for (Connection c : cp.getConnections()) {
                     if (!connections.contains(c)) {
@@ -100,7 +95,7 @@ public class CircuitController implements Serializable {
 
     // Reset all the components to their standard values (eg. lightbulbs turned off and not broken)
     public void reset() {
-        for (Component component: circuit.getAllComponents())
+        for (Component component : circuit.getAllComponents())
             component.reset();
     }
 

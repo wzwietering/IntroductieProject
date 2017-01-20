@@ -15,30 +15,26 @@ import com.edulectronics.tinycircuit.R;
 
 import java.util.List;
 
-/**
- * Created by Jesper on 1/17/2017.
- */
-
 public class ListAdapter extends BaseAdapter {
     private Context context;
     private List<MenuItem> componentlist;
     private ListView listView;
 
-    public ListAdapter(Context context, List<MenuItem> componentlist, ListView list){
+    public ListAdapter(Context context, List<MenuItem> componentlist, ListView list) {
         this.context = context;
         this.componentlist = componentlist;
         this.listView = list;
     }
 
-    public int getCount(){
-        return  componentlist.size();
+    public int getCount() {
+        return componentlist.size();
     }
 
-    public long getItemId(int position){
+    public long getItemId(int position) {
         return position;
     }
 
-    public MenuItem getItem(int position){
+    public MenuItem getItem(int position) {
         return componentlist.get(position);
     }
 
@@ -60,7 +56,7 @@ public class ListAdapter extends BaseAdapter {
         return layoutInflater.inflate(layout, null);
     }
 
-    public View getView(int id, View convertView, ViewGroup viewGroup){
+    public View getView(int id, View convertView, ViewGroup viewGroup) {
         return createMenuItem(convertView, getItem(id), R.layout.header, R.id.iconimage);
     }
 }
