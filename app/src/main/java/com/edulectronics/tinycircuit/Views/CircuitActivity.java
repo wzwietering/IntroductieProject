@@ -81,6 +81,10 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
             ImageView hint = (ImageView) findViewById(R.id.Help);
             hint.setVisibility(View.GONE);
         }
+
+        // Set invisible on start, to prevent square in the middle of the screen
+        FrameLayout componentHolder = (FrameLayout) findViewById(R.id.component_source_frame);
+        componentHolder.setVisibility(View.INVISIBLE);
     }
 
     private void showMessages(boolean allowHint) {

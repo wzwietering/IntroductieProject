@@ -34,11 +34,11 @@ public class CircuitController implements Serializable {
     // Set the circuit to some predefined circuit passed as arguments.
     public CircuitController(int width, int size, ArrayList<Component> components) {
         this.circuit = new Circuit(width, size);
-        int position = width / 2;
+        int position = width / 2 + 1;
         // TODO: Move positioning of components to the scenario. Either based on relative positions (depending on grid size) or lock the grid to a default size.
         for (Component component : components) {
             addComponent(component, position);
-            position+= width * 2;
+            position+= width * 2 - 1;
         }
     }
 
