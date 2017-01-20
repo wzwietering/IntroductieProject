@@ -27,19 +27,21 @@ public class ExerciseMenuActivity extends AppCompatActivity {
             item = (LinearLayout) findViewById(R.id.Linearlayout);
             View button = getLayoutInflater().inflate(R.layout.choise_button, null);
             TextView text = (TextView) button.findViewById(R.id.levelnumber);
-            text.setText(Integer.toString(n));
+            if (levelAvailable(n)){
+                text.setText(Integer.toString(n));
+            } else {
+                text.setText("X");
+            }
             item.addView(button);
         }
     }
 
     //Identifier for which button was pressed
     public void startExercise(View v) {
-        VariableHandler variableHandler = new VariableHandler(getApplicationContext());
-        int currentScenario = variableHandler.loadProgress();
 
         TextView text = (TextView) v.findViewById(R.id.levelnumber);
         String levelnumber = text.getText().toString();
-        if(currentScenario < Integer.parseInt(levelnumber)){
+        if (levelAvailable(Integer.parseInt(levelnumber))){
             MessageController messageController = new MessageController(getFragmentManager());
             messageController.displayMessage(new MessageArgs(getResources().getString(R.string.scenario_locked_explanation), MessageTypes.ScenarioLocked));
         } else {
@@ -47,5 +49,12 @@ public class ExerciseMenuActivity extends AppCompatActivity {
             intent.putExtra("scenario", levelnumber);
             startActivity(intent);
         }
+    }
+
+    public boolean levelAvailable(int levelNumber){
+        VariableHandler variableHandler = new VariableHandler(getApplicationContext());
+        int currentScenario = variableHandler.loadProgress();
+
+        return currentScenario < levelNumber;
     }
 }
