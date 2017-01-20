@@ -12,42 +12,60 @@ import com.edulectronics.tinycircuit.Models.MessageArgs;
 import com.edulectronics.tinycircuit.R;
 
 public class Message extends DialogFragment {
+    View view;
+    MessageArgs messageArgs;
+
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.fragment_message, container, false);
+        messageArgs = (MessageArgs) getArguments().getSerializable("messageargs");
 
-        View view = inflater.inflate(R.layout.fragment_message, container, false);
-        Bundle args = getArguments();
-        MessageArgs messageArgs = (MessageArgs) args.getSerializable("messageargs");
-        setContent(messageArgs, view);
-        setDismissButtonAction(messageArgs, view);
+        setContent();
+        setDismissButtonAction();
+        setHintButton();
 
         return view;
     }
 
-    private void setDismissButtonAction(final MessageArgs args, View view) {
-
+    private void setDismissButtonAction() {
         Button dismiss = (Button) view.findViewById(R.id.dismiss);
         dismiss.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 dismiss();
-                if(args.endActivity) {
+                if(messageArgs.endActivity) {
                     Message.this.getActivity().finish();
                 }
-                if(args.goToNextScenario) {
+                if(messageArgs.goToNextScenario) {
                     ((CircuitActivity)Message.this.getActivity()).startNextScenario();
                 }
             }
         });
     }
 
-    private void setContent(final MessageArgs args, View view) {
+    private void setHintButton() {
+        Button hintButton = (Button) view.findViewById(R.id.hint);
+        if(messageArgs.allowHint) {
+            hintButton.setVisibility(View.VISIBLE);
+            hintButton.setOnClickListener(new View.OnClickListener() {
 
+                @Override
+                public void onClick(View v) {
+                    dismiss();
+                    ((CircuitActivity) Message.this.getActivity()).giveNegativeFeedback();
+                }
+            });
+        } else {
+            hintButton.setVisibility(View.GONE);
+        }
+    }
+
+    private void setContent() {
         TextView explanation = (TextView) view.findViewById(R.id.scenario_explanation);
-        explanation.setText(args.message);
+        explanation.setText(messageArgs.message);
 
         TextView title = (TextView) view.findViewById(R.id.title);
-        title.setText(args.title);
+        title.setText(messageArgs.title);
     }
 }

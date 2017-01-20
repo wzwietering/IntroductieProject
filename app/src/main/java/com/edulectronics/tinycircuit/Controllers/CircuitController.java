@@ -38,7 +38,7 @@ public class CircuitController implements Serializable {
         // TODO: Move positioning of components to the scenario. Either based on relative positions (depending on grid size) or lock the grid to a default size.
         for (Component component : components) {
             addComponent(component, position);
-            position+= 10;
+            position+= width * 2;
         }
     }
 
@@ -105,7 +105,7 @@ public class CircuitController implements Serializable {
     }
 
     // Run the circuit!
-    public void run(Activity circuitActivity) {
+    public int run(Activity circuitActivity) {
         reset();
 
         // Check if there are outgoing connections.
@@ -124,6 +124,7 @@ public class CircuitController implements Serializable {
                 }
             }
         }
+        return animator == null ? 0 : animator.delay;
     }
 
     // Check all paths on the graph to see if there is resistance

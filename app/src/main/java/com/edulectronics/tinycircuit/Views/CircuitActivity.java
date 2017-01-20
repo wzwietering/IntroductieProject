@@ -3,6 +3,7 @@ package com.edulectronics.tinycircuit.Views;
 import android.app.Activity;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Display;
@@ -75,13 +76,15 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
         createDragControls(createCircuit());
         createMenu();
         createDrawView();
-        showMessages();
+        showMessages(false);
     }
 
-    private void showMessages() {
+    private void showMessages(boolean allowHint) {
         if (levelController.getScenario().getClass() != FreePlayScenario.class) {
             String prompt = getResources().getString(levelController.getScenario().getPrompt());
-            messageController.displayMessage(new MessageArgs(prompt, Explanation));
+            MessageArgs args = new MessageArgs(prompt, Explanation);
+            args.allowHint = allowHint;
+            messageController.displayMessage(args);
         }
     }
 
@@ -112,14 +115,19 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
     }
 
     private void setControllers() {
-        Point size = getDisplaySize();
         connectionController = new ConnectionController(this, cellSize, cellSize);
         levelController = new LevelController(getIntent().getStringExtra("scenario"));
+        // now we have the levelcontroller we can set the circuitcontroller.
+        setCircuitController();
+    }
+
+    private void setCircuitController() {
         // Width or height divided by cellsize fits the maxiumum amount of cells inside the screen
+        Point size = getDisplaySize();
         if (getIntent().getStringExtra("scenario").equals("freeplay")) {
             circuitController = new CircuitController(size.x / cellSize, size.y / cellSize);
         } else {
-            circuitController = new CircuitController(size.x / cellSize, size.y / cellSize, levelController.getAvailableComponents());
+            circuitController = new CircuitController(size.x / cellSize, size.y / cellSize, levelController.loadComponents());
         }
         DeleteZone deleteZone = (DeleteZone) findViewById(R.id.delete_zone_view);
         deleteZone.setCircuitController(circuitController);
@@ -194,8 +202,9 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
                     }
                 }
             }
-
-            if(component != null && action == MotionEvent.ACTION_DOWN) {
+            // Only make a wire on the up action. The user might be making a long
+            // press and we don't want to make a wire on long press (longPress is for dragging)
+            if(component != null && action == MotionEvent.ACTION_UP) {
                 connectionController.makeWire(component, ev);
 
                 if (levelController.getScenario().isCompleted(circuitController.circuit)) {
@@ -220,6 +229,7 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
     }
 
     public boolean startDrag(View v) {
+        connectionController.cancelConnection();
         IDragSource dragSource = (IDragSource) v;
         mDragController.startDrag(v, dragSource, dragSource);
         return true;
@@ -273,10 +283,16 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
     }
 
     public void startNextScenario() {
-        // TODO: Implemented by scenariocontroller.
-        // Obviously this is very very bad code. I know. I will fix it when we have a scenario-
-        // controller.
-        levelController.setScenario(new Scenario2(this.circuitController.circuit));
+        levelController.goToNextLevel();
+
+        if(levelController.getScenario().resetCircuitOnStart()) {
+            setCircuitController();
+            initializeView();
+        }
+
+        this.showMessages(false);
+        // Reset the menu. There might be more components for the user to use.
+        this.createMenu();
     }
 
     //The run method with view is necessary because the event handler of a button must be able to
@@ -286,27 +302,35 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
         connectionController.redrawWires();
         ((GridView)findViewById(R.id.circuit)).invalidateViews();
 
-        // TODO: get the delay back from the circuitcontroller (which gets it from wirecontroller)
-        // to delay the scenario complete check until the whole circuit has been animated.
-        circuitController.run(this);
-        checkScenarioComplete(true);
+        // get the delay back from the circuitcontroller to delay the scenario complete check
+        // until the whole circuit has been animated.
+        int delay = circuitController.run(this);
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                checkScenarioComplete();
+            }
+        }, delay == 0 ? delay : delay + 1000);
     }
-
-    private void checkScenarioComplete(boolean ranByButtonClick){
+  
+    private void checkScenarioComplete(){
         //The boolean is used to give the user only negative feedback when they press the run button.
         //Giving negative feedback when this method runs using the onTouch method is a nightmare,
         //because you will get negative messages all the time.
-        if(levelController.getScenario().getClass() != FreePlayScenario.class) {
-            if (levelController.levelIsCompleted(circuitController.circuit)) {
-                scenarioCompleted();
-            } else if (ranByButtonClick) {
-                giveNegativeFeedback();
-            }
+        if (levelController.levelIsCompleted(circuitController.circuit)) {
+            this.scenarioCompleted();
+        } else if (levelController.getScenario().getClass() != FreePlayScenario.class) {
+            giveNegativeFeedback();
         }
     }
 
+    public void getHelp(View view) {
+        showMessages(true);
+    }
+
     //Create a negative feedback message
-    private void giveNegativeFeedback(){
+    public void giveNegativeFeedback(){
         String[] negativeFeedback = getResources().getStringArray(R.array.negative_feedback);
         String feedback = getResources().getString(((DesignScenario) levelController.getScenario()).getHint());
         messageController.displayMessage(new MessageArgs(

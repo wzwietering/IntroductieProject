@@ -71,14 +71,23 @@
 			android:onClick="toggleMode"
 			android:id="@+id/wire"/>
 
-		<Button
-			android:text="@string/run"
+		<ImageView
 			android:layout_width="wrap_content"
 			android:layout_gravity="right"
-			android:layout_marginTop="2dp"
 			android:layout_height="wrap_content"
+			android:layout_margin="10dp"
 			android:id="@+id/Run"
+			android:src="@drawable/play_button"
 			android:onClick="run"/>
+
+		<ImageView
+			android:layout_width="wrap_content"
+			android:layout_gravity="right|bottom"
+			android:layout_height="wrap_content"
+			android:layout_margin="10dp"
+			android:id="@+id/Help"
+			android:src="@drawable/help_button"
+			android:onClick="getHelp"/>
 	</com.edulectronics.tinycircuit.Views.Draggables.DragLayer>
 
 	<android.support.design.widget.NavigationView

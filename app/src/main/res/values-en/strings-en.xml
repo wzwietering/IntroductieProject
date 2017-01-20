@@ -9,7 +9,8 @@
     </string-array>
 
     <string name="exercise">Exercises</string>
-    <string name="freeplay">Free play</string>
+  <string name="freeplay">Free play</string>
+    <string name="button_hint">Give me a hint</string>
     <string name="button_ok">Okay</string>
     <string name="scenario_locked">Unavailable</string>
     <string name="scenario_locked_explanation">This scenario is not yet available. Play the previous scenarios to unlock this one!</string>

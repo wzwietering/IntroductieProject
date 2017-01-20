@@ -16,6 +16,7 @@ import java.util.Set;
  */
 
 public class QuizScenario implements IScenario {
+    public boolean resetCircuitOnStart() { return true;}
     @Override
     public Set<Component> getAvailableComponents() {
         return null;

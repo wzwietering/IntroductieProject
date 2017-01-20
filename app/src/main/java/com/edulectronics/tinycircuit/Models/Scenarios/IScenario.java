@@ -14,6 +14,9 @@ import java.util.Set;
 
  public interface IScenario extends Serializable {
 
+   // Determines whether to reset circuit  to scenario default when user starts this scenario.
+    public boolean resetCircuitOnStart();
+
     // Get the components that the user is allowed to use in this scenario
     public Set<Component> getAvailableComponents();
 
