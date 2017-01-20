@@ -6,6 +6,7 @@ import com.edulectronics.tinycircuit.Models.Scenarios.ImplementedScenarios.Scena
 import com.edulectronics.tinycircuit.Models.Scenarios.ImplementedScenarios.Scenario2;
 import com.edulectronics.tinycircuit.Models.Scenarios.ImplementedScenarios.Scenario3;
 import com.edulectronics.tinycircuit.Models.Scenarios.ImplementedScenarios.Scenario4;
+import com.edulectronics.tinycircuit.Models.Scenarios.ImplementedScenarios.Scenario5;
 
 /**
  * Created by Maaike on 12-12-2016.
@@ -28,6 +29,8 @@ public class ScenarioFactory {
                     return new Scenario3();
             case "4":
                     return new Scenario4();
+            case "5":
+                return new Scenario5();
             default:
                 throw new NullPointerException();
         }

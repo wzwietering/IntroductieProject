@@ -11,10 +11,6 @@ import android.widget.TextView;
 import com.edulectronics.tinycircuit.Models.MessageArgs;
 import com.edulectronics.tinycircuit.R;
 
-/**
- * Created by Maaike on 12-12-2016.
- */
-
 public class Message extends DialogFragment {
     View view;
     MessageArgs messageArgs;

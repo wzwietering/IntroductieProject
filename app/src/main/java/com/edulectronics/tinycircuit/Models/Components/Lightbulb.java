@@ -6,7 +6,6 @@ import com.edulectronics.tinycircuit.R;
  */
 
 public class Lightbulb extends Component {
-
     public boolean isOn = false;
 
     @Override

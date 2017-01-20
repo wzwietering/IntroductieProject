@@ -2,8 +2,9 @@ package com.edulectronics.tinycircuit.Models.Scenarios;
 
 import com.edulectronics.tinycircuit.Models.Circuit;
 import com.edulectronics.tinycircuit.Models.Components.Component;
+import com.edulectronics.tinycircuit.Models.Components.Powersource;
+import com.edulectronics.tinycircuit.R;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -28,6 +29,11 @@ public abstract class DesignScenario implements IScenario {
     // Determines whether the user completed the task. Different implementation for each scenario.
     @Override
     public boolean isCompleted(Circuit circuit) {
+        for (Component component : circuit.getAllComponents()) {
+            if (component.getClass() == Powersource.class) {
+                return component.hasOutputConnection(((Powersource) component).getInput()) && circuit.getComponentCount(component) == 1;
+            }
+        }
         return false;
     }
 
@@ -51,6 +57,11 @@ public abstract class DesignScenario implements IScenario {
     // Get the Id of a message explaining to the user what they need to do
     @Override
     public abstract int getPrompt();
+
+    @Override
+    public int getCompletePrompt(){
+        return R.string.scenario_complete;
+    }
 
     // Get the scenario id
     @Override

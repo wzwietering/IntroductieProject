@@ -14,18 +14,21 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Scenario4 extends DesignScenario {
+/**
+ * Created by Wilmer on 18-1-2017.
+ */
+
+public class Scenario5 extends DesignScenario {
 
     @Override
     public int getPrompt() {
-        return R.string.scenario4_explanation;
+        return R.string.scenario5_explanation;
     }
 
     boolean lampRequirementsMet;
     boolean isFullCircle;
     boolean hasSwitch;
-
-    public boolean resetCircuitOnStart() { return true;}
+    boolean hasResistor;
 
     @Override
     public boolean isCompleted(Circuit circuit) {
@@ -34,17 +37,21 @@ public class Scenario4 extends DesignScenario {
 
         lampRequirementsMet = false;
         hasSwitch = false;
+        hasResistor = false;
 
         for (Component component : circuit.getAllComponents()) {
-            if(component != null) {
+            if(component != null  && circuit.getComponentCount(component) == 1) {
                 if (component.getClass() == Lightbulb.class) {
-                    lampRequirementsMet = (((Lightbulb) component).isOn && circuit.getComponentCount(component) == 2);
-                } else if (component.getClass() == Switch.class && circuit.getComponentCount(component) == 1){
+                    lampRequirementsMet = (((Lightbulb) component).isOn && !((Lightbulb) component).isBroken());
+                } else if (component.getClass() == Switch.class){
                     hasSwitch = component.hasOutputConnection(component.getConnectionPointByIndex(1)) && component.isConductive();
+                } else if (component.getClass() == Resistor.class){
+                    hasResistor = component.hasOutputConnection(component.getConnectionPointByIndex(1));
                 }
             }
         }
-        return (lampRequirementsMet && hasSwitch);
+
+        return (lampRequirementsMet && hasSwitch && hasResistor);
     }
 
     public Set<Component> getAvailableComponents() {
@@ -54,16 +61,12 @@ public class Scenario4 extends DesignScenario {
 
     public ArrayList<Component> loadComponents() {
         ArrayList<Component> components = new ArrayList<>();
-        Powersource powersource = new Powersource();
-
-        components.add(powersource);
-
         return components;
     }
 
     @Override
     public int getID(){
-        return 4;
+        return 5;
     }
 
     public int getHint() {
@@ -75,6 +78,9 @@ public class Scenario4 extends DesignScenario {
         }
         if(!hasSwitch){
             return R.string.switch_required;
+        }
+        if(!hasResistor){
+            return R.string.resistance_required;
         }
         return 0;
     }

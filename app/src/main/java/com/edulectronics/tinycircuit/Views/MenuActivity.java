@@ -1,5 +1,6 @@
 package com.edulectronics.tinycircuit.Views;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import com.edulectronics.tinycircuit.R;
 import com.edulectronics.tinycircuit.Views.Adapters.MainMenuAdapter;
 
 import java.util.Locale;
+import java.util.Objects;
 
 public class MenuActivity extends AppCompatActivity {
     String language = "nl";
@@ -39,6 +41,11 @@ public class MenuActivity extends AppCompatActivity {
         this.createMenu();
     }
 
+    public void aboutActivity(View view){
+        Intent intent = new Intent(this, AboutActivity.class);
+        this.startActivity(intent);
+    }
+
     private void createMenu(){
         ListView listView = (ListView) findViewById(R.id.buttonArea);
         String[] items = {getResources().getString(R.string.exercise), getResources().getString(R.string.freeplay)};
@@ -46,7 +53,7 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     private void switchLanguage(){
-        if (language == "nl"){
+        if (language.equals("nl")){
             language = "en";
         } else {
             language = "nl";
