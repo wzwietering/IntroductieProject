@@ -26,7 +26,9 @@ public class ConnectionController {
     private CircuitController circuitController;
     private Component firstComponent;
     private ConnectionPointOrientation firstOrientation;
+
     private List<Wire> wires = new ArrayList<Wire>();
+
     private CoordinateHelper coordinateHelper;
 
     private int cellHeight, cellWidth;
