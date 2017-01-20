@@ -135,35 +135,31 @@ public class ConnectionController {
 
         boolean drawVerticalLineFirst = true;
 
-        // Als je punt links zit en je moet naar links, ga je eerst horizontaal.
+        // If your connectionpoint is on the same side as the draw direction of the wire,
+        // draw the horizontal wire first. Otherwise, draw the vertical wire first.
         if ((pointA.x < pointB.x && c.pointA.orientation == ConnectionPointOrientation.Right)
                 || (pointA.x > pointB.x && c.pointA.orientation == ConnectionPointOrientation.Left)) {
+                drawVerticalLineFirst = false;
+        }
+
+        // Components are at the same height, and either:
+        // ... drawVerticalineFirst is true, meaning we will intersect component A
+        // because the components are at the same height.
+        // ... or their orientations are the same, meaning we will always intersect component B
+        if (pointA.y == pointB.y
+                && (drawVerticalLineFirst
+                || c.pointA.orientation == c.pointB.orientation)) {
+            // we draw a short vertical wire to go around.
+            Wire startWire = (drawVerticalLineFirst && c.pointA.orientation == c.pointB.orientation)
+                    ? moveUp(pointA)
+                    : moveDown(pointA);
+            connectionWires.add(startWire);
+            pointA = startWire.b;
             drawVerticalLineFirst = false;
-                if (c.pointA.orientation == c.pointB.orientation && pointA.y == pointB.y)  {
-                Wire startWire = moveDown(pointA);
-                connectionWires.add(startWire);
-                pointA = startWire.b;
-                drawVerticalLineFirst = false;
-            }
         }
 
-        if((pointA.x < pointB.x && c.pointA.orientation == ConnectionPointOrientation.Left)
-                || (pointA.x > pointB.x && c.pointA.orientation == ConnectionPointOrientation.Right)) {
-
-            // Als je punt links zit en je moet naar rechts EN verticaal, ga je eerste verticaal
-            if (pointA.y != pointB.y) {
-                drawVerticalLineFirst = true;
-            }
-            // Als je punt links zit en je moet naar rechts en a.y == b.y, je om het component heen
-            else {
-                Wire startWire = moveUp(pointA);
-                connectionWires.add(startWire);
-                pointA = startWire.b;
-                drawVerticalLineFirst = false;
-            }
-        }
-        // We gaan eerst de verticale lijn tekenen MAAR de horizontale lijn gaat door component B
-        // heen lopen! doe dus nog een extra stukje verticaal vanaf component B.
+        // We intersect component B because we draw a vertical line first, and the connectionpoint
+        // is on the 'other side' of the component (considering where we start off)
         if (drawVerticalLineFirst &&
                 ((pointB.x < pointA.x && c.pointB.orientation == ConnectionPointOrientation.Left)
                 || (pointB.x > pointA.x && c.pointB.orientation == ConnectionPointOrientation.Right))) {
