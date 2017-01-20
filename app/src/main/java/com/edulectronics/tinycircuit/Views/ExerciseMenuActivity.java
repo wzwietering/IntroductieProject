@@ -39,7 +39,7 @@ public class ExerciseMenuActivity extends AppCompatActivity {
 
         TextView text = (TextView) v.findViewById(R.id.levelnumber);
         String levelnumber = text.getText().toString();
-        if(currentScenario < Integer.parseInt(levelnumber)){
+        if (currentScenario < Integer.parseInt(levelnumber)) {
             MessageController messageController = new MessageController(getFragmentManager());
             messageController.displayMessage(new MessageArgs(getResources().getString(R.string.scenario_locked_explanation), MessageTypes.ScenarioLocked));
         } else {

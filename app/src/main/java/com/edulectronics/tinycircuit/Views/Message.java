@@ -34,11 +34,11 @@ public class Message extends DialogFragment {
             @Override
             public void onClick(View v) {
                 dismiss();
-                if(messageArgs.endActivity) {
+                if (messageArgs.endActivity) {
                     Message.this.getActivity().finish();
                 }
-                if(messageArgs.goToNextScenario) {
-                    ((CircuitActivity)Message.this.getActivity()).startNextScenario();
+                if (messageArgs.goToNextScenario) {
+                    ((CircuitActivity) Message.this.getActivity()).startNextScenario();
                 }
             }
         });
@@ -46,7 +46,7 @@ public class Message extends DialogFragment {
 
     private void setHintButton() {
         Button hintButton = (Button) view.findViewById(R.id.hint);
-        if(messageArgs.allowHint) {
+        if (messageArgs.allowHint) {
             hintButton.setVisibility(View.VISIBLE);
             hintButton.setOnClickListener(new View.OnClickListener() {
 

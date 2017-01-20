@@ -23,5 +23,6 @@ import android.view.View;
 
 public interface IDragSource {
     boolean allowDrag();
+
     void onDropCompleted(View target, boolean success);
 }

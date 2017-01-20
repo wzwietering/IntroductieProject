@@ -11,10 +11,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * Created by bernd on 09/01/2017.
- */
-
 public class LevelController {
     private IScenario scenario;
 

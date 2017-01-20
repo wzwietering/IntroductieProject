@@ -30,7 +30,7 @@ public class MenuActivity extends AppCompatActivity {
         this.createMenu();
     }
 
-    public void changelanguage(View view){
+    public void changelanguage(View view) {
         switchLanguage();
         Locale locale = new Locale(language);
         Locale.setDefault(locale);
@@ -41,19 +41,19 @@ public class MenuActivity extends AppCompatActivity {
         this.createMenu();
     }
 
-    public void aboutActivity(View view){
+    public void aboutActivity(View view) {
         Intent intent = new Intent(this, AboutActivity.class);
         this.startActivity(intent);
     }
 
-    private void createMenu(){
+    private void createMenu() {
         ListView listView = (ListView) findViewById(R.id.buttonArea);
         String[] items = {getResources().getString(R.string.exercise), getResources().getString(R.string.freeplay)};
         listView.setAdapter(new MainMenuAdapter(this, items));
     }
 
-    private void switchLanguage(){
-        if (language.equals("nl")){
+    private void switchLanguage() {
+        if (language.equals("nl")) {
             language = "en";
         } else {
             language = "nl";
@@ -61,12 +61,11 @@ public class MenuActivity extends AppCompatActivity {
         setFlag();
     }
 
-    private void setFlag(){
+    private void setFlag() {
         ImageView flag = (ImageView) findViewById(R.id.flag);
         if (language.equals("nl")) {
             flag.setImageResource(R.drawable.dutchflag);
-        }
-        else {
+        } else {
             flag.setImageResource(R.drawable.englishflag);
         }
     }

@@ -2,7 +2,7 @@ package com.edulectronics.tinycircuit.Models;
 
 import java.io.Serializable;
 
-public class MessageArgs implements Serializable{
+public class MessageArgs implements Serializable {
     public MessageTypes type;
     public int title;
     public String message;

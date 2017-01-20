@@ -8,11 +8,8 @@ import com.edulectronics.tinycircuit.Models.MessageTypes;
 import com.edulectronics.tinycircuit.R;
 import com.edulectronics.tinycircuit.Views.Message;
 
-/**
- * Created by Maaike on 12-12-2016.
- * Handles the display of all messages in the app.
- */
 
+// Handles the display of all messages in the app.
 public class MessageController {
 
     private FragmentManager fragmentManager;
@@ -22,15 +19,15 @@ public class MessageController {
     }
 
     public void displayMessage(MessageArgs messageArgs) {
-            Bundle args = new Bundle();
+        Bundle args = new Bundle();
 
-            // No title was given. Set a default one.
-            if (messageArgs.title == 0) {
-                messageArgs.title = getTitle(messageArgs.type);
-            }
+        // No title was given. Set a default one.
+        if (messageArgs.title == 0) {
+            messageArgs.title = getTitle(messageArgs.type);
+        }
 
-            args.putSerializable("messageargs", messageArgs);
-            showMessage(args);
+        args.putSerializable("messageargs", messageArgs);
+        showMessage(args);
     }
 
     private void showMessage(Bundle args) {
@@ -40,7 +37,7 @@ public class MessageController {
     }
 
     private int getTitle(MessageTypes type) {
-        switch (type){
+        switch (type) {
             case Explanation:
                 return R.string.scenario_explanation_title;
             case ScenarioComplete:

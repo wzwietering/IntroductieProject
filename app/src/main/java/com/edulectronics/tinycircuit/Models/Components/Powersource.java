@@ -5,13 +5,7 @@ import com.edulectronics.tinycircuit.Models.Components.Connectors.ConnectionPoin
 import com.edulectronics.tinycircuit.R;
 import com.edulectronics.tinycircuit.Views.Wire;
 
-/**
- * Created by Maaike on 28-11-2016.
- */
-
 public class Powersource extends Component {
-
-
     // This is the 'start' of checking whether a circuit is actually a circuit.
     // Always call this method on the powersource first.
     public boolean hasOutputConnection() {
@@ -27,7 +21,7 @@ public class Powersource extends Component {
     }
 
     @Override
-    public int getImage(){
+    public int getImage() {
         return R.drawable.battery;
     }
 }

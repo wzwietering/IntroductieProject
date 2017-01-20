@@ -15,11 +15,6 @@ import com.edulectronics.tinycircuit.Views.Wire;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Stack;
-
-/**
- * Created by Wilmer on 28-11-2016.
- */
-
 public class CircuitController implements Serializable {
     public Circuit circuit;
     public Component newComponent; // When a new component is created, we save it here. It hasn't been dragged to the circuit yet.
@@ -43,7 +38,7 @@ public class CircuitController implements Serializable {
     }
 
     public void addComponent(Component component, int position) {
-        if(placementAllowed(position)) {
+        if (placementAllowed(position)) {
             circuit.add(component, position);
         }
     }
@@ -53,7 +48,7 @@ public class CircuitController implements Serializable {
     }
 
     public void removeComponent(int position) {
-        if(circuit.occupied(position)) {
+        if (circuit.occupied(position)) {
             circuit.remove(position);
         }
     }
@@ -82,7 +77,7 @@ public class CircuitController implements Serializable {
     // Gets all the unique connections in a circuit
     public ArrayList<Connection> getAllConnections() {
         ArrayList<Connection> connections = new ArrayList<Connection>();
-        for (Component component: getComponents()) {
+        for (Component component : getComponents()) {
             for (ConnectionPoint cp : component.getConnectionPoints()) {
                 for (Connection c : cp.getConnections()) {
                     if (!connections.contains(c)) {
@@ -100,7 +95,7 @@ public class CircuitController implements Serializable {
 
     // Reset all the components to their standard values (eg. lightbulbs turned off and not broken)
     public void reset() {
-        for (Component component: circuit.getAllComponents())
+        for (Component component : circuit.getAllComponents())
             component.reset();
     }
 
@@ -129,6 +124,7 @@ public class CircuitController implements Serializable {
 
     // Check all paths on the graph to see if there is resistance
     private void checkPaths(Graph graph) {
+        // First check if there are paths that don't have a resistor.
         for (Stack path : graph.findAllPaths()) {
             boolean pathHasResistor = false;
 
@@ -140,16 +136,32 @@ public class CircuitController implements Serializable {
                 }
             }
 
+            // Highlight them in red.
             if (!pathHasResistor) {
                 animator.highlightPath(path, Color.RED, Wire.WireDrawingMode.flashingHighlight);
                 for (Object element : elements) {
                     ((Component) element).setResistance(false);
                 }
-            } else {
-                animator.animateCurrentFlow(path);
             }
+        }
 
-            animator.handleHighInputs(elements);
+        // Now check if there are any paths that DO have a resistor.
+        for (Stack path : graph.findAllPaths()) {
+                boolean pathHasResistor = false;
+
+                Object[] elements = path.toArray();
+                for (Object element : elements) {
+                    if (element.getClass() == Resistor.class) {
+                        pathHasResistor = true;
+                        break;
+                    }
+                }
+
+                if (pathHasResistor) {
+                    animator.animateCurrentFlow(path);
+                }
+
+                animator.handleHighInputs(elements);
         }
     }
 

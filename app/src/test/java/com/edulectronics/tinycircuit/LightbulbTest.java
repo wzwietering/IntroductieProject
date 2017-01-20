@@ -16,10 +16,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-/**
- * Created by Maaike on 28-11-2016.
- */
-
 public class LightbulbTest {
 
     @Test

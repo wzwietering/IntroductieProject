@@ -5,10 +5,6 @@ import com.edulectronics.tinycircuit.Models.Components.Component;
 
 import java.util.ArrayList;
 
-/**
- * Created by Maaike on 6-1-2017.
- */
-
 public class CircuitBuilder {
     public static CircuitController getCircuitController() {
         CircuitController controller = new CircuitController(10, 10);

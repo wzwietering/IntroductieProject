@@ -5,10 +5,6 @@ import com.edulectronics.tinycircuit.Models.Components.Component;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Maaike on 28-11-2016.
- */
-
 public class ConnectionPoint {
 
     public ConnectionPointOrientation orientation;
@@ -21,8 +17,8 @@ public class ConnectionPoint {
     }
 
     public boolean hasOutputConnection() {
-        for (Connection connection: connections) {
-            if(connection.hasOutputConnection(this))
+        for (Connection connection : connections) {
+            if (connection.hasOutputConnection(this))
                 return true;
         }
         return false;
@@ -37,23 +33,22 @@ public class ConnectionPoint {
     }
 
     public void addConnection(Connection connection) {
-        if(this.getConnection(connection.pointA, connection.pointB) == null) {
+        if (this.getConnection(connection.pointA, connection.pointB) == null) {
             connections.add(connection);
         }
     }
 
     public void removeConnection(ConnectionPoint pointA, ConnectionPoint pointB) {
         Connection c = this.getConnection(pointA, pointB);
-        if(c != null) {
+        if (c != null) {
             connections.remove(c);
         }
     }
 
     private Connection getConnection(ConnectionPoint pointA, ConnectionPoint pointB) {
-        for (Connection c: this.connections) {
+        for (Connection c : this.connections) {
             if (c.pointA == pointA && c.pointB == pointB
-                || c.pointB == pointA && c.pointA == pointB)
-            {
+                    || c.pointB == pointA && c.pointA == pointB) {
                 return c;
             }
         }

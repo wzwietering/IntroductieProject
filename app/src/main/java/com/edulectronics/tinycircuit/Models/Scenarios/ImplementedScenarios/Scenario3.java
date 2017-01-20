@@ -15,11 +15,6 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-
-/**
- * Created by Jesper on 1/4/2017.
- */
-
 public class Scenario3 extends DesignScenario {
     public ArrayList<Component> components = new ArrayList<>();
 
@@ -41,10 +36,10 @@ public class Scenario3 extends DesignScenario {
         lampIsOn = false;
 
         for (Component component : circuit.getAllComponents()) {
-            if(component != null && circuit.getComponentCount(component) == 1) {
-                if(component.getClass() == Lightbulb.class) {
+            if (component != null && circuit.getComponentCount(component) == 1) {
+                if (component.getClass() == Lightbulb.class) {
                     lampIsOn = ((Lightbulb) component).isOn;
-                } else if(component.getClass() == Switch.class){
+                } else if (component.getClass() == Switch.class) {
                     hasConnectedSwitch = component.hasOutputConnection(component.getConnectionPointByIndex(1));
                 }
             }
@@ -70,7 +65,7 @@ public class Scenario3 extends DesignScenario {
         Resistor resistor = new Resistor();
 
         Connector.connect(powersource.getOutput(), bulb.getConnectionPointByIndex(1));
-        Connector.connect(bulb.getConnectionPointByIndex(0),resistor.getConnectionPointByIndex(0));
+        Connector.connect(bulb.getConnectionPointByIndex(0), resistor.getConnectionPointByIndex(0));
         Connector.connect(powersource.getInput(), resistor.getConnectionPointByIndex(1));
 
         components.add(powersource);
@@ -80,18 +75,18 @@ public class Scenario3 extends DesignScenario {
     }
 
     @Override
-    public int getID(){
+    public int getID() {
         return 3;
     }
 
     public int getHint() {
-        if(!hasConnectedSwitch){
+        if (!hasConnectedSwitch) {
             return R.string.no_connection;
         }
-        if(!isFullCircle){
+        if (!isFullCircle) {
             return R.string.no_full_circle;
         }
-        if(!lampIsOn){
+        if (!lampIsOn) {
             return R.string.lamp_off;
         }
         return 0;

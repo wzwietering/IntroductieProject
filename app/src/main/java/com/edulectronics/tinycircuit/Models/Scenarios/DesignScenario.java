@@ -11,7 +11,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Created by Maaike on 12-12-2016.
  * This is the abstract class for design scenario's. The design scenario is a scenario in which
  * the user can modify a circuit in order to complete a task.
  */
@@ -20,7 +19,8 @@ public abstract class DesignScenario implements IScenario {
 
     protected Component[] initialComponents;
 
-    public DesignScenario() {}
+    public DesignScenario() {
+    }
 
     public DesignScenario(Circuit circuit) {
         this.initialComponents = circuit.getAllComponents();
@@ -38,7 +38,9 @@ public abstract class DesignScenario implements IScenario {
     }
 
     // Determines whether to reset circuit  to scenario default when user starts this scenario.
-    public boolean resetCircuitOnStart() { return false; }
+    public boolean resetCircuitOnStart() {
+        return false;
+    }
 
     // The component types that the user is allowed to use. Can differ for each scenario.
     public Set<Component> getAvailableComponents() {
@@ -48,7 +50,7 @@ public abstract class DesignScenario implements IScenario {
     // The preset components that are already part of the scenario.
     @Override
     public ArrayList<Component> loadComponents() {
-        if(this.initialComponents != null) {
+        if (this.initialComponents != null) {
             return new ArrayList(Arrays.asList(initialComponents));
         }
         return null;
@@ -59,13 +61,13 @@ public abstract class DesignScenario implements IScenario {
     public abstract int getPrompt();
 
     @Override
-    public int getCompletePrompt(){
+    public int getCompletePrompt() {
         return R.string.scenario_complete;
     }
 
     // Get the scenario id
     @Override
-    public int getID(){
+    public int getID() {
         return 0;
     }
 

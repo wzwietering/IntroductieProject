@@ -14,12 +14,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Created by Maaike on 12-12-2016.
  * First scenario. Easy-peasy.
  * Circuit:     A power source and a lightbulb. Powersource and lightbulb are connected only
- *              on one side.
+ * on one side.
  * Complete:    if user connects the non-connected side of powersource to none-connected side
- *              of lightbulb.
+ * of lightbulb.
  */
 
 public class Scenario1 extends DesignScenario {
@@ -31,7 +30,7 @@ public class Scenario1 extends DesignScenario {
     }
 
     @Override
-    public int getCompletePrompt(){
+    public int getCompletePrompt() {
         return R.string.scenario1_complete;
     }
 
@@ -43,7 +42,7 @@ public class Scenario1 extends DesignScenario {
         hasLightbulb = false;
 
         for (Component component : circuit.getAllComponents()) {
-            if(component != null) {
+            if (component != null) {
                 if (component.getClass() == Lightbulb.class) {
                     hasLightbulb = true;
                     continue;
@@ -75,11 +74,11 @@ public class Scenario1 extends DesignScenario {
         return 1;
     }
 
-    public int getHint(){
-        if (!hasLightbulb){
+    public int getHint() {
+        if (!hasLightbulb) {
             return R.string.lamp_required;
         }
-        if (!isFullCircle){
+        if (!isFullCircle) {
             return R.string.no_full_circle;
         }
         return 0;
