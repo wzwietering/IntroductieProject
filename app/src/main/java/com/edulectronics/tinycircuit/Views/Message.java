@@ -61,7 +61,7 @@ public class Message extends DialogFragment {
                 }
             });
         } else {
-            hintButton.setVisibility(View.INVISIBLE);
+            hintButton.setVisibility(View.GONE);
         }
     }
 
