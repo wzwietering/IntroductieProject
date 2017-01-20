@@ -20,7 +20,8 @@ import java.util.Set;
  */
 
 public class Scenario2 extends DesignScenario {
-    public Scenario2(){}
+    public Scenario2() {
+    }
 
     public Scenario2(Circuit circuit) {
         super(circuit);
@@ -42,13 +43,13 @@ public class Scenario2 extends DesignScenario {
         lampIsOn = false;
 
         for (Component component : circuit.getAllComponents()) {
-            if(component != null && circuit.getComponentCount(component) == 1) {
-                if(component.getClass() == Resistor.class ) {
+            if (component != null && circuit.getComponentCount(component) == 1) {
+                if (component.getClass() == Resistor.class) {
                     hasResistor = true;
                     continue;
                 }
-                if(component.getClass() == Lightbulb.class){
-                    if(((Lightbulb) component).isOn){
+                if (component.getClass() == Lightbulb.class) {
+                    if (((Lightbulb) component).isOn) {
                         lampIsOn = true;
                     }
                 }
@@ -88,13 +89,13 @@ public class Scenario2 extends DesignScenario {
     }
 
     public int getHint() {
-        if(!hasResistor){
+        if (!hasResistor) {
             return R.string.resistance_required;
         }
-        if(!isFullCircle){
+        if (!isFullCircle) {
             return R.string.no_full_circle;
         }
-        if(!lampIsOn){
+        if (!lampIsOn) {
             return R.string.lamp_off;
         }
         return 0;
