@@ -31,6 +31,11 @@ public class Scenario1 extends DesignScenario {
     }
 
     @Override
+    public int getCompletePrompt(){
+        return R.string.scenario1_complete;
+    }
+
+    @Override
     public boolean isCompleted(Circuit circuit) {
         isFullCircle = super.isCompleted(circuit);
         if (!isFullCircle) return false;

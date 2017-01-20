@@ -11,8 +11,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.view.WindowManager;
-import android.widget.FrameLayout;
 import android.widget.AdapterView;
+import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -36,17 +36,18 @@ import com.edulectronics.tinycircuit.Models.Scenarios.ImplementedScenarios.FreeP
 import com.edulectronics.tinycircuit.Models.Scenarios.ImplementedScenarios.Scenario2;
 import com.edulectronics.tinycircuit.R;
 import com.edulectronics.tinycircuit.Views.Adapters.CircuitAdapter;
-import com.edulectronics.tinycircuit.Views.Draggables.DeleteZone;
 import com.edulectronics.tinycircuit.Views.Adapters.ListAdapter;
+import com.edulectronics.tinycircuit.Views.Draggables.DeleteZone;
 import com.edulectronics.tinycircuit.Views.Draggables.DragController;
 import com.edulectronics.tinycircuit.Views.Draggables.DragLayer;
 import com.edulectronics.tinycircuit.Views.Draggables.GridCell;
 import com.edulectronics.tinycircuit.Views.Draggables.Interfaces.IDragSource;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import static com.edulectronics.tinycircuit.Models.MessageTypes.Explanation;
-import java.util.ArrayList;
 
 public class CircuitActivity extends Activity implements View.OnClickListener, View.OnTouchListener, View.OnLongClickListener { //  , AdapterView.OnItemClickListener
     private DragController mDragController;   // Object that handles a drag-drop sequence. It interacts with DragSource and DropTarget objects.
@@ -198,7 +199,7 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
                 connectionController.makeWire(component, ev);
 
                 if (levelController.getScenario().isCompleted(circuitController.circuit)) {
-                    scenarioCompleted();
+                    checkScenarioComplete(false);
                 }
             }
         }
@@ -278,6 +279,8 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
         levelController.setScenario(new Scenario2(this.circuitController.circuit));
     }
 
+    //The run method with view is necessary because the event handler of a button must be able to
+    // pass a view, but we don't use the view, so this implementation is sufficient.
     public void run(View view) {
         // Reset the circuit before animating it; so all wires start out white, and lightbulbs whole.
         connectionController.redrawWires();
@@ -289,14 +292,16 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
         checkScenarioComplete(true);
     }
 
-    private void checkScenarioComplete(boolean run){
+    private void checkScenarioComplete(boolean ranByButtonClick){
         //The boolean is used to give the user only negative feedback when they press the run button.
         //Giving negative feedback when this method runs using the onTouch method is a nightmare,
         //because you will get negative messages all the time.
-        if (levelController.levelIsCompleted(circuitController.circuit)) {
-            scenarioCompleted();
-        } else if (run && levelController.getScenario().getClass() != FreePlayScenario.class) {
-            giveNegativeFeedback();
+        if(levelController.getScenario().getClass() != FreePlayScenario.class) {
+            if (levelController.levelIsCompleted(circuitController.circuit)) {
+                scenarioCompleted();
+            } else if (ranByButtonClick) {
+                giveNegativeFeedback();
+            }
         }
     }
 
@@ -312,8 +317,10 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
     //Create a positive feedback message
     private void givePositiveFeedback(){
         String[] positiveFeedback = getResources().getStringArray(R.array.positive_feedback);
+        String feedback = giveFeedback(positiveFeedback) + " " + getResources().getString(
+                levelController.getScenario().getCompletePrompt());
         messageController.displayMessage(new MessageArgs(
-                giveFeedback(positiveFeedback),
+                feedback,
                 MessageTypes.ScenarioComplete,
                 true));
     }

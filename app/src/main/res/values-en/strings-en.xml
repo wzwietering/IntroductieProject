@@ -15,7 +15,7 @@
     <string name="scenario_locked_explanation">This scenario is not yet available. Play the previous scenarios to unlock this one!</string>
     <string name="scenario_explanation_title">Explanation</string>
     <string name="scenario_freeplay">This is the free play mode. Here you can design your own ciruit.</string>
-    <string name="scenario1_explanation">Connect the lamp with the battery, to give the lamp power.</string>
+    <string name="scenario1_explanation">Connect the lamp with the battery, to give the lamp power. You can create a connection by pressing the wire icon, and than by tapping on the white dots of a component.</string>
     <string name="scenario2_explanation">Add a resistor to the circuit, so the light won\'t break. To add the resistor, you have to remove a wire. This can be done by touching a wire in wire mode. Run the circuit when you are done.</string>
     <string name="scenario3_explanation">Add a switch to the circuit, so you can flick the Lamp on and off. Afterwards press the switch to turn the lamp on.</string>
     <string name="scenario4_explanation">Now you understand all components, make your own circuit with 2 lightbulbs and a way to turn the lights off and on.</string>
@@ -24,6 +24,7 @@
     <string name="scenario_complete">Good job!</string>
     <string name="scenario_not_complete">The circuit is not right yet!</string>
     <string name="run">Run</string>
+    <string name="scenario1_complete">Sadly, the lamp broke. In the next exercise you will learn how to keep the lamp working.</string>
 
     <!--Specific feedback-->
     <string name="no_full_circle">The circuit is not closed yet.</string>

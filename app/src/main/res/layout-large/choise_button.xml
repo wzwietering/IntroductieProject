@@ -10,8 +10,8 @@
     android:padding="10dp">
 
     <ImageView
-        android:layout_width="120dp"
-        android:layout_height="100dp"
+        android:layout_width="240dp"
+        android:layout_height="200dp"
         app:srcCompat="@drawable/mainmenuselector"
         android:layout_gravity="center_vertical"
         android:scaleType="fitXY"
@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:id="@+id/levelnumber"
-        android:textSize="60sp"
+        android:textSize="120sp"
         android:gravity="center"
         android:layout_marginTop="10dp"
         android:layout_centerInParent="true"
