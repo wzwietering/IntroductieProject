@@ -50,4 +50,8 @@
         <item>"The exercise is not finished yet, but you are nearly there!"</item>
         <item>"You need to change something!"</item>
     </string-array>
+
+    <string name="title_aboutactivity">Who are we?</string>
+    <string name="project_manager">Project manager: \nWilmer Zwietering\n\nLead developers:\nBernd van den Hoek\nMaaike Galama\n\nFront end developer:\nJesper Steensma</string>
+    <string name="website">For more information see our website:</string>
 </resources>

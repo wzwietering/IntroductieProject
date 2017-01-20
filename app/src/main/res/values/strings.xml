@@ -49,4 +49,8 @@
         <item>"De opdracht is nog niet klaar, maar je bent er bijna!"</item>
         <item>"Er is nog een aanpassing nodig!"</item>
     </string-array>
+
+    <string name="title_aboutactivity">Wie zijn wij?</string>
+    <string name="project_manager">Project manager: \nWilmer Zwietering\n\nLead developers:\nBernd van den Hoek\nMaaike Galama\n\nFront end developer:\nJesper Steensma</string>
+    <string name="website">Voor meer informatie kijk op onze website:</string>
 </resources>
