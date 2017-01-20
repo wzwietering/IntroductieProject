@@ -58,6 +58,7 @@
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/logo"
         android:id="@+id/logo"
+        android:onClick="aboutActivity"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:adjustViewBounds="true"/>
