@@ -208,7 +208,7 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
                 connectionController.makeWire(component, ev);
 
                 if (levelController.getScenario().isCompleted(circuitController.circuit)) {
-                    checkScenarioComplete(false);
+                    checkScenarioComplete();
                 }
             }
         }
