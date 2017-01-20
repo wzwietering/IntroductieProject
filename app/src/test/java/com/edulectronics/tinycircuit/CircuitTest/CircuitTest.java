@@ -19,10 +19,6 @@ import java.util.Set;
 
 import static org.junit.Assert.*;
 
-/**
- * Created by Wilmer on 28-11-2016.
- */
-
 public class CircuitTest {
     static CircuitController c;
     Lightbulb light = new Lightbulb();

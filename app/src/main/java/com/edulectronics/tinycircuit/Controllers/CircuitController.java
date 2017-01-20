@@ -15,11 +15,6 @@ import com.edulectronics.tinycircuit.Views.Wire;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Stack;
-
-/**
- * Created by Wilmer on 28-11-2016.
- */
-
 public class CircuitController implements Serializable {
     public Circuit circuit;
     public Component newComponent; // When a new component is created, we save it here. It hasn't been dragged to the circuit yet.

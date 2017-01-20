@@ -15,10 +15,6 @@ import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 
-/**
- * Created by Wilmer on 12-12-2016.
- */
-
 @RunWith(AndroidJUnit4.class)
 public class DragTest {
     Context context = InstrumentationRegistry.getTargetContext();

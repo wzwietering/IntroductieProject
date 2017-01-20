@@ -14,10 +14,6 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * Created by Maaike on 12-12-2016.
- */
-
 public class FreePlayScenario extends DesignScenario {
     @Override
     public int getPrompt() {

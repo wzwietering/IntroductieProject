@@ -10,10 +10,6 @@ import org.junit.runner.RunWith;
 
 import static junit.framework.Assert.assertEquals;
 
-/**
- * Created by Wilmer on 12-12-2016.
- */
-
 //This class is an Android test because the coordinatehelper uses the Resources, which are only
 //existent when running the test on a device
 

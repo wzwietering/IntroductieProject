@@ -8,11 +8,8 @@ import com.edulectronics.tinycircuit.Models.MessageTypes;
 import com.edulectronics.tinycircuit.R;
 import com.edulectronics.tinycircuit.Views.Message;
 
-/**
- * Created by Maaike on 12-12-2016.
- * Handles the display of all messages in the app.
- */
 
+// Handles the display of all messages in the app.
 public class MessageController {
 
     private FragmentManager fragmentManager;

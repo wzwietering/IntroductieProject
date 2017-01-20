@@ -9,10 +9,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.Stack;
-
-/**
- * Created by Maaike on 2-1-2017.
- */
 // A graph of the circuit. Contains the nodes (components in cicuit) and edges
 // (a pair of components representing a connection between the components.
 public class Graph {

@@ -15,11 +15,6 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-
-/**
- * Created by Jesper on 1/4/2017.
- */
-
 public class Scenario3 extends DesignScenario {
     public ArrayList<Component> components = new ArrayList<>();
 

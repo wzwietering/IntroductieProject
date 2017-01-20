@@ -17,10 +17,6 @@ import com.edulectronics.tinycircuit.Views.Wire;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
-
-/**
- * Created by Maaike on 15-1-2017.
- */
 // This animated the circuit, so displayes how the current runs through the circuit.
 public class CircuitAnimator {
 

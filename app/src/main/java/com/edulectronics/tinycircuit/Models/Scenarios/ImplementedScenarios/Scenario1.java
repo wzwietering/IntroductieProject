@@ -14,7 +14,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Created by Maaike on 12-12-2016.
  * First scenario. Easy-peasy.
  * Circuit:     A power source and a lightbulb. Powersource and lightbulb are connected only
  * on one side.

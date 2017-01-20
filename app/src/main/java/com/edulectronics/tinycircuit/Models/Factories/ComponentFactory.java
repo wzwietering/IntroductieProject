@@ -5,10 +5,6 @@ import com.edulectronics.tinycircuit.Models.Components.Lightbulb;
 import com.edulectronics.tinycircuit.Models.Components.Powersource;
 import com.edulectronics.tinycircuit.Models.Components.Resistor;
 import com.edulectronics.tinycircuit.Models.Components.Switch;
-
-/**
- * Created by Maaike on 28-11-2016.
- */
 public class ComponentFactory {
 
     //TODO: geen hardcoded strings gebruiken!!! Uit resources halen.

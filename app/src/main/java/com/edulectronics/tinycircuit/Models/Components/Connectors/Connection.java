@@ -10,10 +10,6 @@ import com.edulectronics.tinycircuit.Views.Wire;
 
 import java.util.List;
 
-/**
- * Created by Maaike on 19-12-2016.
- */
-
 public class Connection {
     public ConnectionPoint pointA;
     public ConnectionPoint pointB;

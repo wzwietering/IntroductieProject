@@ -14,10 +14,6 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * Created by Wilmer on 18-1-2017.
- */
-
 public class Scenario5 extends DesignScenario {
 
     @Override

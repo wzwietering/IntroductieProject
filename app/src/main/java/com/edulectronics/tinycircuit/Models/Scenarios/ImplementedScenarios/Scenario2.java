@@ -14,11 +14,6 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-
-/**
- * Created by Maaike on 14-12-2016.
- */
-
 public class Scenario2 extends DesignScenario {
     public Scenario2() {
     }

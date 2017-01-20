@@ -18,10 +18,6 @@ import com.edulectronics.tinycircuit.Views.Wire;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Wilmer on 11-12-2016.
- */
-
 public class ConnectionController {
     private Context context;
     private CircuitController circuitController;

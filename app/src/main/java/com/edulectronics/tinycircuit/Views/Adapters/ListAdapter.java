@@ -15,10 +15,6 @@ import com.edulectronics.tinycircuit.R;
 
 import java.util.List;
 
-/**
- * Created by Jesper on 1/17/2017.
- */
-
 public class ListAdapter extends BaseAdapter {
     private Context context;
     private List<MenuItem> componentlist;

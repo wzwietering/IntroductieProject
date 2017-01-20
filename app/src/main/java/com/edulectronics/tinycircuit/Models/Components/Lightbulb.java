@@ -2,10 +2,6 @@ package com.edulectronics.tinycircuit.Models.Components;
 
 import com.edulectronics.tinycircuit.R;
 
-/**
- * Created by Maaike on 28-11-2016.
- */
-
 public class Lightbulb extends Component {
     public boolean isOn = false;
 

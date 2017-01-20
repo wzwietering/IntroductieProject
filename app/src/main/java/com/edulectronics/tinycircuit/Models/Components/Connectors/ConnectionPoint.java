@@ -5,10 +5,6 @@ import com.edulectronics.tinycircuit.Models.Components.Component;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Maaike on 28-11-2016.
- */
-
 public class ConnectionPoint {
 
     public ConnectionPointOrientation orientation;

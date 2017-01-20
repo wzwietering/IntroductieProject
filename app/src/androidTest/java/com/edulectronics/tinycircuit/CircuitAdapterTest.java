@@ -31,12 +31,6 @@ import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 
-;
-
-/**
- * Created by Wilmer on 12-12-2016.
- */
-
 @RunWith(AndroidJUnit4.class)
 public class CircuitAdapterTest {
     @Rule

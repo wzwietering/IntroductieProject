@@ -12,13 +12,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * Created by Maaike on 28-11-2016.
- */
-
-/**
- * This is the component base class. All components have to be derived from this base.
- */
+// This is the component base class. All components have to be derived from this base.
 public abstract class Component implements IComponent {
 
     public int position;

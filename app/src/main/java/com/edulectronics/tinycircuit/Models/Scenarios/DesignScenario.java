@@ -11,7 +11,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Created by Maaike on 12-12-2016.
  * This is the abstract class for design scenario's. The design scenario is a scenario in which
  * the user can modify a circuit in order to complete a task.
  */

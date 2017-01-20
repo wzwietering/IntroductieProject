@@ -16,10 +16,6 @@ import com.edulectronics.tinycircuit.R;
 import com.edulectronics.tinycircuit.Views.CircuitActivity;
 import com.edulectronics.tinycircuit.Views.ExerciseMenuActivity;
 
-/**
- * Created by Wilmer on 18-12-2016.
- */
-
 public class MainMenuAdapter extends BaseAdapter {
     private Context context;
     private String[] items;

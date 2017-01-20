@@ -13,11 +13,6 @@ import android.view.WindowManager;
 
 import com.edulectronics.tinycircuit.R;
 
-
-/**
- * Created by bernd on 12/12/2016.
- */
-
 public class Wire extends View {
     public Point a, b;
     public Paint whitePaint = new Paint();

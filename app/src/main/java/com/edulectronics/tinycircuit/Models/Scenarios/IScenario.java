@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Set;
 
 /**
- * Created by Maaike on 12-12-2016.
  * The scenario interface.
  */
 

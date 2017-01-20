@@ -140,15 +140,11 @@ public class GridCell extends ImageView implements IDragSource, IDropTarget {
         setBackgroundResource(bg);
     }
 
-    /**
-     * React to something being dragged over the drop target.
-     */
+    //React to something being dragged over the drop target.
     public void onDragOver(IDragSource source, int x, int y, int xOffset, int yOffset, DragView dragView, Object dragInfo) {
     }
 
-    /**
-     * React to a drag
-     */
+    //React to a drag
     public void onDragExit(IDragSource source, int x, int y, int xOffset, int yOffset, DragView dragView, Object dragInfo) {
         setBackgroundResource(R.color.cell);
     }

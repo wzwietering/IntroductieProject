@@ -60,66 +60,43 @@ public class DragController {
     private Rect mRectTemp = new Rect();
     private final int[] mCoordinatesTemp = new int[2];
 
-    /**
-     * Whether or not we're dragging.
-     */
+    // Whether or not we're dragging.
     private boolean mDragging;
 
-    /**
-     * X coordinate of the down event.
-     */
+    // X coordinate of the down event.
     private float mMotionDownX;
 
-    /**
-     * Y coordinate of the down event.
-     */
+    // Y coordinate of the down event.
     private float mMotionDownY;
 
-    /**
-     * Info about the screen for clamping.
-     */
+
+    // Info about the screen for clamping.
     private DisplayMetrics mDisplayMetrics = new DisplayMetrics();
 
-    /**
-     * Original view that is being dragged.
-     */
+    // Original view that is being dragged.
     private View mOriginator;
 
-    /**
-     * X offset from the upper-left corner of the cell to where we touched.
-     */
+    // X offset from the upper-left corner of the cell to where we touched.
     private float mTouchOffsetX;
 
-    /**
-     * Y offset from the upper-left corner of the cell to where we touched.
-     */
+    //Y offset from the upper-left corner of the cell to where we touched.
     private float mTouchOffsetY;
 
-    /**
-     * Where the drag originated
-     */
+    // Where the drag originated
     private IDragSource mDragSource;
 
-    /**
-     * The data associated with the object being dragged
-     */
+    // The data associated with the object being dragged
     private Object mDragInfo;
 
-    /**
-     * The view that moves around while you drag.
-     */
+    // The view that moves around while you drag.
     private DragView mDragView;
 
-    /**
-     * Who can receive drop events
-     */
+    // Who can receive drop events
     private ArrayList<IDropTarget> mDropTargets = new ArrayList<IDropTarget>();
 
     private IDragListener mListener;
 
-    /**
-     * The window token used as the parent for the DragView.
-     */
+    // The window token used as the parent for the DragView.
     private IBinder mWindowToken;
 
     private View mMoveTarget;
@@ -128,11 +105,6 @@ public class DragController {
 
     private InputMethodManager mInputMethodManager;
     private ConnectionController connectionController;
-
-    /**
-     * Interface to receive notifications when a drag starts or stops
-     */
-
 
     /**
      * Used to create a new DragLayer from XML.
@@ -301,9 +273,7 @@ public class DragController {
         }
     }
 
-    /**
-     * Call this from a drag source view.
-     */
+    // Call this from a drag source view.
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         final int action = ev.getAction();
 
@@ -339,9 +309,7 @@ public class DragController {
         return mMoveTarget != null && mMoveTarget.dispatchUnhandledMove(focused, direction);
     }
 
-    /**
-     * Call this from a drag source view.
-     */
+    // Call this from a drag source view.
     public boolean onTouchEvent(MotionEvent ev) {
         if (!mDragging) {
             return false;
@@ -447,9 +415,7 @@ public class DragController {
                 .getDefaultDisplay().getMetrics(mDisplayMetrics);
     }
 
-    /**
-     * Clamp val to be &gt;= min and &lt; max.
-     */
+    // Clamp val to be &gt;= min and &lt; max.
     private static int clamp(int val, int min, int max) {
         if (val < min) {
             return min;
@@ -460,23 +426,17 @@ public class DragController {
         }
     }
 
-    /**
-     * Sets the drag listener which will be notified when a drag starts or ends.
-     */
+    // Sets the drag listener which will be notified when a drag starts or ends.
     public void setDragListener(IDragListener l) {
         mListener = l;
     }
 
-    /**
-     * Add a DropTarget to the list of potential places to receive drop events.
-     */
+    // Add a DropTarget to the list of potential places to receive drop events.
     public void addDropTarget(IDropTarget target) {
         mDropTargets.add(target);
     }
 
-    /**
-     * Don't send drop events to <em>target</em> any more.
-     */
+    // Don't send drop events to <em>target</em> any more.
     public void removeAllDropTargets() {
         mDropTargets = new ArrayList<IDropTarget>();
     }

@@ -1,9 +1,5 @@
 package com.edulectronics.tinycircuit.Views.Draggables.Interfaces;
 
-/**
- * Created by Maaike on 30-11-2016.
- */
-
 public interface IDragListener {
     /**
      * A drag has begun
@@ -13,8 +9,6 @@ public interface IDragListener {
      */
     public void onDragStart(IDragSource source, Object info);
 
-    /**
-     * The drag has ended
-     */
+    // The drag has ended
     public void onDragEnd();
 }
