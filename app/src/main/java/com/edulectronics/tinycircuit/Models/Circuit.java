@@ -48,11 +48,9 @@ public class Circuit implements Serializable{
 
     public int getComponentCount(Component component) {
         int componentCount = 0;
-        for (Component comp : components){
-            if(comp != null) {
-                if (comp.getClass() == component.getClass()) {
-                    componentCount++;
-                }
+        for (Component comp : getAllComponents()){
+            if (comp.getClass() == component.getClass()) {
+                componentCount++;
             }
         }
         return componentCount;

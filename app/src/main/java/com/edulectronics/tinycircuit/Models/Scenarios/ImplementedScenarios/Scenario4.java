@@ -36,12 +36,10 @@ public class Scenario4 extends DesignScenario {
         hasSwitch = false;
 
         for (Component component : circuit.getAllComponents()) {
-            if(component != null) {
-                if (component.getClass() == Lightbulb.class) {
-                    lampRequirementsMet = (((Lightbulb) component).isOn && circuit.getComponentCount(component) == 2);
-                } else if (component.getClass() == Switch.class && circuit.getComponentCount(component) == 1){
-                    hasSwitch = component.hasOutputConnection(component.getConnectionPointByIndex(1)) && component.isConductive();
-                }
+            if (component.getClass() == Lightbulb.class) {
+                lampRequirementsMet = (((Lightbulb) component).isOn && circuit.getComponentCount(component) == 2);
+            } else if (component.getClass() == Switch.class && circuit.getComponentCount(component) == 1) {
+                hasSwitch = component.hasOutputConnection(component.getConnectionPointByIndex(1)) && component.isConductive();
             }
         }
         return (lampRequirementsMet && hasSwitch);
@@ -62,18 +60,18 @@ public class Scenario4 extends DesignScenario {
     }
 
     @Override
-    public int getID(){
+    public int getID() {
         return 4;
     }
 
     public int getHint() {
-        if(!lampRequirementsMet){
+        if (!lampRequirementsMet) {
             return R.string.lamp_off;
         }
-        if(!isFullCircle){
+        if (!isFullCircle) {
             return R.string.no_full_circle;
         }
-        if(!hasSwitch){
+        if (!hasSwitch) {
             return R.string.switch_required;
         }
         return 0;
