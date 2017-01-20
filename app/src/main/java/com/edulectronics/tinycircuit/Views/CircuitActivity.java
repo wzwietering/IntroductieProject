@@ -328,10 +328,12 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
         //The boolean is used to give the user only negative feedback when they press the run button.
         //Giving negative feedback when this method runs using the onTouch method is a nightmare,
         //because you will get negative messages all the time.
-        if (levelController.levelIsCompleted(circuitController.circuit)) {
-            this.scenarioCompleted();
-        } else if (levelController.getScenario().getClass() != FreePlayScenario.class) {
-            giveNegativeFeedback();
+        if(levelController.getScenario().getClass() != FreePlayScenario.class) {
+            if (levelController.levelIsCompleted(circuitController.circuit)) {
+                this.scenarioCompleted();
+            } else {
+                giveNegativeFeedback();
+            }
         }
     }
 
