@@ -76,6 +76,11 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
         createMenu();
         createDrawView();
         showMessages(false);
+
+        if(levelController.getScenario().getClass() == FreePlayScenario.class){
+            ImageView hint = (ImageView) findViewById(R.id.Help);
+            hint.setVisibility(View.GONE);
+        }
     }
 
     private void showMessages(boolean allowHint) {
