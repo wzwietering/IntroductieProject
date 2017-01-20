@@ -25,13 +25,13 @@ public class DragTest {
     CircuitController controller = new CircuitController(5, 5);
 
     @Test
-    public void emptyGridCell(){
+    public void emptyGridCell() {
         GridCell gridCell = new GridCell(controller, context);
         assertEquals(null, gridCell.getComponent());
     }
 
     @Test
-    public void gridCellTest(){
+    public void gridCellTest() {
         GridCell gridCell = new GridCell(controller, context);
         Lightbulb lightbulb = new Lightbulb();
 

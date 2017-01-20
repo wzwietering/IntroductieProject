@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Point;
 import android.support.v4.widget.DrawerLayout;
 import android.view.MotionEvent;
+
 import com.edulectronics.tinycircuit.Helpers.CoordinateHelper;
 import com.edulectronics.tinycircuit.Models.Components.Component;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.Connection;
@@ -32,7 +33,7 @@ public class ConnectionController {
     private int cellHeight, cellWidth;
     public boolean connecting = false;
 
-    public ConnectionController (Context context, int cellWidth, int cellHeight) {
+    public ConnectionController(Context context, int cellWidth, int cellHeight) {
         this.context = context;
         this.cellWidth = cellWidth;
         this.cellHeight = cellHeight;
@@ -65,7 +66,7 @@ public class ConnectionController {
         ConnectionPoint secondConnectionPoint = getConnectionPoint(component, secondOrientation);
 
         //Connectionpoints should not connect with themself
-        if(firstConnectionPoint != secondConnectionPoint) {
+        if (firstConnectionPoint != secondConnectionPoint) {
             connector.connect(
                     getConnectionPoint(firstComponent, firstOrientation),
                     getConnectionPoint(component, secondOrientation));
@@ -100,7 +101,7 @@ public class ConnectionController {
     }
 
     private void clearWires() {
-        DrawerLayout parentLayout = (DrawerLayout)((Activity)context).findViewById(R.id.wires);
+        DrawerLayout parentLayout = (DrawerLayout) ((Activity) context).findViewById(R.id.wires);
         for (Wire wire : wires) {
             parentLayout.removeView(wire);
         }
@@ -142,7 +143,7 @@ public class ConnectionController {
         connectionWires.add(endWire);
 
         // Parent layout
-        DrawerLayout parentLayout = (DrawerLayout)((Activity)context).findViewById(R.id.wires);
+        DrawerLayout parentLayout = (DrawerLayout) ((Activity) context).findViewById(R.id.wires);
 
         for (Wire wire : connectionWires) {
             // Add the view to the parent layout
@@ -171,6 +172,7 @@ public class ConnectionController {
         }
         return wires;
     }
+
     private Wire createLine(Point a, Point b) {
         Wire wire = new Wire(context, null);
         wire.setCoordinates(a, b);
@@ -199,7 +201,7 @@ public class ConnectionController {
                 if (startPoint.y < endPoint.y) {
                     // Go up half a cell
                     return createLine(startPoint,
-                                    new Point(startPoint.x, startPoint.y + (int) (0.5 * cellHeight)));
+                            new Point(startPoint.x, startPoint.y + (int) (0.5 * cellHeight)));
                 } else {
                     // Go down half a cell
                     return createLine(startPoint,

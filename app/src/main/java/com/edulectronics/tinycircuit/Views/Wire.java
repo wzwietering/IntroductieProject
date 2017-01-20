@@ -88,19 +88,19 @@ public class Wire extends View {
             case staticHighlight:
                 boolean useHighlightColor = this.useHighlightColorFirst;
 
-                while(drawUpToX != drawEnd.x || drawUpToY != drawEnd.y) {
+                while (drawUpToX != drawEnd.x || drawUpToY != drawEnd.y) {
                     drawUpToX += drawIntervalX * 2;
                     drawUpToY += drawIntervalY * 2;
                     checkIfEndWasReached();
 
-                    canvas.drawLine( drawUpToX - drawIntervalX * 2,
+                    canvas.drawLine(drawUpToX - drawIntervalX * 2,
                             drawUpToY - drawIntervalY * 2,
                             drawUpToX,
                             drawUpToY,
                             useHighlightColor ? this.highlightPaint : this.whitePaint);
 
                     useHighlightColor = !useHighlightColor;
-                  }
+                }
 
                 this.useHighlightColorFirst = !this.useHighlightColorFirst;
                 // Reset counters drawUpToX and Y.
@@ -115,7 +115,7 @@ public class Wire extends View {
                 canvas.drawLine(a.x, a.y, b.x, b.y, highlightPaint);
                 // Flash five times.
                 if (numberOfFlashes < 5) {
-                    if(numberOfFlashes % 2 == 0) {
+                    if (numberOfFlashes % 2 == 0) {
                         canvas.drawLine(a.x, a.y, b.x, b.y, highlightPaint);
                     } else {
                         canvas.drawLine(a.x, a.y, b.x, b.y, whitePaint);
@@ -155,6 +155,7 @@ public class Wire extends View {
                 this.color = color;
                 this.drawingMode = drawingMode;
             }
+
             // This runnable invalidates the wire and thus onDraw() is called on the wire.
             public void run() {
                 // Set drawingmode (which is checked in the onDraw() method)
@@ -176,14 +177,14 @@ public class Wire extends View {
         this.drawUpToY = drawStart.y;
     }
 
-    public boolean isTouched(Point point){
+    public boolean isTouched(Point point) {
         //Modify the multiplier to change the detection area of the tap.
         float width = this.whitePaint.getStrokeWidth() * 4;
         int minX = Math.min(a.x, b.x);
         int maxX = Math.max(a.x, b.x);
         int minY = Math.min(a.y, b.y);
         int maxY = Math.max(a.y, b.y);
-        if(point.x > minX - width && point.y > minY - width &&
+        if (point.x > minX - width && point.y > minY - width &&
                 point.x < maxX + width && point.y < maxY + width) {
             return true;
         } else {

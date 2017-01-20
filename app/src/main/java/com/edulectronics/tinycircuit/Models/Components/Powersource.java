@@ -27,7 +27,7 @@ public class Powersource extends Component {
     }
 
     @Override
-    public int getImage(){
+    public int getImage() {
         return R.drawable.battery;
     }
 }

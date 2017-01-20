@@ -20,7 +20,7 @@ import static junit.framework.Assert.assertEquals;
 @RunWith(AndroidJUnit4.class)
 public class CoordinateHelperTest {
     @Test
-    public void coordinateTest(){
+    public void coordinateTest() {
         CoordinateHelper coordinateHelper = new CoordinateHelper(5, 200, 200);
         ConnectionPointOrientation connectionPointOrientation = ConnectionPointOrientation.Left;
         int position = 7;

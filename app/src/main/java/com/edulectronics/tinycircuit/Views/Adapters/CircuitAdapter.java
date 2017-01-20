@@ -10,10 +10,10 @@ import android.widget.ImageView;
 import com.edulectronics.tinycircuit.Controllers.CircuitController;
 import com.edulectronics.tinycircuit.R;
 import com.edulectronics.tinycircuit.Views.Draggables.GridCell;
+
 /**
  * This class is used with a GridView object. It provides a set of ImageCell objects
  * that support dragging and dropping.
- *
  */
 
 public class CircuitAdapter extends BaseAdapter {
@@ -29,8 +29,7 @@ public class CircuitAdapter extends BaseAdapter {
         return circuitController.getCircuitSize();
     }
 
-    public Object getItem(int position)
-    {
+    public Object getItem(int position) {
         return circuitController.getComponent(position);
     }
 
@@ -44,8 +43,7 @@ public class CircuitAdapter extends BaseAdapter {
      *
      * @return ImageCell
      */
-    public View getView (int position, View convertView, ViewGroup parent)
-    {
+    public View getView(int position, View convertView, ViewGroup parent) {
         return createGridCell(position, convertView, parent);
     }
 

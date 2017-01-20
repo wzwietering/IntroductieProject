@@ -57,7 +57,7 @@ public class Graph {
 
             // Only add edges if they conduct power (and thus are a path).
             // A switch turned off is not a path!
-            if(edge.a.isConductive() && edge.b.isConductive()) {
+            if (edge.a.isConductive() && edge.b.isConductive()) {
                 edges.add(edge);
             }
 
@@ -96,9 +96,9 @@ public class Graph {
         Set<Component> neighbours = new HashSet<>();
         for (Edge edge : this.edges) {
             if (edge.a == component && edge.b != this.base) {
-                    neighbours.add(edge.b);
+                neighbours.add(edge.b);
             } else if (edge.b == component && edge.a != this.base) {
-                    neighbours.add(edge.a);
+                neighbours.add(edge.a);
             }
         }
         return neighbours;

@@ -194,7 +194,7 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
             //Check if wire is touched, but only on the down. This is necessary to prevent line
             //removal on the up event.
             Component component = ((GridCell) v).getComponent();
-            if(action == MotionEvent.ACTION_DOWN) {
+            if (action == MotionEvent.ACTION_DOWN) {
                 for (Connection connection : circuitController.getAllConnections()) {
                     if (connection.isTouched(ev) && component == null) {
                         Connector.disconnect(connection.pointA, connection.pointB);
@@ -204,7 +204,7 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
             }
             // Only make a wire on the up action. The user might be making a long
             // press and we don't want to make a wire on long press (longPress is for dragging)
-            if(component != null && action == MotionEvent.ACTION_UP) {
+            if (component != null && action == MotionEvent.ACTION_UP) {
                 connectionController.makeWire(component, ev);
 
                 if (levelController.getScenario().isCompleted(circuitController.circuit)) {
@@ -241,7 +241,7 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
         FrameLayout componentHolder = (FrameLayout) findViewById(R.id.component_source_frame);
         componentHolder.setVisibility(View.VISIBLE);
 
-        FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams (LayoutParams.MATCH_PARENT,
+        FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT,
                 LayoutParams.MATCH_PARENT,
                 Gravity.CENTER);
         GridCell newView = new GridCell(circuitController, this);
@@ -285,7 +285,7 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
     public void startNextScenario() {
         levelController.goToNextLevel();
 
-        if(levelController.getScenario().resetCircuitOnStart()) {
+        if (levelController.getScenario().resetCircuitOnStart()) {
             setCircuitController();
             initializeView();
         }
@@ -300,7 +300,7 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
     public void run(View view) {
         // Reset the circuit before animating it; so all wires start out white, and lightbulbs whole.
         connectionController.redrawWires();
-        ((GridView)findViewById(R.id.circuit)).invalidateViews();
+        ((GridView) findViewById(R.id.circuit)).invalidateViews();
 
         // get the delay back from the circuitcontroller to delay the scenario complete check
         // until the whole circuit has been animated.
@@ -313,8 +313,8 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
             }
         }, delay == 0 ? delay : delay + 1000);
     }
-  
-    private void checkScenarioComplete(){
+
+    private void checkScenarioComplete() {
         //The boolean is used to give the user only negative feedback when they press the run button.
         //Giving negative feedback when this method runs using the onTouch method is a nightmare,
         //because you will get negative messages all the time.
@@ -330,7 +330,7 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
     }
 
     //Create a negative feedback message
-    public void giveNegativeFeedback(){
+    public void giveNegativeFeedback() {
         String[] negativeFeedback = getResources().getStringArray(R.array.negative_feedback);
         String feedback = getResources().getString(((DesignScenario) levelController.getScenario()).getHint());
         messageController.displayMessage(new MessageArgs(
@@ -339,7 +339,7 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
     }
 
     //Create a positive feedback message
-    private void givePositiveFeedback(){
+    private void givePositiveFeedback() {
         String[] positiveFeedback = getResources().getStringArray(R.array.positive_feedback);
         String feedback = giveFeedback(positiveFeedback) + " " + getResources().getString(
                 levelController.getScenario().getCompletePrompt());
@@ -351,12 +351,12 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
 
     //This methods returns a random string from an array. It is used to give the user more
     //interesting feedback, because the string is not always the same.
-    private String giveFeedback(String[] options){
+    private String giveFeedback(String[] options) {
         Random random = new Random();
         return options[random.nextInt(options.length)];
     }
 
-    public CircuitController getCircuitController(){
+    public CircuitController getCircuitController() {
         return circuitController;
     }
 }

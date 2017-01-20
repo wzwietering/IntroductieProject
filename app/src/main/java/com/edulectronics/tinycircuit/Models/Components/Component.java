@@ -41,7 +41,7 @@ public abstract class Component implements IComponent {
 
     public void setResistance(boolean resistance) {
         this.hasResistance = resistance;
-    };
+    }
 
     public boolean hasOutputConnection(ConnectionPoint connectionpoint) {
 
@@ -53,16 +53,16 @@ public abstract class Component implements IComponent {
     }
 
     public ConnectionPoint getConnectionPointByIndex(int i) {
-        if(i < connectionPoints.size()) {
+        if (i < connectionPoints.size()) {
             return connectionPoints.get(i);
         }
         return null;
     }
 
-    public List<ConnectionPoint> getOutgoingConnections(ConnectionPoint connectionPoint){
+    public List<ConnectionPoint> getOutgoingConnections(ConnectionPoint connectionPoint) {
         int incomingConnection = connectionPoints.indexOf(connectionPoint);
         List<ConnectionPoint> outgoingConnections = new ArrayList<ConnectionPoint>(connectionPoints);
-        if(incomingConnection != -1){
+        if (incomingConnection != -1) {
             outgoingConnections.remove(incomingConnection);
         }
 
@@ -76,20 +76,20 @@ public abstract class Component implements IComponent {
         return connectionPointList;
     }
 
-    public void removeAllConnections(){
+    public void removeAllConnections() {
         Connector connector = new Connector();
-        for(ConnectionPoint cp: getConnectionPoints()){
-            for(Connection c: cp.getConnections())
+        for (ConnectionPoint cp : getConnectionPoints()) {
+            for (Connection c : cp.getConnections())
                 connector.disconnect(c.pointA, c.pointB);
         }
     }
 
-    public void setPosition(int position){
+    public void setPosition(int position) {
         this.position = position;
     }
 
     private ConnectionPoint getConnectionPointByOrientation(ConnectionPointOrientation orientation) {
-        for (ConnectionPoint c: connectionPoints) {
+        for (ConnectionPoint c : connectionPoints) {
             if (c.orientation == orientation)
                 return c;
         }
@@ -101,9 +101,14 @@ public abstract class Component implements IComponent {
     public boolean handleClick() {
         // Do nothing by default. A lot of components, e.g. a lightbulb, are not clickable.
         return false;
-    };
+    }
 
-    public void handleInputHigh() {};
+    ;
+
+    public void handleInputHigh() {
+    }
+
+    ;
 
     public void reset() {
         this.hasResistance = true;

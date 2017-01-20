@@ -40,7 +40,10 @@ public interface IDropTarget {
 
     // These methods are implemented in Views
     void getHitRect(Rect outRect);
+
     void getLocationOnScreen(int[] loc);
+
     int getLeft();
+
     int getTop();
 }

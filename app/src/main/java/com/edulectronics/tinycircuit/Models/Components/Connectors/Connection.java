@@ -38,7 +38,7 @@ public class Connection {
         ConnectionPoint outGoingConnectionPoint = connectionPoint == pointA ? pointB : pointA;
 
         // ALWAYS check if parent is a powersource FIRST. Otherwise you get stackoverflow.
-        if(outGoingConnectionPoint.getParentComponent().getClass() == Powersource.class) {
+        if (outGoingConnectionPoint.getParentComponent().getClass() == Powersource.class) {
             // Next component is a powersource, so always return true.
             return true;
         } else {
@@ -56,18 +56,18 @@ public class Connection {
         return wires;
     }
 
-    public boolean isTouched(MotionEvent motionEvent){
+    public boolean isTouched(MotionEvent motionEvent) {
         Point point = new Point((int) motionEvent.getRawX(), (int) motionEvent.getRawY());
-        for (Wire wire : wires){
-            if(wire.isTouched(point)){
+        for (Wire wire : wires) {
+            if (wire.isTouched(point)) {
                 return true;
             }
         }
         return false;
     }
 
-    public ConnectionPoint getOtherPoint(ConnectionPoint connectionPoint){
-        if (connectionPoint == pointB || connectionPoint.getParentComponent() == pointB.getParentComponent()){
+    public ConnectionPoint getOtherPoint(ConnectionPoint connectionPoint) {
+        if (connectionPoint == pointB || connectionPoint.getParentComponent() == pointB.getParentComponent()) {
             return pointA;
         } else {
             return pointB;

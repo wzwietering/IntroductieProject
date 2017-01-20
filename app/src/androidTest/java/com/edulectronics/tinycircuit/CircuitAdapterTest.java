@@ -40,7 +40,7 @@ import static org.hamcrest.Matchers.not;
 @RunWith(AndroidJUnit4.class)
 public class CircuitAdapterTest {
     @Rule
-    public ActivityTestRule<CircuitActivity> circuitActivity = new ActivityTestRule<CircuitActivity>(CircuitActivity.class){
+    public ActivityTestRule<CircuitActivity> circuitActivity = new ActivityTestRule<CircuitActivity>(CircuitActivity.class) {
         @Override
         protected Intent getActivityIntent() {
             Context targetContext = InstrumentationRegistry.getInstrumentation()
@@ -52,7 +52,7 @@ public class CircuitAdapterTest {
     };
 
     @Test
-    public void menuOpen(){
+    public void menuOpen() {
         //The close operations are used to ensure that the menu is openable and
         // is left closed for other tests.
         onView(withId(R.id.activity_main)).perform(DrawerActions.close());
@@ -64,19 +64,19 @@ public class CircuitAdapterTest {
     }
 
     @Test
-    public void menuClose(){
+    public void menuClose() {
         onView(withId(R.id.activity_main)).perform(DrawerActions.open());
         onView(withId(R.id.activity_main)).perform(DrawerActions.close());
         onView(withId(R.id.navigationview)).check(matches(not(isDisplayed())));
     }
 
     @Test
-    public void menuClosed(){
+    public void menuClosed() {
         onView(withId(R.id.navigationview)).check((matches(not(isDisplayed()))));
     }
 
     //Does not work
-    public void dragItem(){
+    public void dragItem() {
         Lightbulb lightbulb = new Lightbulb();
         CircuitController circuitController = circuitActivity.getActivity().getCircuitController();
         circuitController.addComponent(lightbulb, 3);
@@ -86,13 +86,13 @@ public class CircuitAdapterTest {
         assertEquals(null, circuitController.getComponent(3));
     }
 
-    private static ViewAction drag(){
+    private static ViewAction drag() {
         return new GeneralSwipeAction(Swipe.FAST, getCoordinates(0, 0),
                 getCoordinates(500, 500), Press.FINGER);
     }
 
     //Used for coordinates on the screen
-    private static CoordinatesProvider getCoordinates(final float offsetX, final float offsetY){
+    private static CoordinatesProvider getCoordinates(final float offsetX, final float offsetY) {
         return new CoordinatesProvider() {
             @Override
             public float[] calculateCoordinates(View view) {

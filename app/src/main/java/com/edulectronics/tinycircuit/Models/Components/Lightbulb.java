@@ -1,4 +1,5 @@
 package com.edulectronics.tinycircuit.Models.Components;
+
 import com.edulectronics.tinycircuit.R;
 
 /**
@@ -9,9 +10,9 @@ public class Lightbulb extends Component {
     public boolean isOn = false;
 
     @Override
-    public int getImage(){
+    public int getImage() {
         if (isOn) {
-            if(hasResistance) {
+            if (hasResistance) {
                 return R.drawable.lightbulb_on;
             } else {
                 return R.drawable.lightbulb_broken;

@@ -10,7 +10,7 @@ import com.edulectronics.tinycircuit.R;
 public class Resistor extends Component {
 
     @Override
-    public int getImage(){
+    public int getImage() {
         return R.drawable.resistor;
     }
 }
