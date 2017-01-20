@@ -27,7 +27,7 @@ public class ExerciseMenuActivity extends AppCompatActivity {
             item = (LinearLayout) findViewById(R.id.Linearlayout);
             View button = getLayoutInflater().inflate(R.layout.choise_button, null);
             TextView text = (TextView) button.findViewById(R.id.levelnumber);
-            if (levelAvailable(n)){
+            if (levelNotAvailable(n)){
                 text.setText("X");
             } else {
                 text.setText(Integer.toString(n));
@@ -41,7 +41,7 @@ public class ExerciseMenuActivity extends AppCompatActivity {
 
         TextView text = (TextView) v.findViewById(R.id.levelnumber);
         String levelnumber = text.getText().toString();
-        if (levelAvailable(Integer.parseInt(levelnumber))){
+        if (levelNotAvailable(Integer.parseInt(levelnumber))){
             MessageController messageController = new MessageController(getFragmentManager());
             messageController.displayMessage(new MessageArgs(getResources().getString(R.string.scenario_locked_explanation), MessageTypes.ScenarioLocked));
         } else {
@@ -51,7 +51,7 @@ public class ExerciseMenuActivity extends AppCompatActivity {
         }
     }
 
-    public boolean levelAvailable(int levelNumber){
+    public boolean levelNotAvailable(int levelNumber){
         VariableHandler variableHandler = new VariableHandler(getApplicationContext());
         int currentScenario = variableHandler.loadProgress();
 
