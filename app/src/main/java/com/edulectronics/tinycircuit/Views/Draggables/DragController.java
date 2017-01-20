@@ -105,7 +105,8 @@ public class DragController {
 
     private InputMethodManager mInputMethodManager;
     private ConnectionController connectionController;
-  
+
+    /**
      * Used to create a new DragLayer from XML.
      *
      * @param context The application's context.
