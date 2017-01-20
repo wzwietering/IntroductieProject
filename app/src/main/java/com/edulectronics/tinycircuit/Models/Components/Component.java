@@ -103,12 +103,8 @@ public abstract class Component implements IComponent {
         return false;
     }
 
-    ;
-
     public void handleInputHigh() {
     }
-
-    ;
 
     public void reset() {
         this.hasResistance = true;
