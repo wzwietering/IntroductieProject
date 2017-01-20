@@ -105,8 +105,7 @@ public class DragController {
 
     private InputMethodManager mInputMethodManager;
     private ConnectionController connectionController;
-
-    /**
+  
      * Used to create a new DragLayer from XML.
      *
      * @param context The application's context.
@@ -245,13 +244,6 @@ public class DragController {
         return mDragging;
     }
 
-    /**
-     * Stop dragging without dropping.
-     */
-    public void cancelDrag() {
-        endDrag();
-    }
-
     private void endDrag() {
         if (mDragging) {
             mDragging = false;
@@ -329,6 +321,7 @@ public class DragController {
                 // Update the drag view.  Don't use the clamped pos here so the dragging looks
                 // like it goes off screen a little, intead of bumping up against the edge.
                 mDragView.move((int) ev.getRawX(), (int) ev.getRawY());
+
                 // Drop on someone?
                 final int[] coordinates = mCoordinatesTemp;
                 IDropTarget dropTarget = findDropTarget(screenX, screenY, coordinates);
@@ -361,7 +354,7 @@ public class DragController {
 
                 break;
             case MotionEvent.ACTION_CANCEL:
-                cancelDrag();
+                endDrag();
         }
         return true;
     }

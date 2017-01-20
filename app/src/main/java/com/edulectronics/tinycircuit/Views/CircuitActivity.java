@@ -34,7 +34,6 @@ import com.edulectronics.tinycircuit.Models.MessageArgs;
 import com.edulectronics.tinycircuit.Models.MessageTypes;
 import com.edulectronics.tinycircuit.Models.Scenarios.DesignScenario;
 import com.edulectronics.tinycircuit.Models.Scenarios.ImplementedScenarios.FreePlayScenario;
-import com.edulectronics.tinycircuit.Models.Scenarios.ImplementedScenarios.Scenario2;
 import com.edulectronics.tinycircuit.R;
 import com.edulectronics.tinycircuit.Views.Adapters.CircuitAdapter;
 import com.edulectronics.tinycircuit.Views.Adapters.ListAdapter;
@@ -77,6 +76,15 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
         createMenu();
         createDrawView();
         showMessages(false);
+
+        if(levelController.getScenario().getClass() == FreePlayScenario.class){
+            ImageView hint = (ImageView) findViewById(R.id.Help);
+            hint.setVisibility(View.GONE);
+        }
+
+        // Set invisible on start, to prevent square in the middle of the screen
+        FrameLayout componentHolder = (FrameLayout) findViewById(R.id.component_source_frame);
+        componentHolder.setVisibility(View.INVISIBLE);
     }
 
     private void showMessages(boolean allowHint) {
@@ -285,12 +293,13 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
     public void startNextScenario() {
         levelController.goToNextLevel();
 
+        // initializeView calls showMessages, so only show the messages when there is no restart
         if (levelController.getScenario().resetCircuitOnStart()) {
             setCircuitController();
             initializeView();
+        } else {
+            this.showMessages(false);
         }
-
-        this.showMessages(false);
         // Reset the menu. There might be more components for the user to use.
         this.createMenu();
     }
@@ -313,6 +322,7 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
             }
         }, delay == 0 ? delay : delay + 1000);
     }
+
 
     private void checkScenarioComplete() {
         //The boolean is used to give the user only negative feedback when they press the run button.
