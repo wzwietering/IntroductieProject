@@ -190,7 +190,7 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
         final int action = ev.getAction();
 
         // In the situation where a long click is not needed to initiate a drag, simply start on the down event.
-        if (isInWireMode) {
+        if (isInWireMode && ((GridCell) v).mCellNumber > -1) {
             //Check if wire is touched, but only on the down. This is necessary to prevent line
             //removal on the up event.
             Component component = ((GridCell) v).getComponent();

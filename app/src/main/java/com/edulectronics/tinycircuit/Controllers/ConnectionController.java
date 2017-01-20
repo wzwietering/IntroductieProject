@@ -79,16 +79,7 @@ public class ConnectionController {
         // ... and rebuild.
         for (Connection c : circuitController.getAllConnections()) {
             if (c != null) {
-                Point startPoint = coordinateHelper.getNodeLocation(
-                        c.pointA.getParentComponent().position,
-                        c.pointA.orientation);
-
-                Point endPoint = coordinateHelper.getNodeLocation(
-                        c.pointB.getParentComponent().position,
-                        c.pointB.orientation
-                );
-
-                setLines(c, startPoint, endPoint);
+                setLines(c);
             }
         }
         for (Wire wire : this.wires) {
@@ -124,19 +115,55 @@ public class ConnectionController {
         return null;
     }
 
-    public void setLines(Connection c, Point startPoint, Point endPoint) {
+    public void setLines(Connection c) {
+
+        Point pointA = coordinateHelper.getNodeLocation(
+                c.pointA.getParentComponent().position,
+                c.pointA.orientation);
+
+        Point pointB = coordinateHelper.getNodeLocation(
+                c.pointB.getParentComponent().position,
+                c.pointB.orientation
+        );
+
         List<Wire> connectionWires = new ArrayList<Wire>();
-        Wire startWire = getEndPointLine(startPoint, endPoint, c.pointA.orientation);
-        Wire endWire = getEndPointLine(endPoint, startPoint, c.pointB.orientation);
 
-        // If the connection point has a orientation left or right we first draw a vertical
-        // line, then a horizontal one. It looks better (trust me).
-        boolean drawVerticalLineFirst = c.pointA.orientation == ConnectionPointOrientation.Left
-                || c.pointA.orientation == ConnectionPointOrientation.Right;
+        boolean drawVerticalLineFirst = true;
 
-        connectionWires.add(startWire);
-        connectionWires.addAll(getInBetweenLines(startWire.b, endWire.b, drawVerticalLineFirst));
-        connectionWires.add(endWire);
+        // If your connectionpoint is on the same side as the draw direction of the wire,
+        // draw the horizontal wire first. Otherwise, draw the vertical wire first.
+        if ((pointA.x < pointB.x && c.pointA.orientation == ConnectionPointOrientation.Right)
+                || (pointA.x > pointB.x && c.pointA.orientation == ConnectionPointOrientation.Left)) {
+                drawVerticalLineFirst = false;
+        }
+
+        // Components are at the same height, and either:
+        // ... drawVerticalineFirst is true, meaning we will intersect component A
+        // because the components are at the same height.
+        // ... or their orientations are the same, meaning we will always intersect component B
+        if (pointA.y == pointB.y
+                && (drawVerticalLineFirst
+                || c.pointA.orientation == c.pointB.orientation)) {
+            // we draw a short vertical wire to go around.
+            Wire startWire = (drawVerticalLineFirst && c.pointA.orientation == c.pointB.orientation)
+                    ? moveUp(pointA)
+                    : moveDown(pointA);
+            connectionWires.add(startWire);
+            pointA = startWire.b;
+            drawVerticalLineFirst = false;
+        }
+
+        // We intersect component B because we draw a vertical line first, and the connectionpoint
+        // is on the 'other side' of the component (considering where we start off)
+        if (drawVerticalLineFirst &&
+                ((pointB.x < pointA.x && c.pointB.orientation == ConnectionPointOrientation.Left)
+                || (pointB.x > pointA.x && c.pointB.orientation == ConnectionPointOrientation.Right))) {
+                Wire endWire = pointB.y > pointA.y ? moveDown(pointB) : moveUp(pointB);
+                connectionWires.add(endWire);
+                pointB = endWire.b;
+        }
+
+        connectionWires.addAll(getInBetweenLines(pointA, pointB, drawVerticalLineFirst));
 
         // Parent layout
         DrawerLayout parentLayout = (DrawerLayout) ((Activity) context).findViewById(R.id.wires);
@@ -147,6 +174,16 @@ public class ConnectionController {
             this.wires.add(wire);
         }
         c.setWires(connectionWires);
+    }
+
+    private Wire moveUp(Point point) {
+        return createLine(point,
+                new Point(point.x, point.y + (int) (0.5 * cellHeight)));
+    }
+
+    private Wire moveDown(Point point) {
+        return createLine(point,
+                new Point(point.x, point.y - (int) (0.5 * cellHeight)));
     }
 
     public List<Wire> getInBetweenLines(Point a, Point b, boolean drawVerticalLineFirst) {
@@ -184,28 +221,7 @@ public class ConnectionController {
     public Wire getVerticalWire(Point a, Point b) {
         if (a.y == b.y)
             return null;
-        return createLine(new Point(a.x, a.y), new Point(a.x, b.y - (Math.abs(a.y - b.y) % 200)));
-    }
-
-    // First go half a cell up/down/left/right, depending on where the connectionpoint is
-    // and where the endpoint is. Otherwise the next lines will be drawn right through other
-    // components.
-    public Wire getEndPointLine(Point startPoint, Point endPoint, ConnectionPointOrientation orientation) {
-        switch (orientation) {
-            case Left:
-            case Right:
-                if (startPoint.y < endPoint.y) {
-                    // Go up half a cell
-                    return createLine(startPoint,
-                            new Point(startPoint.x, startPoint.y + (int) (0.5 * cellHeight)));
-                } else {
-                    // Go down half a cell
-                    return createLine(startPoint,
-                            new Point(startPoint.x, startPoint.y - (int) (0.5 * cellHeight)));
-                }
-            default:
-                throw new IllegalArgumentException();
-        }
+        return createLine(new Point(a.x, a.y), new Point(a.x, b.y));
     }
 
     public ConnectionPointOrientation getClickedArea(int x) {

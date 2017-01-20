@@ -124,6 +124,7 @@ public class CircuitController implements Serializable {
 
     // Check all paths on the graph to see if there is resistance
     private void checkPaths(Graph graph) {
+        // First check if there are paths that don't have a resistor.
         for (Stack path : graph.findAllPaths()) {
             boolean pathHasResistor = false;
 
@@ -135,16 +136,32 @@ public class CircuitController implements Serializable {
                 }
             }
 
+            // Highlight them in red.
             if (!pathHasResistor) {
                 animator.highlightPath(path, Color.RED, Wire.WireDrawingMode.flashingHighlight);
                 for (Object element : elements) {
                     ((Component) element).setResistance(false);
                 }
-            } else {
-                animator.animateCurrentFlow(path);
             }
+        }
 
-            animator.handleHighInputs(elements);
+        // Now check if there are any paths that DO have a resistor.
+        for (Stack path : graph.findAllPaths()) {
+                boolean pathHasResistor = false;
+
+                Object[] elements = path.toArray();
+                for (Object element : elements) {
+                    if (element.getClass() == Resistor.class) {
+                        pathHasResistor = true;
+                        break;
+                    }
+                }
+
+                if (pathHasResistor) {
+                    animator.animateCurrentFlow(path);
+                }
+
+                animator.handleHighInputs(elements);
         }
     }
 
