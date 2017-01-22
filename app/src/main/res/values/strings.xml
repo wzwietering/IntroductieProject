@@ -34,6 +34,7 @@
     <string name="resistance_required">Een circuit heeft weerstand nodig.</string>
     <string name="switch_required">Zorg er voor dat het licht aan en uit kan.</string>
     <string name="lamp_required">Het is nog donker, voeg een lamp toe!</string>
+    <string name="double_component">Je hebt meer dan 1 can dezelfde onderdelen. Sleep de dubbele componenten naar de prullenbak om ze te verwijderen.</string>
 
     <!--Arrays with feedback-->
     <string-array name="positive_feedback">

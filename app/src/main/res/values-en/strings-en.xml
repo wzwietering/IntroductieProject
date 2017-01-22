@@ -35,6 +35,7 @@
     <string name="resistance_required">A circuit requires resistance.</string>
     <string name="switch_required">Make sure that you can switch the lamp on and off.</string>
     <string name="lamp_required">It\'s still dark, add a lamp!</string>
+    <string name="double_component">You got more than 1 of the same component. Drag it to the thrashcan to delete the ones that are not needed.</string>
 
     <!--Arrays with feedback-->
     <string-array name="positive_feedback">
