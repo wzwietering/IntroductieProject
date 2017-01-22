@@ -18,8 +18,6 @@ public class ScenarioFactory {
 
     public IScenario getScenario(String scenario) {
         switch (scenario) {
-            case "freeplay":
-                return new FreePlayScenario();
             case "1":
                 return new Scenario1();
             case "2":
@@ -31,7 +29,7 @@ public class ScenarioFactory {
             case "5":
                 return new Scenario5();
             default:
-                throw new NullPointerException();
+                return new FreePlayScenario();
         }
     }
 }

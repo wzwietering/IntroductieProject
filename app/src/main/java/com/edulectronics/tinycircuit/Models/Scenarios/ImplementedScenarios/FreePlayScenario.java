@@ -1,6 +1,5 @@
 package com.edulectronics.tinycircuit.Models.Scenarios.ImplementedScenarios;
 
-import com.edulectronics.tinycircuit.Models.Circuit;
 import com.edulectronics.tinycircuit.Models.Components.Component;
 import com.edulectronics.tinycircuit.Models.Components.Lightbulb;
 import com.edulectronics.tinycircuit.Models.Components.Powersource;
@@ -25,6 +24,11 @@ public class FreePlayScenario extends DesignScenario {
     }
 
     @Override
+    public boolean resetCircuitOnStart() {
+        return true;
+    }
+
+    @Override
     public Set<Component> getAvailableComponents() {
         Component[] components = {new Lightbulb(), new Powersource(), new Resistor(), new Switch()};
         return new HashSet<>(Arrays.asList(components));
@@ -32,11 +36,6 @@ public class FreePlayScenario extends DesignScenario {
 
     @Override
     public ArrayList<Component> loadComponents() {
-        ArrayList<Component> components = new ArrayList<Component>();
-        components.add(new Lightbulb());
-        components.add(new Powersource());
-        components.add(new Resistor());
-        components.add(new Switch());
-        return components;
+        return new ArrayList<>();
     }
 }

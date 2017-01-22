@@ -25,6 +25,7 @@ public class Scenario5 extends DesignScenario {
     boolean isFullCircle;
     boolean hasSwitch;
     boolean hasResistor;
+    boolean componentCount;
 
     @Override
     public boolean isCompleted(Circuit circuit) {
@@ -34,9 +35,11 @@ public class Scenario5 extends DesignScenario {
         lampRequirementsMet = false;
         hasSwitch = false;
         hasResistor = false;
+        componentCount = false;
 
         for (Component component : circuit.getAllComponents()) {
             if (component != null && circuit.getComponentCount(component) == 1) {
+                componentCount = true;
                 if (component.getClass() == Lightbulb.class) {
                     lampRequirementsMet = (((Lightbulb) component).isOn && !((Lightbulb) component).isBroken());
                 } else if (component.getClass() == Switch.class) {
@@ -61,6 +64,16 @@ public class Scenario5 extends DesignScenario {
     }
 
     @Override
+    public boolean resetCircuitOnStart() {
+        return true;
+    }
+
+    @Override
+    public int getCompletePrompt(){
+        return R.string.last_scenario_complete;
+    }
+
+    @Override
     public int getID() {
         return 5;
     }
@@ -77,6 +90,9 @@ public class Scenario5 extends DesignScenario {
         }
         if (!hasResistor) {
             return R.string.resistance_required;
+        }
+        if(!componentCount){
+            return R.string.component_count;
         }
         return 0;
     }
