@@ -50,7 +50,7 @@ public class Scenario5 extends DesignScenario {
             }
         }
 
-        return (lampRequirementsMet && hasSwitch && hasResistor);
+        return (lampRequirementsMet && hasSwitch && hasResistor && componentCount && isFullCircle);
     }
 
     public Set<Component> getAvailableComponents() {

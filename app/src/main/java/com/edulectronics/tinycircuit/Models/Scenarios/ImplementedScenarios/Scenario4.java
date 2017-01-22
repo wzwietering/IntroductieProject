@@ -44,7 +44,7 @@ public class Scenario4 extends DesignScenario {
                 hasSwitch = component.hasOutputConnection(component.getConnectionPointByIndex(1)) && component.isConductive();
             }
         }
-        return (lampRequirementsMet && hasSwitch);
+        return (lampRequirementsMet && hasSwitch && isFullCircle);
     }
 
     public Set<Component> getAvailableComponents() {

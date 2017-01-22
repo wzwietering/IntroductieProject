@@ -50,7 +50,7 @@ public class Scenario1 extends DesignScenario {
             }
         }
 
-        return (hasLightbulb);
+        return (hasLightbulb && isFullCircle);
     }
 
     public Set<Component> getAvailableComponents() {
