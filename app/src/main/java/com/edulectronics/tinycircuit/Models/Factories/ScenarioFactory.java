@@ -7,6 +7,7 @@ import com.edulectronics.tinycircuit.Models.Scenarios.ImplementedScenarios.Scena
 import com.edulectronics.tinycircuit.Models.Scenarios.ImplementedScenarios.Scenario3;
 import com.edulectronics.tinycircuit.Models.Scenarios.ImplementedScenarios.Scenario4;
 import com.edulectronics.tinycircuit.Models.Scenarios.ImplementedScenarios.Scenario5;
+import com.edulectronics.tinycircuit.Models.Scenarios.ImplementedScenarios.Scenario6;
 
 /**
  * Scenario factory. It makes scenario's.
@@ -30,6 +31,8 @@ public class ScenarioFactory {
                 return new Scenario4();
             case "5":
                 return new Scenario5();
+            case "6":
+                return new Scenario6();
             default:
                 throw new NullPointerException();
         }
