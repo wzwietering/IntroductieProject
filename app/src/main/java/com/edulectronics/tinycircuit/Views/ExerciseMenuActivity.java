@@ -31,6 +31,8 @@ public class ExerciseMenuActivity extends AppCompatActivity {
             ImageView image = (ImageView) button.findViewById(R.id.exercise_image);
             if (levelAvailable(n)){
                 image.setEnabled(true);
+            } else {
+                image.setEnabled(false);
             }
             text.setText(Integer.toString(n));
             item.addView(button);
