@@ -37,6 +37,7 @@ public class Scenario3 extends DesignScenario {
         hasConnectedSwitch = false;
         lampIsOn = false;
         hasResistor = false;
+        componentCount = false;
 
         for (Component component : circuit.getAllComponents()) {
             if (component.getClass() == Lightbulb.class) {
