@@ -59,7 +59,7 @@ public class Scenario3 extends DesignScenario {
                 }
             }
         }
-        return (hasConnectedSwitch && lampIsOn && hasResistor && isFullCircle);
+        return (hasConnectedSwitch && lampIsOn && hasResistor && componentCount && isFullCircle);
     }
 
     public Set<Component> getAvailableComponents() {
