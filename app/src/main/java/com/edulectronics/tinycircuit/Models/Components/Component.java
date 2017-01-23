@@ -43,6 +43,14 @@ public abstract class Component implements IComponent {
         this.hasResistance = resistance;
     };
 
+    public boolean hasInputAndOutputConnection() {
+        for (ConnectionPoint c : connectionPoints) {
+            if (!c.hasOutputConnection())
+                return false;
+        }
+        return true;
+    }
+
     public boolean hasOutputConnection(ConnectionPoint connectionpoint) {
 
         for (ConnectionPoint c : getOutgoingConnections(connectionpoint)) {
