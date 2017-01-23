@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Point;
 import android.support.v4.widget.DrawerLayout;
 import android.view.MotionEvent;
+
 import com.edulectronics.tinycircuit.Helpers.CoordinateHelper;
 import com.edulectronics.tinycircuit.Models.Components.Component;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.Connection;
@@ -15,7 +16,6 @@ import com.edulectronics.tinycircuit.R;
 import com.edulectronics.tinycircuit.Views.Wire;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -169,7 +169,6 @@ public class ConnectionController {
                 pointB = endWire.b;
         }
 
-
         connectionWires.addAll(getInBetweenLines(c, pointA, pointB, drawVerticalLineFirst));
 
         // Parent layout
@@ -196,18 +195,47 @@ public class ConnectionController {
     public ArrayList<Wire> getInBetweenLines(Connection c, Point a, Point b, boolean drawVerticalLineFirst) {
         ArrayList<Wire> wires = new ArrayList<Wire>();
         Point lastPoint = a;
+        boolean intersection = false;
 
-        wires.addAll(drawVerticalLineFirst
-                ? getWires(c, lastPoint, new Point(lastPoint.x, b.y))
-                : getWires(c, lastPoint, new Point(b.x, lastPoint.y)));
-
-        if (wires.size() > 0) {
-            lastPoint = wires.get(wires.size() - 1).b;
+        //Detect an intersection with another component and avoid the component
+        for (Component component : circuitController.getComponents()){
+            // Check if the horizontal wire of a two part wire intersects a component and
+            // if the component is not a parent
+            if ((drawVerticalLineFirst
+                    ? intersectsComponent(component.coordinates, b, new Point(a.x, b.y))
+                    : intersectsComponent(component.coordinates, a, new Point(b.x, lastPoint.y)))
+                    && component != c.pointA.getParentComponent()
+                    && component != c.pointB.getParentComponent()){
+                //One intersection is enough to know that the wire should be different
+                intersection = true;
+                break;
+            }
         }
 
-        wires.addAll(drawVerticalLineFirst
-                ? getWires(c, lastPoint, new Point(b.x, lastPoint.y))
-                : getWires(c, lastPoint, new Point(lastPoint.x, b.y)));
+        // Regular two part line
+        if (!intersection) {
+            wires.addAll(drawVerticalLineFirst
+                    ? getWires(c, lastPoint, new Point(lastPoint.x, b.y))
+                    : getWires(c, lastPoint, new Point(b.x, lastPoint.y)));
+
+            if (wires.size() > 0) {
+                lastPoint = wires.get(wires.size() - 1).b;
+            }
+
+            wires.addAll(drawVerticalLineFirst
+                    ? getWires(c, lastPoint, new Point(b.x, lastPoint.y))
+                    : getWires(c, lastPoint, new Point(lastPoint.x, b.y)));
+        } else {
+            //A three part line which avoids components
+            //First vertical part
+            wires.add(getHalfLine(a, lastPoint));
+            lastPoint = wires.get(wires.size() - 1).b;
+            //Horizontal part
+            wires.addAll(getWires(c, lastPoint, new Point(b.x, lastPoint.y)));
+            lastPoint = wires.get(wires.size() - 1).b;
+            //Final vertical part
+            wires.addAll(getWires(c, lastPoint, b));
+        }
         return wires;
     }
     private Wire createLine(Point a, Point b) {
@@ -231,21 +259,8 @@ public class ConnectionController {
 
     public ArrayList<Wire> getWires(Connection c, Point a, Point b) {
         ArrayList<Wire> wires = new ArrayList<Wire>();
-        for (Component component : this.circuitController.getComponents()) {
-            if (component != null
-                    && component != c.pointA.getParentComponent()
-                    && component != c.pointB.getParentComponent()
-                    && intersectsComponent(component.coordinates, a, b)) {
-                wires.addAll(avoid(component, c, a, b));
-                a = wires.get(wires.size() - 1).b;
-            }
-        }
         wires.add(createLine(new Point(a.x, a.y), new Point(b.x, b.y)));
         return wires;
-    }
-
-    private ArrayList<Wire> avoid(Component component, Connection c, Point a, Point b) {
-        return null;
     }
 
     public ConnectionPointOrientation getClickedArea(int x) {
@@ -255,6 +270,19 @@ public class ConnectionController {
             return ConnectionPointOrientation.Right;
         } else {
             throw new IllegalArgumentException();
+        }
+    }
+
+    //Creates a vertical line which is half a cell height long
+    public Wire getHalfLine(Point startPoint, Point endPoint) {
+        if (startPoint.y < endPoint.y) {
+            // Go up half a cell
+            return createLine(startPoint,
+                    new Point(startPoint.x, startPoint.y + (int) (0.5 * cellHeight)));
+        } else {
+            // Go down half a cell
+            return createLine(startPoint,
+                    new Point(startPoint.x, startPoint.y - (int) (0.5 * cellHeight)));
         }
     }
 }
