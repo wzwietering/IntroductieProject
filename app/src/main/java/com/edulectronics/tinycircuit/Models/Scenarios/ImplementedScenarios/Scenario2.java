@@ -39,16 +39,19 @@ public class Scenario2 extends DesignScenario {
         componentCount = false;
 
         for (Component component : circuit.getAllComponents()) {
-            if (component != null && circuit.getComponentCount(component) == 1) {
-                componentCount = true;
-                if (component.getClass() == Resistor.class) {
-                    hasResistor = true;
-                    continue;
+            if (component.getClass() == Resistor.class) {
+                hasResistor = true;
+                componentCount = super.componentCount(circuit, component);
+                if(!componentCount){
+                    return false;
                 }
-                if (component.getClass() == Lightbulb.class) {
-                    if (((Lightbulb) component).isOn) {
-                        lampIsOn = true;
-                    }
+            } else if (component.getClass() == Lightbulb.class) {
+                if (((Lightbulb) component).isOn) {
+                    lampIsOn = true;
+                }
+                componentCount = super.componentCount(circuit, component);
+                if(!componentCount){
+                    return false;
                 }
             }
         }
@@ -86,6 +89,9 @@ public class Scenario2 extends DesignScenario {
     }
 
     public int getHint() {
+        if(!componentCount){
+            return R.string.component_count;
+        }
         if (!hasResistor) {
             return R.string.resistance_required;
         }
@@ -94,9 +100,6 @@ public class Scenario2 extends DesignScenario {
         }
         if (!lampIsOn) {
             return R.string.lamp_off;
-        }
-        if(!componentCount){
-            return R.string.component_count;
         }
         return 0;
     }

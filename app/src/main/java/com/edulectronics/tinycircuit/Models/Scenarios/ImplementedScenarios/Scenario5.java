@@ -38,14 +38,23 @@ public class Scenario5 extends DesignScenario {
         componentCount = false;
 
         for (Component component : circuit.getAllComponents()) {
-            if (component != null && circuit.getComponentCount(component) == 1) {
-                componentCount = true;
-                if (component.getClass() == Lightbulb.class) {
-                    lampRequirementsMet = (((Lightbulb) component).isOn && !((Lightbulb) component).isBroken());
-                } else if (component.getClass() == Switch.class) {
-                    hasSwitch = component.hasOutputConnection(component.getConnectionPointByIndex(1)) && component.isConductive();
-                } else if (component.getClass() == Resistor.class) {
-                    hasResistor = component.hasOutputConnection(component.getConnectionPointByIndex(1));
+            if (component.getClass() == Lightbulb.class) {
+                lampRequirementsMet = (((Lightbulb) component).isOn && !((Lightbulb) component).isBroken());
+                componentCount = super.componentCount(circuit, component);
+                if(!componentCount){
+                    return false;
+                }
+            } else if (component.getClass() == Switch.class) {
+                hasSwitch = component.hasOutputConnection(component.getConnectionPointByIndex(1)) && component.isConductive();
+                componentCount = super.componentCount(circuit, component);
+                if(!componentCount){
+                    return false;
+                }
+            } else if (component.getClass() == Resistor.class) {
+                hasResistor = component.hasOutputConnection(component.getConnectionPointByIndex(1));
+                componentCount = super.componentCount(circuit, component);
+                if(!componentCount){
+                    return false;
                 }
             }
         }
@@ -79,6 +88,9 @@ public class Scenario5 extends DesignScenario {
     }
 
     public int getHint() {
+        if(!componentCount){
+            return R.string.component_count;
+        }
         if (!lampRequirementsMet) {
             return R.string.lamp_off;
         }
@@ -90,9 +102,6 @@ public class Scenario5 extends DesignScenario {
         }
         if (!hasResistor) {
             return R.string.resistance_required;
-        }
-        if(!componentCount){
-            return R.string.component_count;
         }
         return 0;
     }

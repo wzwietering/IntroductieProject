@@ -33,4 +33,7 @@ public interface IScenario extends Serializable {
 
     // Returns the id of the scenario, which is its number.
     public int getID();
+
+    // Check if the amount of components is right.
+    public boolean componentCount(Circuit circuit, Component component);
 }
