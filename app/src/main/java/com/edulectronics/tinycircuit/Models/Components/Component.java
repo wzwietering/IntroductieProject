@@ -28,7 +28,7 @@ public abstract class Component implements IComponent {
     protected boolean hasResistance;
 
     protected List<ConnectionPoint> connectionPoints = new ArrayList<ConnectionPoint>(4);
-    public Point coordinates;
+    public Point coordinates = new Point(0,0);
 
     public Component() {
         this.connectionPoints.add(new ConnectionPoint(this, ConnectionPointOrientation.Left));
