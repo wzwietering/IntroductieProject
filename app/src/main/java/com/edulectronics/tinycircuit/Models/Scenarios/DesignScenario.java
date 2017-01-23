@@ -73,7 +73,6 @@ public abstract class DesignScenario implements IScenario {
 
     public abstract int getHint();
 
-    @Override
     public boolean componentCount(Circuit circuit, Component component){
         if(circuit.getComponentCount(component) == 1){
             return true;
