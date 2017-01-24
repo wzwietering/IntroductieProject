@@ -12,8 +12,9 @@
     <ImageView
         android:layout_width="240dp"
         android:layout_height="180dp"
-        app:srcCompat="@drawable/mainmenuselector"
+        app:srcCompat="@drawable/availableselector"
         android:layout_gravity="center_vertical"
+        android:state_enabled="false"
         android:scaleType="fitXY"
         android:id="@+id/exercise_image"/>
 
