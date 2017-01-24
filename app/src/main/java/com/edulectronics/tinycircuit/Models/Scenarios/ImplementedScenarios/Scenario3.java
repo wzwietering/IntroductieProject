@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.Stack;
 
 public class Scenario3 extends DesignScenario {
     public ArrayList<Component> components = new ArrayList<>();
@@ -61,6 +62,24 @@ public class Scenario3 extends DesignScenario {
                 }
             }
         }
+
+        for (Stack path: graph.findAllPaths()) {
+            boolean hasSwitch = false;
+            boolean hasLightBulb = false;
+
+            while(!path.empty()) {
+                Component c = (Component)path.pop();
+                if (c.getClass() == Switch.class)
+                    hasSwitch = true;
+                else if(c.getClass() == Lightbulb.class)
+                    hasLightBulb = true;
+            }
+            if((hasSwitch && !hasLightBulb) || (!hasSwitch && hasLightBulb)) {
+                hasConnectedSwitch = false;
+                break;
+            }
+        }
+
         return (hasConnectedSwitch && lampIsOn && hasResistor && componentCount && isFullCircle);
     }
 
