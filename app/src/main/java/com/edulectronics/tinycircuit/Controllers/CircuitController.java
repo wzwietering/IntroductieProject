@@ -2,6 +2,7 @@ package com.edulectronics.tinycircuit.Controllers;
 
 import android.app.Activity;
 import android.graphics.Color;
+import android.os.Handler;
 
 import com.edulectronics.tinycircuit.Models.Circuit;
 import com.edulectronics.tinycircuit.Models.Components.Component;
@@ -18,6 +19,7 @@ import java.util.Stack;
 public class CircuitController implements Serializable {
     public Circuit circuit;
     public Component newComponent; // When a new component is created, we save it here. It hasn't been dragged to the circuit yet.
+    public boolean isRunning;
 
     public CircuitController(int width, int size) {
         this.circuit = new Circuit(width, size);
@@ -100,6 +102,7 @@ public class CircuitController implements Serializable {
 
     // Run the circuit!
     public int run(Activity circuitActivity) {
+        this.isRunning = true;
         reset();
 
         // Check if there are outgoing connections.
@@ -118,7 +121,20 @@ public class CircuitController implements Serializable {
                 }
             }
         }
-        return animator == null ? 0 : animator.delay;
+        if (animator == null) {
+            isRunning = false;
+            return 0;
+        } else {
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    CircuitController.this.isRunning = false;
+                }
+            }, animator.delay);
+
+            return animator.delay;
+        }
     }
 
     public Graph getGraph() {

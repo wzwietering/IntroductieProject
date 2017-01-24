@@ -304,20 +304,22 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
     //The run method with view is necessary because the event handler of a button must be able to
     // pass a view, but we don't use the view, so this implementation is sufficient.
     public void run(View view) {
-        // Reset the circuit before animating it; so all wires start out white, and lightbulbs whole.
-        connectionController.redrawWires();
-        ((GridView) findViewById(R.id.circuit)).invalidateViews();
+        if(!circuitController.isRunning) {
+            // Reset the circuit before animating it; so all wires start out white, and lightbulbs whole.
+            connectionController.redrawWires();
+            ((GridView) findViewById(R.id.circuit)).invalidateViews();
 
-        // get the delay back from the circuitcontroller to delay the scenario complete check
-        // until the whole circuit has been animated.
-        int delay = circuitController.run(this);
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                checkScenarioComplete();
-            }
-        }, delay == 0 ? delay : delay + 1000);
+            // get the delay back from the circuitcontroller to delay the scenario complete check
+            // until the whole circuit has been animated.
+            int delay = circuitController.run(this);
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    checkScenarioComplete();
+                }
+            }, delay == 0 ? delay : delay + 1000);
+        }
     }
 
 
