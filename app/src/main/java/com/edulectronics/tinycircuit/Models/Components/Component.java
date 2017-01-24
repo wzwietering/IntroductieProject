@@ -22,7 +22,7 @@ public abstract class Component implements IComponent {
     protected boolean hasResistance;
 
     protected List<ConnectionPoint> connectionPoints = new ArrayList<ConnectionPoint>(4);
-    public Point coordinates;
+    public Point coordinates = new Point(0,0);
 
     public Component() {
         this.connectionPoints.add(new ConnectionPoint(this, ConnectionPointOrientation.Left));
@@ -35,6 +35,14 @@ public abstract class Component implements IComponent {
 
     public void setResistance(boolean resistance) {
         this.hasResistance = resistance;
+    }
+
+    public boolean hasInputAndOutputConnection() {
+        for (ConnectionPoint c : connectionPoints) {
+            if (!c.hasOutputConnection())
+                return false;
+        }
+        return true;
     }
 
     public boolean hasOutputConnection(ConnectionPoint connectionpoint) {

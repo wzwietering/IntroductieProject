@@ -72,6 +72,9 @@ public class CircuitAnimator {
 
         while (!path.empty()) {
             nextComponent = (Component) path.pop();
+            // They should all have output connections!
+            if(nextComponent.hasInputAndOutputConnection()
+                && currentComponent.hasInputAndOutputConnection())
             this.highlightBetween(currentComponent, nextComponent, color, drawingMode);
 
             // move to the next component
@@ -196,7 +199,8 @@ public class CircuitAnimator {
             @Override
             public void run() {
                 for (Object element : elements) {
-                    ((Component) element).handleInputHigh();
+                    if(((Component) element).hasInputAndOutputConnection())
+                        ((Component) element).handleInputHigh();
                 }
                 ((GridView) circuitActivity.findViewById(R.id.circuit)).invalidateViews();
             }
