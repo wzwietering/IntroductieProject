@@ -29,7 +29,7 @@ public class Scenario6 extends DesignScenario {
 
     @Override
     public int getPrompt() {
-        return R.string.scenario5_explanation;
+        return R.string.scenario6_explanation;
     }
 
     @Override
