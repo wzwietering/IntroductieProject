@@ -79,11 +79,6 @@ public class Scenario5 extends DesignScenario {
     }
 
     @Override
-    public int getCompletePrompt(){
-        return R.string.last_scenario_complete;
-    }
-
-    @Override
     public int getID() {
         return 5;
     }

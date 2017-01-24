@@ -34,7 +34,7 @@ public class Scenario6 extends DesignScenario {
 
     @Override
     public int getCompletePrompt() {
-        return R.string.scenario_complete;
+        return R.string.last_scenario_complete;
     }
 
     @Override
@@ -118,6 +118,11 @@ public class Scenario6 extends DesignScenario {
         components.add(switch1);
 
         return components;
+    }
+
+    @Override
+    public boolean resetCircuitOnStart() {
+        return true;
     }
 
     public int getID() {
