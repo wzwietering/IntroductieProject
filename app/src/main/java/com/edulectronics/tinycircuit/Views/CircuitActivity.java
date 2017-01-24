@@ -190,6 +190,7 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
             // Let clicked component handle the tap.
             if (circuitController.handleClick(((GridCell) v).mCellNumber)) {
                 ((GridCell) v).resetImage();
+                run(null);
             }
         }
     }

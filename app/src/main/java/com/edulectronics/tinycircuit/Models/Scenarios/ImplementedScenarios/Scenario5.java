@@ -25,6 +25,7 @@ public class Scenario5 extends DesignScenario {
     boolean isFullCircle;
     boolean hasSwitch;
     boolean hasResistor;
+    boolean componentCount;
 
     @Override
     public boolean isCompleted(Circuit circuit) {
@@ -34,20 +35,31 @@ public class Scenario5 extends DesignScenario {
         lampRequirementsMet = false;
         hasSwitch = false;
         hasResistor = false;
+        componentCount = false;
 
         for (Component component : circuit.getAllComponents()) {
-            if (component != null && circuit.getComponentCount(component) == 1) {
-                if (component.getClass() == Lightbulb.class) {
-                    lampRequirementsMet = (((Lightbulb) component).isOn && !((Lightbulb) component).isBroken());
-                } else if (component.getClass() == Switch.class) {
-                    hasSwitch = component.hasOutputConnection(component.getConnectionPointByIndex(1)) && component.isConductive();
-                } else if (component.getClass() == Resistor.class) {
-                    hasResistor = component.hasOutputConnection(component.getConnectionPointByIndex(1));
+            if (component.getClass() == Lightbulb.class) {
+                lampRequirementsMet = (((Lightbulb) component).isOn && !((Lightbulb) component).isBroken());
+                componentCount = super.componentCount(circuit, component);
+                if(!componentCount){
+                    return false;
+                }
+            } else if (component.getClass() == Switch.class) {
+                hasSwitch = component.hasOutputConnection(component.getConnectionPointByIndex(1)) && component.isConductive();
+                componentCount = super.componentCount(circuit, component);
+                if(!componentCount){
+                    return false;
+                }
+            } else if (component.getClass() == Resistor.class) {
+                hasResistor = component.hasOutputConnection(component.getConnectionPointByIndex(1));
+                componentCount = super.componentCount(circuit, component);
+                if(!componentCount){
+                    return false;
                 }
             }
         }
 
-        return (lampRequirementsMet && hasSwitch && hasResistor);
+        return (lampRequirementsMet && hasSwitch && hasResistor && componentCount && isFullCircle);
     }
 
     public Set<Component> getAvailableComponents() {
@@ -61,6 +73,16 @@ public class Scenario5 extends DesignScenario {
     }
 
     @Override
+    public boolean resetCircuitOnStart() {
+        return true;
+    }
+
+    @Override
+    public int getCompletePrompt(){
+        return R.string.last_scenario_complete;
+    }
+
+    @Override
     public int getID() {
         return 5;
     }
@@ -69,14 +91,17 @@ public class Scenario5 extends DesignScenario {
         if (!lampRequirementsMet) {
             return R.string.lamp_off;
         }
-        if (!isFullCircle) {
-            return R.string.no_full_circle;
-        }
         if (!hasSwitch) {
             return R.string.switch_required;
         }
         if (!hasResistor) {
             return R.string.resistance_required;
+        }
+        if (!isFullCircle) {
+            return R.string.no_full_circle;
+        }
+        if(!componentCount){
+            return R.string.component_count;
         }
         return 0;
     }

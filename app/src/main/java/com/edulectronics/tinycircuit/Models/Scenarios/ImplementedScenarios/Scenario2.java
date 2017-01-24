@@ -27,7 +27,7 @@ public class Scenario2 extends DesignScenario {
         return R.string.scenario2_explanation;
     }
 
-    boolean hasResistor, lampIsOn, isFullCircle;
+    boolean hasResistor, lampIsOn, isFullCircle, componentCount;
 
     @Override
     public boolean isCompleted(Circuit circuit) {
@@ -36,22 +36,27 @@ public class Scenario2 extends DesignScenario {
 
         hasResistor = false;
         lampIsOn = false;
+        componentCount = false;
 
         for (Component component : circuit.getAllComponents()) {
-            if (component != null && circuit.getComponentCount(component) == 1) {
-                if (component.getClass() == Resistor.class) {
-                    hasResistor = true;
-                    continue;
+            if (component.getClass() == Resistor.class) {
+                hasResistor = true;
+                componentCount = super.componentCount(circuit, component);
+                if(!componentCount){
+                    return false;
                 }
-                if (component.getClass() == Lightbulb.class) {
-                    if (((Lightbulb) component).isOn) {
-                        lampIsOn = true;
-                    }
+            } else if (component.getClass() == Lightbulb.class) {
+                if (((Lightbulb) component).isOn) {
+                    lampIsOn = true;
+                }
+                componentCount = super.componentCount(circuit, component);
+                if(!componentCount){
+                    return false;
                 }
             }
         }
 
-        return (hasResistor && lampIsOn);
+        return (hasResistor && lampIsOn && componentCount && isFullCircle);
     }
 
     public Set<Component> getAvailableComponents() {
@@ -84,6 +89,9 @@ public class Scenario2 extends DesignScenario {
     }
 
     public int getHint() {
+        if(!componentCount){
+            return R.string.component_count;
+        }
         if (!hasResistor) {
             return R.string.resistance_required;
         }

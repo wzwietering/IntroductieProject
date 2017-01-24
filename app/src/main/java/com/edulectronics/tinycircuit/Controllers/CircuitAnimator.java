@@ -123,12 +123,16 @@ public class CircuitAnimator {
     // Sort the wires so they are highlighted in correct order.
     private List<Wire> sortWires(Component origin, List<Wire> wires) {
         sortedWires = new ArrayList<>();
+        // Shift the coordinates down 1 so the origin coordinates are closer to the center
+        // of the grid cell than to the center of the gridcell above it.
+        // otherwise a vertical line spanning 1 gridcell gets animated wrong
+        Point originCoordinates = new Point(origin.coordinates.x, origin.coordinates.y + 1);
 
         while (wires.size() > 0) {
             for (Wire wire : wires) {
                 // Get distance between wire endpoints and component
-                int distanceA = getDistance(wire.a, origin.coordinates);
-                int distanceB = getDistance(wire.b, origin.coordinates);
+                int distanceA = getDistance(wire.a, originCoordinates);
+                int distanceB = getDistance(wire.b, originCoordinates);
 
                 // If any end point is closer to the component than the current endpoint, take
                 // that as the new closest wire.
