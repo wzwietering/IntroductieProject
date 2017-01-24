@@ -2,6 +2,7 @@ package com.edulectronics.tinycircuit.Controllers;
 
 import com.edulectronics.tinycircuit.Models.Circuit;
 import com.edulectronics.tinycircuit.Models.Components.Component;
+import com.edulectronics.tinycircuit.Models.Components.Connectors.Connection;
 import com.edulectronics.tinycircuit.Models.Factories.ScenarioFactory;
 import com.edulectronics.tinycircuit.Models.Scenarios.DesignScenario;
 import com.edulectronics.tinycircuit.Models.Scenarios.IScenario;
@@ -9,7 +10,9 @@ import com.edulectronics.tinycircuit.Models.Scenarios.ImplementedScenarios.Scena
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.Stack;
 
 public class LevelController {
     private IScenario scenario;

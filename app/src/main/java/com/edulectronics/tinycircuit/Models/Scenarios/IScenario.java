@@ -2,6 +2,7 @@ package com.edulectronics.tinycircuit.Models.Scenarios;
 
 import com.edulectronics.tinycircuit.Models.Circuit;
 import com.edulectronics.tinycircuit.Models.Components.Component;
+import com.edulectronics.tinycircuit.Models.Components.Connectors.Connection;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -33,4 +34,5 @@ public interface IScenario extends Serializable {
 
     // Returns the id of the scenario, which is its number.
     public int getID();
+
 }
