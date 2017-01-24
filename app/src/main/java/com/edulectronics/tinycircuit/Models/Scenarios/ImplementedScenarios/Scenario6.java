@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.Stack;
 
 
 /**
@@ -24,11 +25,11 @@ import java.util.Set;
 public class Scenario6 extends DesignScenario {
     private boolean isFullCircle;
 
-    boolean lightsOn, Switches, twoLamps, twoSwitches, twoPaths;
+    boolean lightsOn, Switches, twoLamps, twoSwitches, isParallel;
 
     @Override
     public int getPrompt() {
-        return R.string.scenario6_explanation;
+        return R.string.scenario5_explanation;
     }
 
     @Override
@@ -45,7 +46,30 @@ public class Scenario6 extends DesignScenario {
         Switches = true;
         twoLamps = false;
         twoSwitches = false;
-        twoPaths = (graph.findAllPaths().size() != 1);
+        isParallel = false;
+
+        for (Stack path: graph.findAllPaths()) {
+            Component firstLightbulb = null;
+            boolean pathIsParallel = true;
+
+            while(!path.empty()) {
+                Component c = (Component)path.pop();
+                if (c.getClass() == Lightbulb.class) {
+                    if(firstLightbulb == null || c == firstLightbulb) {
+                        firstLightbulb = c;
+                    }
+                    // As soon as we find a path containing two lightbulbs, we know it´s not parallel.
+                    else {
+                        pathIsParallel = false;
+                        break;
+                    }
+                }
+            }
+            if(pathIsParallel) {
+                isParallel = true;
+                break;
+            }
+        };
 
         for (Component component : circuit.getAllComponents()) {
             if (component != null) {
@@ -63,7 +87,7 @@ public class Scenario6 extends DesignScenario {
             }
         }
 
-        return (lightsOn && Switches && twoLamps && twoSwitches && twoPaths);
+        return (lightsOn && Switches && twoLamps && twoSwitches && isParallel);
     }
 
 
@@ -83,10 +107,10 @@ public class Scenario6 extends DesignScenario {
         Connector.connect(resistor.getConnectionPointByIndex(1), bulb.getConnectionPointByIndex(1));
         Connector.connect(resistor.getConnectionPointByIndex(1), switch1.getConnectionPointByIndex(1));
 
-        powersource.setPosition(22);
-        resistor.setPosition(24);
-        bulb.setPosition(5);
-        switch1.setPosition(43);
+        powersource.setPosition(19);
+        resistor.setPosition(21);
+        bulb.setPosition(6);
+        switch1.setPosition(30);
 
         components.add(powersource);
         components.add(resistor);
