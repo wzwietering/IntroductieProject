@@ -107,11 +107,6 @@ public class Scenario6 extends DesignScenario {
         Connector.connect(resistor.getConnectionPointByIndex(1), bulb.getConnectionPointByIndex(1));
         Connector.connect(resistor.getConnectionPointByIndex(1), switch1.getConnectionPointByIndex(1));
 
-        powersource.setPosition(19);
-        resistor.setPosition(21);
-        bulb.setPosition(6);
-        switch1.setPosition(30);
-
         components.add(powersource);
         components.add(resistor);
         components.add(bulb);
