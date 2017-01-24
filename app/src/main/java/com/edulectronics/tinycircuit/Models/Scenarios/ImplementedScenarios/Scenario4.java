@@ -56,6 +56,8 @@ public class Scenario4 extends DesignScenario {
         ArrayList<Component> components = new ArrayList<>();
         Powersource powersource = new Powersource();
 
+        powersource.setPosition(13);
+
         components.add(powersource);
 
         return components;

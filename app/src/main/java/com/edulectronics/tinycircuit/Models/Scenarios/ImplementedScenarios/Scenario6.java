@@ -1,6 +1,4 @@
 package com.edulectronics.tinycircuit.Models.Scenarios.ImplementedScenarios;
-
-import com.edulectronics.tinycircuit.Controllers.CircuitController;
 import com.edulectronics.tinycircuit.Models.Circuit;
 import com.edulectronics.tinycircuit.Models.Components.Component;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.Connector;
@@ -8,19 +6,14 @@ import com.edulectronics.tinycircuit.Models.Components.Lightbulb;
 import com.edulectronics.tinycircuit.Models.Components.Powersource;
 import com.edulectronics.tinycircuit.Models.Components.Resistor;
 import com.edulectronics.tinycircuit.Models.Components.Switch;
-import com.edulectronics.tinycircuit.Models.Graph;
 import com.edulectronics.tinycircuit.Models.Scenarios.DesignScenario;
 import com.edulectronics.tinycircuit.R;
-import com.edulectronics.tinycircuit.Views.CircuitActivity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
-import java.util.Stack;
 
-import static com.edulectronics.tinycircuit.R.id.circuit;
 
 /**
  * Created by Jesper on 1/22/2017.
@@ -28,6 +21,10 @@ import static com.edulectronics.tinycircuit.R.id.circuit;
 
 public class Scenario6 extends DesignScenario {
     private boolean isFullCircle;
+    boolean lightsOn = true;
+    boolean Switches = true;
+    boolean twoLamps = false;
+    boolean twoSwitches = false;
 
     @Override
     public int getPrompt() {
@@ -44,10 +41,10 @@ public class Scenario6 extends DesignScenario {
         isFullCircle = super.isCompleted(circuit);
         if (!isFullCircle) return false;
 
-        boolean lightsOn = true;
-        boolean Switches = true;
-        boolean twoLamps = false;
-        boolean twoSwitches = false;
+        lightsOn = true;
+        Switches = true;
+        twoLamps = false;
+        twoSwitches = false;
 
         for (Component component : circuit.getAllComponents()) {
             if (component != null) {
@@ -81,13 +78,20 @@ public class Scenario6 extends DesignScenario {
         Lightbulb bulb = new Lightbulb();
         Switch switch1 = new Switch();
 
-        Connector.connect(powersource.getOutput(), resistor.getConnectionPointByIndex(1));
-        Connector.connect(resistor.getConnectionPointByIndex(0), bulb.getConnectionPointByIndex(0));
+        Connector.connect(powersource.getOutput(), resistor.getConnectionPointByIndex(0));
+        Connector.connect(resistor.getConnectionPointByIndex(1), bulb.getConnectionPointByIndex(1));
+        Connector.connect(resistor.getConnectionPointByIndex(1), switch1.getConnectionPointByIndex(1));
+
+        powersource.setPosition(22);
+        resistor.setPosition(24);
+        bulb.setPosition(5);
+        switch1.setPosition(43);
 
         components.add(powersource);
         components.add(resistor);
         components.add(bulb);
         components.add(switch1);
+
         return components;
     }
 
@@ -99,6 +103,16 @@ public class Scenario6 extends DesignScenario {
         if (!isFullCircle) {
             return R.string.no_full_circle;
         }
-        return 0;
+        if (!twoLamps){
+            return R.string.lamp_required;
+        }
+        if (!lightsOn) {
+            return R.string.lamp_off;
+        }
+        if (!twoSwitches){
+            return R.string.switch_required;
+        }
+        return R.string.wrong_connection;
+
     }
 }
