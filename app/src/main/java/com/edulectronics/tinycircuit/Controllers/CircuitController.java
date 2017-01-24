@@ -29,11 +29,10 @@ public class CircuitController implements Serializable {
     // Set the circuit to some predefined circuit passed as arguments.
     public CircuitController(int width, int size, ArrayList<Component> components) {
         this.circuit = new Circuit(width, size);
-        int position = width / 2 + 1;
         // TODO: Move positioning of components to the scenario. Either based on relative positions (depending on grid size) or lock the grid to a default size.
         for (Component component : components) {
+            int position = component.position;
             addComponent(component, position);
-            position+= width - 1;
         }
     }
 
@@ -122,6 +121,16 @@ public class CircuitController implements Serializable {
         return animator == null ? 0 : animator.delay;
     }
 
+    public Graph getGraph() {
+        for (Component component : this.getComponents()) {
+            if (component != null && component.getClass() == Powersource.class) {
+                if (((Powersource) component).hasOutputConnection()) {
+                    return new Graph(((Powersource) component), this.getAllConnections());
+                }
+            }
+        }
+        return null;
+    }
     // Check all paths on the graph to see if there is resistance
     private void checkPaths(Graph graph) {
         // First check if there are paths that don't have a resistor.

@@ -5,6 +5,7 @@ import com.edulectronics.tinycircuit.Models.Components.Component;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.Connector;
 import com.edulectronics.tinycircuit.Models.Components.Lightbulb;
 import com.edulectronics.tinycircuit.Models.Components.Powersource;
+import com.edulectronics.tinycircuit.Models.Graph;
 import com.edulectronics.tinycircuit.Models.Scenarios.DesignScenario;
 import com.edulectronics.tinycircuit.R;
 
@@ -35,8 +36,8 @@ public class Scenario1 extends DesignScenario {
     }
 
     @Override
-    public boolean isCompleted(Circuit circuit) {
-        isFullCircle = super.isCompleted(circuit);
+    public boolean isCompleted(Circuit circuit, Graph graph) {
+        isFullCircle = super.isCompleted(circuit, graph);
         if (!isFullCircle) return false;
 
         hasLightbulb = false;
@@ -64,6 +65,9 @@ public class Scenario1 extends DesignScenario {
         Lightbulb bulb = new Lightbulb();
 
         Connector.connect(powersource.getOutput(), bulb.getConnectionPointByIndex(1));
+
+        powersource.setPosition(13);
+        bulb.setPosition(31);
 
         components.add(powersource);
         components.add(bulb);

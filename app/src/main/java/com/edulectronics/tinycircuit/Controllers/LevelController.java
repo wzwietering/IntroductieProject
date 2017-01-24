@@ -3,13 +3,12 @@ package com.edulectronics.tinycircuit.Controllers;
 import com.edulectronics.tinycircuit.Models.Circuit;
 import com.edulectronics.tinycircuit.Models.Components.Component;
 import com.edulectronics.tinycircuit.Models.Factories.ScenarioFactory;
-import com.edulectronics.tinycircuit.Models.Scenarios.DesignScenario;
+import com.edulectronics.tinycircuit.Models.Graph;
 import com.edulectronics.tinycircuit.Models.Scenarios.IScenario;
-import com.edulectronics.tinycircuit.Models.Scenarios.ImplementedScenarios.Scenario2;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Set;
+
 
 public class LevelController {
     private IScenario scenario;
@@ -19,8 +18,8 @@ public class LevelController {
         scenario = factory.getScenario(scenarioNr);
     }
 
-    public boolean levelIsCompleted(Circuit circuit) {
-        return scenario.isCompleted(circuit);
+    public boolean levelIsCompleted(Circuit circuit, Graph graph) {
+        return scenario.isCompleted(circuit, graph);
     }
 
     public int getScenarioID() {

@@ -2,6 +2,7 @@ package com.edulectronics.tinycircuit.Models.Scenarios;
 
 import com.edulectronics.tinycircuit.Models.Circuit;
 import com.edulectronics.tinycircuit.Models.Components.Component;
+import com.edulectronics.tinycircuit.Models.Graph;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ public interface IScenario extends Serializable {
     public Set<Component> getAvailableComponents();
 
     // Returns true if the user has completed the scenario.
-    public boolean isCompleted(Circuit circuit);
+    public boolean isCompleted(Circuit circuit, Graph graph);
 
     // Show a message to the user (explaining what to do, or a quiz question)
     public int getPrompt();
@@ -33,4 +34,5 @@ public interface IScenario extends Serializable {
 
     // Returns the id of the scenario, which is its number.
     public int getID();
+
 }

@@ -21,6 +21,7 @@
     <string name="scenario3_explanation">Add a switch to the circuit, so you can flick the Lamp on and off. Afterwards press the switch to turn the lamp on.</string>
     <string name="scenario4_explanation">Now you understand all components, make your own circuit with 2 lightbulbs and a way to turn the lights off and on.</string>
     <string name="scenario5_explanation">You now know how to build a circuit, time to try it out yourself! Make circuit with a switch and a lamp, and ensure that the lamp turns on.</string>
+    <string name="scenario6_explanation">You can also split wires, in this way you can make 2 circuits with 1 battery! Finish this circuit by adding a lamp on one side and a switch on the other.</string>
     <string name="scenario_nonexisting">Unfortunately this scenario does not yet exist. You can create your own circuit here.</string>
     <string name="scenario_complete">Good job!</string>
     <string name="scenario_not_complete">The circuit is not right yet!</string>

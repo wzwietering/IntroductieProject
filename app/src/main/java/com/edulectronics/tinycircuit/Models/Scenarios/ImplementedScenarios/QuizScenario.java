@@ -2,6 +2,7 @@ package com.edulectronics.tinycircuit.Models.Scenarios.ImplementedScenarios;
 
 import com.edulectronics.tinycircuit.Models.Circuit;
 import com.edulectronics.tinycircuit.Models.Components.Component;
+import com.edulectronics.tinycircuit.Models.Graph;
 import com.edulectronics.tinycircuit.Models.Scenarios.IScenario;
 import com.edulectronics.tinycircuit.R;
 
@@ -26,7 +27,7 @@ public class QuizScenario implements IScenario {
     }
 
     @Override
-    public boolean isCompleted(Circuit circuit) {
+    public boolean isCompleted(Circuit circuit, Graph graph) {
         return false;
     }
 

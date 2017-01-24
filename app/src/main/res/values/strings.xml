@@ -20,6 +20,7 @@
     <string name="scenario3_explanation">Voeg een schakelaar toe aan het circuit, zodat je het lampje aan en uit kan zetten. Druk daarna op de knop om de lamp aan te zetten.</string>
     <string name="scenario4_explanation">Je snapt nu wat alle onderdelen doen. Maak nu zelf een circuit met 2 lampjes die door een schakelaar aan en uit gezet kunnen worden.</string>
     <string name="scenario5_explanation">Je weet nu hoe je een circuit moet maken, het is tijd om het zelf te proberen! Maak een circuit met een schakelaar en een lamp, en zorg er voor dat de lamp aan gaat.</string>
+    <string name="scenario6_explanation">Je kan draden ook op splitsen, hierdoor kan je 2 circuits maken met 1 batterij! Maak dit scenario af door aan de ene kant een lamp toe te voegen en andere een switch.</string>
     <string name="scenario_nonexisting">Helaas bestaat dit scenario nog niet. Probeer als vervanger hier je eigen circuit te maken.</string>
     <string name="scenario_complete">Goed gedaan!</string>
     <string name="scenario_not_complete">Het circuit klopt nog niet!</string>

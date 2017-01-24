@@ -7,6 +7,7 @@ import com.edulectronics.tinycircuit.Models.Components.Lightbulb;
 import com.edulectronics.tinycircuit.Models.Components.Powersource;
 import com.edulectronics.tinycircuit.Models.Components.Resistor;
 import com.edulectronics.tinycircuit.Models.Components.Switch;
+import com.edulectronics.tinycircuit.Models.Graph;
 import com.edulectronics.tinycircuit.Models.Scenarios.DesignScenario;
 import com.edulectronics.tinycircuit.R;
 
@@ -30,8 +31,8 @@ public class Scenario3 extends DesignScenario {
     boolean componentCount;
 
     @Override
-    public boolean isCompleted(Circuit circuit) {
-        isFullCircle = super.isCompleted(circuit);
+    public boolean isCompleted(Circuit circuit, Graph graph) {
+        isFullCircle = super.isCompleted(circuit, graph);
         if (!isFullCircle) return false;
 
         hasConnectedSwitch = false;
@@ -81,8 +82,12 @@ public class Scenario3 extends DesignScenario {
         Resistor resistor = new Resistor();
 
         Connector.connect(powersource.getOutput(), bulb.getConnectionPointByIndex(1));
-        Connector.connect(bulb.getConnectionPointByIndex(0), resistor.getConnectionPointByIndex(0));
-        Connector.connect(powersource.getInput(), resistor.getConnectionPointByIndex(1));
+        Connector.connect(bulb.getConnectionPointByIndex(0), resistor.getConnectionPointByIndex(1));
+        Connector.connect(powersource.getInput(), resistor.getConnectionPointByIndex(0));
+
+        powersource.setPosition(13);
+        bulb.setPosition(32);
+        resistor.setPosition(30);
 
         components.add(powersource);
         components.add(bulb);

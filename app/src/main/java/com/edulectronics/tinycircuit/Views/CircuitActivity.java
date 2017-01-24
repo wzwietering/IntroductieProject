@@ -326,7 +326,7 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
         //Giving negative feedback when this method runs using the onTouch method is a nightmare,
         //because you will get negative messages all the time.
         if(levelController.getScenario().getClass() != FreePlayScenario.class) {
-            if (levelController.levelIsCompleted(circuitController.circuit)) {
+            if (levelController.levelIsCompleted(circuitController.circuit, circuitController.getGraph())) {
                 this.scenarioCompleted();
             } else {
                 giveNegativeFeedback();
