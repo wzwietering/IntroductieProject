@@ -121,6 +121,16 @@ public class CircuitController implements Serializable {
         return animator == null ? 0 : animator.delay;
     }
 
+    public Graph getGraph() {
+        for (Component component : this.getComponents()) {
+            if (component != null && component.getClass() == Powersource.class) {
+                if (((Powersource) component).hasOutputConnection()) {
+                    return new Graph(((Powersource) component), this.getAllConnections());
+                }
+            }
+        }
+        return null;
+    }
     // Check all paths on the graph to see if there is resistance
     private void checkPaths(Graph graph) {
         // First check if there are paths that don't have a resistor.

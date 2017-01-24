@@ -1,4 +1,5 @@
 package com.edulectronics.tinycircuit.Models.Scenarios.ImplementedScenarios;
+
 import com.edulectronics.tinycircuit.Models.Circuit;
 import com.edulectronics.tinycircuit.Models.Components.Component;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.Connector;
@@ -6,6 +7,7 @@ import com.edulectronics.tinycircuit.Models.Components.Lightbulb;
 import com.edulectronics.tinycircuit.Models.Components.Powersource;
 import com.edulectronics.tinycircuit.Models.Components.Resistor;
 import com.edulectronics.tinycircuit.Models.Components.Switch;
+import com.edulectronics.tinycircuit.Models.Graph;
 import com.edulectronics.tinycircuit.Models.Scenarios.DesignScenario;
 import com.edulectronics.tinycircuit.R;
 
@@ -21,10 +23,8 @@ import java.util.Set;
 
 public class Scenario6 extends DesignScenario {
     private boolean isFullCircle;
-    boolean lightsOn = true;
-    boolean Switches = true;
-    boolean twoLamps = false;
-    boolean twoSwitches = false;
+
+    boolean lightsOn, Switches, twoLamps, twoSwitches, twoPaths;
 
     @Override
     public int getPrompt() {
@@ -37,14 +37,15 @@ public class Scenario6 extends DesignScenario {
     }
 
     @Override
-    public boolean isCompleted(Circuit circuit) {
-        isFullCircle = super.isCompleted(circuit);
+    public boolean isCompleted(Circuit circuit, Graph graph) {
+        isFullCircle = super.isCompleted(circuit, graph);
         if (!isFullCircle) return false;
 
         lightsOn = true;
         Switches = true;
         twoLamps = false;
         twoSwitches = false;
+        twoPaths = (graph.findAllPaths().size() != 1);
 
         for (Component component : circuit.getAllComponents()) {
             if (component != null) {
@@ -53,7 +54,7 @@ public class Scenario6 extends DesignScenario {
                     if (!((Lightbulb) component).isOn){
                         lightsOn = false;
                     }
-                } else if (component.getClass() == Switch.class ){
+                } else if (component.getClass() == Switch.class) {
                     twoSwitches = circuit.getComponentCount(component) == 2;
                     if (!component.hasOutputConnection(component.getConnectionPointByIndex(1))){
                         Switches = false;
@@ -62,7 +63,7 @@ public class Scenario6 extends DesignScenario {
             }
         }
 
-        return (lightsOn && Switches && twoLamps && twoSwitches);
+        return (lightsOn && Switches && twoLamps && twoSwitches && twoPaths);
     }
 
 

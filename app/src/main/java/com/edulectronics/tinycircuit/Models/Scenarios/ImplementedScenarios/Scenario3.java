@@ -7,6 +7,7 @@ import com.edulectronics.tinycircuit.Models.Components.Lightbulb;
 import com.edulectronics.tinycircuit.Models.Components.Powersource;
 import com.edulectronics.tinycircuit.Models.Components.Resistor;
 import com.edulectronics.tinycircuit.Models.Components.Switch;
+import com.edulectronics.tinycircuit.Models.Graph;
 import com.edulectronics.tinycircuit.Models.Scenarios.DesignScenario;
 import com.edulectronics.tinycircuit.R;
 
@@ -28,8 +29,8 @@ public class Scenario3 extends DesignScenario {
     boolean lampIsOn;
 
     @Override
-    public boolean isCompleted(Circuit circuit) {
-        isFullCircle = super.isCompleted(circuit);
+    public boolean isCompleted(Circuit circuit, Graph graph) {
+        isFullCircle = super.isCompleted(circuit, graph);
         if (!isFullCircle) return false;
 
         hasConnectedSwitch = false;

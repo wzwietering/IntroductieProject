@@ -88,7 +88,7 @@ public class Graph {
     }
 
     // Get all components that are connected to this component by an edge in the graph.
-    private Set<Component> getNeighbours(Component component) {
+     public Set<Component> getNeighbours(Component component) {
         Set<Component> neighbours = new HashSet<>();
         for (Edge edge : this.edges) {
             if (edge.a == component && edge.b != this.base) {
