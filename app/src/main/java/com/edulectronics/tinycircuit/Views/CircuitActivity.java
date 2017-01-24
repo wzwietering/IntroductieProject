@@ -215,10 +215,6 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
             // press and we don't want to make a wire on long press (longPress is for dragging)
             if (component != null && action == MotionEvent.ACTION_UP) {
                 connectionController.makeWire(component, ev);
-
-                if (levelController.getScenario().isCompleted(circuitController.circuit)) {
-                    checkScenarioComplete();
-                }
             }
         }
         return false;
