@@ -23,11 +23,14 @@ import android.widget.TextView;
 import com.edulectronics.tinycircuit.Controllers.CircuitController;
 import com.edulectronics.tinycircuit.Controllers.ConnectionController;
 import com.edulectronics.tinycircuit.Controllers.LevelController;
+import com.edulectronics.tinycircuit.Controllers.MediaController;
 import com.edulectronics.tinycircuit.Controllers.MessageController;
 import com.edulectronics.tinycircuit.DataStorage.VariableHandler;
+import com.edulectronics.tinycircuit.Models.Components.Bell;
 import com.edulectronics.tinycircuit.Models.Components.Component;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.Connection;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.Connector;
+import com.edulectronics.tinycircuit.Models.Components.Switch;
 import com.edulectronics.tinycircuit.Models.Factories.ComponentFactory;
 import com.edulectronics.tinycircuit.Models.MenuItem;
 import com.edulectronics.tinycircuit.Models.MessageArgs;
@@ -56,6 +59,7 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
     private ConnectionController connectionController;
     private LevelController levelController;
     private MessageController messageController = new MessageController(getFragmentManager());
+    private MediaController mediaController = new MediaController(this);
     private boolean isInWireMode = false;
     private int cellSize;
 
@@ -175,7 +179,7 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
         int componentCount = levelController.getAvailableComponents().size();
 
         String[] items = getResources().getStringArray(R.array.menuitems);
-        int[] textures = {R.drawable.battery, R.drawable.lightbulb_on, R.drawable.resistor, R.drawable.switch_on};
+        int[] textures = {R.drawable.battery, R.drawable.lightbulb_on, R.drawable.resistor, R.drawable.switch_on, R.drawable.ic_launcher};
 
         for (int i = 0; i < componentCount; i++) {
             MenuItem item = new MenuItem();
@@ -189,8 +193,13 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
         if (!isInWireMode) {
             // Let clicked component handle the tap.
             if (circuitController.handleClick(((GridCell) v).mCellNumber)) {
-                ((GridCell) v).resetImage();
-                run(null);
+                Component component = circuitController.getComponent(((GridCell) v).mCellNumber);
+                if(component.getClass() == Switch.class) {
+                    ((GridCell) v).resetImage();
+                    animateWires();
+                } else if (component.getClass() == Bell.class){
+                    ringBell((Bell) component);
+                }
             }
         }
     }
@@ -305,21 +314,31 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
     // pass a view, but we don't use the view, so this implementation is sufficient.
     public void run(View view) {
         if(!circuitController.isRunning) {
-            // Reset the circuit before animating it; so all wires start out white, and lightbulbs whole.
-            connectionController.redrawWires();
-            ((GridView) findViewById(R.id.circuit)).invalidateViews();
-
-            // get the delay back from the circuitcontroller to delay the scenario complete check
-            // until the whole circuit has been animated.
-            int delay = circuitController.run(this);
-            Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    checkScenarioComplete();
-                }
-            }, delay == 0 ? delay : delay + 1000);
+            int delay = animateWires();
+            delayedScenarioComplete(delay);
         }
+    }
+
+    //Animate the wires of the circuit
+    private int animateWires(){
+        // Reset the circuit before animating it; so all wires start out white, and lightbulbs whole.
+        connectionController.redrawWires();
+        ((GridView) findViewById(R.id.circuit)).invalidateViews();
+
+        // get the delay back from the circuitcontroller to delay the scenario complete check
+        // until the whole circuit has been animated.
+        return circuitController.run(this);
+    }
+
+    //Check if the scenario is completed after a certain delay
+    private void delayedScenarioComplete(int delay){
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                checkScenarioComplete();
+            }
+        }, delay == 0 ? delay : delay + 1000);
     }
 
 
@@ -369,5 +388,9 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
 
     public CircuitController getCircuitController() {
         return circuitController;
+    }
+
+    public void ringBell(Bell bell){
+        mediaController.playSound(bell.getSound());
     }
 }

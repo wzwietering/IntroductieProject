@@ -1,5 +1,6 @@
 package com.edulectronics.tinycircuit.Models.Scenarios.ImplementedScenarios;
 
+import com.edulectronics.tinycircuit.Models.Components.Bell;
 import com.edulectronics.tinycircuit.Models.Components.Component;
 import com.edulectronics.tinycircuit.Models.Components.Lightbulb;
 import com.edulectronics.tinycircuit.Models.Components.Powersource;
@@ -30,7 +31,7 @@ public class FreePlayScenario extends DesignScenario {
 
     @Override
     public Set<Component> getAvailableComponents() {
-        Component[] components = {new Lightbulb(), new Powersource(), new Resistor(), new Switch()};
+        Component[] components = {new Lightbulb(), new Powersource(), new Resistor(), new Switch(), new Bell()};
         return new HashSet<>(Arrays.asList(components));
     }
 

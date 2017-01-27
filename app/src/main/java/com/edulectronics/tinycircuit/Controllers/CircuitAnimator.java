@@ -7,11 +7,13 @@ import android.os.Handler;
 import android.os.Looper;
 import android.widget.GridView;
 
+import com.edulectronics.tinycircuit.Models.Components.Bell;
 import com.edulectronics.tinycircuit.Models.Components.Component;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.Connection;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.ConnectionPoint;
 import com.edulectronics.tinycircuit.Models.Graph;
 import com.edulectronics.tinycircuit.R;
+import com.edulectronics.tinycircuit.Views.CircuitActivity;
 import com.edulectronics.tinycircuit.Views.Wire;
 
 import java.util.ArrayList;
@@ -199,8 +201,12 @@ public class CircuitAnimator {
             @Override
             public void run() {
                 for (Object element : elements) {
-                    if(((Component) element).hasInputAndOutputConnection())
-                        ((Component) element).handleInputHigh();
+                    Component component = (Component) element;
+                    if(component.hasInputAndOutputConnection())
+                        component.handleInputHigh();
+                    if(component.getClass() == Bell.class){
+                        ((CircuitActivity) circuitActivity).ringBell((Bell) component);
+                    }
                 }
                 ((GridView) circuitActivity.findViewById(R.id.circuit)).invalidateViews();
             }

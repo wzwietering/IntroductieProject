@@ -5,6 +5,7 @@
         <item>Gloeilamp</item>
         <item>Weerstand</item>
         <item>Schakelaar</item>
+        <item>Bel</item>
     </string-array>
 
     <string name="exercise">Opgaven</string>

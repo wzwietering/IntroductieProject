@@ -6,6 +6,7 @@
         <item>Lightbulb</item>
         <item>Resistor</item>
         <item>Switch</item>
+        <item>Bell</item>
     </string-array>
 
     <string name="exercise">Exercises</string>
