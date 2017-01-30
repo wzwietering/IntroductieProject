@@ -139,7 +139,7 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
         if (getIntent().getStringExtra("scenario").equals("freeplay")) {
             circuitController = new CircuitController(size.x / cellSize, size.y / cellSize);
         } else {
-            circuitController = new CircuitController(size.x / cellSize, size.y / cellSize, levelController.loadComponents());
+            circuitController = new CircuitController(size.x / cellSize, size.y / cellSize, levelController.loadComponents(), levelController.getScenarioID());
         }
         DeleteZone deleteZone = (DeleteZone) findViewById(R.id.delete_zone_view);
         deleteZone.setCircuitController(circuitController);
