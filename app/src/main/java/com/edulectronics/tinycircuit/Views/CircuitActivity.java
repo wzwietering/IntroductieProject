@@ -179,7 +179,7 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
         int componentCount = levelController.getAvailableComponents().size();
 
         String[] items = getResources().getStringArray(R.array.menuitems);
-        int[] textures = {R.drawable.battery, R.drawable.lightbulb_on, R.drawable.resistor, R.drawable.switch_on, R.drawable.ic_launcher};
+        int[] textures = {R.drawable.battery, R.drawable.lightbulb_on, R.drawable.resistor, R.drawable.switch_on, R.drawable.bell};
 
         for (int i = 0; i < componentCount; i++) {
             MenuItem item = new MenuItem();
