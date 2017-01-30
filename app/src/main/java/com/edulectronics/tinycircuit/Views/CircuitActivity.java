@@ -391,6 +391,13 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
     }
 
     public void ringBell(Bell bell){
-        mediaController.playSound(bell.getSound());
+        final Bell _bell = bell;
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                mediaController.playSound(_bell.getSound());
+            }
+        });
+        thread.run();
     }
 }
