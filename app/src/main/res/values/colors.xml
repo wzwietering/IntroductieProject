@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#4141ab</color>
+    <color name="colorPrimaryDark">#28136b</color>
+    <color name="colorAccent">#F4A842</color>
     <color name="cell">#00000000</color>
     <color name="cell_empty_hover">#eaeaea</color>
     <color name="cell_filled_hover">#bbbbbb</color>

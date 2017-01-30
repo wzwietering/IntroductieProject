@@ -33,6 +33,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
 import com.edulectronics.tinycircuit.Controllers.ConnectionController;
+import com.edulectronics.tinycircuit.DataStorage.VariableHandler;
 import com.edulectronics.tinycircuit.R;
 import com.edulectronics.tinycircuit.Views.Draggables.Interfaces.IDragListener;
 import com.edulectronics.tinycircuit.Views.Draggables.Interfaces.IDragSource;
@@ -129,9 +130,12 @@ public class DragController {
         boolean doDrag = source.allowDrag();
         if (!doDrag) return;
 
-        // Vibrate for 500 milliseconds
-        Vibrator vibrator = (Vibrator) this.mContext.getSystemService(Context.VIBRATOR_SERVICE);
-        vibrator.vibrate(500);
+        VariableHandler variableHandler = new VariableHandler(mContext);
+        if(variableHandler.getVibration()) {
+            // Vibrate for 500 milliseconds
+            Vibrator vibrator = (Vibrator) this.mContext.getSystemService(Context.VIBRATOR_SERVICE);
+            vibrator.vibrate(500);
+        }
 
         mOriginator = v;
 

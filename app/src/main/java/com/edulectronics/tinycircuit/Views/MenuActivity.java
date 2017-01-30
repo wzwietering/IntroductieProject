@@ -6,17 +6,15 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.ImageView;
 import android.widget.ListView;
 
+import com.edulectronics.tinycircuit.DataStorage.VariableHandler;
 import com.edulectronics.tinycircuit.R;
 import com.edulectronics.tinycircuit.Views.Adapters.MainMenuAdapter;
 
 import java.util.Locale;
-import java.util.Objects;
 
 public class MenuActivity extends AppCompatActivity {
-    String language = "nl";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,21 +22,18 @@ public class MenuActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_menu);
-        //The split is used because language tags like 'en-US' and 'en-GB' should all use English
-        language = Locale.getDefault().toLanguageTag().substring(0, 2);
-        setFlag();
-        this.createMenu();
     }
 
-    public void changelanguage(View view) {
-        switchLanguage();
-        Locale locale = new Locale(language);
-        Locale.setDefault(locale);
-        Configuration config = new Configuration();
-        config.locale = locale;
-        getBaseContext().getResources().updateConfiguration(config,
-                getBaseContext().getResources().getDisplayMetrics());
-        this.createMenu();
+    //Recreate the menu every time the activity is started to apply language changes
+    @Override
+    protected void onStart(){
+        super.onStart();
+        setLanguage();
+        createMenu();
+    }
+
+    public void openSettings(View view){
+        this.startActivity(new Intent(this, SettingsActivity.class));
     }
 
     public void aboutActivity(View view) {
@@ -52,21 +47,14 @@ public class MenuActivity extends AppCompatActivity {
         listView.setAdapter(new MainMenuAdapter(this, items));
     }
 
-    private void switchLanguage() {
-        if (language.equals("nl")) {
-            language = "en";
-        } else {
-            language = "nl";
-        }
-        setFlag();
-    }
-
-    private void setFlag() {
-        ImageView flag = (ImageView) findViewById(R.id.flag);
-        if (language.equals("nl")) {
-            flag.setImageResource(R.drawable.dutchflag);
-        } else {
-            flag.setImageResource(R.drawable.englishflag);
-        }
+    //Get the language from the save file
+    private void setLanguage(){
+        VariableHandler variableHandler = new VariableHandler(getApplicationContext());
+        Locale locale = new Locale(variableHandler.getLanguage());
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        getBaseContext().getResources().updateConfiguration(config,
+                getBaseContext().getResources().getDisplayMetrics());
     }
 }

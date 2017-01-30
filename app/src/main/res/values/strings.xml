@@ -58,4 +58,11 @@
     <string name="title_aboutactivity">Wie zijn wij?</string>
     <string name="project_manager">Project manager: \nWilmer Zwietering\n\nLead developers:\nBernd van den Hoek\nMaaike Galama\n\nFront end developer:\nJesper Steensma</string>
     <string name="website">Voor meer informatie kijk op onze website:</string>
+
+    <!--Settings-->
+    <string name="setting_vibration">Trillingen</string>
+    <string name="setting_language">Taal</string>
+    <string name="setting_reset_progress">Begin opnieuw</string>
+    <string name="setting_reset">Wis voortgang</string>
+    <string name="reset_warning">Weet je zeker dat je opnieuw wilt beginnen?</string>
 </resources>

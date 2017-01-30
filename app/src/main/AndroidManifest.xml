@@ -27,6 +27,8 @@
             android:screenOrientation="sensorLandscape"/>
         <activity android:name=".Views.AboutActivity"
             android:screenOrientation="sensorLandscape"/>
+        <activity android:name=".Views.SettingsActivity"
+                  android:screenOrientation="sensorLandscape"/>
     </application>
 
 </manifest>
