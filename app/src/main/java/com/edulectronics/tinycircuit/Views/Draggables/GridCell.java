@@ -1,14 +1,12 @@
 package com.edulectronics.tinycircuit.Views.Draggables;
 
 import android.content.Context;
-import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.GridView;
 import android.widget.ImageView;
 
 import com.edulectronics.tinycircuit.Controllers.CircuitController;
-import com.edulectronics.tinycircuit.Models.Components.Bell;
 import com.edulectronics.tinycircuit.Models.Components.Component;
 import com.edulectronics.tinycircuit.R;
 import com.edulectronics.tinycircuit.Views.Draggables.Interfaces.IDragSource;
@@ -46,14 +44,6 @@ public class GridCell extends ImageView implements IDragSource, IDropTarget {
         super(context, attrs, style);
         circuitController = controller;
         setBackgroundResource(R.color.cell);
-    }
-
-    @Override
-    protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
-        if(this.getComponent() != null && this.getComponent().getClass() == Bell.class) {
-            ((Bell)this.getComponent()).doRing(this);
-        }
     }
 
     public void resetImage() {

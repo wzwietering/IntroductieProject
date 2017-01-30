@@ -9,6 +9,7 @@ import android.media.MediaPlayer;
 
 public class MediaController {
     Context context;
+    private boolean makingSound = false;
 
     public MediaController(Context context){
         this.context = context;
@@ -17,12 +18,14 @@ public class MediaController {
     public void playSound(int id){
         //When a component has no power or resistance it will give 0 as its sound id, so zero means
         //no sound
-        if(id != 0) {
+        if(id != 0 && !makingSound) {
+            makingSound = true;
             MediaPlayer mediaPlayer = MediaPlayer.create(context, id);
             //This listener is used to clean up the memory of the device after playing the sound
             mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                 @Override
                 public void onCompletion(MediaPlayer mp) {
+                    makingSound = false;
                     mp.release();
                 }
             });

@@ -1,10 +1,7 @@
 package com.edulectronics.tinycircuit.Models.Components;
 
-import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Looper;
-import android.telecom.GatewayInfo;
 
 import com.edulectronics.tinycircuit.R;
 import com.edulectronics.tinycircuit.Views.Draggables.GridCell;
