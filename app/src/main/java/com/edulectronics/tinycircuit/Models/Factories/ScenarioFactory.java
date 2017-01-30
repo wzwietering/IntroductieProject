@@ -8,6 +8,7 @@ import com.edulectronics.tinycircuit.Models.Scenarios.ImplementedScenarios.Scena
 import com.edulectronics.tinycircuit.Models.Scenarios.ImplementedScenarios.Scenario4;
 import com.edulectronics.tinycircuit.Models.Scenarios.ImplementedScenarios.Scenario5;
 import com.edulectronics.tinycircuit.Models.Scenarios.ImplementedScenarios.Scenario6;
+import com.edulectronics.tinycircuit.Models.Scenarios.ImplementedScenarios.Scenario7;
 
 /**
  * Scenario factory. It makes scenario's.
@@ -32,7 +33,7 @@ public class ScenarioFactory {
             case "6":
                 return new Scenario6();
             case "7":
-                return new Scenario6();
+                return new Scenario7();
             default:
                 return new FreePlayScenario();
         }

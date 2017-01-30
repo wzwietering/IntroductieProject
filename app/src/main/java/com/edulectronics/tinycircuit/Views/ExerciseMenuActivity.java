@@ -15,7 +15,7 @@ import com.edulectronics.tinycircuit.Models.MessageTypes;
 import com.edulectronics.tinycircuit.R;
 
 public class ExerciseMenuActivity extends AppCompatActivity {
-    int exercise_amount = 6;
+    int exercise_amount = 7;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

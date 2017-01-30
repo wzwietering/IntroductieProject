@@ -104,11 +104,11 @@ public class Scenario7 extends DesignScenario {
         Switch switch1 = new Switch();
 
         Connector.connect(powersource.getOutput(), resistor.getConnectionPointByIndex(0));
-        Connector.connect(resistor.getConnectionPointByIndex(1), bulb.getConnectionPointByIndex(1));
+        Connector.connect(resistor.getConnectionPointByIndex(1), bulb.getConnectionPointByIndex(0));
         Connector.connect(resistor.getConnectionPointByIndex(1), switch1.getConnectionPointByIndex(1));
 
-        components.add(powersource);
         components.add(resistor);
+        components.add(powersource);
         components.add(bulb);
         components.add(switch1);
 
@@ -121,7 +121,7 @@ public class Scenario7 extends DesignScenario {
     }
 
     public int getID() {
-        return 6;
+        return 7;
     }
 
     public int getHint() {
