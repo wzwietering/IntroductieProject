@@ -19,9 +19,10 @@
     <string name="scenario1_explanation">Verbind het lampje met de batterij, zodat het lampje stroom heeft. Je kan een verbinding maken door op het draad icoon te tikken, en dan op de witte puntjes van een component.</string>
     <string name="scenario2_explanation">Voeg een weerstand toe aan het circuit, zodat je het lampje niet kapot gaat. Om een weerstand toe te voegen, moet je een draad weg halen. Dit kan je doen door in draad modus op een draad te tikken. Voer het circuit uit als je klaar bent.</string>
     <string name="scenario3_explanation">Voeg een schakelaar toe aan het circuit, zodat je het lampje aan en uit kan zetten. Druk daarna op de knop om de lamp aan te zetten.</string>
-    <string name="scenario4_explanation">Je snapt nu wat alle onderdelen doen. Maak nu zelf een circuit met 2 lampjes die door een schakelaar aan en uit gezet kunnen worden.</string>
-    <string name="scenario5_explanation">Je weet nu hoe je een circuit moet maken, het is tijd om het zelf te proberen! Maak een circuit met een schakelaar en een lamp, en zorg er voor dat de lamp aan gaat.</string>
-    <string name="scenario6_explanation">Je kan draden ook op splitsen, hierdoor kan je 2 circuits maken met 1 batterij! Maak dit scenario af door aan de ene kant een lamp toe te voegen en andere een schakelaar.</string>
+    <string name="scenario4_explanation">Je weet nu hoe je een circuit moet maken, het is tijd om het zelf te proberen! Maak nu zelf een circuit met een lampje dat door een schakelaar aan en uit gezet kan worden.</string>
+    <string name="scenario5_explanation">Een batterij kan meer dan alleen een lampje laten branden. Voeg een bel toe aan je circuit!</string>
+    <string name="scenario6_explanation">Je kan ook 2 circuits maken met 1 batterij! Maak dit circuit af zodat de schakelaar slechts één lamp bedient.</string>
+    <string name="scenario7_explanation">Je kan draden ook op splitsen, hierdoor kan je 2 circuits maken met 1 batterij! Maak dit scenario af door aan de ene kant een lamp toe te voegen en andere een schakelaar.</string>
     <string name="scenario_nonexisting">Helaas bestaat dit scenario nog niet. Probeer als vervanger hier je eigen circuit te maken.</string>
     <string name="scenario_complete">Goed gedaan!</string>
     <string name="scenario_not_complete">Het circuit klopt nog niet!</string>
@@ -38,6 +39,7 @@
     <string name="switch_required">Zorg er voor dat het licht aan en uit kan.</string>
     <string name="lamp_required">Het is nog donker, voeg een lamp toe!</string>
     <string name="component_count">Het aantal componenten klopt niet.</string>
+    <string name="no_bell">Er is nog geen bel aangesloten aan het circuit.</string>
 
     <!--Arrays with feedback-->
     <string-array name="positive_feedback">

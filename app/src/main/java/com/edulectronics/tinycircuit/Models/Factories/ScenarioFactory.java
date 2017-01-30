@@ -31,6 +31,8 @@ public class ScenarioFactory {
                 return new Scenario5();
             case "6":
                 return new Scenario6();
+            case "7":
+                return new Scenario6();
             default:
                 return new FreePlayScenario();
         }
