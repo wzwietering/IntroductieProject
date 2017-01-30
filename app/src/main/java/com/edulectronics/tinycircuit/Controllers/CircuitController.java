@@ -35,7 +35,7 @@ public class CircuitController implements Serializable {
         // TODO: Move positioning of components to the scenario. Either based on relative positions (depending on grid size) or lock the grid to a default size.
         for (Component component : components) {
             addComponent(component, position);
-            position += width - 1;
+            position += width / 2;
         }
     }
 

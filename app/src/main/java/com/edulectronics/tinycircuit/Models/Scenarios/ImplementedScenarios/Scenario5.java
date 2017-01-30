@@ -1,6 +1,7 @@
 package com.edulectronics.tinycircuit.Models.Scenarios.ImplementedScenarios;
 
 import com.edulectronics.tinycircuit.Models.Circuit;
+import com.edulectronics.tinycircuit.Models.Components.Bell;
 import com.edulectronics.tinycircuit.Models.Components.Component;
 import com.edulectronics.tinycircuit.Models.Components.Lightbulb;
 import com.edulectronics.tinycircuit.Models.Components.Powersource;
@@ -27,6 +28,7 @@ public class Scenario5 extends DesignScenario {
     boolean hasSwitch;
     boolean hasResistor;
     boolean componentCount;
+    boolean hasBell;
 
     @Override
     public boolean isCompleted(Circuit circuit, Graph graph) {
@@ -37,6 +39,7 @@ public class Scenario5 extends DesignScenario {
         hasSwitch = false;
         hasResistor = false;
         componentCount = false;
+        hasBell = false;
 
         for (Component component : circuit.getAllComponents()) {
             if (component.getClass() == Lightbulb.class) {
@@ -57,25 +60,29 @@ public class Scenario5 extends DesignScenario {
                 if(!componentCount){
                     return false;
                 }
+            } else if (component.getClass() == Bell.class) {
+                hasBell = component.hasOutputConnection(component.getConnectionPointByIndex(1));
+                componentCount = super.componentCount(circuit, component);
+                if(!componentCount){
+                    return false;
+                }
             }
         }
 
-        return (lampRequirementsMet && hasSwitch && hasResistor && componentCount && isFullCircle);
+        return (lampRequirementsMet && hasSwitch && hasResistor && componentCount && isFullCircle && hasBell);
     }
 
     public Set<Component> getAvailableComponents() {
-        Component[] components = {new Lightbulb(), new Powersource(), new Resistor(), new Switch()};
+        Component[] components = {new Lightbulb(), new Powersource(), new Resistor(), new Switch(), new Bell()};
         return new HashSet<>(Arrays.asList(components));
     }
 
     public ArrayList<Component> loadComponents() {
+        if (super.loadComponents() != null) {
+            return super.loadComponents();
+        }
         ArrayList<Component> components = new ArrayList<>();
         return components;
-    }
-
-    @Override
-    public boolean resetCircuitOnStart() {
-        return true;
     }
 
     @Override
@@ -98,6 +105,9 @@ public class Scenario5 extends DesignScenario {
         }
         if(!componentCount){
             return R.string.component_count;
+        }
+        if (!hasBell) {
+            return R.string.no_bell;
         }
         return 0;
     }

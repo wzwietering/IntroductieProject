@@ -22,14 +22,19 @@ import java.util.Stack;
  * Created by Jesper on 1/22/2017.
  */
 
-public class Scenario6 extends DesignScenario {
+public class Scenario7 extends DesignScenario {
     private boolean isFullCircle;
 
-    boolean lightsOn, hasSwitch, twoLamps, isParallel;
+    boolean lightsOn, Switches, twoLamps, twoSwitches, isParallel;
 
     @Override
     public int getPrompt() {
-        return R.string.scenario6_explanation;
+        return R.string.scenario7_explanation;
+    }
+
+    @Override
+    public int getCompletePrompt() {
+        return R.string.last_scenario_complete;
     }
 
     @Override
@@ -38,8 +43,9 @@ public class Scenario6 extends DesignScenario {
         if (!isFullCircle) return false;
 
         lightsOn = true;
-        hasSwitch = true;
+        Switches = true;
         twoLamps = false;
+        twoSwitches = false;
         isParallel = false;
 
         for (Stack path: graph.findAllPaths()) {
@@ -73,15 +79,15 @@ public class Scenario6 extends DesignScenario {
                         lightsOn = false;
                     }
                 } else if (component.getClass() == Switch.class) {
-                    hasSwitch = circuit.getComponentCount(component) == 1;
+                    twoSwitches = circuit.getComponentCount(component) == 2;
                     if (!component.hasOutputConnection(component.getConnectionPointByIndex(1))){
-                        hasSwitch = false;
+                        Switches = false;
                     }
                 }
             }
         }
 
-        return (lightsOn && hasSwitch && twoLamps && isParallel);
+        return (lightsOn && Switches && twoLamps && twoSwitches && isParallel);
     }
 
 
@@ -96,21 +102,15 @@ public class Scenario6 extends DesignScenario {
         Resistor resistor = new Resistor();
         Lightbulb bulb = new Lightbulb();
         Switch switch1 = new Switch();
-        Resistor resistor2 = new Resistor();
-        Lightbulb bulb2 = new Lightbulb();
 
         Connector.connect(powersource.getOutput(), resistor.getConnectionPointByIndex(0));
-        Connector.connect(resistor.getConnectionPointByIndex(1), bulb.getConnectionPointByIndex(0));
-        Connector.connect(bulb.getConnectionPointByIndex(1), switch1.getConnectionPointByIndex(0));
-        Connector.connect(switch1.getConnectionPointByIndex(1), powersource.getInput());
-        Connector.connect(powersource.getOutput(), resistor2.getConnectionPointByIndex(0));
+        Connector.connect(resistor.getConnectionPointByIndex(1), bulb.getConnectionPointByIndex(1));
+        Connector.connect(resistor.getConnectionPointByIndex(1), switch1.getConnectionPointByIndex(1));
 
         components.add(powersource);
         components.add(resistor);
         components.add(bulb);
         components.add(switch1);
-        components.add(bulb2);
-        components.add(resistor2);
 
         return components;
     }
@@ -134,7 +134,7 @@ public class Scenario6 extends DesignScenario {
         if (!lightsOn) {
             return R.string.lamp_off;
         }
-        if (!hasSwitch){
+        if (!twoSwitches){
             return R.string.switch_required;
         }
         return R.string.wrong_connection;
