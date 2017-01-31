@@ -39,9 +39,9 @@ public class Bell extends Component {
         this.isOn = false;
     }
 
-    //Only returns sound if there is power and resistance
+    //Only returns sound if there is power
     public int getSound(){
-        if(isOn && hasResistance) {
+        if(isOn) {
             return R.raw.bell2;
         } else {
             return 0;
