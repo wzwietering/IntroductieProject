@@ -19,7 +19,8 @@ import java.util.Stack;
 public class CircuitController implements Serializable {
     public Circuit circuit;
     public Component newComponent; // When a new component is created, we save it here. It hasn't been dragged to the circuit yet.
-    public boolean isRunning;
+    public boolean isAnimating;
+    public boolean isInRunningState;
 
     public CircuitController(int width, int size) {
         this.circuit = new Circuit(width, size);
@@ -120,19 +121,24 @@ public class CircuitController implements Serializable {
 
     // Reset all the components to their standard values (eg. lightbulbs turned off and not broken)
     public void reset() {
+        this.isAnimating = false;
+        animator = null;
+
         for (Component component : circuit.getAllComponents())
             component.reset();
     }
 
     // Run the circuit!
     public int run(Activity circuitActivity) {
-        this.isRunning = true;
         reset();
 
         // Check if there are outgoing connections.
         for (Component component : this.getComponents()) {
             if (component != null && component.getClass() == Powersource.class) {
                 if (((Powersource) component).hasOutputConnection()) {
+                    this.isAnimating = true;
+                    this.isInRunningState = true;
+
                     // If yes, create graph.
                     Graph graph = new Graph((Powersource) component, this.getAllConnections());
 
@@ -143,20 +149,13 @@ public class CircuitController implements Serializable {
                     // Now check all paths on the graph to see if there is resistance.
                     checkPaths(graph);
                 }
+
             }
         }
         if (animator == null) {
-            isRunning = false;
+            isAnimating = false;
             return 0;
         } else {
-            Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    CircuitController.this.isRunning = false;
-                }
-            }, animator.delay);
-
             return animator.delay;
         }
     }

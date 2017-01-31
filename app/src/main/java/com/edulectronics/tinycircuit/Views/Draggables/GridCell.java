@@ -51,8 +51,11 @@ public class GridCell extends ImageView implements IDragSource, IDropTarget {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        if(this.getComponent() != null && this.getComponent().getClass() == Bell.class) {
-            ((Bell)this.getComponent()).doRing(this);
+        if(this.getComponent() != null) {
+            this.getComponent().setCoordinates((int) this.getX(), (int) this.getY());
+            if(this.getComponent().getClass() == Bell.class) {
+                ((Bell)this.getComponent()).doRing(this);
+            }
         }
     }
 

@@ -196,7 +196,14 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
                 Component component = circuitController.getComponent(((GridCell) v).mCellNumber);
                 if(component.getClass() == Switch.class) {
                     ((GridCell) v).resetImage();
-                    animateWires();
+                    // Only animate the wires if the circuit was already running. Also check for
+                    // scenario complete then, since it's more intuitive to do here also.
+                    if(circuitController.isInRunningState) {
+                        int delay = animateWires();
+                        if(circuitController.isAnimating) {
+                            delayedScenarioComplete(delay);
+                        }
+                    }
                 } else if (component.getClass() == Bell.class){
                     ringBell((Bell) component);
                 }
@@ -225,6 +232,8 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
             if (component != null && action == MotionEvent.ACTION_UP) {
                 connectionController.makeWire(component, ev);
             }
+
+            circuitController.isInRunningState = false;
         }
         return false;
     }
@@ -313,7 +322,7 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
     //The run method with view is necessary because the event handler of a button must be able to
     // pass a view, but we don't use the view, so this implementation is sufficient.
     public void run(View view) {
-        if(!circuitController.isRunning) {
+        if(!circuitController.isAnimating) {
             int delay = animateWires();
             delayedScenarioComplete(delay);
         }
@@ -331,26 +340,29 @@ public class CircuitActivity extends Activity implements View.OnClickListener, V
     }
 
     //Check if the scenario is completed after a certain delay
-    private void delayedScenarioComplete(int delay){
+    private void delayedScenarioComplete(final int delay){
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                checkScenarioComplete();
+                checkScenarioComplete(delay);
+                circuitController.isAnimating = false;
             }
         }, delay == 0 ? delay : delay + 1000);
     }
 
 
-    private void checkScenarioComplete() {
+    private void checkScenarioComplete(int delay) {
         //The boolean is used to give the user only negative feedback when they press the run button.
         //Giving negative feedback when this method runs using the onTouch method is a nightmare,
         //because you will get negative messages all the time.
-        if(levelController.getScenario().getClass() != FreePlayScenario.class) {
-            if (levelController.levelIsCompleted(circuitController.circuit, circuitController.getGraph())) {
-                this.scenarioCompleted();
-            } else {
-                giveNegativeFeedback();
+        if(circuitController.isAnimating || delay == 0) {
+            if (levelController.getScenario().getClass() != FreePlayScenario.class) {
+                if (levelController.levelIsCompleted(circuitController.circuit, circuitController.getGraph())) {
+                    this.scenarioCompleted();
+                } else {
+                    giveNegativeFeedback();
+                }
             }
         }
     }
