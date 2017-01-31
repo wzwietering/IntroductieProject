@@ -43,7 +43,7 @@
 
     <!--Arrays with feedback-->
     <string-array name="positive_feedback">
-        <item>"Goed gedaan!"</item>
+        <item>"Gefeliciteerd, je hebt de opgave gehaald!"</item>
         <item>"Dit circuit klopt!"</item>
         <item>"Het gaat goed!"</item>
         <item>"Je bent klaar voor een grotere uitdaging!"</item>
