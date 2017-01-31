@@ -52,9 +52,9 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/dutchflag"
-        android:id="@+id/flag"
-        android:onClick="changelanguage"
+        android:src="@drawable/ic_cogwheel"
+        android:id="@+id/settings"
+        android:onClick="openSettings"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"/>
 

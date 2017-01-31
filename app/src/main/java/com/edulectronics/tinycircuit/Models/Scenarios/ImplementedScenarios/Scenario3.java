@@ -116,9 +116,6 @@ public class Scenario3 extends DesignScenario {
     }
 
     public int getHint() {
-        if(!componentCount){
-            return R.string.component_count;
-        }
         if (!hasConnectedSwitch) {
             return R.string.switch_required;
         }
@@ -130,6 +127,9 @@ public class Scenario3 extends DesignScenario {
         }
         if(!hasResistor){
             return R.string.resistance_required;
+        }
+        if(!componentCount){
+            return R.string.component_count;
         }
         return 0;
     }

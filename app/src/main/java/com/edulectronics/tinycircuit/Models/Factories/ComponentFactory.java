@@ -1,5 +1,6 @@
 package com.edulectronics.tinycircuit.Models.Factories;
 
+import com.edulectronics.tinycircuit.Models.Components.Bell;
 import com.edulectronics.tinycircuit.Models.Components.Component;
 import com.edulectronics.tinycircuit.Models.Components.Lightbulb;
 import com.edulectronics.tinycircuit.Models.Components.Powersource;
@@ -23,6 +24,9 @@ public class ComponentFactory {
             case "Schakelaar":
             case "Switch":
                 return new Switch();
+            case "Bel":
+            case "Bell":
+                return new Bell();
         }
         throw new IllegalArgumentException("component name unknown");
     }

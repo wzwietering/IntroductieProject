@@ -44,12 +44,20 @@ public class CircuitController implements Serializable {
             case 1 : components.get(0).setPosition(width + width/2);
                 components.get(1).setPosition(3*width + width/2);
                 break;
-            case 4 : components.get(0).setPosition(width + width/2);
-            case 5 : break;
-            case 6 : components.get(0).setPosition(2*width + width/2 - 1);
-                     components.get(1).setPosition(2*width + width/2 + 1);
+            case 5 :
+            case 7:
+            components.get(0).setPosition(2*width + width/2 - 1);
+                     components.get(1).setPosition(width + 1);
                 components.get(2).setPosition(width/2 + 1);
                 components.get(3).setPosition(3*width + width/2 + 2);
+                break;
+            case 6 : components.get(0).setPosition(2*width + width/2 - 2);
+                components.get(1).setPosition(2*width + width/2 + 2);
+                components.get(2).setPosition(width/2 + 1);
+                components.get(3).setPosition(width/2 - 1);
+                components.get(4).setPosition(4*width + width/2 + 2);
+                components.get(5).setPosition(3*width + width/2 - 1);
+            case 4 :
             default: break;
         }
     }

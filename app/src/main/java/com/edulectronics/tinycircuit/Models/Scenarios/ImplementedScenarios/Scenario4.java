@@ -40,7 +40,7 @@ public class Scenario4 extends DesignScenario {
 
         for (Component component : circuit.getAllComponents()) {
             if (component.getClass() == Lightbulb.class) {
-                lampRequirementsMet = (((Lightbulb) component).isOn && circuit.getComponentCount(component) == 2);
+                lampRequirementsMet = (((Lightbulb) component).isOn && circuit.getComponentCount(component) == 1);
             } else if (component.getClass() == Switch.class && circuit.getComponentCount(component) == 1) {
                 hasSwitch = component.hasOutputConnection(component.getConnectionPointByIndex(1)) && component.isConductive();
             }
@@ -55,10 +55,6 @@ public class Scenario4 extends DesignScenario {
 
     public ArrayList<Component> loadComponents() {
         ArrayList<Component> components = new ArrayList<>();
-        Powersource powersource = new Powersource();
-
-        components.add(powersource);
-
         return components;
     }
 
