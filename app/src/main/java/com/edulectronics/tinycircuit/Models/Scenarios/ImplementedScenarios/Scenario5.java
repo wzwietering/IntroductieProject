@@ -3,6 +3,7 @@ package com.edulectronics.tinycircuit.Models.Scenarios.ImplementedScenarios;
 import com.edulectronics.tinycircuit.Models.Circuit;
 import com.edulectronics.tinycircuit.Models.Components.Bell;
 import com.edulectronics.tinycircuit.Models.Components.Component;
+import com.edulectronics.tinycircuit.Models.Components.Connectors.Connector;
 import com.edulectronics.tinycircuit.Models.Components.Lightbulb;
 import com.edulectronics.tinycircuit.Models.Components.Powersource;
 import com.edulectronics.tinycircuit.Models.Components.Resistor;
@@ -81,7 +82,22 @@ public class Scenario5 extends DesignScenario {
         if (super.loadComponents() != null) {
             return super.loadComponents();
         }
+        Powersource powersource = new Powersource();
+        Lightbulb bulb = new Lightbulb();
+        Resistor resistor = new Resistor();
+        Switch switch1 = new Switch();
+
+        Connector.connect(powersource.getInput(), bulb.getConnectionPointByIndex(0));
+        Connector.connect(bulb.getConnectionPointByIndex(1), resistor.getConnectionPointByIndex(0));
+        Connector.connect(switch1.getConnectionPointByIndex(1), resistor.getConnectionPointByIndex(1));
+        Connector.connect(switch1.getConnectionPointByIndex(0), powersource.getOutput());
+
         ArrayList<Component> components = new ArrayList<>();
+
+        components.add(powersource);
+        components.add(bulb);
+        components.add(resistor);
+        components.add(switch1);
         return components;
     }
 

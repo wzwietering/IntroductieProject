@@ -29,13 +29,36 @@ public class CircuitController implements Serializable {
     CircuitAnimator animator;
 
     // Set the circuit to some predefined circuit passed as arguments.
-    public CircuitController(int width, int size, ArrayList<Component> components) {
+    public CircuitController(int width, int size, ArrayList<Component> components, int scenarioID) {
         this.circuit = new Circuit(width, size);
-        int position = width / 2 + 1;
-        // TODO: Move positioning of components to the scenario. Either based on relative positions (depending on grid size) or lock the grid to a default size.
+        positionSetter(scenarioID, width, components);
         for (Component component : components) {
-            addComponent(component, position);
-            position += width / 2;
+            addComponent(component, component.position);
+        }
+    }
+
+    public void positionSetter(int scenario, int width, ArrayList<Component> components){
+        switch (scenario){
+            case 3 : components.get(2).setPosition(3*width + width/2 - 2);
+            case 2 :
+            case 1 : components.get(0).setPosition(width + width/2);
+                components.get(1).setPosition(3*width + width/2);
+                break;
+            case 5 :
+            case 7:
+            components.get(0).setPosition(2*width + width/2 - 1);
+                     components.get(1).setPosition(width + 1);
+                components.get(2).setPosition(width/2 + 1);
+                components.get(3).setPosition(3*width + width/2 + 2);
+                break;
+            case 6 : components.get(0).setPosition(2*width + width/2 - 2);
+                components.get(1).setPosition(2*width + width/2 + 2);
+                components.get(2).setPosition(width/2 + 1);
+                components.get(3).setPosition(width/2 - 1);
+                components.get(4).setPosition(4*width + width/2 + 2);
+                components.get(5).setPosition(3*width + width/2 - 1);
+            case 4 :
+            default: break;
         }
     }
 

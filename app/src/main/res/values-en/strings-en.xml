@@ -23,7 +23,7 @@
     <string name="scenario4_explanation">You now know how to build a circuit, time to try it out yourself! Make your own circuit with a lightbulbs and a way to turn the light off and on.</string>
     <string name="scenario5_explanation">A battery can do more than just turn a light on and off. Add a bell to your circuit!</string>
     <string name="scenario6_explanation">You can also make 2 circuits with 1 battery! Finish this circuit so the switch turns only one of the lamps on and off.</string>
-    <string name="scenario7_explanation">Finish this circuit by adding a lamp on one side and a switch on the other.</string>
+    <string name="scenario7_explanation">Make 2 circuits with 1 battery by adding a lamp on one side and a switch on the other.</string>
     <string name="scenario_nonexisting">Unfortunately this scenario does not yet exist. You can create your own circuit here.</string>
     <string name="scenario_complete">Good job!</string>
     <string name="scenario_not_complete">The circuit is not right yet!</string>
