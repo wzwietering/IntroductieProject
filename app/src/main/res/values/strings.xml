@@ -62,9 +62,10 @@
     <string name="website">Voor meer informatie kijk op onze website:</string>
 
     <!--Settings-->
-    <string name="setting_vibration">Trillingen</string>
-    <string name="setting_language">Taal</string>
-    <string name="setting_reset_progress">Begin opnieuw</string>
+    <string name="settings_title">Instellingen</string>
+    <string name="setting_vibration">Trillingen:</string>
+    <string name="setting_language">Taal:</string>
+    <string name="setting_reset_progress">Begin opnieuw:</string>
     <string name="setting_reset">Wis voortgang</string>
     <string name="reset_warning">Weet je zeker dat je opnieuw wilt beginnen?</string>
 </resources>

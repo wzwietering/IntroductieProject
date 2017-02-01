@@ -54,6 +54,8 @@ public class SettingsActivity extends AppCompatActivity{
         getBaseContext().getResources().updateConfiguration(config,
                 getBaseContext().getResources().getDisplayMetrics());
         save();
+        finish();
+        startActivity(getIntent());
     }
 
     private void switchLanguage() {

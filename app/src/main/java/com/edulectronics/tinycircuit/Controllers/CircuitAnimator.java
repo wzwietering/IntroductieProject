@@ -188,7 +188,7 @@ public class CircuitAnimator {
     }
 
     //Only handle input for the connected elements. Do this after a delay!
-    public void handleHighInputs(Object[] elements) {
+    public void handleHighInputs(Object[] elements ) {
         // We declare a runnable which takes our elements as input.
         class highInputRunnable implements Runnable {
             Object[] elements;

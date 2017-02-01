@@ -6,58 +6,56 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:paddingBottom="@dimen/activity_vertical_margin"
-                android:paddingLeft="@dimen/activity_horizontal_margin"
                 android:background="@drawable/circuitboard">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:id="@+id/settings_title"
+        android:text="@string/settings_title"
+        android:textSize="30sp"
+        android:textColor="@android:color/black"
+        android:layout_marginTop="20dp"
+        android:textAllCaps="true" />
+
 
     <RelativeLayout
         android:id="@+id/vibration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true">
+        android:layout_below="@id/settings_title"
+        android:layout_marginTop="20dp">
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:id="@+id/vibration_text"
             android:text="@string/setting_vibration"
-            android:textSize="40sp"
+            android:textSize="30sp"
             android:textColor="@android:color/black"
             android:layout_alignParentStart="true"
-            android:layout_centerInParent="true"/>
-
-        <Switch
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/vibration_switch"
+            android:textAlignment="viewEnd"
             android:layout_centerVertical="true"
-            android:layout_toEndOf="@id/vibration_text"
-            android:checked="true"/>
+            android:fontFamily="sans-serif"
+            android:textAllCaps="false" />
+
     </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/language"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/vibration">
+        android:layout_below="@id/vibration"
+        android:layout_marginTop="10dp">
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:id="@+id/language_text"
             android:text="@string/setting_language"
-            android:textSize="40sp"
+            android:textSize="30sp"
             android:textColor="@android:color/black"
             android:layout_alignParentStart="true"
-            android:layout_centerInParent="true"/>
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/dutchflag"
-            android:id="@+id/flag"
-            android:onClick="changeLanguage"
-            android:paddingStart="10dp"
-            android:layout_centerVertical="true"
-            android:layout_toEndOf="@id/language_text"/>
+            android:textAlignment="viewEnd"
+            android:layout_centerVertical="true" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -66,14 +64,15 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/language">
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:id="@+id/progress_text"
             android:text="@string/setting_reset_progress"
-            android:textSize="40sp"
+            android:textSize="30sp"
             android:textColor="@android:color/black"
             android:layout_alignParentStart="true"
-            android:layout_centerInParent="true"/>
+            android:layout_centerInParent="true"
+            android:textAlignment="viewEnd" />
 
         <Button
             android:layout_width="wrap_content"
@@ -81,8 +80,34 @@
             android:text="@string/setting_reset"
             android:id="@+id/reset_progress_button"
             android:onClick="areYouSureDialog"
-            android:paddingStart="10dp"
-            android:layout_centerVertical="true"
-            android:layout_toEndOf="@id/progress_text"/>
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/progress_text"
+            android:layout_marginStart="48dp" />
     </RelativeLayout>
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/vibration_switch"
+        android:checked="true"
+        android:background="#666666"
+        android:textAlignment="viewEnd"
+        android:layout_alignBaseline="@+id/vibration"
+        android:layout_alignBottom="@+id/vibration"
+        android:layout_alignStart="@+id/flag"
+        android:splitTrack="false" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/dutchflag"
+        android:id="@+id/flag"
+        android:onClick="changeLanguage"
+        android:layout_below="@+id/vibration"
+        android:layout_toEndOf="@+id/vibration"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="5dp" />
+
+
+
 </RelativeLayout>

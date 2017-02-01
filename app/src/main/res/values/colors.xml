@@ -3,7 +3,7 @@
 <resources>
     <color name="colorPrimary">#4141ab</color>
     <color name="colorPrimaryDark">#28136b</color>
-    <color name="colorAccent">#F4A842</color>
+    <color name="colorAccent">#ffffff</color>
     <color name="cell">#00000000</color>
     <color name="cell_empty_hover">#eaeaea</color>
     <color name="cell_filled_hover">#bbbbbb</color>

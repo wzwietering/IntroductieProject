@@ -216,7 +216,6 @@ public class CircuitController implements Serializable {
                     }
                 }
 
-
                 if ((pathHasResistor && pathHasLightBulb) || !pathHasLightBulb) {
                     animator.animateCurrentFlow(path);
                 }

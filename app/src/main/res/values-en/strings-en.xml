@@ -63,9 +63,10 @@
     <string name="website">For more information see our website:</string>
 
     <!--Settings-->
-    <string name="setting_vibration">Vibration</string>
-    <string name="setting_language">Language</string>
-    <string name="setting_reset_progress">Reset progress</string>
+    <string name="settings_title">Settings</string>
+    <string name="setting_vibration">Vibrations:</string>
+    <string name="setting_language">Language:</string>
+    <string name="setting_reset_progress">Reset progress:</string>
     <string name="setting_reset">Delete progress</string>
     <string name="reset_warning">Are you sure you want to restart?</string>
 </resources>

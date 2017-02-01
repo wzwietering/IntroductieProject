@@ -20,6 +20,12 @@ public class ExerciseMenuActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        makeMenu();
+
+    }
+
+    private void makeMenu() {
         setContentView(R.layout.activity_exercise_menu);
 
         //fills the horizontal scrollView
@@ -37,6 +43,13 @@ public class ExerciseMenuActivity extends AppCompatActivity {
             text.setText(Integer.toString(n));
             item.addView(button);
         }
+    }
+
+    //Recreate the menu every time the activity is started to apply language changes
+    @Override
+    protected void onStart(){
+        super.onStart();
+        makeMenu();
     }
 
     //Identifier for which button was pressed
