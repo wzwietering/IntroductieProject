@@ -57,7 +57,7 @@ public class CircuitController implements Serializable {
                 components.get(2).setPosition(width/2 + 1);
                 components.get(3).setPosition(width/2 - 1);
                 components.get(4).setPosition(4*width + width/2 + 2);
-                components.get(5).setPosition(3*width + width/2 - 1);
+                components.get(5).setPosition(4*width + 2);
             case 4 :
             default: break;
         }
