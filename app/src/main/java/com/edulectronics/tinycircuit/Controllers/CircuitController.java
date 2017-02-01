@@ -2,12 +2,12 @@ package com.edulectronics.tinycircuit.Controllers;
 
 import android.app.Activity;
 import android.graphics.Color;
-import android.os.Handler;
 
 import com.edulectronics.tinycircuit.Models.Circuit;
 import com.edulectronics.tinycircuit.Models.Components.Component;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.Connection;
 import com.edulectronics.tinycircuit.Models.Components.Connectors.ConnectionPoint;
+import com.edulectronics.tinycircuit.Models.Components.Lightbulb;
 import com.edulectronics.tinycircuit.Models.Components.Powersource;
 import com.edulectronics.tinycircuit.Models.Components.Resistor;
 import com.edulectronics.tinycircuit.Models.Graph;
@@ -40,15 +40,17 @@ public class CircuitController implements Serializable {
 
     public void positionSetter(int scenario, int width, ArrayList<Component> components){
         switch (scenario){
-            case 3 : components.get(2).setPosition(3*width + width/2 - 2);
+            case 3 :
+                components.get(2).setPosition(3*width + width/2 - 2);
             case 2 :
-            case 1 : components.get(0).setPosition(width + width/2);
+            case 1 :
+                components.get(0).setPosition(width + width/2);
                 components.get(1).setPosition(3*width + width/2);
                 break;
             case 5 :
             case 7:
-            components.get(0).setPosition(2*width + width/2 - 1);
-                     components.get(1).setPosition(width + 1);
+                components.get(0).setPosition(2*width + width/2 - 1);
+                components.get(1).setPosition(width + 1);
                 components.get(2).setPosition(width/2 + 1);
                 components.get(3).setPosition(3*width + width/2 + 2);
                 break;
@@ -170,11 +172,13 @@ public class CircuitController implements Serializable {
         }
         return null;
     }
+
     // Check all paths on the graph to see if there is resistance
     private void checkPaths(Graph graph) {
         // First check if there are paths that don't have a resistor.
         for (Stack path : graph.findAllPaths()) {
             boolean pathHasResistor = false;
+            boolean pathHasLightBulb = false;
 
             Object[] elements = path.toArray();
             for (Object element : elements) {
@@ -182,10 +186,13 @@ public class CircuitController implements Serializable {
                     pathHasResistor = true;
                     break;
                 }
+                if(element.getClass() == Lightbulb.class) {
+                    pathHasLightBulb = true;
+                }
             }
 
             // Highlight them in red.
-            if (!pathHasResistor) {
+            if (!pathHasResistor && pathHasLightBulb) {
                 animator.highlightPath(path, Color.RED, Wire.WireDrawingMode.flashingHighlight);
                 for (Object element : elements) {
                     ((Component) element).setResistance(false);
@@ -196,6 +203,7 @@ public class CircuitController implements Serializable {
         // Now check if there are any paths that DO have a resistor.
         for (Stack path : graph.findAllPaths()) {
                 boolean pathHasResistor = false;
+                boolean pathHasLightBulb = false;
 
                 Object[] elements = path.toArray();
                 for (Object element : elements) {
@@ -203,9 +211,13 @@ public class CircuitController implements Serializable {
                         pathHasResistor = true;
                         break;
                     }
+                    if(element.getClass() == Lightbulb.class) {
+                        pathHasLightBulb = true;
+                    }
                 }
 
-                if (pathHasResistor) {
+
+                if ((pathHasResistor && pathHasLightBulb) || !pathHasLightBulb) {
                     animator.animateCurrentFlow(path);
                 }
 
